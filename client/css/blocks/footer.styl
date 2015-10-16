@@ -1,0 +1,57 @@
+.footer
+    full-width()
+    min-height 228px
+    background url(/layout/images/footer.jpg) bottom center no-repeat
+    color alpha(white, .4)
+    font-size 12px
+    img
+        middle()
+
+    &__copyright
+        full-width()
+        line-height 78px
+        padding-top 2px
+        padding 0 15px
+        a
+            color alpha(white, .4)
+            border-line(alpha(white, .2))
+
+            &:hover
+                color alpha(white, 1)
+                border-line(alpha(@color, .5))
+    &__spectrum
+        img
+            margin-right 16px
+            margin-left 5px
+            position relative
+            top 3px
+    &__rules
+        span(1/4)
+
+    &__social
+        line-height 183px
+        max-height 146px
+        overflow hidden
+        .social
+            middle()
+            size 35px
+            line-height 35px
+            margin 0 8px
+            border-radius 2px
+            text-align center
+            t opacity
+            img
+                max-width 25px
+                max-height 19px
+
+            &--vk
+                background-color #1f84b5
+            &--fb
+                background-color #005c9a
+                padding-left 2px
+            &--in
+                background-color #006a9c
+                padding-left 1.5px
+
+            &:hover
+                opacity .5

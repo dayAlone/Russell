@@ -1,0 +1,41 @@
+.history
+    full-width()
+    padding 30px 30px 50px
+    background url(/layout/images/share-love.jpg) center bottom no-repeat
+    background-size 120% auto
+    &:before
+        @extend .share-love:before
+        top 0
+    &__slider
+        background url(/layout/images/history.jpg) top center no-repeat
+        background-size cover
+    &__title
+        @extend .text h2
+        margin-left -30px
+        margin-top 0px
+        margin-bottom 20px
+    &__item
+        height 300px
+        text-align center
+        position relative
+        full-width()
+        pointer-events none
+    &__year
+        font-size 33px
+        font-weight bold
+    &__text
+        padding 0 20%
+        font-size 16px
+        line-height 20px
+    &__divider
+        max-width 300px
+        width 50%
+        margin 0 auto
+        border-bottom 1px solid white
+        margin 30px auto
+    &__content
+        position absolute
+        top 50%
+        width 100%
+        left 0
+        transform translateY(-50%)

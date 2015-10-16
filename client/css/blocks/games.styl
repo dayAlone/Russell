@@ -1,0 +1,23 @@
+.games
+    full-width()
+    z-index 10
+    & + .share-love
+        margin-top -65px
+    .game
+        full-width()
+        &__content
+            column(8/12)
+        &__description
+            line-height 1.4
+            margin-bottom 25px
+            max-width 97%
+        &__image
+            img
+                max-width 100%
+                margin-top 28px
+        &__line
+            margin-top 36px
+        &__title
+            @extend .text h2
+            margin-top 40px
+            margin-bottom 18px

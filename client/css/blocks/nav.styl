@@ -1,0 +1,27 @@
+.nav
+    full-width()
+    margin-bottom 26px
+    &__col
+        span(1/3)
+    &:after
+        content ""
+        width calc(100% + 165px * 2)
+        background url(/layout/images/menu.jpg) repeat-y center
+        background-size contain
+        height 27px
+        position absolute
+        bottom -26px
+        left -165px
+    &__item
+        color white
+        font-size 18px
+        padding 11px 27px 9px
+        display inline-block
+        border-top-right-radius 4px
+        border-top-left-radius 4px
+        &:hover
+            color red
+        &--active
+            &, &:hover
+                color white
+                background-color #ed1c13

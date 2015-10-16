@@ -102,9 +102,9 @@ class PageIndex extends Component {
         });
     }
     get() {
-        //this.getProducts();
-        this.getCategories();
-        this.getCollections();
+        this.getProducts();
+        //this.getCategories();
+        //this.getCollections();
     }
     render() {
         return <div className='page page--index'>

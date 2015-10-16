@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/ru';
-
+import { Link } from 'react-router';
 import Countdown from './Countdown';
 
 @connect(state => ({ game: state.games.list[0] }))
@@ -29,7 +29,7 @@ class Title extends Component {
                             <Countdown dateStart={dateStart} dateStop={dateStop} link={link} />
                         </div> : false}
                         <div className="title__actions">
-                            {this.props.type !== 'counter' ? <a href="/games/" className="button button--big">Выиграть!</a> : false }
+                            {this.props.type !== 'counter' ? <Link to="/games/" className="button button--big">Выиграть!</Link> : false }
                         </div>
                     </div>;
                 break;

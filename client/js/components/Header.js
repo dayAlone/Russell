@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import UserInfo from './UserInfo';
+import { Link } from 'react-router';
 class Header extends Component {
     render() {
         return <div className='header'>
             <div className='header__col'>
-                <a href='/' className='header__logo'>
+                <Link to='/' className='header__logo'>
                     <img src='/layout/images/svg/logo.svg' />
-                </a>
+                </Link>
             </div>
             <div className='header__col right'>
                 <img src='/layout/images/svg/title-description.svg' className='header__title' />

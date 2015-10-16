@@ -25,6 +25,7 @@
     "config": "^1.16.0",
     "countdown": "^2.6.0",
     "css-loader": "^0.19.0",
+    "cssnano": "^3.3.1",
     "dotenv": "^1.2.0",
     "history": "^1.12.4",
     "imgur": "^0.1.6",

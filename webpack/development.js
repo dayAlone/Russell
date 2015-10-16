@@ -17,7 +17,7 @@ export default {
         filename: '[name].js',
         pathinfo: true
     },
-    //devtool: '#source-map',
+    devtool: '#source-map',
     module: {
         noParse: [/moment.js/],
         loaders: [

@@ -6,6 +6,77 @@
         text-transform uppercase
         font-size 33px
         margin-bottom 10px
+    &__tabs
+        column(5/12)
+        &-trigger
+            a
+                height 40px
+                line-height 43px
+                padding 0 12px
+                color black
+                font-size 12px
+                background-color white
+                margin-right 2px
+                position relative
+                z-index 2
+                text-align center
+                display inline-block
+                &:after
+                    position absolute
+                    size 100%
+                    background: linear-gradient(to bottom, rgba(230,230,230,1) 0%,rgba(230,230,230,1) 50%,rgba(177,177,177,1) 100%);
+                    content ""
+                    top 0
+                    left 0
+                    t opacity
+                span
+                    position relative
+                    z-index 2
+                img
+                    middle()
+                    position relative
+                    top -1px
+                    margin-left 12px
+                &:not(.active):hover
+                    &:after
+                        opacity .5
+                &.active
+
+                    &:after
+                        opacity 0
+        &-content
+            background-color white
+            color black
+            font-size 13px
+            line-height 1.2
+            padding 30px 15px 25px
+            display none
+            border-radius 8px
+            box-shadow 0 5px 15px 2px alpha(black,.5)
+            border-top-left-radius 0
+            &--active
+                display block
+            .featureIcons
+                margin-top 20px
+                background url(/layout/images/divide.png) top center no-repeat
+                padding-top 20px
+                ul
+                    margin-bottom 0px
+                    li
+                        display inline
+            ul
+                padding-left 0px
+                ul
+                    padding-left 20px
+                    list-style square outside
+                    li
+                        margin-bottom 6px
+            p
+                margin-bottom 15px
+                br
+                    display none
+                &:last-of-type
+                    margin-bottom 0px
     &__images
         margin-top 30px
         column(5/12)

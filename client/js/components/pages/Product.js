@@ -11,9 +11,16 @@ import Title from '../layout/Title';
 
 @connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Product extends Component {
+    state = { open: 'short' }
     componentWillMount() {
         const { getProducts } = this.props.actions;
         if (this.props.products.length === 0) getProducts();
+    }
+    handleClick(e) {
+        let target = e.relatedTarget || e.target;
+        this.setState({open: target.href.split('#')[1] });
+        e.preventDefault();
+        e.stopPropagation();
     }
     render() {
         let { products, routeParams, routes } = this.props;
@@ -23,8 +30,9 @@ class Product extends Component {
                 const { name,
                         artnumber,
                         preview,
-                        code,
-                        images} = current;
+                        images,
+                        short_description,
+                        description} = current;
                 return <div className='page'>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
@@ -38,6 +46,32 @@ class Product extends Component {
                                     <div className="product__thumb-preview" style={{backgroundImage: `url(${el})`}}></div>
                                 </div>
                             })}
+                        </div>
+                        <div className="product__tabs">
+                            <div className="product__tabs-trigger">
+                                <a onClick={this.handleClick.bind(this)} className={this.state.open === 'short'? 'active': null} href="#short">
+                                    <span>
+                                        Краткое описание
+                                        <img src="/layout/images/down.png" alt="" />
+                                    </span>
+                                </a>
+                                <a onClick={this.handleClick.bind(this)} className={this.state.open === 'full'? 'active': null} href="#full">
+                                    <span>
+                                        Полное описание
+                                        <img src="/layout/images/down.png" alt="" />
+                                    </span>
+                                </a>
+                            </div>
+                            <div
+                                className={`product__tabs-content ${this.state.open === 'short'? 'product__tabs-content--active' : null}`}
+                                dangerouslySetInnerHTML={{__html: short_description.replace('<p>&nbsp;</p>', '')}}
+                                ref='short'
+                                />
+                            <div
+                                className={`product__tabs-content ${this.state.open === 'full'? 'product__tabs-content--active' : null}`}
+                                dangerouslySetInnerHTML={{__html: description.replace('<p>&nbsp;</p>', '')}}
+                                ref='full'
+                                />
                         </div>
                     </div>
                 </div>;

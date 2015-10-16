@@ -8,7 +8,7 @@ class Page404 extends Component {
             <Title />
             <div className='text'>
                 <h2>Страница не найдена</h2>
-                <p><br/><Link to='/'>Вернуться на главную</Link></p>
+                <p><br/><Link to='/'>Вернуться на главную</Link><br/><br/></p>
             </div>
         </div>;
     }

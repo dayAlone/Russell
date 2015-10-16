@@ -4,20 +4,24 @@
     padding 0px 0 0px
     .text
         padding-top 0px
+        padding-bottom 0px
         h2
             margin-bottom 20px
     &__item
         padding 0 7px
         span(1/4)
         margin-bottom 45px
+
     &__action
-        padding 37px 0 47px
+        padding 27px 0 47px
         full-width()
     &__rows
         padding 0 25px
     &__slider
         position relative
         padding 0 25px
+        .slick-track
+            padding 20px 0 10px
         full-width()
         .categories__item
             margin-bottom 0px
@@ -32,6 +36,11 @@
         background-size cover
         border-radius 8px
         color black
+        t all, .4s
+        box-shadow 0 0 0 0 alpha(red, 1)
+        &:hover
+            transform translateY(-10px)
+            box-shadow 0 6px 15px 2px alpha(red, .5)
     &__image
         width 100%
         min-height 138px

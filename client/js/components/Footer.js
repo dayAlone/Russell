@@ -19,7 +19,8 @@ class Footer extends Component {
             </div>
             <div className="footer__copyright">
                 <div className="footer__rules">
-                    <Link to="/conditions/">Условия проведения акции</Link>
+                    {/*<Link to="/conditions/">Условия проведения акции</Link>*/}
+                    <br />
                 </div>
                 <div className="footer__spectrum">
                     <img src='/layout/images/svg/spectrum.svg' /> © 2015 SPECTRUM BRANDS , INC., ALL RIGHTS RESERVED

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/catalog';
 import { bindActionCreators } from 'redux';
 import Page404 from './Page404';
+import Spinner from './Spinner';
 
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Products extends Component {
@@ -51,9 +52,11 @@ class Products extends Component {
                         <div className="products__items">{items}</div>
                     </div>;
             }
+            return <Page404 hideTitle={true}/>;
 
         }
-        return <Page404 hideTitle={true}/>;
+        return <Spinner />;
+
     }
 }
 

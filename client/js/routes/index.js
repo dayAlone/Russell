@@ -11,13 +11,16 @@ import Page404 from '../components/Page404';
 import PageCategory from '../components/PageCategory';
 
 export default function configureRoutes() {
-    return <Route path="/" component={App} location='history'>
+    return <Route path="/" component={App} location='history' name='Начальная страница'>
 
-            <Route path="/history/" component={PageHistory} />
-            <Route path="/games/" component={PageGames} />
-            <Route path="/catalog/">
-                <Route path="collections/" component={PageCollections} />
-                <Route path="collections/:code" component={PageCategory} source='collections'/>
+            <Route path="history/" component={PageHistory} name='История бренда'/>
+            <Route path="games/" component={PageGames} name='Выиграй мечту'/>
+            <Route path="catalog/" name='Продукты'>
+                <Route path="collections/" name='Коллекции'>
+                    <Route path=":code/" component={PageCategory} source='collections'/>
+                    <IndexRoute component={PageCollections} />
+                </Route>
+
                 <Route path="categories/:code" component={PageCategory} source='categories'/>
                 <IndexRoute component={PageCatalog} />
             </Route>

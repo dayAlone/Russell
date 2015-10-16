@@ -1,0 +1,21 @@
+.breadcrumbs
+    full-width()
+    padding-top 15px
+    font-size 12px
+    margin-bottom 5px
+    margin-left -10px
+    &__item
+        color white
+        margin-left 25px
+        border-line(alpha(@color, .3))
+        position relative
+        &:before
+            content ""
+            position absolute
+            size 8px
+            background url(/layout/images/breadcrumb.gif) center center no-repeat
+            top 1px
+            left -15px
+        &:hover
+            color red
+            border-line(alpha(@color, .3))

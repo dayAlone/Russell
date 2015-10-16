@@ -7,7 +7,7 @@ class PageCatalog extends Component {
     render() {
         return <div className='page page--index'>
             <Title />
-            <Categories source='categories'>
+            <Categories source='categories' routes={this.props.routes}>
                 <div className='text text--small'>
                     <h2>Продукты</h2>
                     <p>Продукция компании Russell Hobbs – это больше, чем просто качество, стиль и новые технологии. Наша продукция дает возможность людям создать чудесные мгновения, остающиеся в памяти на всю жизнь. Первая чашка кофе ранним утром, приятное тепло свежевыглаженной рубашки, вкусный ужин в кругу семьи – именно эти мелочи по-настоящему важны для каждого человека. </p>

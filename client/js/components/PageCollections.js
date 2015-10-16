@@ -7,7 +7,7 @@ class PageCatalog extends Component {
     render() {
         return <div className='page page--index'>
             <Title />
-            <Categories source='collections'>
+            <Categories source='collections' routes={this.props.routes}>
                 <div className='text text--small'>
                     <h2>Коллекции</h2>
                     <p><strong>В сердце каждого дома, тогда и сейчас</strong></p>

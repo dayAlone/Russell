@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/catalog';
 import { bindActionCreators } from 'redux';
 import Spinner from './Spinner';
-
+import Breadcrumbs from './Breadcrumbs';
 @connect(state => ({ collections: state.catalog.collections, categories: state.catalog.categories }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Categories extends Component {
     static defaultProps = { source: 'categories' }
@@ -19,7 +19,7 @@ class Categories extends Component {
         }
     }
     render() {
-        let { children, source, type } = this.props;
+        let { children, source, type, routes } = this.props;
         if (this.props[source].length > 0) {
             let categories = this.props[source].map((el, i) => {
                 const { code, image, name, short_description } = el;
@@ -41,6 +41,7 @@ class Categories extends Component {
                 </div>;
             } else {
                 return <div className='categories'>
+                    <Breadcrumbs routes={routes} />
                     {children}
                     <img src="/layout/images/line.png" width="100%" className="categories__line" />
                     <div className="categories__rows">{categories}</div>

@@ -1,0 +1,383 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/iojs',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'react-breadcrumbs',
+1 verbose cli   '--save' ]
+2 info using npm@2.14.3
+3 info using node@v3.3.1
+4 verbose install initial load of /Users/slider/Documents/Projects/Russell/package.json
+5 warn package.json russel-hobbs@0.0.1 No description
+6 warn package.json russel-hobbs@0.0.1 No repository field.
+7 warn package.json russel-hobbs@0.0.1 No README data
+8 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/autoprefixer/package.json
+9 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/babel/package.json
+10 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/babel-core/package.json
+11 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/babel-loader/package.json
+12 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/clarify/package.json
+13 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/co/package.json
+14 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/co-busboy/package.json
+15 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/compression-webpack-plugin/package.json
+16 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/config/package.json
+17 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/countdown/package.json
+18 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/css-loader/package.json
+19 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/css-mqpacker/package.json
+20 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/cssnano/package.json
+21 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/dotenv/package.json
+22 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/history/package.json
+23 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/imgur/package.json
+24 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/jade/package.json
+25 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/jeet/package.json
+26 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/jquery/package.json
+27 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/kcors/package.json
+28 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa/package.json
+29 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-better-body/package.json
+30 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-body/package.json
+31 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-bodyparser/package.json
+32 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-connect/package.json
+33 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-cors/package.json
+34 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-favicon/package.json
+35 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-generic-session/package.json
+36 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-logger/package.json
+37 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-passport/package.json
+38 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-rbac/package.json
+39 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-request/package.json
+40 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-roles/package.json
+41 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-router/package.json
+42 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-session-mongoose/package.json
+43 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-static-server/package.json
+44 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-webpack-dev-middleware/package.json
+45 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/lodash/package.json
+46 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/log/package.json
+47 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/moment/package.json
+48 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/moment-countdown/package.json
+49 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/mongoose/package.json
+50 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/nib/package.json
+51 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/passport/package.json
+52 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-facebook/package.json
+53 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-google-plus/package.json
+54 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-local/package.json
+55 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-vkontakte/package.json
+56 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/postcss-loader/package.json
+57 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/postcss-will-change/package.json
+58 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/react/package.json
+59 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/react-dom/package.json
+60 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/react-hot-loader/package.json
+61 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/react-redux/package.json
+62 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/react-router/package.json
+63 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/react-spin/package.json
+64 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/redux/package.json
+65 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/redux-devtools/package.json
+66 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/redux-router/package.json
+67 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/redux-thunk/package.json
+68 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/slick/package.json
+69 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/slick-carousel/package.json
+70 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/spin.js/package.json
+71 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/stack-chain/package.json
+72 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/style-loader/package.json
+73 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/stylus/package.json
+74 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/stylus-loader/package.json
+75 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/trace/package.json
+76 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/typograf/package.json
+77 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/typographic/package.json
+78 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/webpack/package.json
+79 verbose installManyTop reading scoped package data from /Users/slider/Documents/Projects/Russell/node_modules/webpack-hot-middleware/package.json
+80 info package.json imgur@0.1.7 No license field.
+81 info package.json jquery@2.1.4 No license field.
+82 info package.json koa-better-body@1.0.17 license should be a valid SPDX license expression
+83 info package.json koa-connect@1.0.0 No repository field.
+84 info package.json koa-passport@1.2.0 No license field.
+85 info package.json log@1.4.0 No repository field.
+86 info package.json log@1.4.0 No license field.
+87 info package.json koa-webpack-dev-middleware@1.0.1 No license field.
+88 info package.json passport-google-plus@0.5.1 license should be a valid SPDX license expression
+89 info package.json passport-facebook@2.0.0 No license field.
+90 info package.json passport-local@1.0.0 No license field.
+91 info package.json passport-vkontakte@0.4.0 No license field.
+92 info package.json compression-webpack-plugin@0.2.0 No license field.
+93 info package.json slick@1.12.2 license should be a valid SPDX license expression
+94 info package.json typographic@2.9.3 No license field.
+95 verbose readDependencies loading dependencies from /Users/slider/Documents/Projects/Russell/package.json
+96 silly cache add args [ 'react-breadcrumbs', null ]
+97 verbose cache add spec react-breadcrumbs
+98 silly cache add parsed spec Result {
+98 silly cache add   raw: 'react-breadcrumbs',
+98 silly cache add   scope: null,
+98 silly cache add   name: 'react-breadcrumbs',
+98 silly cache add   rawSpec: '',
+98 silly cache add   spec: '*',
+98 silly cache add   type: 'range' }
+99 silly addNamed react-breadcrumbs@*
+100 verbose addNamed "*" is a valid semver range for react-breadcrumbs
+101 silly addNameRange { name: 'react-breadcrumbs', range: '*', hasData: false }
+102 silly mapToRegistry name react-breadcrumbs
+103 silly mapToRegistry using default registry
+104 silly mapToRegistry registry https://registry.npmjs.org/
+105 silly mapToRegistry uri https://registry.npmjs.org/react-breadcrumbs
+106 verbose addNameRange registry:https://registry.npmjs.org/react-breadcrumbs not in flight; fetching
+107 verbose request uri https://registry.npmjs.org/react-breadcrumbs
+108 verbose request no auth needed
+109 info attempt registry request try #1 at 17:48:58
+110 verbose request using bearer token for auth
+111 verbose request id 5abf2025c8c0c173
+112 http request GET https://registry.npmjs.org/react-breadcrumbs
+113 http 200 https://registry.npmjs.org/react-breadcrumbs
+114 silly get cb [ 200,
+114 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+114 silly get     etag: '"8123SPGGUJUJ849FKM61HSO6E"',
+114 silly get     'content-type': 'application/json',
+114 silly get     'cache-control': 'max-age=60',
+114 silly get     'content-length': '39717',
+114 silly get     'accept-ranges': 'bytes',
+114 silly get     date: 'Fri, 16 Oct 2015 12:48:59 GMT',
+114 silly get     via: '1.1 varnish',
+114 silly get     connection: 'keep-alive',
+114 silly get     'x-served-by': 'cache-fra1227-FRA',
+114 silly get     'x-cache': 'MISS',
+114 silly get     'x-cache-hits': '0',
+114 silly get     'x-timer': 'S1444999738.784632,VS0,VE381',
+114 silly get     vary: 'Accept' } ]
+115 verbose get saving react-breadcrumbs to /Users/slider/.npm/registry.npmjs.org/react-breadcrumbs/.cache.json
+116 silly addNameRange number 2 { name: 'react-breadcrumbs', range: '*', hasData: true }
+117 silly addNameRange versions [ 'react-breadcrumbs',
+117 silly addNameRange   [ '0.1.0',
+117 silly addNameRange     '0.1.1',
+117 silly addNameRange     '0.2.0',
+117 silly addNameRange     '0.2.1',
+117 silly addNameRange     '0.2.2',
+117 silly addNameRange     '0.2.3',
+117 silly addNameRange     '0.2.4',
+117 silly addNameRange     '0.2.5',
+117 silly addNameRange     '0.2.6',
+117 silly addNameRange     '0.2.7',
+117 silly addNameRange     '0.2.8',
+117 silly addNameRange     '0.2.9',
+117 silly addNameRange     '0.2.10',
+117 silly addNameRange     '0.2.11',
+117 silly addNameRange     '0.2.12',
+117 silly addNameRange     '0.2.13',
+117 silly addNameRange     '0.2.14',
+117 silly addNameRange     '0.2.15',
+117 silly addNameRange     '0.13.0',
+117 silly addNameRange     '0.13.1',
+117 silly addNameRange     '0.13.2',
+117 silly addNameRange     '0.13.5',
+117 silly addNameRange     '1.0.0-beta1',
+117 silly addNameRange     '1.0.1',
+117 silly addNameRange     '0.13.7',
+117 silly addNameRange     '1.0.2' ] ]
+118 silly addNamed react-breadcrumbs@1.0.2
+119 verbose addNamed "1.0.2" is a plain semver version for react-breadcrumbs
+120 silly mapToRegistry name react-breadcrumbs
+121 silly mapToRegistry using default registry
+122 silly mapToRegistry registry https://registry.npmjs.org/
+123 silly mapToRegistry uri https://registry.npmjs.org/react-breadcrumbs
+124 verbose addRemoteTarball https://registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz not in flight; adding
+125 verbose addRemoteTarball [ 'https://registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz',
+125 verbose addRemoteTarball   '1f19da11b5af2753af537dc54fd830303134c4c1' ]
+126 info retry fetch attempt 1 at 17:48:59
+127 info attempt registry request try #1 at 17:48:59
+128 http fetch GET https://registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz
+129 verbose request using bearer token for auth
+130 http fetch 200 https://registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz
+131 silly fetchAndShaCheck shasum 1f19da11b5af2753af537dc54fd830303134c4c1
+132 verbose addTmpTarball /var/folders/2t/kkwn6wlx0_nbqs96b12nfr0r0000gn/T/npm-56562-73ac05ac/registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz not in flight; adding
+133 verbose addTmpTarball already have metadata; skipping unpack for react-breadcrumbs@1.0.2
+134 silly cache afterAdd react-breadcrumbs@1.0.2
+135 verbose afterAdd /Users/slider/.npm/react-breadcrumbs/1.0.2/package/package.json not in flight; writing
+136 verbose afterAdd /Users/slider/.npm/react-breadcrumbs/1.0.2/package/package.json written
+137 silly install resolved [ { name: 'react-breadcrumbs',
+137 silly install resolved     version: '1.0.2',
+137 silly install resolved     description: 'Automatic breadcrumbs for react-router',
+137 silly install resolved     main: 'index.js',
+137 silly install resolved     scripts: { test: 'npm test' },
+137 silly install resolved     npmName: 'react-breadcrumbs',
+137 silly install resolved     npmFileMap: [ [Object] ],
+137 silly install resolved     repository:
+137 silly install resolved      { type: 'git',
+137 silly install resolved        url: 'git+https://github.com/svenanders/react-breadcrumbs.git' },
+137 silly install resolved     keywords: [ 'react-component', 'breadcrumbs', 'react', 'trail' ],
+137 silly install resolved     author: { name: 'Sven Anders Robbestad', email: 'anders@robbestad.com' },
+137 silly install resolved     license: 'ISC',
+137 silly install resolved     bugs: { url: 'https://github.com/svenanders/react-breadcrumbs/issues' },
+137 silly install resolved     homepage: 'https://github.com/svenanders/react-breadcrumbs',
+137 silly install resolved     peerDependencies: { react: '^0.13.x', 'react-router': '^1.0.0-alpha1' },
+137 silly install resolved     devDependencies:
+137 silly install resolved      { gulp: '^3.8.11',
+137 silly install resolved        'gulp-babel': '^4.0.0',
+137 silly install resolved        'gulp-jsx': '^0.9.0',
+137 silly install resolved        'gulp-rename': '^1.2.0' },
+137 silly install resolved     dependencies: { lodash: '^3.6.0' },
+137 silly install resolved     contributors:
+137 silly install resolved      [ [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object],
+137 silly install resolved        [Object] ],
+137 silly install resolved     gitHead: 'def4982c09c750e7cd0b9dcf3fc9ee5cd8eba6ca',
+137 silly install resolved     _id: 'react-breadcrumbs@1.0.2',
+137 silly install resolved     _shasum: '1f19da11b5af2753af537dc54fd830303134c4c1',
+137 silly install resolved     _from: 'react-breadcrumbs@*',
+137 silly install resolved     _npmVersion: '3.2.1',
+137 silly install resolved     _nodeVersion: '0.12.7',
+137 silly install resolved     _npmUser: { name: 'svenanders', email: 'anders@robbestad.com' },
+137 silly install resolved     dist:
+137 silly install resolved      { shasum: '1f19da11b5af2753af537dc54fd830303134c4c1',
+137 silly install resolved        tarball: 'http://registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz' },
+137 silly install resolved     maintainers: [ [Object] ],
+137 silly install resolved     directories: {},
+137 silly install resolved     _resolved: 'https://registry.npmjs.org/react-breadcrumbs/-/react-breadcrumbs-1.0.2.tgz' } ]
+138 info install react-breadcrumbs@1.0.2 into /Users/slider/Documents/Projects/Russell
+139 info installOne react-breadcrumbs@1.0.2
+140 verbose installOne of react-breadcrumbs to /Users/slider/Documents/Projects/Russell not in flight; installing
+141 verbose lock using /Users/slider/.npm/_locks/react-breadcrumbs-c5477ae31438f098.lock for /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+142 silly install write writing react-breadcrumbs 1.0.2 to /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+143 verbose unbuild node_modules/react-breadcrumbs
+144 silly gentlyRm /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs is being purged from base /Users/slider/Documents/Projects/Russell
+145 verbose gentlyRm don't care about contents; nuking /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+146 verbose tar unpack /Users/slider/.npm/react-breadcrumbs/1.0.2/package.tgz
+147 verbose tar unpacking to /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+148 silly gentlyRm /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs is being purged
+149 verbose gentlyRm don't care about contents; nuking /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+150 silly gunzTarPerm modes [ '755', '644' ]
+151 silly gunzTarPerm extractEntry package.json
+152 silly gunzTarPerm extractEntry .npmignore
+153 silly gunzTarPerm extractEntry README.md
+154 silly gunzTarPerm extractEntry LICENSE
+155 silly gunzTarPerm extractEntry gulpfile.js
+156 silly gunzTarPerm extractEntry index.js
+157 silly gunzTarPerm extractEntry dist/react-breadcrumbs.min.js
+158 silly gunzTarPerm extractEntry .jshintrc
+159 silly gunzTarPerm extractEntry bin/authors
+160 silly gunzTarPerm extractEntry AUTHORS
+161 silly gunzTarPerm extractEntry 1.0.md
+162 silly gunzTarPerm extractEntry Makefile
+163 silly gunzTarPerm extractEntry index.jsx
+164 verbose write writing to /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs/package.json
+165 info preinstall react-breadcrumbs@1.0.2
+166 verbose readDependencies loading dependencies from /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs/package.json
+167 silly prepareForInstallMany adding react@^0.13.x from react-breadcrumbs peerDependencies
+168 warn peerDependencies The peer dependency react@^0.13.x included from react-breadcrumbs will no
+169 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+170 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+171 verbose readDependencies loading dependencies from /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs/package.json
+172 silly install resolved []
+173 verbose about to build /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+174 info build /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+175 info linkStuff react-breadcrumbs@1.0.2
+176 silly linkStuff react-breadcrumbs@1.0.2 has /Users/slider/Documents/Projects/Russell/node_modules as its parent node_modules
+177 verbose linkBins react-breadcrumbs@1.0.2
+178 verbose linkMans react-breadcrumbs@1.0.2
+179 verbose rebuildBundles react-breadcrumbs@1.0.2
+180 info install react-breadcrumbs@1.0.2
+181 info postinstall react-breadcrumbs@1.0.2
+182 verbose readDependencies loading dependencies from /Users/slider/Documents/Projects/Russell/package.json
+183 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/autoprefixer/package.json
+184 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/babel/package.json
+185 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/babel-core/package.json
+186 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/babel-loader/package.json
+187 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/clarify/package.json
+188 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/co/package.json
+189 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/co-busboy/package.json
+190 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/compression-webpack-plugin/package.json
+191 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/config/package.json
+192 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/countdown/package.json
+193 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/css-loader/package.json
+194 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/css-mqpacker/package.json
+195 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/cssnano/package.json
+196 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/dotenv/package.json
+197 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/history/package.json
+198 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/imgur/package.json
+199 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/jade/package.json
+200 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/jeet/package.json
+201 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/jquery/package.json
+202 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/kcors/package.json
+203 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa/package.json
+204 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-better-body/package.json
+205 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-body/package.json
+206 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-bodyparser/package.json
+207 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-connect/package.json
+208 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-cors/package.json
+209 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-favicon/package.json
+210 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-generic-session/package.json
+211 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-logger/package.json
+212 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-passport/package.json
+213 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-rbac/package.json
+214 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-request/package.json
+215 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-roles/package.json
+216 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-router/package.json
+217 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-session-mongoose/package.json
+218 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-static-server/package.json
+219 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/koa-webpack-dev-middleware/package.json
+220 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/lodash/package.json
+221 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/log/package.json
+222 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/moment/package.json
+223 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/moment-countdown/package.json
+224 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/mongoose/package.json
+225 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/nib/package.json
+226 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/passport/package.json
+227 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-facebook/package.json
+228 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-google-plus/package.json
+229 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-local/package.json
+230 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/passport-vkontakte/package.json
+231 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/postcss-loader/package.json
+232 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/postcss-will-change/package.json
+233 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react/package.json
+234 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs/package.json
+235 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react-dom/package.json
+236 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react-hot-loader/package.json
+237 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react-redux/package.json
+238 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react-router/package.json
+239 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/react-spin/package.json
+240 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/redux/package.json
+241 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/redux-devtools/package.json
+242 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/redux-router/package.json
+243 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/redux-thunk/package.json
+244 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/slick/package.json
+245 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/slick-carousel/package.json
+246 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/spin.js/package.json
+247 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/stack-chain/package.json
+248 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/style-loader/package.json
+249 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/stylus/package.json
+250 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/stylus-loader/package.json
+251 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/trace/package.json
+252 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/typograf/package.json
+253 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/typographic/package.json
+254 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/webpack/package.json
+255 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/webpack-hot-middleware/package.json
+256 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/babel/package.json
+257 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/babel-external-helpers/package.json
+258 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/babel-node/package.json
+259 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/babel-plugin/package.json
+260 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/imgur/package.json
+261 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/jade/package.json
+262 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/mqpacker/package.json
+263 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/stylus/package.json
+264 verbose targetResolver reading package data from /Users/slider/Documents/Projects/Russell/node_modules/.bin/webpack/package.json
+265 verbose already installed skipping react@^0.13.x /Users/slider/Documents/Projects/Russell
+266 silly install resolved []
+267 verbose unlock done using /Users/slider/.npm/_locks/react-breadcrumbs-c5477ae31438f098.lock for /Users/slider/Documents/Projects/Russell/node_modules/react-breadcrumbs
+268 verbose validateInstall loading /Users/slider/Documents/Projects/Russell/package.json for validation
+269 verbose stack Error: The package react@0.14.0 does not satisfy its siblings' peerDependencies requirements!
+269 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+269 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:268:7
+269 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+269 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+269 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+269 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+269 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+269 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+269 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+269 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+270 verbose cwd /Users/slider/Documents/Projects/Russell
+271 error Darwin 15.0.0
+272 error argv "/usr/local/bin/iojs" "/usr/local/bin/npm" "install" "react-breadcrumbs" "--save"
+273 error node v3.3.1
+274 error npm  v2.14.3
+275 error code EPEERINVALID
+276 error peerinvalid The package react@0.14.0 does not satisfy its siblings' peerDependencies requirements!
+277 verbose exit [ 1, true ]

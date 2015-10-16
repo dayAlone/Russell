@@ -5,6 +5,7 @@ import * as actionCreators from '../actions/catalog';
 import { bindActionCreators } from 'redux';
 import Page404 from './Page404';
 import Spinner from './Spinner';
+import Breadcrumbs from './Breadcrumbs';
 
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Products extends Component {
@@ -21,7 +22,7 @@ class Products extends Component {
         if (products.length === 0) getProducts();
     }
     render() {
-        let { products, source, code } = this.props;
+        let { products, source, code, routes } = this.props;
 
         if (this.props[source].length && products.length > 0) {
             const current = this.props[source].filter(el => (el.code === code))[0];
@@ -44,7 +45,10 @@ class Products extends Component {
                                 </Link>
                             </div>;
                     });
+                current.code = source + '/' + current.code
                 return <div className='products'>
+
+                        <Breadcrumbs routes={routes} current={current} />
                         <div className="text">
                             <h2>{current.name}</h2>
                             <div dangerouslySetInnerHTML={{__html: current.description}} />

@@ -9,6 +9,10 @@ const categorySchema = new mongoose.Schema({
         default:  '',
         required: 'Укажите название категории'
     },
+    sort: {
+        type: Number,
+        default: 500
+    },
     code: {
         type:     String,
         default:  '',

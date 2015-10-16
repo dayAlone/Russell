@@ -10,7 +10,7 @@ router
     let ids = raw.map(el => (el._id));
     let result;
     try {
-        result = yield Collection.find({_id: { $in: ids } });
+        result = yield Collection.find({_id: { $in: ids } }).sort( { sort: 1 } );
     } catch(e) {
         this.body = { error: e };
     }

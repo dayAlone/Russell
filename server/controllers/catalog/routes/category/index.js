@@ -6,7 +6,7 @@ router
 .get('/get/', function*() {
     let result;
     try {
-        result = yield Category.find();
+        result = yield Category.find().sort( { sort: 1 } );
     } catch(e) {
         this.body = { error: e };
     }

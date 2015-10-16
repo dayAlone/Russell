@@ -9,6 +9,10 @@ const collectionSchema = new mongoose.Schema({
         default:  '',
         required: 'Укажите название коллекции'
     },
+    sort: {
+        type: Number,
+        default: 500
+    },
     code: {
         type:     String,
         index: {

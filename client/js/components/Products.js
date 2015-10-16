@@ -22,6 +22,7 @@ class Products extends Component {
     }
     render() {
         let { products, source, code } = this.props;
+
         if (this.props[source].length && products.length > 0) {
             const current = this.props[source].filter(el => (el.code === code))[0];
             if (current) {
@@ -55,8 +56,8 @@ class Products extends Component {
             return <Page404 hideTitle={true}/>;
 
         }
-        return <Spinner />;
 
+        return <Spinner />;
     }
 }
 

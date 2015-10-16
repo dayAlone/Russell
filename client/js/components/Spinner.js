@@ -3,14 +3,20 @@ import Spinner from 'spin.js';
 
 class ReactSpinner extends Component {
     static defaultProps = {
-        confog: {
+        style: {
+            minHeight: 400,
+            width: '100%',
+            float: 'left',
+            position: 'relative'
+        },
+        config: {
             lines: 13,
             length: 37,
             width: 2,
             radius: 40,
             scale: 1,
             corners: 1,
-            color: '#000',
+            color: 'white',
             opacity: 0.25,
             rotate: 0,
             direction: 1,

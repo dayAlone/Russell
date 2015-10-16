@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Carousel from './Carousel';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/catalog';
 import { bindActionCreators } from 'redux';
-import Spinner from './Spinner';
-import Breadcrumbs from './Breadcrumbs';
+
+import Carousel from './ui/Carousel';
+import Spinner from './ui/Spinner';
+import Breadcrumbs from './ui/Breadcrumbs';
+
 @connect(state => ({ collections: state.catalog.collections, categories: state.catalog.categories }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Categories extends Component {
     static defaultProps = { source: 'categories' }

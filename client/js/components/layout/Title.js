@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
+
 import moment from 'moment';
 import 'moment/locale/ru';
-import { Link } from 'react-router';
-import Countdown from './Countdown';
+
+import Countdown from '../ui/Countdown';
 
 @connect(state => ({ game: state.games.list[0] }))
 class Title extends Component {

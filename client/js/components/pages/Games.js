@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Title from './Title';
-import ShareLove from '../components/ShareLove';
-import Countdown from './Countdown';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/ru';
+
+import Title from '../layout/Title';
+import ShareLove from '../ShareLove';
+import Countdown from '../ui/Countdown';
 
 @connect(state => ({ games: state.games.list }))
 class PageGames extends Component {
@@ -14,7 +15,7 @@ class PageGames extends Component {
             let { title, description, dateStart, dateStop, image, link } = el;
             let start = moment(dateStart, 'DD.MM.YYYY').format('D MMMM');
             let end = moment(dateStop, 'DD.MM.YYYY').format('D MMMM');
-            description = description.replace('#start#', start).replace('#end#', end)
+            description = description.replace('#start#', start).replace('#end#', end);
 
             if (i > 0)
                 return <div key={i} className='game'>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import UserInfo from './UserInfo';
 import { Link } from 'react-router';
 class Header extends Component {
     render() {

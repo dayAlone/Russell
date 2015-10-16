@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Title from './Title';
-import ShareLove from '../components/ShareLove';
-import Categories from '../components/Categories';
-import oid from '../../../server/libs/oid';
+import oid from '../../../../server/libs/oid';
+
+import Title from '../layout/Title';
+import ShareLove from '../ShareLove';
+import Categories from '../Categories';
 
 class PageIndex extends Component {
     componentDidUpdate() {

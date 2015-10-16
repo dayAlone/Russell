@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Title from './Title';
-import ShareLove from '../components/ShareLove';
-import Categories from '../components/Categories';
+import Title from '../layout/Title';
+import ShareLove from '../ShareLove';
+import Categories from '../Categories';
 
 class PageCatalog extends Component {
     render() {

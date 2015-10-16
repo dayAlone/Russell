@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Title from './Title';
+import Title from '../layout/Title';
 import { Link } from 'react-router';
 class Page404 extends Component {
 

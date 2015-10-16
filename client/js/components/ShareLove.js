@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Typograf from 'typograf';
-import Carousel from './Carousel';
+
+import Carousel from './ui/Carousel';
 
 class ShareLove extends Component {
     state = {

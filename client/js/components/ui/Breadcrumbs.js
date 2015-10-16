@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 class Breadcrumbs extends Component {
     render() {
+        console.log(this.props);
         if (this.props.routes) {
             let url = '';
             let current = this.props.current;
@@ -12,6 +13,7 @@ class Breadcrumbs extends Component {
                     {el.name}
                 </Link>;
             });
+            console.log(links);
             if (current) {
                 url += current.code + '/';
                 links.push(

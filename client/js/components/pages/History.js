@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Title from './Title';
-import Carousel from './Carousel';
 import Typograf from 'typograf';
+
+import Title from '../layout/Title';
+import Carousel from '../ui/Carousel';
 
 class PageHistorySlider extends Component {
     state = {

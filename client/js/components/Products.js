@@ -3,9 +3,10 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/catalog';
 import { bindActionCreators } from 'redux';
-import Page404 from './Page404';
-import Spinner from './Spinner';
-import Breadcrumbs from './Breadcrumbs';
+
+import Page404 from './pages/404';
+import Spinner from './ui/Spinner';
+import Breadcrumbs from './ui/Breadcrumbs';
 
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Products extends Component {
@@ -45,7 +46,6 @@ class Products extends Component {
                                 </Link>
                             </div>;
                     });
-                current.code = source + '/' + current.code
                 return <div className='products'>
 
                         <Breadcrumbs routes={routes} current={current} />

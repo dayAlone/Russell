@@ -13,8 +13,8 @@ export default function configureRoutes() {
 
             <Route path="/history/" component={PageHistory} />
             <Route path="/games/" component={PageGames} />
-            <Route path="/catalog">
-                <Route path="/collections/" component={PageCollections} />
+            <Route path="/catalog/">
+                <Route path="collections/" component={PageCollections} />
                 <IndexRoute component={PageCatalog} />
             </Route>
             <IndexRoute component={PageIndex} />

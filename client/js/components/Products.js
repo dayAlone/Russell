@@ -39,7 +39,7 @@ class Products extends Component {
                                     <div className="products__image">
                                         <img src={preview} alt={name} />
                                     </div>
-                                    <div className="products__name">{name}</div>
+                                    <div className={`products__name`}>{name}</div>
                                     <div className="products__artnumber">{artnumber}</div>
                                 </Link>
                             </div>;

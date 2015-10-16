@@ -17,8 +17,8 @@ class Product extends Component {
         if (this.props.products.length === 0) getProducts();
     }
     handleClick(e) {
-        let target = e.relatedTarget || e.target;
-        this.setState({open: target.href.split('#')[1] });
+        let href = e.relatedTarget.href || e.target.href;
+        this.setState({open: href.split('#')[1] });
         e.preventDefault();
         e.stopPropagation();
     }

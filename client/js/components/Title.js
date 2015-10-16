@@ -37,9 +37,9 @@ class Title extends Component {
                 content = <Link to='/games/'><img src='/layout/images/header-small.jpg' width='100%' className='title__image' height='162'/></Link>;
         }
         return <div className={`title ${this.props.type ? `title--${this.props.type}`:''}`}>
-            <img src='/layout/images/svg/love.svg' className='title__love' />
+            <img src='/layout/images/svg/love.svg' height='29' className='title__love' />
             {content}
-            <img src='/layout/images/line.png' width='100%' className='title__line' />
+            <img src='/layout/images/line.png' width='100%' className='title__line' height='2'/>
         </div>;
     }
 }

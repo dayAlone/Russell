@@ -17,7 +17,8 @@ class Product extends Component {
         if (this.props.products.length === 0) getProducts();
     }
     handleClick(e) {
-        let href = e.target.href || e.relatedTarget.href;
+        let href = e.target.href;
+        console.log(href);
         this.setState({open: href.split('#')[1] });
         e.preventDefault();
         e.stopPropagation();
@@ -40,7 +41,9 @@ class Product extends Component {
                         <h2 className="product__name">{name}</h2>
                         <h4 className="product__artnumber">{artnumber}</h4>
                         <div className="product__images">
-                            <img src={preview} alt="" className="product__image"/>
+                            <div className="product__image">
+                                <img src={preview} alt=""/>
+                            </div>
                             {images.map((el, i) => {
                                 return <div className="product__thumb" style={{backgroundImage: `url(${el})`}}>
                                     <div className="product__thumb-preview" style={{backgroundImage: `url(${el})`}}></div>

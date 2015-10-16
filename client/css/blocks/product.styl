@@ -7,7 +7,7 @@
         font-size 33px
         margin-bottom 10px
     &__tabs
-        column(5/12)
+        column(6/12)
         &-trigger
             a
                 height 40px
@@ -32,6 +32,8 @@
                 span
                     position relative
                     z-index 2
+                > *
+                    pointer-events none
                 img
                     middle()
                     position relative
@@ -64,22 +66,29 @@
                     margin-bottom 0px
                     li
                         display inline
-            ul
-                padding-left 0px
-                ul
+            .featureList
+                > ul
                     padding-left 20px
-                list-style square outside
-                li
-                    margin-bottom 6px
+                    overflow hidden
+                    margin-bottom 0px
+                    list-style square outside
+                    li ul
+                        padding-left 0px
+                        margin-bottom 0px
+                        list-style square outside
+                    li
+                        margin-bottom 6px
             p
                 margin-bottom 15px
                 br
                     display none
                 &:last-of-type
                     margin-bottom 0px
+    &__image
+        width 100%
     &__images
         margin-top 30px
-        column(5/12)
+        column(6/12)
         min-height 485px
         background url(/layout/images/product.image.bg.png) bottom center no-repeat
         background-size contain

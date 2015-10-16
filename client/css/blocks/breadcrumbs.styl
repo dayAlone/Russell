@@ -3,11 +3,15 @@
     padding-top 15px
     font-size 12px
     margin-bottom 5px
-    margin-left -10px
+    margin-left -5px
+    /.title + &, /.categories &, /.products &
+        margin-top -43px
+    a&__item
+        color red
+        &:hover
+            color white
     &__item
-        color white
-        margin-left 25px
-        border-line(alpha(@color, .3))
+        margin-left 20px
         position relative
         &:before
             content ""
@@ -16,6 +20,3 @@
             background url(/layout/images/breadcrumb.gif) center center no-repeat
             top 1px
             left -15px
-        &:hover
-            color red
-            border-line(alpha(@color, .3))

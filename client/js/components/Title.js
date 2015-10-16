@@ -26,7 +26,7 @@ class Title extends Component {
                             <p dangerouslySetInnerHTML={{__html: description}} />
                         </div>
                         {this.props.type === 'counter' ? <div className='title__counter'>
-                            <Countdown dateStart={dateStart} dateStop={dateStop} link={link} />
+                            <Countdown dateStart={dateStart} dateStop={dateStop} link={link} hideButton={true}/>
                         </div> : false}
                         <div className='title__actions'>
                             {this.props.type !== 'counter' ? <Link to='/games/' className='button button--big'>Выиграть!</Link> : false }

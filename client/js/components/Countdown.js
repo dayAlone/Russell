@@ -82,8 +82,12 @@ class Coundown extends Component {
         const counter = this.getCounter();
         return <div className='countdown'>
             <div className='countdown__info'>C {dateStart.format('D MMMM')}<br/> по {dateStop.format('D MMMM')}</div>
-            <div className='countdown__divider' />
-            {dateStart.toDate() < current ? <a href={this.props.link} className='countdown__button'>Участвовать</a> : <div className='countdown__frame'><div className='countdown__till'>До начала<br/>акции</div>{counter}</div>}
+            {!this.props.hideButton ? <div className='countdown__divider' /> : false}
+            {
+                dateStart.toDate() < current ?
+                ( !this.props.hideButton ? <a href={this.props.link} className='countdown__button'>Участвовать</a> : false)
+                : <div className='countdown__frame'><div className='countdown__till'>До начала<br/>акции</div>{counter}</div>
+            }
         </div>;
     }
 }

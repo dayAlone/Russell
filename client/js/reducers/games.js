@@ -3,7 +3,7 @@ const initialState = {
         {
             title: 'Вы мечтаете о стильной технике для кухни?',
             description: 'С #start# по #end# приобретайте технику <strong>Russell Hobbs</strong>, сохраняйте чеки от покупок и участвуйте в акции «Выиграй мечту!». Вы сможете выиграть именно то, что вы &nbsp;&nbsp;<img class="title__heart" src="/layout/images/svg/heart.svg" width="17" />',
-            dateStart: '18.10.2015',
+            dateStart: '12.10.2015',
             dateStop: '15.12.2015',
             image: '/layout/images/products.png',
             link: '/games/'

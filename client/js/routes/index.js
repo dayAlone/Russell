@@ -1,12 +1,14 @@
 import React from 'react';
 import { IndexRoute, Route, NotFoundRoute } from 'react-router';
 import App from '../containers/App';
+
 import PageIndex from '../components/PageIndex';
 import PageHistory from '../components/PageHistory';
 import PageGames from '../components/PageGames';
 import PageCatalog from '../components/PageCatalog';
 import PageCollections from '../components/PageCollections';
 import Page404 from '../components/Page404';
+import PageCategory from '../components/PageCategory';
 
 export default function configureRoutes() {
     return <Route path="/" component={App} location='history'>
@@ -15,6 +17,8 @@ export default function configureRoutes() {
             <Route path="/games/" component={PageGames} />
             <Route path="/catalog/">
                 <Route path="collections/" component={PageCollections} />
+                <Route path="collections/:code" component={PageCategory} source='collections'/>
+                <Route path="categories/:code" component={PageCategory} source='categories'/>
                 <IndexRoute component={PageCatalog} />
             </Route>
             <IndexRoute component={PageIndex} />

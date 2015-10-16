@@ -12,7 +12,7 @@ class PageIndex extends Component {
         this.get();
     }
     getCategories() {
-        $.get('http://ru.russellhobbs.com/russell-hobbs-products/', (data) => {
+        $.get('https://ru.russellhobbs.com/russell-hobbs-products/', (data) => {
             $(data).find('#dsnestCat li').each((key, el)=> {
                 let $el = $(el);
                 let $img = $el.find('img');
@@ -37,7 +37,7 @@ class PageIndex extends Component {
         });
     }
     getCollections() {
-        $.get('http://ru.russellhobbs.com/russell-hobbs-collections/', (data) => {
+        $.get('https://ru.russellhobbs.com/russell-hobbs-collections/', (data) => {
            $(data).find('#dsnestCat li').each((key, el)=> {
                let $el = $(el);
                let $img = $el.find('img');

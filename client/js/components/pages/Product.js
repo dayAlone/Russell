@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/catalog';
@@ -24,13 +23,22 @@ class Product extends Component {
                 const { name,
                         artnumber,
                         preview,
-                        code } = current;
+                        code,
+                        images} = current;
                 return <div className='page'>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
                     <div className="product">
                         <h2 className="product__name">{name}</h2>
                         <h4 className="product__artnumber">{artnumber}</h4>
+                        <div className="product__images">
+                            <img src={preview} alt="" className="product__image"/>
+                            {images.map((el, i) => {
+                                return <div className="product__thumb" style={{backgroundImage: `url(${el})`}}>
+                                    <div className="product__thumb-preview" style={{backgroundImage: `url(${el})`}}></div>
+                                </div>
+                            })}
+                        </div>
                     </div>
                 </div>;
             }

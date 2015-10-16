@@ -19,29 +19,27 @@ class Title extends Component {
             case 'counter':
             case 'big':
                     content = <div>
-                        <img src="/layout/images/header.jpg" width="100%" className='title__image'/>
-                        <div className="title__question">Вы мечтаете о стильной технике для кухни?</div>
-                        <div className="title__products"><img src={image} /></div>
-                        <div className="title__description">
+                        <img src='/layout/images/header.jpg' width='100%' height='322' className='title__image'/>
+                        <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
+                        <div className='title__products'><img src={image} /></div>
+                        <div className='title__description'>
                             <p dangerouslySetInnerHTML={{__html: description}} />
                         </div>
-                        {this.props.type === 'counter' ? <div className="title__counter">
+                        {this.props.type === 'counter' ? <div className='title__counter'>
                             <Countdown dateStart={dateStart} dateStop={dateStop} link={link} />
                         </div> : false}
-                        <div className="title__actions">
-                            {this.props.type !== 'counter' ? <Link to="/games/" className="button button--big">Выиграть!</Link> : false }
+                        <div className='title__actions'>
+                            {this.props.type !== 'counter' ? <Link to='/games/' className='button button--big'>Выиграть!</Link> : false }
                         </div>
                     </div>;
                 break;
             default:
-                content = <div>
-                    <img src="/layout/images/header-small.jpg" width="100%" className='title__image'/>
-                </div>;
+                content = <Link to='/games/'><img src='/layout/images/header-small.jpg' width='100%' className='title__image' height='162'/></Link>;
         }
         return <div className={`title ${this.props.type ? `title--${this.props.type}`:''}`}>
-            <img src="/layout/images/svg/love.svg" className="title__love" />
+            <img src='/layout/images/svg/love.svg' className='title__love' />
             {content}
-            <img src="/layout/images/line.png" width="100%" className="title__line" />
+            <img src='/layout/images/line.png' width='100%' className='title__line' />
         </div>;
     }
 }

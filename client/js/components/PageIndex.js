@@ -102,8 +102,8 @@ class PageIndex extends Component {
         });
     }
     get() {
-        //this.getProducts();
-        //this.getCategories();
+        this.getProducts();
+        this.getCategories();
         //this.getCollections();
     }
     render() {

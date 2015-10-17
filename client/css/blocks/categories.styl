@@ -11,7 +11,14 @@
         padding 0 7px
         span(1/4)
         margin-bottom 45px
-
+    &--list
+        .categories__item
+            transform scale(.9)
+            opacity 0
+        &.categories--ready
+            .categories__item
+                transform scale(1)
+                opacity 1
     &__action
         padding 27px 0 47px
         full-width()
@@ -62,4 +69,4 @@
         font-family Arial
         font-size 12px
         padding 12px 12px
-        line-height 16px
+        line-height 15px

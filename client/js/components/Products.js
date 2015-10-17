@@ -22,12 +22,18 @@ class Products extends Component {
         }
         if (products.length === 0) getProducts();
     }
+    componentDidMount() {
+        setTimeout(()=>{
+            $('.products').addClass('products--ready');
+        }, 300);
+    }
     render() {
         let { products, source, code, routes } = this.props;
 
         if (this.props[source].length && products.length > 0) {
             const current = this.props[source].filter(el => (el.code === code))[0];
             if (current) {
+                let delay = 0;
                 const items = products
                     .filter(el => (el[source] === current._id))
                     .map((el, i) => {
@@ -35,8 +41,8 @@ class Products extends Component {
                                 artnumber,
                                 preview,
                                 code } = el;
-
-                        return <div className='products__item' key={i}>
+                        if (i > 0) delay += 0.1;
+                        return <div className='products__item' key={i} style={{transition: `.3s all ${delay}s`}}>
                                 <Link to={`/catalog/product/${code}/`}>
                                     <div className="products__image">
                                         <img src={preview} alt={name} />

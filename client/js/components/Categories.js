@@ -20,12 +20,25 @@ class Categories extends Component {
                 getCategories();
         }
     }
+    componentDidMount() {
+        setTimeout(()=>{
+            $('.categories').addClass('categories--ready');
+        }, 300);
+    }
     render() {
         let { children, source, type, routes } = this.props;
+        let css;
         if (this.props[source].length > 0) {
+            let delay = 0;
             let categories = this.props[source].map((el, i) => {
                 const { code, image, name, short_description } = el;
-                return <Link className='categories__item' key={i} to={`/catalog/${source}/${code}/`}>
+                if (!type) {
+                    if (i > 0) delay += 0.1;
+                     css = {
+                        transition: `.3s all ${delay}s`
+                    };
+                }
+                return <Link className='categories__item' key={i} to={`/catalog/${source}/${code}/`} style={css}>
                         <div className="categories__frame">
                             <div className="categories__image" style={{backgroundImage: `url(${image.replace(':/', 's:/')})`}}/>
                             <div className="categories__name">{name}</div>
@@ -42,7 +55,7 @@ class Categories extends Component {
                     </div>
                 </div>;
             } else {
-                return <div className='categories'>
+                return <div className='categories categories--list' ref='block'>
                     <Breadcrumbs routes={routes} />
                     {children}
                     <img src="/layout/images/line.png" width="100%" className="categories__line" />

@@ -1,11 +1,8 @@
 import webpack from 'webpack';
 import config from 'config';
 
-
 // PostCSS plugins
 import autoprefixer from 'autoprefixer';
-import willChange from 'postcss-will-change';
-import mqpacker from 'css-mqpacker';
 
 export default {
     entry: {
@@ -17,7 +14,7 @@ export default {
         filename: '[name].js',
         pathinfo: true
     },
-    //devtool: '#source-map',
+    devtool: '#source-map',
     module: {
         noParse: [/moment.js/],
         loaders: [

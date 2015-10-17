@@ -45,9 +45,9 @@ class Product extends Component {
                                 <img src={preview} alt=""/>
                             </div>
                             {images.map((el, i) => {
-                                return <div className="product__thumb" style={{backgroundImage: `url(${el})`}}>
+                                return <div className="product__thumb" key={i} style={{backgroundImage: `url(${el})`}}>
                                     <div className="product__thumb-preview" style={{backgroundImage: `url(${el})`}}></div>
-                                </div>
+                                </div>;
                             })}
                         </div>
                         <div className="product__tabs">

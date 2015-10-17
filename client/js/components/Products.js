@@ -22,10 +22,17 @@ class Products extends Component {
         }
         if (products.length === 0) getProducts();
     }
+    activateAnimation() {
+        setTimeout(()=>{
+            $('.products').removeClass('products--ready').addClass('products--ready');
+        }, 500);
+
+    }
     componentDidMount() {
         $(document).ready(()=>{
-            $('.products').addClass('products--ready');
+            this.activateAnimation();
         });
+        this.activateAnimation();
     }
     render() {
         let { products, source, code, routes } = this.props;

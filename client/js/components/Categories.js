@@ -20,10 +20,16 @@ class Categories extends Component {
                 getCategories();
         }
     }
+    activateAnimation() {
+        setTimeout(()=>{
+            $('.categories').removeClass('categories--ready').addClass('categories--ready');
+        }, 500);
+    }
     componentDidMount() {
         $(document).ready(()=>{
-            $('.categories').addClass('categories--ready');
+            this.activateAnimation();
         });
+        this.activateAnimation();
     }
     render() {
         let { children, source, type, routes } = this.props;

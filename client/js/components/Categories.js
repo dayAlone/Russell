@@ -21,9 +21,9 @@ class Categories extends Component {
         }
     }
     componentDidMount() {
-        setTimeout(()=>{
+        $(document).ready(()=>{
             $('.categories').addClass('categories--ready');
-        }, 300);
+        });
     }
     render() {
         let { children, source, type, routes } = this.props;

@@ -23,9 +23,9 @@ class Products extends Component {
         if (products.length === 0) getProducts();
     }
     componentDidMount() {
-        setTimeout(()=>{
+        $(document).ready(()=>{
             $('.products').addClass('products--ready');
-        }, 300);
+        });
     }
     render() {
         let { products, source, code, routes } = this.props;

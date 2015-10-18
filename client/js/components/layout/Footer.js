@@ -4,7 +4,7 @@ import Modal from 'boron/ScaleModal';
 import Login from '../Login';
 
 import { connect } from 'react-redux';
-@connect(state => ({ user: state.login.data, isLogin: state.login.isLogin }))
+@connect(state => ({ isLogin: state.login.isLogin }))
 class Footer extends Component {
     state = {
         modalIsOpen: false
@@ -12,6 +12,9 @@ class Footer extends Component {
     openModal(e) {
         e.preventDefault()
         this.refs.modal.show();
+    }
+    componentDidUpdate() {
+        if (this.props.isLogin === true) this.refs.modal.hide();
     }
     render() {
         let { isLogin } = this.props;

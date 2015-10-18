@@ -14,8 +14,8 @@ class UserInfo extends Component {
         if (this.props.isLogin) {
             let { realName: name, photo } = this.props.user;
             if (name) {
-            name = name.split(' ');
-            return <div className='header__profile header__col'>
+                name = name.split(' ');
+                return <div className='header__profile header__col'>
                     <img src={photo} alt='' width='40'/>
                     <div className='header__name'>{name[0]}<br/>{name[1]}</div>
                 </div>;
@@ -23,8 +23,8 @@ class UserInfo extends Component {
         }
         return false;
         return <div className='header__links header__col right'>
-                <a href='#'>Регистрация</a> <span>/</span> <a href='#'>Авторизация</a>
-            </div>;
+            <a href='#'>Регистрация</a> <span>/</span> <a href='#'>Авторизация</a>
+        </div>;
     }
 }
 

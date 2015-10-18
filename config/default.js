@@ -44,8 +44,8 @@ export default {
     },
     facebook: {
         client: {
-            id: '1547174235496273',
-            secret: '81a124c43663e258887c6b0f3b0ee642'
+            id: '1507758476204624',
+            secret: '86ccf62d9e619a80d467d594f8e7ff51'
         },
         callback: {
             url: url + '/auth/facebook/callback'
@@ -53,8 +53,8 @@ export default {
     },
     vk: {
         client: {
-            id: '4599838',
-            secret: 'me1pxHVbIf1KDEfqzvbg'
+            id: '5110739',
+            secret: 'Jd3hweCOh1zpqUUX8B9M'
         },
         callback: {
             url: url + '/auth/vk/callback'

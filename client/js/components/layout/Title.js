@@ -18,30 +18,30 @@ class Title extends Component {
         description = description.replace('#start#', start).replace('#end#', end)
 
         switch (this.props.type) {
-            case 'counter':
-            case 'big':
-                    content = <div>
-                        <img src='/layout/images/header.jpg' width='100%' height='322' className='title__image'/>
-                        <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
-                        <div className='title__products'><img src={image} /></div>
-                        <div className='title__description'>
-                            <p dangerouslySetInnerHTML={{__html: description}} />
-                        </div>
-                        {this.props.type === 'counter' ? <div className='title__counter'>
-                            <Countdown dateStart={dateStart} dateStop={dateStop} link={link} hideButton={true}/>
-                        </div> : false}
-                        <div className='title__actions'>
-                            {this.props.type !== 'counter' ? <Link to='/games/' className='button button--big'>Выиграть!</Link> : false }
-                        </div>
-                    </div>;
-                break;
-            default:
-                content = <Link to='/games/'><img src='/layout/images/header-small.jpg' width='100%' className='title__image' height='162'/></Link>;
+        case 'counter':
+        case 'big':
+            content = <div>
+                <img src={`${cdn}/layout/images/header.jpg`} width='100%' height='322' className='title__image'/>
+                <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
+                <div className='title__products'><img src={image} /></div>
+                <div className='title__description'>
+                    <p dangerouslySetInnerHTML={{__html: description}} />
+                </div>
+                {this.props.type === 'counter' ? <div className='title__counter'>
+                    <Countdown dateStart={dateStart} dateStop={dateStop} link={link} hideButton={true}/>
+                </div> : false}
+                <div className='title__actions'>
+                    {this.props.type !== 'counter' ? <Link to='/games/' className='button button--big'>Выиграть!</Link> : false }
+                </div>
+            </div>;
+            break;
+        default:
+            content = <Link to='/games/'><img src={`${cdn}/layout/images/header-small.jpg`} width='100%' className='title__image' height='162'/></Link>;
         }
-        return <div className={`title ${this.props.type ? `title--${this.props.type}`:''}`}>
-            <img src='/layout/images/svg/love.svg' height='29' className='title__love' />
+        return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
+            <img src={`${cdn}/layout/images/svg/love.svg`} height='29' className='title__love' />
             {content}
-            <img src='/layout/images/line.png' width='100%' className='title__line' height='2'/>
+            <img src={`${cdn}/layout/images/line.png`} width='100%' className='title__line' height='2'/>
         </div>;
     }
 }

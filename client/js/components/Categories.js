@@ -32,6 +32,9 @@ class Categories extends Component {
         });
         this.activateAnimation();
     }
+    componentDidUpdate() {
+        this.activateAnimation();
+    }
     render() {
         let { children, source, type, routes } = this.props;
         let css;

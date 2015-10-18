@@ -28,6 +28,11 @@
         box-shadow 0 0 0 0 alpha(black, 0)
         transform scale(.9)
         opacity 0
+        position relative
+        .edit
+            opacity 0
+            pointer-events none
+            t opacity
         .products--ready &
             transform scale(1)
             opacity 1
@@ -36,10 +41,14 @@
             background-color black
             transform translateY(-10px)
             box-shadow 0 6px 15px 2px alpha(black, .5)
-        a
-            color white
-            min-height 295px
-            display inline-block
+            z-index 10
+            .edit
+                pointer-events all
+                opacity 1
+    &__link
+        color white
+        min-height 295px
+        display inline-block
     &__artnumber
         font-size 11px
     &__name

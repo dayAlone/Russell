@@ -7,9 +7,12 @@ html
     meta(name="apple-mobile-web-app-capable", content="yes")
     meta(name="mobile-web-app-capable", content="yes")
     meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
+    script.
+        var cdn = '#{cdn}';
+        var version = '#{version}';
   body
     #app
-    script(type="application/javascript", src="/layout/js/app.js", async, defer)
+    script(type="application/javascript", src="#{app}", async, defer)
     noscript
         div
             img(src="https://mc.yandex.ru/watch/33079538" style="position:absolute; left:-9999px;" alt="")
@@ -19,3 +22,4 @@ html
 
         ga('create', 'UA-68931467-1', 'auto');
         ga('send', 'pageview');
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')

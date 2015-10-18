@@ -7,11 +7,29 @@ export default {
     __dirname: defer(function(cfg) {
         return cfg.root;
     }),
-    // secret data can be moved to env variables
-    // or a separate config
+    version: 'v1',
+    cdn: defer(function(cfg) {
+        return `http://164623.selcdn.com/russell`;
+    }),
+    ftp: {
+        host: 'ftp.selcdn.ru',
+        folder: defer(function(cfg) {
+            return `/russell`;
+        }),
+        login: '47651',
+        password: '3lQV616N'
+    },
     selectel: {
         login: '47651',
         password: '3lQV616N'
+    },
+    folders: {
+        source: defer(function(cfg) {
+            return path.join(cfg.root, 'client/public/');
+        }),
+        tmp: defer(function(cfg) {
+            return path.join(cfg.root, 'layout');
+        }),
     },
     secret: 'mysecret',
     expires: 60 * 60 * 24,

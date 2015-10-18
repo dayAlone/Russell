@@ -6,11 +6,11 @@ class Header extends Component {
         return <div className='header'>
             <div className='header__col'>
                 <Link to='/' className='header__logo'>
-                    <img src='/layout/images/svg/logo.svg' />
+                    <img src={`${cdn}/layout/images/svg/logo.svg`} />
                 </Link>
             </div>
             <div className='header__col right'>
-                <img src='/layout/images/svg/title-description.svg' className='header__title' />
+                <img src={`${cdn}/layout/images/svg/title-description.svg`} className='header__title' />
             </div>
             <UserInfo />
         </div>;

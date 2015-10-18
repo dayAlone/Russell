@@ -26,14 +26,9 @@ let webpackConfig = {
                 exclude: /node_modules/,
                 loaders: ['react-hot', 'imports?$=jquery,react', 'babel-loader?cacheDirectory']
             },
-
             {
                 test: /\.styl$/,
                 loader: 'style-loader!css-loader!stylus-loader'
-            },
-            {
-                test: /\.sass$/,
-                loader: 'style-loader!css-loader!sass'
             }
         ]
     },

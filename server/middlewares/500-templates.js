@@ -1,11 +1,12 @@
 // initialize template system early, to let error handler use them
 // koa-views is a wrapper around many template systems!
 // most of time it's better to use the chosen template system directly
-var jade = require('jade');
-var config = require('config');
-var path = require('path');
+require('dotenv').config({silent: true});
+import jade from 'jade';
+import config from 'config';
+import path from 'path';
 
-module.exports = function* (next) {
+export default function* (next) {
 
     var ctx = this;
     /* default helpers*/
@@ -13,17 +14,21 @@ module.exports = function* (next) {
 
     this.render = function(templatePath, locals) {
         locals = locals || {};
-        var localsFull = Object.create(this.locals);
+        let localsFull = Object.create(this.locals);
 
-        for (var key in locals) {
+        for (let key in locals) {
             localsFull[key] = locals[key];
         }
 
-        var templatePathResolved = path.join(config.template.root, templatePath + '.jade');
+        localsFull['cdn'] = config.cdn;
+        localsFull['version'] = config.version;
+        localsFull['app'] = process.env.NODE_ENV === 'production' ? `${config.cdn}/layout/js/${config.version}/app.js` : '/layout/js/app.js'
+
+        let templatePathResolved = path.join(config.template.root, templatePath + '.jade');
 
         return jade.renderFile(templatePathResolved, localsFull);
     };
 
     yield* next;
 
-};
+}

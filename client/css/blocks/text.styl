@@ -1,6 +1,11 @@
 .text
     line-height 1.4
     padding 22px 0 20px
+    &--no-padding
+        padding 0
+    &--black
+        *
+            color black
     full-width()
     p
         max-width 97%
@@ -14,6 +19,9 @@
             border-line(alpha(red, .5))
     h2
         font-size 33px
+        .text--no-padding&
+            &:first-child
+                margin-top 0px
         & + div
             margin-top 20px
     strong

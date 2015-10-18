@@ -71,8 +71,8 @@ class ShareLove extends Component {
                     </a>;
                 })}
             </Carousel>
-            <div className="share-love__action center">
-                <a href="#" className="button">Все рецепты</a>
+            <div className='share-love__action center'>
+                <a href='#' className='button'>Все рецепты</a>
             </div>
         </div>;
     }

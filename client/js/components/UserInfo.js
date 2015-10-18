@@ -12,19 +12,18 @@ class UserInfo extends Component {
     }
     render() {
         if (this.props.isLogin) {
-            const { realName: name, photo } = this.props.user;
-            return <div>
-                <img src={photo} alt='' /><br/>
-                {name}<br/>
-            <a href="/auth/logout">Exit</a>
+            let { realName: name, photo } = this.props.user;
+            name = name.split(' ');
+            return <div className='header__profile header__col'>
+                <img src={photo} alt='' width='40'/>
+                <div className='header__name'>{name[0]}<br/>{name[1]}</div>
+
             </div>;
         }
-        else {
-            return false;
-            return <div>
+        return false;
+        return <div className='header__links header__col right'>
                 <a href='#'>Регистрация</a> <span>/</span> <a href='#'>Авторизация</a>
             </div>;
-        }
     }
 }
 

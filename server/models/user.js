@@ -6,20 +6,24 @@ import transliterate from '../libs/textUtil/transliterate';
 
 const ProviderSchema = new mongoose.Schema({
     name: String,
-    nameId:  {
-        type:  String,
+    nameId: {
+        type: String,
         index: true
     },
     profile: {} // updates just fine if I replace it with a new value, w/o going inside
 });
 
 const userSchema = new mongoose.Schema({
-    displayName:   {
-        type:     String,
-        default:  ''
+    role: {
+        type: String,
+        default: 'user'
     },
-    profileName:   {
-        type:     String,
+    displayName: {
+        type: String,
+        default: ''
+    },
+    profileName: {
+        type: String,
         validate: [
             {
                 validator: function(value) {
@@ -49,9 +53,9 @@ const userSchema = new mongoose.Schema({
             errorMessage: 'Такое имя профиля уже используется.'
         }
     },
-    email:         {
-        type:     String,
-        unique:   true,
+    email: {
+        type: String,
+        unique: true,
         required: 'E-mail пользователя не должен быть пустым.',
         validate: [
             {
@@ -59,7 +63,8 @@ const userSchema = new mongoose.Schema({
                     return this.deleted ? true : (value.length > 0);
                 },
                 msg: 'E-mail пользователя не должен быть пустым.'
-            },{
+            },
+            {
                 validator: function checkEmail(value) {
                     return this.deleted ? true : /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
                 },
@@ -77,30 +82,27 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: {
-            values:  ['male', 'female'],
+            values: ['male', 'female'],
             message: 'Неизвестное значение для пола.'
         }
     },
-    realName:      String,
-    birthday:      String,
-    photo:         String, // imgur photo link
-    country:       String,
-    town:          String,
+    birthday: String,
+    photo: String, // imgur photo link
     verifiedEmail: {
-        type:    Boolean,
+        type: Boolean,
         default: false
     },
     verifyEmailToken: {
-        type:  String,
+        type: String,
         index: true
     },
     verifyEmailRedirect: String, // where to redirect after verify
     passwordResetToken: {  // refresh with each recovery request
-        type:  String,
+        type: String,
         index: true
     },
     passwordResetTokenExpires: Date, // valid until this date
-    passwordResetRedirect:     String, // where to redirect after password recovery
+    passwordResetRedirect: String, // where to redirect after password recovery
     created: {
         type: Date,
         default: Date.now
@@ -109,7 +111,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.virtual('password')
     .set(function(password) {
-
         if (password !== undefined) {
             if (password.length < 4) {
                 this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
@@ -132,7 +133,7 @@ userSchema.virtual('password')
     });
 
 userSchema.methods.generateProfileName = function* () {
-    var profileName = this.displayName.trim()
+    let profileName = this.displayName.trim()
         .replace(/<\/?[a-z].*?>/gim, '')  // strip tags, leave /<DIGIT/ like: 'IE<123'
         .replace(/[ \t\n!'#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/g, '-') // пунктуация, пробелы -> дефис
         .replace(/[^a-zа-яё0-9-]/gi, '') // убрать любые символы, кроме [слов цифр дефиса])
@@ -142,7 +143,7 @@ userSchema.methods.generateProfileName = function* () {
     profileName = transliterate(profileName);
     profileName = profileName.toLowerCase();
 
-    var existingUser;
+    let existingUser;
     while (true) {
         existingUser = yield User.findOne({profileName: profileName}).exec();
 
@@ -156,7 +157,6 @@ userSchema.methods.generateProfileName = function* () {
 
 userSchema.pre('save', function(next) {
     if (this.deleted || this.profileName) return next();
-
     co(function*() {
         yield* this.generateProfileName();
     }.bind(this)).then(next, next);

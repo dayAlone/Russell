@@ -4,12 +4,12 @@ import transliterate from '../libs/textUtil/transliterate';
 
 const productSchema = new mongoose.Schema({
     name: {
-        type:     String,
-        default:  '',
+        type: String,
+        default: '',
         required: 'Укажите название коллекции'
     },
     code: {
-        type:     String,
+        type: String,
         index: {
             unique: true,
             sparse: true,
@@ -28,16 +28,17 @@ const productSchema = new mongoose.Schema({
 
 productSchema.methods.generateCode = function* () {
     var code = this.name.trim()
-        .replace(/<\/?[a-z].*?>/gim, '')  // strip tags, leave /<DIGIT/ like: 'IE<123'
-        .replace(/[ \t\n!'#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/g, '-') // пунктуация, пробелы -> дефис
-        .replace(/[^a-zа-яё0-9-]/gi, '') // убрать любые символы, кроме [слов цифр дефиса])
-        .replace(/-+/gi, '-') // слить дефисы вместе
-        .replace(/^-|-$/g, ''); // убрать дефисы с концов
+    .replace(/<\/?[a-z].*?>/gim, '')  // strip tags, leave /<DIGIT/ like: 'IE<123'
+    .replace(/[ \t\n!'#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/g, '-') // пунктуация, пробелы -> дефис
+    .replace(/[^a-zа-яё0-9-]/gi, '') // убрать любые символы, кроме [слов цифр дефиса])
+    .replace(/-+/gi, '-') // слить дефисы вместе
+    .replace(/^-|-$/g, ''); // убрать дефисы с концов
 
     code = transliterate(code);
     code = code.toLowerCase();
 
-    var existing;
+    let existing;
+
     while (true) {
         existing = yield Product.findOne({code: code}).exec();
 
@@ -54,5 +55,6 @@ productSchema.pre('save', function(next) {
         yield* this.generateCode();
     }.bind(this)).then(next, next);
 });
+
 const Product = mongoose.model('Product', productSchema);
 export default Product;

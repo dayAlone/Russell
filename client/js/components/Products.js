@@ -15,21 +15,18 @@ class Products extends Component {
         const { getCollections, getCategories, getProducts } = this.props.actions;
         let { products, source } = this.props;
         if (this.props[source].length === 0) {
-            if (source === 'collections')
-                getCollections();
-            else
-                getCategories();
+            if (source === 'collections') getCollections();
+            else getCategories();
         }
         if (products.length === 0) getProducts();
     }
     activateAnimation() {
-        setTimeout(()=>{
+        setTimeout(() => {
             $('.products').removeClass('products--ready').addClass('products--ready');
         }, 500);
-
     }
     componentDidMount() {
-        $(document).ready(()=>{
+        $(document).ready(() => {
             this.activateAnimation();
         });
         this.activateAnimation();
@@ -51,27 +48,26 @@ class Products extends Component {
                         if (i > 0) delay += 0.1;
                         return <div className='products__item' key={i} style={{transition: `.3s all ${delay}s`}}>
                                 <Link to={`/catalog/product/${code}/`}>
-                                    <div className="products__image">
+                                    <div className='products__image'>
                                         <img src={preview} alt={name} />
                                     </div>
                                     <div className={`products__name`}>{name}</div>
-                                    <div className="products__artnumber">{artnumber}</div>
+                                    <div className='products__artnumber'>{artnumber}</div>
                                 </Link>
                             </div>;
                     });
                 return <div className='products'>
 
                         <Breadcrumbs routes={routes} current={current} />
-                        <div className="text">
+                        <div className='text'>
                             <h2>{current.name}</h2>
                             <div dangerouslySetInnerHTML={{__html: current.description}} />
                         </div>
-                        <img src="/layout/images/line.png" width="100%" className="products__line" />
-                        <div className="products__items">{items}</div>
+                        <img src='/layout/images/line.png' width='100%' className='products__line' />
+                        <div className='products__items'>{items}</div>
                     </div>;
             }
             return <Page404 hideTitle={true}/>;
-
         }
 
         return <Spinner />;

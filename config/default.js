@@ -9,6 +9,10 @@ export default {
     }),
     // secret data can be moved to env variables
     // or a separate config
+    selectel: {
+        login: '47651',
+        password: '3lQV616N'
+    },
     secret:   'mysecret',
     expires: 60 * 60 * 24,
     mongoose: {

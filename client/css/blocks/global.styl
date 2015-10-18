@@ -43,3 +43,19 @@ a
 
 .wrap
     center($mw)
+
+.ReactModal
+    &__Overlay
+        z-index 1000
+        background-color alpha(black, .7) !important
+        opacity 0
+        t all, .2s
+        &--after-open
+            opacity 1
+    &__Content
+        opacity 0
+        transition .3s all .1s
+        &--after-open
+            opacity 1
+        transform translateX(-50%)
+        min-height 100px

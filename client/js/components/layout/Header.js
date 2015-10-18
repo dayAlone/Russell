@@ -12,9 +12,7 @@ class Header extends Component {
             <div className='header__col right'>
                 <img src='/layout/images/svg/title-description.svg' className='header__title' />
             </div>
-            
-                <UserInfo />
-            
+            <UserInfo />
         </div>;
     }
 }

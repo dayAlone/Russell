@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'user'
     },
-    displayName: {
+    realName: {
         type: String,
         default: ''
     },

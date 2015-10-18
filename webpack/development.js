@@ -23,14 +23,7 @@ let webpackConfig = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: [StringReplacePlugin.replace({
-                    replacements: [{
-                        pattern: /\/layout\/images\/(.*?)('|")/ig,
-                        replacement: m => {
-                            console.log(m)
-                            return config.cdn + m
-                        }
-                    }]}), 'react-hot', 'imports?$=jquery,react', 'babel-loader?cacheDirectory']
+                loaders: ['react-hot', 'imports?$=jquery,react', 'babel-loader?cacheDirectory']
             },
             {
                 test: /\.styl$/,

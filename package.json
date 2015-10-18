@@ -88,6 +88,7 @@
     "redux-router": "^1.0.0-beta3",
     "redux-thunk": "^1.0.0",
     "replace-loader": "^0.1.0",
+    "request": "^2.65.0",
     "run-sequence": "^1.1.4",
     "sass-loader": "^3.0.0",
     "selectel-manager": "0.0.5",

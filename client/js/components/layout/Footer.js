@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import Modal from 'boron/ScaleModal';
 import Login from '../Login';
 
-// import { connect } from 'react-redux';
-// @connect(state => ({ user: state.login.data, isLogin: state.login.isLogin }))
+import { connect } from 'react-redux';
+@connect(state => ({ user: state.login.data, isLogin: state.login.isLogin }))
 class Footer extends Component {
     state = {
         modalIsOpen: false
@@ -14,6 +14,7 @@ class Footer extends Component {
         this.refs.modal.show();
     }
     render() {
+        let { isLogin } = this.props;
         let list = {
             fb: 'https://www.facebook.com/russellhobbsrussia',
             vk: 'https://vk.com/russelhobbsrussia',

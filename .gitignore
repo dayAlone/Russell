@@ -3,4 +3,5 @@ node_modules/
 client/public/js/
 client/public/css/
 npm-debug.log
-layout
+/layout/
+!client/js/componetns/layout/*

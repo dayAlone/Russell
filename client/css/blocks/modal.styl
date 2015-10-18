@@ -7,6 +7,8 @@
         margin-bottom 30px
     p
         color black
+        &:last-item
+            margin-bottom 0px
     &__content
         padding 40px
     label, legend
@@ -29,6 +31,19 @@
             column(4/12)
     .row
         full-width()
+    .text
+        float none
+        padding 0
+        line-height 1.25
+        h2
+            color black
+            margin-top 0px
+            margin-bottom 20px
+        p
+            font-size 14px
+            &:last-of-type
+                margin-bottom 0px
+                padding-bottom 0px
     .btn-group
         float right
         button

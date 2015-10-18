@@ -97,6 +97,7 @@ gulp.task('upload', () => {
             }
             let uploadPath = file.path.replace(config.__dirname + '/', '');
             let pathInfo = fs.lstatSync(file.path);
+
             if (pathInfo.isDirectory()) {
                 let result = yield new Promise((fulfill, reject) => {
                     selectel.getContainerFiles('russell', (err, data) => {
@@ -114,16 +115,18 @@ gulp.task('upload', () => {
                         hash: el.hash
                     }
                 });
-            } else if (fs.lstatSync(file.path).isFile()) {
-                if (!folders[uploadPath] || pathInfo.size !== folders[uploadPath].bites) {
-                    yield new Promise((fulfill, reject) => {
-                        selectel.uploadFile(file.path, 'russell/' + uploadPath, (err, data) => {
+            } else if (pathInfo.isFile()) {
+                if (file.path.indexOf('.js') != -1) {
+                    let data = yield new Promise((fulfill, reject) => {
+                        requestClearCache(config.cdn + uploadPath, auth.xUrl, auth.authToken, (err, data) => {
                             if (err) reject(err);
                             fulfill(data)
                         })
                     });
+                }
+                if (!folders[uploadPath] || pathInfo.size !== folders[uploadPath].bites) {
                     yield new Promise((fulfill, reject) => {
-                        requestClearCache(config.cdn + uploadPath, auth.xUrl, auth.authToken, (err, data) => {
+                        selectel.uploadFile(file.path, 'russell/' + uploadPath, (err, data) => {
                             if (err) reject(err);
                             fulfill(data)
                         })
@@ -139,4 +142,8 @@ gulp.task('upload', () => {
 
 gulp.task('build', () => {
     runSequence('scripts', 'images', 'fonts', 'upload');
+});
+
+gulp.task('build_js', () => {
+    runSequence('scripts', 'upload');
 });

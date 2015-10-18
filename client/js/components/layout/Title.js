@@ -21,7 +21,7 @@ class Title extends Component {
         case 'counter':
         case 'big':
             content = <div>
-                <img src={`${cdn}/layout/images/header.jpg`} width='100%' height='322' className='title__image'/>
+                <img src={`/layout/images/header.jpg`} width='100%' height='322' className='title__image'/>
                 <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
                 <div className='title__products'><img src={image} /></div>
                 <div className='title__description'>
@@ -36,12 +36,12 @@ class Title extends Component {
             </div>;
             break;
         default:
-            content = <Link to='/games/'><img src={`${cdn}/layout/images/header-small.jpg`} width='100%' className='title__image' height='162'/></Link>;
+            content = <Link to='/games/'><img src={`/layout/images/header-small.jpg`} width='100%' className='title__image' height='162'/></Link>;
         }
         return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
-            <img src={`${cdn}/layout/images/svg/love.svg`} height='29' className='title__love' />
+            <img src={`/layout/images/svg/love.svg`} height='29' className='title__love' />
             {content}
-            <img src={`${cdn}/layout/images/line.png`} width='100%' className='title__line' height='2'/>
+            <img src={`/layout/images/line.png`} width='100%' className='title__line' height='2'/>
         </div>;
     }
 }

@@ -2,6 +2,8 @@ import webpack from 'webpack';
 import config from 'config';
 import CompressionPlugin from 'compression-webpack-plugin';
 
+import StringReplacePlugin from 'string-replace-webpack-plugin';
+
 // PostCSS plugins
 import autoprefixer from 'autoprefixer';
 import willChange from 'postcss-will-change';
@@ -24,11 +26,23 @@ export default {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'babel-loader']
+                loaders: [StringReplacePlugin.replace({
+                    replacements: [{
+                        pattern: /\/layout\/images/ig,
+                        replacement: m => {
+                            return config.cdn + m
+                        }
+                    }]}), 'babel-loader']
             },
             {
                 test: /\.styl$/,
-                loader: 'style-loader!css-loader!stylus-loader'
+                loaders: [ 'style-loader', StringReplacePlugin.replace({
+                    replacements: [{
+                        pattern: /\/layout/ig,
+                        replacement: m => {
+                            return config.cdn + m
+                        }
+                    }]}), 'css-loader', 'postcss', 'stylus-loader']
             }
         ]
     },
@@ -52,6 +66,7 @@ export default {
             compress: {
                 warnings: false
             }
-        })
+        }),
+        new StringReplacePlugin()
     ]
 };

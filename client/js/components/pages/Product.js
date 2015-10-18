@@ -37,41 +37,43 @@ class Product extends Component {
                 return <div className='page'>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
-                    <div className="product">
-                        <h2 className="product__name">{name}</h2>
-                        <h4 className="product__artnumber">{artnumber}</h4>
-                        <div className="product__images">
-                            <div className="product__image">
-                                <img src={preview} alt=""/>
+                    <div className='product'>
+                        <h2 className='product__name'>{name}</h2>
+                        <h4 className='product__artnumber'>{artnumber}</h4>
+                        <div className='product__images'>
+                            <div className='product__image'>
+                                <img src={preview} alt=''/>
                             </div>
-                            {images.map((el, i) => {
-                                return <div className="product__thumb" key={i} style={{backgroundImage: `url(${el})`}}>
-                                    <div className="product__thumb-preview" style={{backgroundImage: `url(${el})`}}></div>
-                                </div>;
-                            })}
+                            <div className='product__thumbs'>
+                                {images.map((el, i) => {
+                                    return <div className='product__thumb' key={i} style={{backgroundImage: `url(${el})`}}>
+                                        <div className='product__thumb-preview' style={{backgroundImage: `url(${el})`}}></div>
+                                    </div>;
+                                })}
+                            </div>
                         </div>
-                        <div className="product__tabs">
-                            <div className="product__tabs-trigger">
-                                <a onClick={this.handleClick.bind(this)} className={this.state.open === 'short'? 'active': null} href="#short">
+                        <div className='product__tabs'>
+                            <div className='product__tabs-trigger'>
+                                <a onClick={this.handleClick.bind(this)} className={this.state.open === 'short' ? 'active' : null} href='#short'>
                                     <span>
                                         Краткое описание
-                                        <img src="/layout/images/down.png" alt="" />
+                                        <img src='/layout/images/down.png' alt='' />
                                     </span>
                                 </a>
-                                <a onClick={this.handleClick.bind(this)} className={this.state.open === 'full'? 'active': null} href="#full">
+                                <a onClick={this.handleClick.bind(this)} className={this.state.open === 'full' ? 'active' : null} href='#full'>
                                     <span>
                                         Полное описание
-                                        <img src="/layout/images/down.png" alt="" />
+                                        <img src='/layout/images/down.png' alt='' />
                                     </span>
                                 </a>
                             </div>
                             <div
-                                className={`product__tabs-content ${this.state.open === 'short'? 'product__tabs-content--active' : null}`}
+                                className={`product__tabs-content ${this.state.open === 'short' ? 'product__tabs-content--active' : null}`}
                                 dangerouslySetInnerHTML={{__html: short_description.replace('<p>&nbsp;</p>', '')}}
                                 ref='short'
                                 />
                             <div
-                                className={`product__tabs-content ${this.state.open === 'full'? 'product__tabs-content--active' : null}`}
+                                className={`product__tabs-content ${this.state.open === 'full' ? 'product__tabs-content--active' : null}`}
                                 dangerouslySetInnerHTML={{__html: description.replace('<p>&nbsp;</p>', '')}}
                                 ref='full'
                                 />

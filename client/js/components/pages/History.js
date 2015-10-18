@@ -3,6 +3,7 @@ import Typograf from 'typograf';
 
 import Title from '../layout/Title';
 import Carousel from '../ui/Carousel';
+import Breadcrumbs from '../ui/Breadcrumbs';
 
 class PageHistorySlider extends Component {
     state = {
@@ -30,29 +31,30 @@ class PageHistorySlider extends Component {
     }
     render() {
         let tp = new Typograf({lang: 'ru'});
-        return <div className="history">
-            <h2 className="history__title">Детали</h2>
+        return <div className='history'>
+            <h2 className='history__title'>Детали</h2>
             <Carousel className='history__slider' slideToShow='1' arrowsType='black'>
                 {this.state.dates.map((item, i) => {
                     const { year, text } = item;
                     return <div className='history__item' key={i}>
-                        <div className="history__content">
-                            <div className="history__year">{year}</div>
-                            <div className="history__divider"></div>
-                            <div className="history__text">{tp.execute(text)}</div>
+                        <div className='history__content'>
+                            <div className='history__year'>{year}</div>
+                            <div className='history__divider'></div>
+                            <div className='history__text'>{tp.execute(text)}</div>
                         </div>
                     </div>;
                 })}
             </Carousel>
         </div>;
-    };
+    }
 }
 
 class PageHistory extends Component {
     render() {
         return <div className='page page--index'>
             <Title />
-            <div className="text">
+            <Breadcrumbs routes={this.props.routes} />
+            <div className='text'>
                 <p>Наша продукция RUSSELL HOBBS предлагает не просто качество, стиль и инновации – она помогает придать приятным моментам вашей жизни восхитительный вкус.</p>
 
                 <p>Первая чашка кофе утром, тепло свежевыглаженной рубашки, улыбка удовольствия от аромата свежей выпечки – вот те моменты, которые действительно имеют значение, моменты истинной радости. Это уникальный опыт, который ежедневно создается продукцией Russell Hobbs.</p>

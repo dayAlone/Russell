@@ -1,8 +1,7 @@
 import webpack from 'webpack';
 import config from 'config';
 import path from 'path';
-// PostCSS plugins
-import autoprefixer from 'autoprefixer';
+import StringReplacePlugin from 'string-replace-webpack-plugin';
 
 let webpackConfig = {
     entry: {
@@ -24,16 +23,20 @@ let webpackConfig = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'imports?$=jquery,react', 'babel-loader?cacheDirectory']
+                loaders: [StringReplacePlugin.replace({
+                    replacements: [{
+                        pattern: /\/layout\/images\/(.*?)('|")/ig,
+                        replacement: m => {
+                            console.log(m)
+                            return config.cdn + m
+                        }
+                    }]}), 'react-hot', 'imports?$=jquery,react', 'babel-loader?cacheDirectory']
             },
             {
                 test: /\.styl$/,
-                loader: 'style-loader!css-loader!stylus-loader'
+                loaders: [ 'style-loader', 'css-loader', 'stylus-loader']
             }
         ]
-    },
-    postcss() {
-        return [autoprefixer];//, willChange, mqpacker];
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -44,7 +47,8 @@ let webpackConfig = {
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new StringReplacePlugin()
     ]
 };
 

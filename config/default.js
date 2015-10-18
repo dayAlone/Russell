@@ -1,11 +1,11 @@
 import path from 'path';
 import { deferConfig as defer } from 'config/defer';
 
-const url = process.env.NODE_ENV === 'production' ? 'http://testkoa.herokuapp.com': 'http://localhost:3000';
+const url = process.env.NODE_ENV === 'production' ? 'http://russellhobbs-promo.com' : 'http://localhost:3000';
 
 export default {
     __dirname: defer(function(cfg) {
-            return cfg.root;
+        return cfg.root;
     }),
     // secret data can be moved to env variables
     // or a separate config
@@ -13,10 +13,10 @@ export default {
         login: '47651',
         password: '3lQV616N'
     },
-    secret:   'mysecret',
+    secret: 'mysecret',
     expires: 60 * 60 * 24,
     mongoose: {
-        uri:     process.env.NODE_ENV === 'production' ? process.env.MONGOLAB_URI : 'mongodb://localhost/testReact',
+        uri: process.env.NODE_ENV === 'production' ? process.env.MONGOLAB_URI : 'mongodb://localhost/testReact',
         options: {
             server: {
                 socketOptions: {

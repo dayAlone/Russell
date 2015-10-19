@@ -60,9 +60,8 @@ categorySchema.pre('save', function(next) {
 });
 
 const Category = mongoose.model('Category', categorySchema);
-
 Category.count({}, (err, count) => {
-    if (count === 0) require('./fixtures/category')();
+    //if (count === 0) require('./fixtures/category')();
 })
 
 

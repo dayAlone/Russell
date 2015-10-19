@@ -1,18 +1,24 @@
 global-reset()
 
-
-//
-$body-color        = white
-$gotham            = 'MainFont', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
-$body-font         = $gotham
-$header-font       = $gotham
-$max-font          = 15px
-$mw                = 970px
-$line-height-ratio = 1.4
+$body-color         = white
+$gotham             = 'MainFont', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
+$body-font          = $gotham
+$header-font        = $gotham
+$max-font           = 15px
+$line-height-ratio  = 1.4
 $header-font-weight = 600
 $header-color       = white
-$header-ratio      = $minor-seventh
+$header-ratio       = $minor-seventh
 typographic()
+
+
+$mw = 970px
+$sw = 720px
+
+$scr_sm = 720px
+$scr_md = 990px
+$scr_lg = 1170px
+
 
 body, html
     height 100%
@@ -28,7 +34,6 @@ body
     background black
     color white
     overflow-x hidden
-    min-width 1000px
 a
     text-decoration none
     t color
@@ -43,7 +48,10 @@ a
     text-align right !important
 
 .wrap
-    center($mw)
+    @media (min-width: $scr_sm)
+        center($sw)
+    @media (min-width: $scr_md)
+        center($mw)
 
 .ReactModal
     &__Overlay

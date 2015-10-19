@@ -22,8 +22,16 @@ class Carousel extends Component {
             slidesToScroll: 1,
             infinite: true,
             slidesToShow: slideToShow,
-            nextArrow: '<button type="button" class="slick-next '+ arrowClass +'"><img src="/layout/images/' + imgNext + '" /></button>',
-            prevArrow: '<button type="button" class="slick-prev '+ arrowClass +'"><img src="/layout/images/' + imgPrev + '" /></button>'
+            nextArrow: `<button type='button' class='slick-next ${arrowClass}'><img src='/layout/images/${imgNext}' /></button>`,
+            prevArrow: `<button type='button' class='slick-prev  ${arrowClass}'><img src='/layout/images/${imgPrev}' /></button>`,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                }
+            ]
         });
 
 

@@ -24,7 +24,7 @@ class Header extends Component {
                 <Modal ref='modal' className='modal'>
                     <div className='modal__content'>
                         <div className='text'>
-                            <h2 class='modal__title'>Share the <img src='/layout/images/svg/heart.svg' width='26' /></h2>
+                            <h2 className='modal__title'>Share the <img src='/layout/images/svg/heart.svg' width='26' /></h2>
                             <p>Кто сказал, что от добра добра не ищут? Мы, Russell Hobbs, занимаемся этим вот уже больше 60 лет, и не только ищем, но и находим.</p>
                             <p>Например, что может быть проще и удобней электрического чайника? Но мы взяли и создали первый чайник, который автоматическим отключался после закипани.</p>
                             <p>Так же и с людьми. Вокруг много хороших людей, но мы решили найти и показать всем реальные факты, наглядно демонстрирующие масштаб людской доброты.</p>

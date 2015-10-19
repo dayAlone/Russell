@@ -1,14 +1,14 @@
 import path from 'path';
 import { deferConfig as defer } from 'config/defer';
 
-const url = process.env.NODE_ENV === 'production' ? 'http://russellhobbs-promo.com' : 'http://localhost:3000';
-
 export default {
+
+    cdn: `http://164623.selcdn.com/russell`,
+    version: process.env.VERSION || 'v1.11',
+    domain: 'localhost',
     __dirname: defer(function(cfg) {
         return cfg.root;
     }),
-    version: process.env.VERSION || 'v1.1',
-    cdn: `http://164623.selcdn.com/russell`,
     ftp: {
         host: 'ftp.selcdn.ru',
         folder: `/russell`,
@@ -30,7 +30,7 @@ export default {
     secret: 'mysecret',
     expires: 60 * 60 * 24,
     mongoose: {
-        uri: process.env.NODE_ENV === 'production' ? process.env.MONGOLAB_URI : 'mongodb://localhost/testReact',
+        uri: 'mongodb://localhost/testReact',
         options: {
             server: {
                 socketOptions: {
@@ -44,7 +44,7 @@ export default {
         hash: {
             length: 128,
             // may be slow(!): iterations = 12000 take ~60ms to generate strong password
-            iterations: process.env.NODE_ENV === 'production' ? 12000 : 1
+            iterations: 1
         }
     },
     '/': defer(function(cfg) {
@@ -62,7 +62,9 @@ export default {
             secret: '86ccf62d9e619a80d467d594f8e7ff51'
         },
         callback: {
-            url: url + '/auth/facebook/callback'
+            url: defer(function(cfg) {
+                return `http://${cfg.domain}/auth/facebook/callback`
+            })
         }
     },
     vk: {
@@ -71,7 +73,9 @@ export default {
             secret: 'Jd3hweCOh1zpqUUX8B9M'
         },
         callback: {
-            url: url + '/auth/vk/callback'
+            url: defer(function(cfg) {
+                return `http://${cfg.domain}/auth/vk/callback`
+            })
         }
     },
     root: process.cwd()

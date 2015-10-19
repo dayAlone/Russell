@@ -5,8 +5,8 @@ import transliterate from '../libs/textUtil/transliterate';
 
 const categorySchema = new mongoose.Schema({
     name: {
-        type:     String,
-        default:  '',
+        type: String,
+        default: '',
         required: 'Укажите название категории'
     },
     sort: {
@@ -14,8 +14,8 @@ const categorySchema = new mongoose.Schema({
         default: 500
     },
     code: {
-        type:     String,
-        default:  '',
+        type: String,
+        default: '',
         index: {
             unique: true,
             errorMessage: 'Такое название категории уже используется.'
@@ -29,7 +29,7 @@ const categorySchema = new mongoose.Schema({
 
 categorySchema.methods.generateCode = function* () {
     if (!this.code) {
-        var code = this.name.trim()
+        let code = this.name.trim()
             .replace(/<\/?[a-z].*?>/gim, '')  // strip tags, leave /<DIGIT/ like: 'IE<123'
             .replace(/[ \t\n!'#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/g, '-') // пунктуация, пробелы -> дефис
             .replace(/[^a-zа-яё0-9-]/gi, '') // убрать любые символы, кроме [слов цифр дефиса])
@@ -39,7 +39,7 @@ categorySchema.methods.generateCode = function* () {
         code = transliterate(code);
         code = code.toLowerCase();
 
-        var existing;
+        let existing;
         while (true) {
             existing = yield Category.findOne({code: code}).exec();
 
@@ -60,4 +60,10 @@ categorySchema.pre('save', function(next) {
 });
 
 const Category = mongoose.model('Category', categorySchema);
+
+Category.count({}, (err, count) => {
+    if (count === 0) require('./fixtures/category')();
+})
+
+
 export default Category;

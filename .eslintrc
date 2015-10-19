@@ -3,8 +3,7 @@
 		"browser": true,
 		"es6": true,
 		"node": true,
-		"jquery": true,
-		"react": true
+		"jquery": true
 	},
 	"ecmaFeatures": {
 		"modules": true,
@@ -23,7 +22,7 @@
 		"dot-notation": [0, {"allowKeywords": false}],
 		"consistent-this": [0, "that"],
 		"no-unused-vars": [1, {"args": "after-used", "varsIgnorePattern": "[rR]eact"}],
-		"react/jsx-quotes": [1, "single"],
+
 		"comma-dangle": 0,
 		"spaced-comment": 0,
 		"guard-for-in": 0,
@@ -33,7 +32,9 @@
 		"no-constant-condition": 0,
 		"no-shadow": 0,
 		"padded-blocks": 0,
-		"no-console": 0
+		"no-console": 0,
+		"jsx-quotes": [1, "prefer-single"],
+		"no-trailing-spaces": 0
 	},
 	"extends": "airbnb/legacy"
 }

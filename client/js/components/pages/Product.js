@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../actions/catalog';
 import { bindActionCreators } from 'redux';
@@ -35,6 +36,7 @@ class Product extends Component {
                         short_description,
                         description} = current;
                 return <div className='page'>
+                    <Helmet title={'Russell Hobbs | ' + name}/>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
                     <div className='product'>

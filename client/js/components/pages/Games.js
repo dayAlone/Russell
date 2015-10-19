@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/ru';
@@ -32,6 +33,7 @@ class PageGames extends Component {
                 </div>;
         });
         return <div className='page page--index'>
+            <Helmet title={'Russell Hobbs | Выиграй мечту!'}/>
             <Title type='counter' />
             <div className='games'>{games}</div>
             <ShareLove />

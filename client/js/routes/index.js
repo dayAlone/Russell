@@ -2,38 +2,35 @@ import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import App from '../containers/App';
 
-import PageIndex from '../components/pages/Index';
-import PageHistory from '../components/pages/History';
-import PageGames from '../components/pages/Games';
-import PageCatalog from '../components/pages/Catalog';
-import PageCollections from '../components/pages/Collections';
+import Index from '../components/pages/Index';
+import History from '../components/pages/History';
+import Games from '../components/pages/Games';
+import Buy from '../components/pages/Buy';
+import Catalog from '../components/pages/Catalog';
+import Collections from '../components/pages/Collections';
 import Page404 from '../components/pages/404';
-import PageCategory from '../components/pages/Category';
-import PageProduct from '../components/pages/Product';
+import Category from '../components/pages/Category';
+import Product from '../components/pages/Product';
 
 
 export default function configureRoutes() {
-    return <Route path="/" component={App} location='history' name='Начальная страница'>
+    return <Route path='/' component={App} location='history' name='Начальная страница'>
 
-            <Route path="history/" component={PageHistory} name='История бренда'/>
-            <Route path="games/" component={PageGames} name='Выиграй мечту'/>
+            <Route path='history/' component={History} name='История бренда'/>
+            <Route path='games/' component={Games} name='Выиграй мечту'/>
+            <Route path='buy/' component={Buy} name='Где купить'/>
 
-            <Route path="catalog/" name='Продукты'>
+            <Route path='catalog/' name='Продукты'>
+                <IndexRoute component={Catalog} />
+                <Route path='categories/:code' component={Category} source='categories'/>
+                <Route path='product/:code' component={Product} />
 
-                <Route path="product/:code" component={PageProduct} />
-
-                <Route path="collections/" name='Коллекции'>
-                    <Route path=":code/" component={PageCategory} source='collections'/>
-                    <IndexRoute component={PageCollections} />
+                <Route path='collections/' name='Коллекции'>
+                    <Route path=':code/' component={Category} source='collections'/>
+                    <IndexRoute component={Collections} />
                 </Route>
-
-                <Route path="categories/:code" component={PageCategory} source='categories'/>
-
-
-
-                <IndexRoute component={PageCatalog} />
             </Route>
-            <IndexRoute component={PageIndex} />
-            <Route path="*" component={Page404} />
+            <IndexRoute component={Index} />
+            <Route path='*' component={Page404} />
         </Route>;
 }

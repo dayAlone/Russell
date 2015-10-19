@@ -34,7 +34,7 @@ const initialState = {
             title: 'Карусель',
             image: '/layout/images/store-9.jpg',
             link: 'http://karusel.ru/',
-            color: '#00a739'
+            color: '#74c23b'
         },
         {
             title: 'М.видео',

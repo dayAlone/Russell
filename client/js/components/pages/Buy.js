@@ -8,11 +8,10 @@ import { connect } from 'react-redux';
 
 @connect(state => ({ stores: state.stores.list }))
 class PageBuy extends Component {
-
     render() {
         let items = this.props.stores.map((el, i) => {
-            let { title, image, link, color } = el;
-            return <a
+            let { image, link, color } = el;
+            return <a key={i}
                         className='stores__item'
                         href={link}
                         target='_blank'

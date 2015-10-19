@@ -20,7 +20,7 @@ class PageBuy extends Component {
                             backgroundColor: color
                         }} />;
         })
-        return <div className='page'>
+        return <div className='page page--stores'>
             <Helmet title={'Russell Hobbs | Где купить'}/>
             <Title />
             <Breadcrumbs routes={this.props.routes} />

@@ -49,16 +49,16 @@ const initialState = {
             color: '#ff167f'
         },
         {
-            title: 'МаксидоМ',
-            image: '/layout/images/store-1.jpg',
-            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
-            color: '#f01b2d'
-        },
-        {
             title: 'Озон',
             image: '/layout/images/store-3.jpg',
             link: 'http://www.ozon.ru/?context=search&text=russell+hobbs',
             color: '#ffffff'
+        },
+        {
+            title: 'МаксидоМ',
+            image: '/layout/images/store-1.jpg',
+            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
+            color: '#f01b2d'
         },
         {
             title: 'Техносила',
@@ -73,16 +73,16 @@ const initialState = {
             color: '#fe0e29'
         },
         {
-            title: 'Энтер',
-            image: '/layout/images/store-11.jpg',
-            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
-            color: '#000000'
-        },
-        {
             title: 'Юлмарт',
             image: '/layout/images/store-10.jpg',
             link: 'http://www.ulmart.ru/search?string=russell+hobbs&rootCategory=&sort=6',
             color: '#ffffff'
+        },
+        {
+            title: 'Энтер',
+            image: '/layout/images/store-11.jpg',
+            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
+            color: '#000000'
         }
     ]
 };

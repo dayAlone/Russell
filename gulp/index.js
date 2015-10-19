@@ -47,6 +47,7 @@ gulp.task('fonts', () => {
 });
 
 gulp.task('scripts', () => {
+    if (process.env.VERSION) return false;
     return gulp.src([ `${source}/js/**/*.js` ])
     .pipe(webpack(configWebpack))
     .pipe(gulp.dest(`${tmp}/js/${config.version}`));
@@ -116,7 +117,7 @@ gulp.task('upload', () => {
                     }
                 });
             } else if (pathInfo.isFile()) {
-                if (file.path.indexOf('.js') != -1) {
+                if (file.path.indexOf('.js') !== -1) {
                     let data = yield new Promise((fulfill, reject) => {
                         requestClearCache(config.cdn + uploadPath, auth.xUrl, auth.authToken, (err, data) => {
                             if (err) reject(err);

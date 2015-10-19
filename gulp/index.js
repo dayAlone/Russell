@@ -47,6 +47,7 @@ gulp.task('fonts', () => {
 });
 
 gulp.task('scripts', () => {
+    if (process.env.VERSION) return false;
     return gulp.src([ `${source}/js/**/*.js` ])
     .pipe(webpack(configWebpack))
     .pipe(gulp.dest(`${tmp}/js/${config.version}`));
@@ -116,15 +117,15 @@ gulp.task('upload', () => {
                     }
                 });
             } else if (pathInfo.isFile()) {
-                if (file.path.indexOf('.js') != -1) {
-                    let data = yield new Promise((fulfill, reject) => {
+                if (!folders[uploadPath] || pathInfo.size !== folders[uploadPath].bites) {
+
+                    yield new Promise((fulfill, reject) => {
                         requestClearCache(config.cdn + uploadPath, auth.xUrl, auth.authToken, (err, data) => {
                             if (err) reject(err);
                             fulfill(data)
                         })
                     });
-                }
-                if (!folders[uploadPath] || pathInfo.size !== folders[uploadPath].bites) {
+
                     yield new Promise((fulfill, reject) => {
                         selectel.uploadFile(file.path, 'russell/' + uploadPath, (err, data) => {
                             if (err) reject(err);

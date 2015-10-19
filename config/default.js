@@ -7,15 +7,11 @@ export default {
     __dirname: defer(function(cfg) {
         return cfg.root;
     }),
-    version: 'v1.1',
-    cdn: defer(function(cfg) {
-        return `http://164623.selcdn.com/russell`;
-    }),
+    version: process.env.VERSION || 'v1.1',
+    cdn: `http://164623.selcdn.com/russell`,
     ftp: {
         host: 'ftp.selcdn.ru',
-        folder: defer(function(cfg) {
-            return `/russell`;
-        }),
+        folder: `/russell`,
         login: '47651',
         password: '3lQV616N'
     },

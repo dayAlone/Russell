@@ -11,8 +11,26 @@ let Product = t.struct({
     code: t.String,
     preview: t.String,
     images: t.list(t.String),
-    description: t.String
+    description: t.String,
+    short_description: t.String,
 });
+
+let formLayout = (locals) => {
+    return <div className='row'>
+        <div className='col-md-6'>
+            {locals.inputs.name}
+        </div>
+        <div className='col-md-6'>
+            {locals.inputs.code}
+        </div>
+        <div className='col-md-6'>
+            {locals.inputs.description}
+        </div>
+        <div className='col-md-6'>
+            {locals.inputs.short_description}
+        </div>
+    </div>
+}
 
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class EditProduct extends Component {
@@ -24,6 +42,7 @@ class EditProduct extends Component {
     }
     render() {
         let options = {
+            template: formLayout,
             fields: {
                 name: {
                     label: 'Название'
@@ -38,7 +57,11 @@ class EditProduct extends Component {
                     label: 'Фотографии'
                 },
                 description: {
-                    label: 'Полное описание товара',
+                    label: 'Полное описание',
+                    type: 'textarea'
+                },
+                short_description: {
+                    label: 'Кратное описание',
                     type: 'textarea'
                 }
             },
@@ -58,7 +81,9 @@ class EditProduct extends Component {
                 value={this.props.value}
                 options={options}
                 />
-            <button onClick={this.save.bind(this)} className='save'>Сохранить</button>
+            <div className='row'>
+                <button onClick={this.save.bind(this)} className='save'>Сохранить</button>
+            </div>
         </div>
     }
 }

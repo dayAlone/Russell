@@ -8,8 +8,7 @@ import Page404 from './pages/404'
 import Spinner from './ui/Spinner'
 import Breadcrumbs from './ui/Breadcrumbs'
 import EditProduct from './edit/Product'
-import Modal from 'boron/ScaleModal'
-
+import Modal from './ui/Modal'
 
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Products extends Component {
@@ -57,7 +56,7 @@ class Products extends Component {
                             className='products__item'
                             style={{transition: `.3s all ${delay}s`}}>
 
-                        {isEditor ? <a href='#' className='edit' data-id={code} onClick={this.editProduct.bind(this, code)}><i className='fa fa-pencil'></i></a> : false}
+                        {isEditor ? <a href='#' className='edit' data-id={code} onClick={this.editProduct.bind(this, code)}><img src='/layout/images/svg/pencil.svg' width='17' /></a> : false}
 
                         <Link to={`/catalog/product/${code}/`} className='products__link'>
                             <div className='products__image'>
@@ -70,9 +69,9 @@ class Products extends Component {
             })
         return items
     }
+
     render() {
         let { code, products, source, routes, isEditor } = this.props
-
         if (this.props[source].length && products.length > 0) {
             const current = this.props[source].filter(el => (el.code === code))[0]
             if (current) {
@@ -85,7 +84,7 @@ class Products extends Component {
                         <img src='/layout/images/line.png' width='100%' className='products__line' />
                         <div className='products__items'>{this.getItems(current)}</div>
                         {isEditor ?
-                            <Modal ref='modal' className='modal modal--width'>
+                            <Modal ref='modal' className='modal--wide' static={true}>
                                 <div className='modal__content'><EditProduct value={this.state.edit}/></div>
                             </Modal>
                             : false }

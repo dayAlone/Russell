@@ -1,16 +1,44 @@
 .modal
+    cf()
+    .modal-overflow &
+        position relative !important
+        top 0 !important
+        transform translateX(-50%) !important
+    &--wide
+        width 970px !important
+        .modal__content
+            padding 20px 40px 15px
+    &-frame
+        position fixed
+        size 100%
+        top 0
+        left 0
+        pointer-events none
+        overflow auto
+        z-index -1
+        .modal-open &
+            pointer-events all
+            z-index 1000
+        &--static
+            .modal + div
+                pointer-events none
+    &-overflow
+        overflow: hidden
     & + div
         background-color black !important
+        overflow auto
     &__title
         margin-top 0px
         color black
         margin-bottom 30px
+    &__content
+        padding 40px
+        cf()
     p
         color black
         &:last-item
             margin-bottom 0px
-    &__content
-        padding 40px
+
     label, legend
         color black
         line-height 35px
@@ -25,10 +53,7 @@
         margin 0
         max-width 100%
         full-width()
-        .col-sm-8
-            column(8/12)
-        .col-sm-4
-            column(4/12)
+
     .row
         full-width()
     .text
@@ -38,9 +63,9 @@
         h2
             color black
             margin-top 0px
-            margin-bottom 20px
+            margin-bottom 27px
         p
-            font-size 14px
+            font-size 13px
             &:last-of-type
                 margin-bottom 0px
                 padding-bottom 0px
@@ -75,11 +100,14 @@
             border-color #0089d3
             color white
         &.save
-            font-seize 15px
+            font-size 14px
             font-weight bold
-            height 40px
-            line-height 32px
-            margin-top 5px
+            height 45px
+            line-height 30px
+            margin-top 20px
+            &:hover
+                background-color #005b9c
+                border-color #005b9c
         &:focus
             outline 0
     input
@@ -97,6 +125,17 @@
                 outline 0
     textarea
         @extend .modal input[type='text']
-        min-height 100px
+        min-height 200px
         max-width 100%
         font-size 12px
+
+
+
+    .col-sm-8
+        column(8/12)
+    .col-sm-4
+        column(4/12)
+    .col-md-4
+        column(4/12, cycle: 2)
+    .col-md-6
+        column(6/12, cycle: 2)

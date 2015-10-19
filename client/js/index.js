@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { ReduxRouter } from 'redux-router';
-//import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
 import configureStore from './store';
 import configureRoutes from './routes';
@@ -34,7 +34,8 @@ render(<div>
     </Provider>
 </div>, document.querySelector('#app'));
 /*
+
 <DebugPanel top right bottom key="debugPanel">
-    <DevTools store={store} monitor={LogMonitor} skippedActions={skip} visibleOnLoad={false}/>
+    <DevTools store={store} monitor={LogMonitor} skippedActions={skip} visibleOnLoad={true}/>
 </DebugPanel>
  */

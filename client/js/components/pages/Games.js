@@ -12,7 +12,7 @@ class PageGames extends Component {
     render() {
         const games = this.props.games.map((el, i) => {
 
-            let { title, description, dateStart, dateStop, image, link } = el;
+            let { title, description, dateStart, dateStop, image, link, flag } = el;
             let start = moment(dateStart, 'DD.MM.YYYY').format('D MMMM');
             let end = moment(dateStop, 'DD.MM.YYYY').format('D MMMM');
             description = description.replace('#start#', start).replace('#end#', end);
@@ -25,6 +25,7 @@ class PageGames extends Component {
                         <Countdown dateStart={dateStart} dateStop={dateStop} link={link} />
                     </div>
                     <div className="game__image right">
+                        <div className='game__flag'>{flag}</div>
                         <img src={image} alt="" />
                     </div>
                     <img src="/layout/images/line.png" width="100%" className="game__line" />

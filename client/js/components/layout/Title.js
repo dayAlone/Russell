@@ -12,7 +12,7 @@ class Title extends Component {
     static defaultProps = { type: 'small' }
     render() {
         let content = '';
-        let { image, dateStart, dateStop, description, link } = this.props.game;
+        let { image, dateStart, dateStop, description, link, flag } = this.props.game;
         let start = moment(dateStart, 'DD.MM.YYYY').format('D MMMM');
         let end = moment(dateStop, 'DD.MM.YYYY').format('D MMMM');
         description = description.replace('#start#', start).replace('#end#', end)
@@ -21,7 +21,10 @@ class Title extends Component {
         case 'counter':
         case 'big':
             content = <div>
-                <img src={`/layout/images/header.jpg`} width='100%' height='322' className='title__image'/>
+                <div className='title__image'>
+                    {this.props.type === 'counter' ? <div className='title__flag'>{flag}</div> : false}
+                    <img src={`/layout/images/header.jpg`} width='100%' height='322' />
+                </div>
                 <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
                 <div className='title__products'><img src={image} /></div>
                 <div className='title__description'>

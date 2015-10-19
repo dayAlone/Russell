@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Title from '../layout/Title';
+import Helmet from 'react-helmet';
 import ShareLove from '../ShareLove';
 import Categories from '../Categories';
 
 class PageCatalog extends Component {
     render() {
         return <div className='page page--index'>
+            <Helmet title={'Russell Hobbs | Продукты'}/>
             <Title />
             <Categories source='categories' routes={this.props.routes}>
                 <div className='text text--small'>

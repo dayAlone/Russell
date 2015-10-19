@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import oid from '../../../../server/libs/oid';
+import Helmet from 'react-helmet';
 
 import Title from '../layout/Title';
 import ShareLove from '../ShareLove';
@@ -69,11 +70,11 @@ class PageIndex extends Component {
                 let category = false;
                 let collection = false;
                 categories.forEach(i => {
-                    if(url.indexOf(i.substring(0, i.length - 1).split('-')[0]) !== -1) category = i;
+                    if (url.indexOf(i.substring(0, i.length - 1).split('-')[0]) !== -1) category = i;
                 });
 
                 collections.forEach(i => {
-                    if(url.indexOf(i.substring(0, i.length - 1).split('-')[0]) !== -1) collection = i;
+                    if (url.indexOf(i.substring(0, i.length - 1).split('-')[0]) !== -1) collection = i;
                 });
                 if (!category) {
                     if (collection === 'fiesta' || url.indexOf('grill') !== -1) category = 'cooking-and-baking';
@@ -109,6 +110,7 @@ class PageIndex extends Component {
     }
     render() {
         return <div className='page page--index'>
+            <Helmet title='Russell Hobbs' />
             <Title type='big' />
             <Categories type='carousel' source='collections'>
                 <div className='text'>

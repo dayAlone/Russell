@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Helmet from 'react-helmet';
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import * as actionCreators from '../actions/catalog'
@@ -76,6 +77,7 @@ class Products extends Component {
             const current = this.props[source].filter(el => (el.code === code))[0]
             if (current) {
                 return <div className='products'>
+                        <Helmet title={'Russell Hobbs | ' + current.name}/>
                         <Breadcrumbs routes={routes} current={current} />
                         <div className='text'>
                             <h2>{current.name}</h2>

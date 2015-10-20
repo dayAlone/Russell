@@ -22,7 +22,7 @@ export default function* (next) {
 
         localsFull['cdn'] = config.cdn;
         localsFull['version'] = config.version;
-        localsFull['app'] = process.env.NODE_ENV === 'production' && !process.env.TEST ? `${config.cdn}/layout/js/${config.version}/app.js` : '/layout/js/app.js'
+        localsFull['app'] = process.env.NODE_ENV === 'production' && process.env.TEST !== 'Y' ? `${config.cdn}/layout/js/${config.version}/app.js` : '/layout/js/app.js'
         //localsFull['app'] = `${config.cdn}/layout/js/${config.version}/app.js`
         let templatePathResolved = path.join(config.template.root, templatePath + '.jade');
 

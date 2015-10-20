@@ -14,8 +14,10 @@ typographic()
 
 $mw = 970px
 $sw = 720px
+$xsw = 640px
 
-$scr_sm = 720px
+$scr_s = 660px
+$scr_sm = 760px
 $scr_md = 990px
 $scr_lg = 1170px
 
@@ -49,6 +51,8 @@ a
     text-align right !important
 
 .wrap
+    @media (min-width: $scr_s)
+        center($xsw)
     @media (min-width: $scr_sm)
         center($sw)
     @media (min-width: $scr_md)

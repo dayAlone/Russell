@@ -27,6 +27,7 @@ class Title extends Component {
                 </div>
                 <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
                 <div className='title__products'><img src={image} /></div>
+                <div className='title__divider'></div>
                 <div className='title__description'>
                     <p dangerouslySetInnerHTML={{__html: description}} />
                 </div>

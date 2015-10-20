@@ -3,13 +3,19 @@
     margin 60px 0 40px
     &__item
         span(1/5)
-        padding-bottom 20%
+
         background-position center center
         background-size contain
+        background-repeat no-repeat
         transition .2s all
         position relative
         box-shadow 0 0 0 0 alpha(black, 0)
 
+        span(1/4)
+        padding-bottom 25%
+        @media (min-width: $scr_md)
+            span(1/5)
+            padding-bottom 20%
         &:hover
             box-shadow 0 10px 20px 5px alpha(black, .5)
             transform translateY(-10px) scale(1.01)

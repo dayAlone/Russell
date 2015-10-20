@@ -82,6 +82,7 @@ let requestClearCache = (filePath, xUrl, authToken, callback) => {
 gulp.task('upload', () => {
     let auth = false;
     let folders = {};
+    if (process.env.NODE_ENV === 'test') return false;
     return gulp.src(
         [ `${tmp}/js/**`, `${tmp}/images/**`, `${tmp}/fonts/**` ],
         { base: '.', buffer: false }

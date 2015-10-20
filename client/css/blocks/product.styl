@@ -89,6 +89,21 @@
         padding-top 20px
         margin-top 20px
         background url(/layout/images/divide.png) top center no-repeat
+    &__video
+        position: relative
+        display block
+        height 0
+        padding 0
+        overflow hidden
+        padding-bottom 56.25%
+        iframe
+            position absolute
+            top 0
+            bottom 0
+            left 0
+            width 100%
+            height 100%
+            border 0
     &__pdf
         padding-top 25px
         a
@@ -104,12 +119,16 @@
                 top -7px
     &__images
         margin-top 30px
-        column(6/12)
-        min-height 530px
+
         background url(/layout/images/product.image.bg.png) bottom center no-repeat
         background-size contain
-        text-align center
+        text-align center !important
         position relative
+        column(6/12)
+        min-height 460px
+        @media (min-width: $scr_md)
+
+            min-height 530px
         img
             max-width 85%
             display inline-block

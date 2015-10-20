@@ -24,14 +24,14 @@ class Carousel extends Component {
             slidesToShow: slideToShow,
             nextArrow: `<button type='button' class='slick-next ${arrowClass}'><img src='/layout/images/${imgNext}' /></button>`,
             prevArrow: `<button type='button' class='slick-prev  ${arrowClass}'><img src='/layout/images/${imgPrev}' /></button>`,
-            responsive: [
+            responsive: this.props.adaptive ? [
                 {
                     breakpoint: 1024,
                     settings: {
                         slidesToShow: 3
                     }
                 }
-            ]
+            ] : false
         });
 
 

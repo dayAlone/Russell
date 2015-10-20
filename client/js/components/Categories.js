@@ -59,7 +59,7 @@ class Categories extends Component {
             if (type === 'carousel') {
                 return <div className='categories'>
                     {children}
-                    <Carousel className='categories__slider' slideToShow='4'>{categories}</Carousel>
+                    <Carousel adaptive={true} className='categories__slider' slideToShow='4'>{categories}</Carousel>
                     <div className='categories__action center'>
                         { source === 'collections' ? <Link to={`/catalog/collections/`} className='button'>Все коллекции</Link> : false }
                     </div>

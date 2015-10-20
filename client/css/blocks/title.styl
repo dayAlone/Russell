@@ -18,12 +18,18 @@
         bottom 30px
 
     &__question
-        span(4/12)
-        font-size 24px
+
+
         font-weight bold
         padding 10px 0
-        line-height 27px
 
+        span(5/12)
+        font-size 22px
+        line-height 23px
+        @media (min-width: $scr_md)
+            span(4/12)
+            font-size 24px
+            line-height 27px
     &__heart
         position relative
         top 3px
@@ -36,19 +42,24 @@
         position relative
         .title--small &
             margin-bottom 25px
-
+    &__divider
+        full-width()
     &__products
-        min-height 74px
+
         text-align right
-
-        span(8/12)
-
+        position relative
+        span(7/12)
+        @media (min-width: $scr_md)
+            span(8/12)
         img
             margin-right 12px
-            margin-top -74px
+
             position relative
             z-index 3
             max-width 100%
+            margin-top -44px
+            @media (min-width: $scr_md)
+                margin-top -74px
 
     &__counter
         min-height 60px
@@ -56,12 +67,14 @@
         span(9/12)
 
     &__description
-        font-size 16px
-        line-height 21px
         padding-top 9px
         margin-bottom 14px
-
+        font-size 14px
+        line-height 19px
         span(9/12)
+        @media (min-width: $scr_md)
+            font-size 16px
+            line-height 21px
 
         .title--counter &
             width 100%
@@ -69,8 +82,11 @@
             p
                 max-width none
         p
-            max-width 78%
+
             margin-bottom 0px
+            max-width 85%
+            @media (min-width: $scr_md)
+                max-width 78%
             strong
                 font-weight bold
     &__love

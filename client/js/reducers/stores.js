@@ -4,13 +4,13 @@ const initialState = {
             title: '5 Элемент',
             image: '/layout/images/store-14.jpg',
             link: 'http://5element.su/search/index.php?q=RUSSELL+HOBBS&s=%A0',
-            color: '#063c8b'
+            color: '#20398b'
         },
         {
             title: 'METRO Cash&Carry',
             image: '/layout/images/store-8.jpg',
             link: 'http://www.metro-cc.ru/',
-            color: '#002757'
+            color: '#002a59'
         },
         {
             title: 'Selgros Cash&Carry',
@@ -22,7 +22,7 @@ const initialState = {
             title: 'Глобус',
             image: '/layout/images/store-2.jpg',
             link: 'http://www.globus.ru/stores/',
-            color: '#ff7521'
+            color: '#f67300'
         },
         {
             title: 'Домотехника',
@@ -46,7 +46,7 @@ const initialState = {
             title: 'МедиаМаркт',
             image: '/layout/images/store-5.jpg',
             link: 'https://www.mediamarkt.ru/search?q=russell+hobbs',
-            color: '#ff167f'
+            color: '#e4007b'
         },
         {
             title: 'Озон',
@@ -58,7 +58,7 @@ const initialState = {
             title: 'МаксидоМ',
             image: '/layout/images/store-1.jpg',
             link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
-            color: '#f01b2d'
+            color: '#d2151d'
         },
         {
             title: 'Техносила',
@@ -70,7 +70,7 @@ const initialState = {
             title: 'Эльдорадо',
             image: '/layout/images/store-12.jpg',
             link: 'http://www.eldorado.ru/search/catalog.php?q=RUSSELL+HOBBS',
-            color: '#fe0e29'
+            color: '#e00015'
         },
         {
             title: 'Юлмарт',

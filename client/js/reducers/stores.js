@@ -39,7 +39,7 @@ const initialState = {
         {
             title: 'М.видео',
             image: '/layout/images/store-7.jpg',
-            link: 'http://www.mvideo.ru/pricelist.php?reff=search_result&SearchWord=Russell+Hobbs&ok.x=0&ok.y=0',
+            link: 'http://www.mvideo.ru/product-list?Ntt=russell%20hobbs&Nty=1&Dy=1&Nrpp=24&_requestid=227233',
             color: '#ffffff'
         },
         {
@@ -49,21 +49,21 @@ const initialState = {
             color: '#ff167f'
         },
         {
-            title: 'МаксидоМ',
-            image: '/layout/images/store-1.jpg',
-            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
-            color: '#f01b2d'
-        },
-        {
             title: 'Озон',
             image: '/layout/images/store-3.jpg',
             link: 'http://www.ozon.ru/?context=search&text=russell+hobbs',
             color: '#ffffff'
         },
         {
+            title: 'МаксидоМ',
+            image: '/layout/images/store-1.jpg',
+            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
+            color: '#f01b2d'
+        },
+        {
             title: 'Техносила',
             image: '/layout/images/store-13.jpg',
-            link: 'http://www.tehnosila.ru/',
+            link: 'http://www.tehnosila.ru/search?q=russell+hobbs',
             color: '#ffffff'
         },
         {
@@ -73,16 +73,16 @@ const initialState = {
             color: '#fe0e29'
         },
         {
-            title: 'Энтер',
-            image: '/layout/images/store-11.jpg',
-            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
-            color: '#000000'
-        },
-        {
             title: 'Юлмарт',
             image: '/layout/images/store-10.jpg',
             link: 'http://www.ulmart.ru/search?string=russell+hobbs&rootCategory=&sort=6',
             color: '#ffffff'
+        },
+        {
+            title: 'Энтер',
+            image: '/layout/images/store-11.jpg',
+            link: 'http://www.enter.ru/search?q=russell+hobbs',
+            color: '#000000'
         }
     ]
 };

@@ -39,7 +39,7 @@ const initialState = {
         {
             title: 'М.видео',
             image: '/layout/images/store-7.jpg',
-            link: 'http://www.mvideo.ru/pricelist.php?reff=search_result&SearchWord=Russell+Hobbs&ok.x=0&ok.y=0',
+            link: 'http://www.mvideo.ru/product-list?Ntt=russell%20hobbs&Nty=1&Dy=1&Nrpp=24&_requestid=227233',
             color: '#ffffff'
         },
         {
@@ -63,7 +63,7 @@ const initialState = {
         {
             title: 'Техносила',
             image: '/layout/images/store-13.jpg',
-            link: 'http://www.tehnosila.ru/',
+            link: 'http://www.tehnosila.ru/search?q=russell+hobbs',
             color: '#ffffff'
         },
         {
@@ -81,7 +81,7 @@ const initialState = {
         {
             title: 'Энтер',
             image: '/layout/images/store-11.jpg',
-            link: 'http://www.maxidom.ru/search/catalog.php?q=RUSSELL+HOBBS&category_search=',
+            link: 'http://www.enter.ru/search?q=russell+hobbs',
             color: '#000000'
         }
     ]

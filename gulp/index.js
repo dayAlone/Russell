@@ -48,15 +48,18 @@ gulp.task('fonts', () => {
 
 gulp.task('scripts', () => {
     if (process.env.VERSION) return false;
-    let file = process.env.NODE_ENV === 'dev' ? 'production' : process.env.NODE_ENV;
-
-    let configWebpack = require('../webpack/' + file + '.js')
-
+    let configWebpack = require('../webpack/production.js')
     return gulp.src([ `${source}/js/**/*.js` ])
     .pipe(webpack(configWebpack))
     .pipe(gulp.dest(`${tmp}/js/${config.version}`));
 });
 
+gulp.task('scripts_test', () => {
+    let configWebpack = require('../webpack/test.js')
+    return gulp.src([ `${source}/js/**/*.js` ])
+    .pipe(webpack(configWebpack))
+    .pipe(gulp.dest(`${source}/js/`));
+});
 
 import request from 'request';
 
@@ -86,7 +89,6 @@ let requestClearCache = (filePath, xUrl, authToken, callback) => {
 gulp.task('upload', () => {
     let auth = false;
     let folders = {};
-    if (process.env.NODE_ENV === 'test') return false;
     return gulp.src(
         [ `${tmp}/js/**`, `${tmp}/images/**`, `${tmp}/fonts/**` ],
         { base: '.', buffer: false }
@@ -147,7 +149,12 @@ gulp.task('upload', () => {
 });
 
 gulp.task('build', () => {
-    runSequence('scripts', 'images', 'fonts', 'upload');
+    if (process.env.NODE_ENV === 'test') {
+        runSequence('scripts_test')
+    } else {
+        runSequence('scripts', 'images', 'fonts', 'upload');
+    }
+
 });
 
 gulp.task('build_js', () => {

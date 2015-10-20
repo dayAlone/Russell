@@ -66,25 +66,42 @@
                     margin-bottom 0px
                     li
                         display inline
-            .featureList
-                > ul
-                    padding-left 20px
-                    overflow hidden
-                    margin-bottom 0px
-                    list-style square outside
-                    li ul
-                        padding-left 0px
-                        margin-bottom 0px
-                        list-style square outside
-                    li
-                        margin-bottom 6px
+
             p
                 margin-bottom 15px
                 padding-left 0px !important
+                small
+                    font-size 10px
+                br
+                    margin 10px
                 &:last-of-type
                     margin-bottom 0px
+    &__features
+        padding-left 20px
+        overflow hidden
+        margin-bottom 0px
+        list-style square outside
+        li
+            margin-bottom 6px
     &__image
         width 100%
+    &__video, &__pdf, &__icons
+        padding-top 20px
+        margin-top 20px
+        background url(/layout/images/divide.png) top center no-repeat
+    &__pdf
+        padding-top 25px
+        a
+            color red
+            font-size 14px
+            border-line alpha(red, .5)
+            margin-top 10px
+            position relative
+            margin-left 30px
+            img
+                position absolute
+                left -25px
+                top -7px
     &__images
         margin-top 30px
         column(6/12)

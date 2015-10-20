@@ -17,13 +17,15 @@ const productSchema = new mongoose.Schema({
         }
     },
     artnumber: String,
-    short_description: String,
+    features: Object,
     description: String,
     preview: String,
     images: Array,
     categories: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
     collections: { type: mongoose.Schema.Types.ObjectId, ref: 'Collections' },
-    line: String
+    line: String,
+    video: String,
+    pdf: String
 });
 
 productSchema.methods.generateCode = function* () {
@@ -57,4 +59,9 @@ productSchema.pre('save', function(next) {
 });
 
 const Product = mongoose.model('Product', productSchema);
+
+Product.count({}, (err, count) => {
+    if (count === 0) require('./fixtures/product')(Product);
+})
+
 export default Product;

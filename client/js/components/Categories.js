@@ -52,7 +52,7 @@ class Categories extends Component {
                     <div className='categories__frame'>
                         <div className='categories__image' style={{backgroundImage: `url(${image.replace(':/', 's:/')})`}}/>
                         <div className='categories__name'>{name}</div>
-                        <div className='categories__description'>{short_description}</div>
+                        <div className='categories__description' dangerouslySetInnerHTML={{__html: short_description}} />
                     </div>
                 </Link>;
             });

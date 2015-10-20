@@ -5,8 +5,8 @@ import transliterate from '../libs/textUtil/transliterate';
 
 const collectionSchema = new mongoose.Schema({
     name: {
-        type:     String,
-        default:  '',
+        type: String,
+        default: '',
         required: 'Укажите название коллекции'
     },
     sort: {
@@ -14,7 +14,7 @@ const collectionSchema = new mongoose.Schema({
         default: 500
     },
     code: {
-        type:     String,
+        type: String,
         index: {
             unique: true,
             sparse: true,
@@ -28,7 +28,7 @@ const collectionSchema = new mongoose.Schema({
 });
 
 collectionSchema.methods.generateCode = function* () {
-    var code = this.name.trim()
+    let code = this.name.trim()
         .replace(/<\/?[a-z].*?>/gim, '')  // strip tags, leave /<DIGIT/ like: 'IE<123'
         .replace(/[ \t\n!'#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/g, '-') // пунктуация, пробелы -> дефис
         .replace(/[^a-zа-яё0-9-]/gi, '') // убрать любые символы, кроме [слов цифр дефиса])
@@ -38,7 +38,7 @@ collectionSchema.methods.generateCode = function* () {
     code = transliterate(code);
     code = code.toLowerCase();
 
-    var existing;
+    let existing;
     while (true) {
         existing = yield Collection.findOne({code: code}).exec();
 
@@ -57,4 +57,9 @@ collectionSchema.pre('save', function(next) {
     }.bind(this)).then(next, next);
 });
 const Collection = mongoose.model('Collections', collectionSchema);
+
+Collection.count({}, (err, count) => {
+    if (count === 0) require('./fixtures/category')(Collection, 'https://ru.russellhobbs.com/russell-hobbs-collections/');
+})
+
 export default Collection;

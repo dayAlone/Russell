@@ -48,6 +48,7 @@ class Products extends Component {
     getItems(current) {
         let { products, source, isEditor } = this.props
         let delay = 0
+        console.log(current._id)
         const items = products
             .filter(el => (el[source] === current._id))
             .map((el, i) => {

@@ -32,10 +32,11 @@ render(<div>
     <Provider store={store}>
         <ReduxRouter routes={routes}/>
     </Provider>
+
 </div>, document.querySelector('#app'));
 /*
-
 <DebugPanel top right bottom key="debugPanel">
     <DevTools store={store} monitor={LogMonitor} skippedActions={skip} visibleOnLoad={true}/>
 </DebugPanel>
+
  */

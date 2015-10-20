@@ -33,8 +33,11 @@ class Product extends Component {
                         artnumber,
                         preview,
                         images,
-                        short_description,
+                        video,
+                        pdf,
+                        features,
                         description} = current;
+                console.log(features);
                 return <div className='page'>
                     <Helmet title={'Russell Hobbs | ' + name}/>
                     <Title />
@@ -71,14 +74,31 @@ class Product extends Component {
                             </div>
                             <div
                                 className={`product__tabs-content ${this.state.open === 'short' ? 'product__tabs-content--active' : null}`}
-                                dangerouslySetInnerHTML={{__html: short_description.replace('<p>&nbsp;</p>', '')}}
                                 ref='short'
-                                />
+                                >
+                                <span dangerouslySetInnerHTML={{__html: description }} />
+                                { video ? <div className='product__video'><iframe width='440' height='248' src={video} frameBorder='0' allowFullScreen=''></iframe></div> : false}
+                                { pdf ? <div className='product__pdf'><a href={pdf} target='_blank'><img src='/layout/images/svg/pdf.svg' />Скачать инструкции</a></div> : false}
+                            </div>
                             <div
                                 className={`product__tabs-content ${this.state.open === 'full' ? 'product__tabs-content--active' : null}`}
-                                dangerouslySetInnerHTML={{__html: description.replace('<p>&nbsp;</p>', '')}}
                                 ref='full'
-                                />
+                                >
+                                {features.list.length > 0 ?
+                                    <ul className='product__features'>
+                                        {features.list.map((el, i) => {
+                                            return <li key={i}>{el}</li>
+                                        })}
+                                    </ul>
+                                    : false }
+                                {features.icons.length > 0 ?
+                                    <div className='product__icons'>
+                                        {features.icons.map((el, i) => {
+                                            return <img key={i} src={el.image} alt={el.title}/>
+                                        })}
+                                    </div>
+                                    : false}
+                            </div>
                         </div>
                     </div>
                 </div>;

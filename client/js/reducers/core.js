@@ -4,5 +4,6 @@ export default {
     games: require('./games'),
     catalog: require('./catalog'),
     stores: require('./stores'),
+    design: require('./design'),
     router: routerStateReducer
 };

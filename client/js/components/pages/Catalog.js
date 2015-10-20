@@ -4,7 +4,15 @@ import Helmet from 'react-helmet';
 import ShareLove from '../ShareLove';
 import Categories from '../Categories';
 
+import * as design from '../../actions/design';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+@connect(false, dispatch => ({design: bindActionCreators(design, dispatch)}))
 class PageCatalog extends Component {
+    componentDidMount() {
+        this.props.design.setLine(null)
+    }
     render() {
         return <div className='page page--index'>
             <Helmet title={'Russell Hobbs | Продукты'}/>

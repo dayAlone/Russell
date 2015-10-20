@@ -5,9 +5,14 @@ import Title from '../layout/Title';
 import ShareLove from '../ShareLove';
 
 import { connect } from 'react-redux';
+import * as design from '../../actions/design';
+import { bindActionCreators } from 'redux';
 
-@connect(state => ({ stores: state.stores.list }))
+@connect(state => ({ stores: state.stores.list }), dispatch => ({design: bindActionCreators(design, dispatch)}))
 class PageBuy extends Component {
+    componentDidMount() {
+        this.props.design.setLine(null)
+    }
     render() {
         let items = this.props.stores.map((el, i) => {
             let { image, link, color } = el;

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+
+import { connect } from 'react-redux'
+@connect(state => ({ routerState: state.router, line: state.design.line }))
 class Header extends Component {
     render() {
         return <div className='nav'>
@@ -15,6 +18,7 @@ class Header extends Component {
             <div className='nav__col right'>
                 <Link to='/games/' className='nav__item' activeClassName='nav__item--active'>Выиграй мечту!</Link>
             </div>
+            <div className='nav__line' style={{backgroundImage: `url(${this.props.line ? this.props.line : '/layout/images/menu.jpg'})`}}></div>
         </div>;
     }
 }

@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
-
 import Helmet from 'react-helmet';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/catalog';
-import { bindActionCreators } from 'redux';
-
 import Page404 from '../pages/404';
 import Spinner from '../ui/Spinner';
 import Breadcrumbs from '../ui/Breadcrumbs';
 import Title from '../layout/Title';
 
-@connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+import * as actionCreators from '../../actions/catalog';
+import * as design from '../../actions/design';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+@connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Product extends Component {
     state = { open: 'short' }
     componentWillMount() {
         const { getProducts } = this.props.actions;
         if (this.props.products.length === 0) getProducts();
+        else this.getCurrent();
+    }
+    getCurrent() {
+        let {products, routeParams} = this.props;
+        let { setLine } = this.props.design;
+        let current = products.filter(el => (el.code === routeParams.code))[0]
+        setLine(current.line);
+        this.setState({current: current})
     }
     handleClick(e) {
         let href = e.target.href;
-        console.log(href);
         this.setState({open: href.split('#')[1] });
         e.preventDefault();
         e.stopPropagation();
     }
+    componentDidUpdate(prevProps) {
+        console.log(1);
+        if (prevProps.products.length === 0) this.getCurrent();
+    }
     render() {
-        let { products, routeParams, routes } = this.props;
-        if (products.length > 0) {
-            const current = products.filter(el => (el.code === routeParams.code))[0];
+        let { routes } = this.props;
+        if (this.state.current) {
+            const current = this.state.current;
             if (current) {
                 const { name,
                         artnumber,
@@ -36,8 +47,9 @@ class Product extends Component {
                         video,
                         pdf,
                         features,
+                        line,
                         description} = current;
-                console.log(features);
+
                 return <div className='page'>
                     <Helmet title={'Russell Hobbs | ' + name}/>
                     <Title />

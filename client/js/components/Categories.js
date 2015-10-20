@@ -50,7 +50,7 @@ class Categories extends Component {
                 }
                 return <Link className='categories__item' key={i} to={`/catalog/${source}/${code}/`} style={css}>
                     <div className='categories__frame'>
-                        <div className='categories__image' style={{backgroundImage: `url(${image.replace(':/', 's:/')})`}}/>
+                        <div className='categories__image' style={{backgroundImage: `url(${image})`}}/>
                         <div className='categories__name'>{name}</div>
                         <div className='categories__description' dangerouslySetInnerHTML={{__html: short_description}} />
                     </div>

@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet';
-import { Link } from 'react-router'
-import { connect } from 'react-redux'
-import * as actionCreators from '../actions/catalog'
-import { bindActionCreators } from 'redux'
 
 import Page404 from './pages/404'
 import Spinner from './ui/Spinner'
@@ -11,7 +7,14 @@ import Breadcrumbs from './ui/Breadcrumbs'
 import EditProduct from './edit/Product'
 import Modal from './ui/Modal'
 
-@connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import * as actionCreators from '../actions/catalog'
+import * as design from '../actions/design';
+
+@connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Products extends Component {
     static defaultProps = { source: 'categories' }
     state = { edit: false }
@@ -22,12 +25,9 @@ class Products extends Component {
             if (source === 'collections') getCollections()
             else getCategories()
         }
+        else this.getCurrent();
+        
         if (products.length === 0) getProducts()
-    }
-    activateAnimation() {
-        setTimeout(() => {
-            $('.products').removeClass('products--ready').addClass('products--ready')
-        }, 500)
     }
     componentDidMount() {
         $(document).ready(() => {
@@ -35,8 +35,16 @@ class Products extends Component {
         })
         this.activateAnimation()
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         this.activateAnimation()
+        if (prevProps[this.props.source].length === 0) this.getCurrent();
+    }
+    getCurrent() {
+        let { code, source } = this.props;
+        let { setLine } = this.props.design;
+        const current = this.props[source].filter(el => (el.code === code))[0]
+        setLine(current.line);
+        this.setState({current: current})
     }
     editProduct(code, e) {
         e.preventDefault()
@@ -45,10 +53,14 @@ class Products extends Component {
         this.setState({edit: item});
         this.refs.modal.show()
     }
+    activateAnimation() {
+        setTimeout(() => {
+            $('.products').removeClass('products--ready').addClass('products--ready')
+        }, 500)
+    }
     getItems(current) {
         let { products, source, isEditor } = this.props
         let delay = 0
-        console.log(current._id)
         const items = products
             .filter(el => (el[source] === current._id))
             .map((el, i) => {
@@ -73,9 +85,9 @@ class Products extends Component {
     }
 
     render() {
-        let { code, products, source, routes, isEditor } = this.props
-        if (this.props[source].length && products.length > 0) {
-            const current = this.props[source].filter(el => (el.code === code))[0]
+        let { products, routes, isEditor } = this.props
+        if (this.state.current && products.length > 0) {
+            const current = this.state.current;
             if (current) {
                 return <div className='products'>
                         <Helmet title={'Russell Hobbs | ' + current.name}/>

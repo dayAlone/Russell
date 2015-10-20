@@ -4,7 +4,7 @@ import { deferConfig as defer } from 'config/defer';
 export default {
 
     cdn: `http://164623.selcdn.com/russell`,
-    version: process.env.VERSION || 'v1.2',
+    version: process.env.VERSION || 'v1.2.3',
     domain: 'localhost',
     __dirname: defer(function(cfg) {
         return cfg.root;
@@ -14,6 +14,10 @@ export default {
         folder: `/russell`,
         login: '47651',
         password: '3lQV616N'
+    },
+    basicAuth: {
+        name: 'test',
+        pass: 'test'
     },
     selectel: {
         login: '47651',

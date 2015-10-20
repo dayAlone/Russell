@@ -6,8 +6,15 @@ import Title from '../layout/Title';
 import ShareLove from '../ShareLove';
 import Categories from '../Categories';
 
-class PageIndex extends Component {
+import * as design from '../../actions/design';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
+@connect(false, dispatch => ({design: bindActionCreators(design, dispatch)}))
+class PageIndex extends Component {
+    componentDidMount() {
+        this.props.design.setLine(null)
+    }
     render() {
         return <div className='page page--index'>
             <Helmet title='Russell Hobbs' />

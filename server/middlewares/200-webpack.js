@@ -7,7 +7,7 @@ import webpackConfig from '../../webpack.config';
 const env = process.env.NODE_ENV || 'test';
 const compiler = webpack(webpackConfig);
 
-export default env !== 'production' ? [
+export default env === 'dev' ? [
     webpackDevMiddleware(compiler, {
         noInfo: false,
         publicPath: '/layout/js/',

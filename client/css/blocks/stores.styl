@@ -6,7 +6,7 @@
         padding-bottom 20%
         background-position center center
         background-size contain
-        transition .3s all .3s
+        transition .2s all
         position relative
         box-shadow 0 0 0 0 alpha(black, 0)
 
@@ -14,9 +14,10 @@
             box-shadow 0 10px 20px 5px alpha(black, .5)
             transform translateY(-10px) scale(1.01)
             z-index 1
+            transition-delay .3s
         &--hover
             z-index 20
     & + p
         font-size 14px
         margin-bottom 40px
-        color apha(white, .4)
+        color alpha(white, .7)

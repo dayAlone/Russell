@@ -4,10 +4,9 @@ import webpackDevMiddleware from 'koa-webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../../webpack.config';
 
-const env = process.env.NODE_ENV || 'test';
 const compiler = webpack(webpackConfig);
 
-export default env === 'dev' ? [
+export default process.env.NODE_ENV === 'dev' ? [
     webpackDevMiddleware(compiler, {
         noInfo: false,
         publicPath: '/layout/js/',

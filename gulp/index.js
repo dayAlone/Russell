@@ -1,7 +1,7 @@
 import config from 'config';
 import gulp from 'gulp';
 import webpack from 'webpack-stream';
-import configWebpack from '../webpack/production';
+
 import through from 'through2';
 import runSequence from 'run-sequence'
 import co from 'co';
@@ -48,6 +48,10 @@ gulp.task('fonts', () => {
 
 gulp.task('scripts', () => {
     if (process.env.VERSION) return false;
+    let file = process.env.NODE_ENV === 'dev' ? 'production' : process.env.NODE_ENV;
+
+    let configWebpack = require('../webpack/' + file + '.js')
+
     return gulp.src([ `${source}/js/**/*.js` ])
     .pipe(webpack(configWebpack))
     .pipe(gulp.dest(`${tmp}/js/${config.version}`));

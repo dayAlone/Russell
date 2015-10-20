@@ -149,6 +149,7 @@ gulp.task('upload', () => {
 });
 
 gulp.task('build', () => {
+    console.log('!!!!!!!!!! - ' + process.env.NODE_ENV);
     if (process.env.NODE_ENV === 'test') {
         runSequence('scripts_test')
     } else {

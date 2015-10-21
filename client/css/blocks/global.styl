@@ -5,6 +5,7 @@ $gotham             = 'MainFont', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-
 $body-font          = $gotham
 $header-font        = $gotham
 $max-font           = 15px
+$min-font           = 13px
 $line-height-ratio  = 1.4
 $header-font-weight = 600
 $header-color       = white
@@ -38,6 +39,8 @@ body
     color white
     overflow-x hidden
     padding-top 80px
+
+    -webkit-text-size-adjust: 100%
     @media (min-width: $scr_xs)
         padding-top 100px
     @media (min-width: $scr_s)

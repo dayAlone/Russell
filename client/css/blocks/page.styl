@@ -8,8 +8,11 @@
     &__title
         margin-top 0px
     &--stores
-        background url(/layout/images/texture.jpg) top center no-repeat
-        background-size auto 100%
+        background url(/layout/images/texture.jpg) bottom center no-repeat
+        background-size 140% auto
+        @media (min-width: $scr_sm)
+            background-size auto 100%
+            background-position top center
     &--index
         & + .share-love
             margin-top -65px

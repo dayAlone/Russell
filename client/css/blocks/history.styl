@@ -2,7 +2,9 @@
     full-width()
     padding 30px 30px 50px
     background url(/layout/images/share-love.jpg) center bottom no-repeat
-    background-size 120% auto
+    background-size cover
+    @media (min-width: $scr_sm)
+        background-size 120% auto
     &:before
         @extend .share-love:before
         top 0
@@ -11,9 +13,11 @@
         background-size cover
     &__title
         @extend .text h2
-        margin-left -30px
+
         margin-top 0px
         margin-bottom 20px
+        @media (min-width: $scr_sm)
+            margin-left -30px
     &__item
         height 300px
         text-align center
@@ -25,8 +29,11 @@
         font-weight bold
     &__text
         padding 0 20%
-        font-size 16px
-        line-height 20px
+        font-size 14px
+        line-height 17px
+        @media (min-width: $scr_sm)
+            font-size 16px
+            line-height 20px
     &__divider
         max-width 300px
         width 50%

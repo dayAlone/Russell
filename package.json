@@ -130,11 +130,12 @@
     "wait.for": "^0.6.6",
     "webpack": "^1.12.2",
     "webpack-hot-middleware": "^2.4.1",
-    "webpack-stream": "^2.1.1"
+    "webpack-stream": "^2.1.1",
+    "browser-sync": "^2.9.11"
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^1.1.1",
-    "browser-sync": "^2.9.11",
+
     "gulp": "^3.9.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1"

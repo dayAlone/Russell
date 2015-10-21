@@ -1,7 +1,6 @@
-import webpack from 'webpack';
-import config from 'config';
-import StringReplacePlugin from 'string-replace-webpack-plugin';
-
+import webpack from 'webpack'
+import config from 'config'
+import StringReplacePlugin from 'string-replace-webpack-plugin'
 import lost from 'lost'
 
 let webpackConfig = {
@@ -24,16 +23,16 @@ let webpackConfig = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: ['react-hot', 'imports?$=jquery,react', 'babel-loader?cacheDirectory']
+                loaders: ['react-hot', 'babel?cacheDirectory']
             },
             {
-                test: /\.styl$/,
-                loaders: [ 'style-loader', 'css-loader', 'postcss', 'stylus-loader']
+                test: /\.css$/,
+                loaders: [ 'style-loader', 'css-raw-loader', 'postcss']
             }
         ]
     },
     postcss() {
-        return [lost];
+        return [lost]
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -47,6 +46,6 @@ let webpackConfig = {
         new webpack.NoErrorsPlugin(),
         new StringReplacePlugin()
     ]
-};
+}
 
-export default webpackConfig;
+export default webpackConfig

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-//import { Link } from 'react-router';
-import Modal from 'boron/ScaleModal';
-import Login from '../Login';
+import React, { Component } from 'react'
+//import { Link } from 'react-router'
+import Modal from 'boron/ScaleModal'
+import Login from '../Login'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 @connect(state => ({ isLogin: state.login.isLogin }))
 class Footer extends Component {
     state = {
@@ -11,23 +11,23 @@ class Footer extends Component {
     }
     openModal(e) {
         e.preventDefault()
-        this.refs.modal.show();
+        this.refs.modal.show()
     }
     componentDidUpdate() {
-        if (this.props.isLogin === true) this.refs.modal.hide();
+        if (this.props.isLogin === true) this.refs.modal.hide()
     }
     render() {
-        let { isLogin } = this.props;
+        let { isLogin } = this.props
         let list = {
             fb: 'https://www.facebook.com/russellhobbsrussia',
             vk: 'https://vk.com/russelhobbsrussia',
             in: 'https://instagram.com/russellhobbsrussia/'
-        };
-        let socials = [];
+        }
+        let socials = []
         for (let id in list) {
             socials.push(<a href={list[id]} key={id} className={`social social--${id}`}>
                 <img src={`/layout/images/svg/${id}.svg`} alt='' />
-            </a>);
+            </a>)
         }
         return <div className='footer'>
             <div className='footer__social center'>
@@ -40,8 +40,8 @@ class Footer extends Component {
                 </div>
                 <div className='footer__spectrum'>
                     <img src='/layout/images/svg/spectrum.svg' />
-                    <a onClick={this.openModal.bind(this)} href='#'>©</a>&nbsp;
-                     2015 SPECTRUM BRANDS , INC., ALL RIGHTS RESERVED
+
+                    <div className='footer__text'><a onClick={this.openModal.bind(this)} href='#'>©</a> 2015 SPECTRUM BRANDS, INC.,<br/> ALL RIGHTS RESERVED</div>
                 </div>
             </div>
             <Modal ref='modal' className='modal center'>
@@ -50,8 +50,8 @@ class Footer extends Component {
                     <Login />
                 </div>
             </Modal>
-        </div>;
+        </div>
     }
 }
 
-export default Footer;
+export default Footer

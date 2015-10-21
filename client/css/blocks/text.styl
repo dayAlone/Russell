@@ -1,6 +1,8 @@
 .text
     line-height 1.4
-    padding 22px 0 20px
+    padding 22px 30px 20px
+    @media (min-width: $scr_s)
+        padding 22px 0 20px
     &--no-padding
         padding 0
     &--black
@@ -18,8 +20,13 @@
             color red
             border-line(alpha(red, .5))
     h2
-        font-size 33px
+
         margin-bottom 20px
+        font-size 20px
+        @media (min-width: $scr_s)
+            font-size 27px
+        @media (min-width: $scr_sm)
+            font-size 33px
         .text--no-padding&
             &:first-child
                 margin-top 0px

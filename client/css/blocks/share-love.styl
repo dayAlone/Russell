@@ -1,9 +1,18 @@
 .share-love
-    padding 60px 30px 0
+    full-width()
+
     lost-utility clearfix
     margin-top -60px
-    full-width()
+
     background url(/layout/images/share-love.jpg) center bottom no-repeat
+
+    padding 60px 40px 40px
+    background-size 160% auto
+    @media (min-width: $scr_s)
+        background-size 145% auto
+        padding 60px 30px 40px
+    @media (min-width: $scr_md)
+        background-size 160% auto
     .page--stores &
         background-image none
     &:before
@@ -11,7 +20,6 @@
         top 60px
         width 100%
         height 2px
-        left 0
         background url(/layout/images/line.png) center top repeat-y
         background-size contain
         content ""
@@ -19,15 +27,29 @@
         padding 40px 0 65px
         full-width()
     &__title
+        text-align center
         margin 28px 0 24px
-        max-width 222px
+        img
+            max-width 200px
+        @media (min-width: $scr_s)
+            text-align left
+            img
+
+                max-width 222px
     &__item
-        min-height: 182px !important
+
         background-size cover
         background-position center
         position relative
         color white
         display block
+        min-height 200px !important
+        @media (min-width: 400px)
+            min-height: 152px !important
+        @media (min-width: $scr_s)
+            min-height 200px !important
+        @media (min-width: $scr_md)
+            min-height: 182px !important
         *
             position relative
             z-index 2
@@ -36,7 +58,7 @@
             top 0
             left 0
             size 100%
-            min-height: 182px
+            min-height: 100%
             content ""
             opacity .6
             t opacity

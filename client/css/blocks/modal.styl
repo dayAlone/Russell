@@ -28,6 +28,33 @@
     & + div
         background-color black !important
         overflow auto
+    &--nav
+        background-color alpha(#cf1c2a, .9)
+        -webkit-backdrop-filter blur(40px)
+        min-height 100%
+        .nav
+            &__col
+                width 100%
+                display block
+                text-align center
+                border-bottom 1px solid #e87a80
+                &:first-of-type
+                    border-top 1px solid #e87a80
+            &__item
+                font-size 24px
+                padding 21px 38px 20px
+                text-align center
+                width 100%
+                &:hover
+                    color white
+                &--active
+                    background-color transparent
+                    font-weight bold
+            &__line
+                display none
+        & + div
+            background-color transparent !important
+
     &__title
         margin-top 0px
         color black

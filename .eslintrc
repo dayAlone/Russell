@@ -34,7 +34,8 @@
 		"padded-blocks": 0,
 		"no-console": 0,
 		"jsx-quotes": [1, "prefer-single"],
-		"no-trailing-spaces": 0
+		"no-trailing-spaces": 0,
+		"semi": [2, "never"]
 	},
 	"extends": "airbnb/legacy"
 }

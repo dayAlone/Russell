@@ -6,6 +6,17 @@
         float left
     &__till
         margin-right 17px
+        @media (max-width: $scr_sm)
+            full-width()
+            margin-right 0px
+            padding-left 7px
+            margin-bottom 2px
+            br
+                display none
+    &__frame
+        @media (max-width: $scr_sm)
+            max-width 250px
+            margin-top -10px
     &__info
         color #ff1628
         font-size 15px

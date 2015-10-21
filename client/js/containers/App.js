@@ -21,7 +21,7 @@ class App extends Component {
     }
     render() {
         return <div className='wrap'>
-            <Header />
+            <Header routes={this.props.location} />
             <Nav routes={this.props.location} />
             {this.props.children}
             <Footer />

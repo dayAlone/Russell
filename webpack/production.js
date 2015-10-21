@@ -1,15 +1,15 @@
-import webpack from 'webpack';
-import config from 'config';
-import CompressionPlugin from 'compression-webpack-plugin';
+import webpack from 'webpack'
+import config from 'config'
+import CompressionPlugin from 'compression-webpack-plugin'
 
-import StringReplacePlugin from 'string-replace-webpack-plugin';
+import StringReplacePlugin from 'string-replace-webpack-plugin'
 
 // PostCSS plugins
 import autoprefixer from 'autoprefixer'
 import lost from 'lost'
-import willChange from 'postcss-will-change';
-import mqpacker from 'css-mqpacker';
-import cssnano from 'cssnano';
+import willChange from 'postcss-will-change'
+import mqpacker from 'css-mqpacker'
+import cssnano from 'cssnano'
 
 export default {
     entry: {
@@ -48,7 +48,7 @@ export default {
         ]
     },
     postcss() {
-        return [autoprefixer(({ browsers: 'last 2 version' })), lost, willChange, mqpacker, cssnano];
+        return [autoprefixer(({ browsers: 'last 2 version' })), lost, willChange, mqpacker, cssnano]
     },
     plugins: [
         new webpack.ProvidePlugin({
@@ -70,4 +70,4 @@ export default {
         }),
         new StringReplacePlugin()
     ]
-};
+}

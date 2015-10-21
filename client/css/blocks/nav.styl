@@ -1,26 +1,33 @@
 .nav
     full-width()
-    margin-bottom 26px
-    text-align center
+    //text-align center
+    @media (min-width: $scr_s)
+        margin-bottom 24px
     &__col
         lost-column 1/4 4 0
+        display none
+        @media (min-width: $scr_s)
+            display block
     &__line
-        content ""
-
         background url(/layout/images/menu.jpg) no-repeat top center
         background-size 1600px auto
-        height 24px
-        position absolute
-        bottom -24px
-        left -320px
-        width calc(100% + 320px * 2)
+        height 20px
+        @media (min-width: $scr_s)
+            height 24px
+            bottom -24px
+            position absolute
+            left -320px
+            width calc(100% + 320px * 2)
     &__item
         color white
         display inline-block
         border-top-right-radius 4px
         border-top-left-radius 4px
-        font-size 17px
+        font-size 15px
         padding 11px 15px 9px
+        @media (min-width: $scr_sm)
+            font-size 17px
+
         @media (min-width: $scr_md)
             font-size 18px
             padding 11px 27px 9px

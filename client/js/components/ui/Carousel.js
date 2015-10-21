@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import slick from 'slick-carousel';
+import React, { Component } from 'react'
+import slick from 'slick-carousel'
 
 class Carousel extends Component {
     static defaultProps = {
@@ -8,45 +8,66 @@ class Carousel extends Component {
         arrowClass: false
     }
     initSlick() {
-        const $el = $(this.refs.carousel);
-        let { imgNext, imgPrev, arrowClass, arrowsType, slideToShow} = this.props;
-        if ($el.hasClass('slick-initialized')) $el.slick('unslick');
+        const $el = $(this.refs.carousel)
+        let { imgNext, imgPrev, arrowClass, arrowsType, slideToShow} = this.props
+        if ($el.hasClass('slick-initialized')) $el.slick('unslick')
 
         if (arrowsType === 'black') {
-            imgNext = 'next.png';
-            imgPrev = 'prev.png';
-            arrowClass = 'black';
+            imgNext = 'next.png'
+            imgPrev = 'prev.png'
+            arrowClass = 'black'
         }
         $el.slick({
             accessibility: false,
             slidesToScroll: 1,
             infinite: true,
+            autoplay: true,
+            adaptiveHeight: false,
             slidesToShow: slideToShow,
             nextArrow: `<button type='button' class='slick-next ${arrowClass}'><img src='/layout/images/${imgNext}' /></button>`,
             prevArrow: `<button type='button' class='slick-prev  ${arrowClass}'><img src='/layout/images/${imgPrev}' /></button>`,
-            responsive: this.props.adaptive ? [
+            responsive: this.props.responsive ? [
                 {
                     breakpoint: 1024,
                     settings: {
                         slidesToShow: 3
                     }
-                }
+                },
+                {
+                    breakpoint: 620,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 400,
+                    settings: {
+                        slidesToShow: 1,
+                        adaptiveHeight: true
+                    }
+                },
+                {
+                    breakpoint: 300,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
             ] : false
-        });
+        })
 
 
     }
     componentDidMount() {
-        this.initSlick();
+        this.initSlick()
     }
     componentDidUpdate() {
-        this.initSlick();
+        this.initSlick()
     }
     render() {
         return <div ref='carousel' className={this.props.className}>
             {this.props.children}
-        </div>;
+        </div>
     }
 }
 
-export default Carousel;
+export default Carousel

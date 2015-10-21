@@ -1,20 +1,34 @@
 .footer
     full-width()
-    min-height 228px
-    background url(/layout/images/footer.jpg) bottom center no-repeat
-    background-size 100% 100%
+
     color alpha(white, .4)
-    font-size 12px
-    position relative
     z-index 20
+    font-size 10px
+    background url(/layout/images/footer-mobile.jpg) top center no-repeat
+    @media (min-width: $scr_s)
+        min-height 228px
+        background url(/layout/images/footer.jpg) top center no-repeat
+        font-size 12px
+        background-size 100% 100%
+        br
+            display none
+    @media (max-width: $scr_sm)
+        text-align center
     img
         middle()
 
+    &__text
+        middle()
+        line-height 1
+        text-align left
     &__copyright
         full-width()
-        line-height 78px
-        padding-top 2px
-        padding 0 15px
+        margin-bottom 20px
+        @media (min-width: $scr_s)
+            line-height 78px
+            padding-top 2px
+            padding 0 15px
+            margin-bottom 0px
         a
             color alpha(white, .4)
             :not([href='#'])
@@ -24,17 +38,24 @@
                 color alpha(white, 1)
                 border-line(alpha(@color, .5))
     &__spectrum
+
         img
             margin-right 16px
             margin-left 5px
             position relative
-            top 3px
+            top -5px
+            @media (min-width: $scr_s)
+                top 3px
     &__rules
-        lost-column 1/4 0 0
 
+        @media (min-width: $scr_sm)
+            lost-column 1/4 0 0
     &__social
-        line-height 183px
-        max-height 146px
+        padding 54px 0 20px
+        @media (min-width: $scr_s)
+            padding 0
+            line-height 183px
+            max-height 146px
         overflow hidden
         .social
             middle()

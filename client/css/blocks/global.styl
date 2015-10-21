@@ -16,6 +16,7 @@ $mw = 970px
 $sw = 720px
 $xsw = 640px
 
+$scr_xs = 375px
 $scr_s = 660px
 $scr_sm = 760px
 $scr_md = 990px
@@ -36,7 +37,11 @@ body
     background black
     color white
     overflow-x hidden
-    min-width 760px
+    padding-top 80px
+    @media (min-width: $scr_xs)
+        padding-top 100px
+    @media (min-width: $scr_s)
+        padding-top 0px
 a
     text-decoration none
     t color

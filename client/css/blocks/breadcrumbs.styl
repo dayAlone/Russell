@@ -5,7 +5,10 @@
     z-index 200
     font-size 12px
     margin-bottom 5px
-    margin-left -5px
+    display none
+    @media (min-width: $scr_s)
+        display block
+        margin-left -5px
     /.title + &, /.categories &, /.products &
         margin-top -43px
     a&__item

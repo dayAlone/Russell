@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
-import UserInfo from '../UserInfo';
-import { Link } from 'react-router';
-import Modal from 'boron/ScaleModal';
-
+import React, { Component } from 'react'
+import UserInfo from '../UserInfo'
+import { Link } from 'react-router'
+import Modal from 'boron/ScaleModal'
+import Nav from './Nav'
 class Header extends Component {
     openModal(e) {
         e.preventDefault()
-        this.refs.modal.show();
+        this.refs.modal.show()
+    }
+    openNav(e) {
+        e.preventDefault()
+        this.refs.nav.show()
+    }
+    componentDidUpdate() {
+        this.refs.nav.hide()
     }
     render() {
         return <div>
-                <div className='header'>
+                <div className='header header--desktop'>
                     <div className='header__col'>
                         <Link to='/' className='header__logo'>
                             <img src={`/layout/images/svg/logo.svg`} />
@@ -21,6 +28,23 @@ class Header extends Component {
                     </div>
                     <UserInfo />
                 </div>
+                <div className='header header--mobile'>
+                    <div className='header__col'>
+                        <Link to='/' className='header__logo'>
+                            <img src={`/layout/images/svg/logo-mobile.svg`} />
+                        </Link>
+                    </div>
+                    <div className='header__col center'>
+                        <a href='#' onClick={this.openModal.bind(this)}><img src={`/layout/images/svg/title-description-mobile.svg`} className='header__title' /></a>
+
+                    </div>
+                    <div className='header__col right'>
+                        <a href='#' onClick={this.openNav.bind(this)} className='nav-trigger'><img src='/layout/images/svg/nav.svg' alt='' /></a>
+                    </div>
+                </div>
+                <Modal ref='nav' className='modal modal--nav'>
+                    <Nav />
+                </Modal>
                 <Modal ref='modal' className='modal'>
                     <div className='modal__content'>
                         <div className='text'>
@@ -34,8 +58,8 @@ class Header extends Component {
                         </div>
                     </div>
                 </Modal>
-        </div>;
+        </div>
     }
 }
 
-export default Header;
+export default Header

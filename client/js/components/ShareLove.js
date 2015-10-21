@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Typograf from 'typograf';
+import React, { Component } from 'react'
+import Typograf from 'typograf'
 
-import Carousel from './ui/Carousel';
+import Carousel from './ui/Carousel'
 
 class ShareLove extends Component {
     state = {
@@ -57,24 +57,31 @@ class ShareLove extends Component {
         ]
     }
     render() {
-        let tp = new Typograf({lang: 'ru'});
+        let tp = new Typograf({lang: 'ru'})
         return <div className='share-love'>
-            <img src='/layout/images/svg/title.svg' alt='' className='share-love__title' />
-            <Carousel className='share-love__slider' slideToShow='5'>
+            <div className='share-love__title'>
+                <img src='/layout/images/svg/title.svg' alt='' className='' />
+            </div>
+
+            <Carousel className='share-love__slider' slideToShow='5' responsive={true}>
                 {this.state.items.map((item, i) => {
-                    const { name, author, city, thumb, type, photos, video } = item;
+                    const { name, author, city, thumb, type, photos, video } = item
                     return <a href='#' key={i} className='share-love__item' style={{backgroundImage: `url(${thumb})`}}>
                         <div className='share-love__name'>{tp.execute(name)}</div>
                         <div className='share-love__author'>{author}{city ? ',' : false} <nobr>{city}</nobr></div>
                         {type === 'video' ? <img src='/layout/images/svg/video.svg' className='share-love__icon' /> : false}
-                    </a>;
+                    </a>
                 })}
             </Carousel>
-            <div className='share-love__action center'>
-                <a href='#' className='button'>Все рецепты</a>
-            </div>
-        </div>;
+
+        </div>
     }
 }
 
-export default ShareLove;
+export default ShareLove
+
+/*
+<div className='share-love__action center'>
+    <a href='#' className='button'>Все рецепты</a>
+</div>
+*/

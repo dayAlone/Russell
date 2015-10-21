@@ -10,6 +10,7 @@ import lost from 'lost'
 import willChange from 'postcss-will-change';
 import mqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
+import lost from 'lost'
 
 export default {
     entry: {
@@ -48,7 +49,7 @@ export default {
         ]
     },
     postcss() {
-        return [autoprefixer(({ browsers: 'last 2 version' })), willChange, mqpacker, cssnano];
+        return [autoprefixer(({ browsers: 'last 2 version' })), lost, willChange, mqpacker, cssnano];
     },
     plugins: [
         new webpack.ProvidePlugin({

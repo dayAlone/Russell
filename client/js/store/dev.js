@@ -7,10 +7,13 @@ import configureReducers from '../reducers';
 
 export default function configureStore(reducerRegistry) {
     const rootReducer = configureReducers(reducerRegistry.getReducers());
-
+    let DevTools = require('../components/ui/DevTools');
     let store = compose(
         applyMiddleware(thunkMiddleware),
-        reduxReactRouter({ createHistory }),
+        reduxReactRouter({
+            createHistory
+        }),
+        DevTools.instrument()
     )(createStore)(rootReducer);
 
     reducerRegistry.setChangeListener((reducers) => {

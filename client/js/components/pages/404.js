@@ -8,7 +8,9 @@ import { bindActionCreators } from 'redux';
 
 @connect(false, dispatch => ({design: bindActionCreators(design, dispatch)}))
 class Page404 extends Component {
-
+    componentDidMount() {
+        this.props.design.setLine(null)
+    }
     render() {
         return <div className='page page--index'>
             {!this.props.hideTitle ? <Title /> : false}

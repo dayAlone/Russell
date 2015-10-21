@@ -6,11 +6,7 @@ import Title from '../layout/Title';
 import Carousel from '../ui/Carousel';
 import Breadcrumbs from '../ui/Breadcrumbs';
 
-import * as design from '../../actions/design';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-@connect(false, dispatch => ({design: bindActionCreators(design, dispatch)}))
 class PageHistorySlider extends Component {
     state = {
         dates: [
@@ -34,9 +30,6 @@ class PageHistorySlider extends Component {
             { year: '2014', text: 'Представлена коллекция Illumina с технолщгией Colour Control, которая разработана с целью сделать процесс приготовления простым и наглядным.' },
             { year: '2015', text: 'В честь 60-летия инноваций бренда Russell Hobbs, который создал первый в мире электрический чайник с автоматическим отключением, выпущена юбилейная коллекция приборов для завтрака Legacy. ' }
         ]
-    }
-    componentDidMount() {
-        this.props.design.setLine(null)
     }
     render() {
         let tp = new Typograf({lang: 'ru'});

@@ -58,7 +58,6 @@ class ShareLove extends Component {
     }
     render() {
         let tp = new Typograf({lang: 'ru'});
-        return false;
         return <div className='share-love'>
             <img src='/layout/images/svg/title.svg' alt='' className='share-love__title' />
             <Carousel className='share-love__slider' slideToShow='5'>

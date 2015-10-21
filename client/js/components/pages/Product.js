@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
+
 import Page404 from '../pages/404';
 import Spinner from '../ui/Spinner';
 import Breadcrumbs from '../ui/Breadcrumbs';
 import Title from '../layout/Title';
+import ShareLove from '../ShareLove';
 
 import * as actionCreators from '../../actions/catalog';
 import * as design from '../../actions/design';
@@ -113,6 +115,7 @@ class Product extends Component {
                             </div>
                         </div>
                     </div>
+                    <ShareLove />
                 </div>;
             }
             return <Page404 />;

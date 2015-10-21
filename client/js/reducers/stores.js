@@ -87,9 +87,8 @@ const initialState = {
     ]
 };
 
-export default function(state = initialState, action) {
-    switch (action.type) {
-    default:
-        return state;
-    }
+let stores = function(state = initialState) {
+    return state
 }
+
+export default stores

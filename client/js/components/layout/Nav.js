@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import { connect } from 'react-redux'
-@connect(state => ({ routerState: state.router, line: state.design.line }))
-class Header extends Component {
+@connect(state => ({ line: state.design.line }))
+class Nav extends Component {
     render() {
         return <div className='nav'>
             <div className='nav__col'>
@@ -22,4 +22,4 @@ class Header extends Component {
         </div>;
     }
 }
-export default Header;
+export default Nav;

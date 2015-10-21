@@ -5,7 +5,8 @@ import CompressionPlugin from 'compression-webpack-plugin';
 import StringReplacePlugin from 'string-replace-webpack-plugin';
 
 // PostCSS plugins
-import autoprefixer from 'autoprefixer';
+import autoprefixer from 'autoprefixer'
+import lost from 'lost'
 import willChange from 'postcss-will-change';
 import mqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';

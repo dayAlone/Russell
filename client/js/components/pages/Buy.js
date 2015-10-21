@@ -5,26 +5,22 @@ import Title from '../layout/Title';
 import ShareLove from '../ShareLove';
 
 import { connect } from 'react-redux';
-import * as design from '../../actions/design';
-import { bindActionCreators } from 'redux';
 
-@connect(state => ({ stores: state.stores.list }), dispatch => ({design: bindActionCreators(design, dispatch)}))
+@connect(state => ({ stores: state.stores.list }))
 class PageBuy extends Component {
-    componentDidMount() {
-        this.props.design.setLine(null)
-    }
     render() {
-        let items = this.props.stores.map((el, i) => {
-            let { image, link, color } = el;
-            return <a key={i}
-                        className='stores__item'
-                        href={link}
-                        target='_blank'
-                        style={{
-                            backgroundImage: `url(${image})`,
-                            backgroundColor: color
-                        }} />;
-        })
+        let items = this.props.stores ?
+            this.props.stores.map((el, i) => {
+                let { image, link, color } = el;
+                return <a key={i}
+                            className='stores__item'
+                            href={link}
+                            target='_blank'
+                            style={{
+                                backgroundImage: `url(${image})`,
+                                backgroundColor: color
+                            }} />;
+            }) : false
         return <div className='page page--stores'>
             <Helmet title={'Russell Hobbs | Где купить'}/>
             <Title />

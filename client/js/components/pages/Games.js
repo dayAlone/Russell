@@ -8,14 +8,9 @@ import Title from '../layout/Title';
 import ShareLove from '../ShareLove';
 import Countdown from '../ui/Countdown';
 
-import * as design from '../../actions/design';
-import { bindActionCreators } from 'redux';
-
-@connect(state => ({ games: state.games.list }), dispatch => ({design: bindActionCreators(design, dispatch)}))
+@connect(state => ({ games: state.games.list }))
 class PageGames extends Component {
-    componentDidMount() {
-        this.props.design.setLine(null)
-    }
+
     render() {
         const games = this.props.games.map((el, i) => {
 

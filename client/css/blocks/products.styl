@@ -1,8 +1,13 @@
 .products
     full-width()
+    position relative
+    z-index 20
     background url(/layout/images/texture.jpg) bottom center
     @media (max-width: $scr_md)
         background-size 150% auto
+    @media (min-width: $scr_md)
+        background-size 155% auto
+        background-position top center
     padding-bottom 20px
     .text
         padding-top 0px
@@ -26,20 +31,20 @@
         padding 10px
 
         margin-bottom 30px
-        t all
+        transition .3s transform, .3s opacity, .3s box-shadow, 0s width
         box-shadow 0 0 0 0 alpha(black, 0)
         transform scale(.9)
         opacity 0
         position relative
         text-align center !important
-        column(1/4, cycle: 4)
+        @media (max-width: $scr_md)
+            lost-column 1/4 4
         @media (min-width: $scr_md)
-            column(1/5, cycle: 5)
+            lost-column 1/5 5
         .edit
             opacity 0
             pointer-events none
             t opacity
-
         .products--ready &
             transform scale(1)
             opacity 1

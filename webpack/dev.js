@@ -3,9 +3,11 @@ import config from 'config';
 import path from 'path';
 import StringReplacePlugin from 'string-replace-webpack-plugin';
 
+import lost from 'lost'
+
 let webpackConfig = {
     entry: {
-        app: [config.__dirname + '/client/js/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000']
+        app: [config.__dirname + '/client/js/index.dev.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000']
     },
     resolve: {
         alias: {}
@@ -27,9 +29,12 @@ let webpackConfig = {
             },
             {
                 test: /\.styl$/,
-                loaders: [ 'style-loader', 'css-loader', 'stylus-loader']
+                loaders: [ 'style-loader', 'css-loader', 'postcss', 'stylus-loader']
             }
         ]
+    },
+    postcss() {
+        return [lost];
     },
     plugins: [
         new webpack.ProvidePlugin({

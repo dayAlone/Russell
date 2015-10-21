@@ -2,12 +2,14 @@
     full-width()
     background url(/layout/images/texture.jpg) top center
     padding-bottom 50px
+    position relative
+    z-index 20
     &__name
         text-transform uppercase
         font-size 33px
         margin-bottom 10px
     &__tabs
-        column(6/12)
+        lost-column 6/12 0 0
         &-trigger
             a
                 height 40px
@@ -124,7 +126,7 @@
         background-size contain
         text-align center !important
         position relative
-        column(6/12)
+        lost-column 6/12 0 0
         min-height 460px
         @media (min-width: $scr_md)
 

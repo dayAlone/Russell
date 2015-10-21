@@ -1,6 +1,5 @@
 import webpack from 'webpack';
 import config from 'config';
-import path from 'path';
 import StringReplacePlugin from 'string-replace-webpack-plugin';
 
 import lost from 'lost'

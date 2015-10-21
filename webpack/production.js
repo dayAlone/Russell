@@ -10,7 +10,6 @@ import lost from 'lost'
 import willChange from 'postcss-will-change';
 import mqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
-import lost from 'lost'
 
 export default {
     entry: {

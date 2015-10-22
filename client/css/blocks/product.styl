@@ -225,10 +225,11 @@
                     margin-left -64px
                     &:before
                         left 23%
-        &:hover
-            .product__thumb-preview
-                transform translateY(0)
-                opacity 1
+        @media (min-width: $scr_s)
+            &:hover
+                .product__thumb-preview
+                    transform translateY(0)
+                    opacity 1
         &-preview
             pointer-events none
             size 376px

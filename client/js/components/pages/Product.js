@@ -29,6 +29,7 @@ class Product extends Component {
     }
     handleClick(e) {
         let href = e.target.href
+        console.log(e.target)
         this.setState({open: href.split('#')[1] })
         e.preventDefault()
         e.stopPropagation()

@@ -20,9 +20,12 @@
             max-width 97%
         &__flag
             @extend .title__flag
-            right 0
-            top 30px
-            left auto
+
+            @media (min-width: $scr_s)
+                width 100px
+                right 0
+                top 30px
+                left auto
         &__image
             position relative
             lost-column 4/12 0 0

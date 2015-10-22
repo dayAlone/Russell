@@ -12,15 +12,19 @@
                 display block
     &__flag
         position absolute
-        background-color red
+        background-color #e6151d
         height 24px
         font-size 15px
         font-weight bold
         z-index 2
         line-height 26px
         padding 0 10px
-        left 0
-        bottom 30px
+        text-align center
+        width 100%
+        @media (min-width: $scr_s)
+            left 0
+            bottom 30px
+            width auto
 
     &__question
         font-weight bold

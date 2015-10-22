@@ -1,77 +1,111 @@
 .product
     full-width()
-    background url(/layout/images/texture.jpg) top center
+
     padding-bottom 50px
     position relative
     z-index 20
+    @media (max-width: $scr_sm)
+        padding 15px 30px 25px
+    @media (min-width: $scr_sm)
+        background url(/layout/images/texture.jpg) top center
     &__name
         text-transform uppercase
-        font-size 33px
         margin-bottom 10px
+        font-size 20px
+        line-height 1.1
+        @media (min-width: $scr_xs)
+            font-size 23px
+        @media (min-width: $scr_s)
+            font-size 27px
+        @media (min-width: $scr_sm)
+            font-size 33px
+
     &__tabs
-        lost-column 6/12 0 0
+        margin-right -30px
+        margin-left -30px
+        position relative
+        z-index 3
+        @media (min-width: $scr_sm)
+            lost-column 6/12 0 0
         &-trigger
+            @media (max-width: $scr_s)
+                background url(/layout/images/line.png) center bottom no-repeat
+                background-size 100% 2px
+                padding-bottom 0px
+                padding-left 30px
             a
-                height 40px
-                line-height 43px
-                padding 0 12px
-                color black
-                font-size 12px
-                background-color white
-                margin-right 2px
+                font-size 14px
+                color white
                 position relative
                 z-index 2
                 text-align center
+                margin-right 20px
+                height 30px
+
                 display inline-block
-                &:after
-                    position absolute
-                    size 100%
-                    background: linear-gradient(to bottom, rgba(230,230,230,1) 0%,rgba(230,230,230,1) 50%,rgba(177,177,177,1) 100%);
-                    content ""
-                    top 0
-                    left 0
-                    t opacity
-                span
-                    position relative
-                    z-index 2
+                &.active > span
+                    border-line(alpha(white, .5))
+                img
+                    display none
                 > *
                     pointer-events none
-                img
-                    middle()
-                    position relative
-                    top -1px
-                    margin-left 12px
-                &:not(.active):hover
-                    &:after
-                        opacity .5
-                &.active
+                @media (min-width: $scr_s)
 
+                    margin-right 2px
+                    padding 0 12px
+                    font-size 12px
+                    height 40px
+                    line-height 43px
+                    color black
+                    background white
                     &:after
-                        opacity 0
+                        position absolute
+                        size 100%
+                        background: linear-gradient(to bottom, rgba(230,230,230,1) 0%,rgba(230,230,230,1) 50%,rgba(177,177,177,1) 100%);
+                        content ""
+                        top 0
+                        left 0
+                        t opacity
+                    span
+                        position relative
+                        z-index 2
+
+                    img
+                        middle()
+                        position relative
+                        top -1px
+                        margin-left 12px
+                    &:not(.active):hover
+                        &:after
+                            opacity .5
+                    &.active
+
+                        &:after
+                            opacity 0
         &-content
-            background-color white
-            color black
+
             font-size 13px
             line-height 1.2
-            padding 30px 15px 25px
+
             display none
             border-radius 8px
             box-shadow 0 5px 15px 2px alpha(black,.5)
             border-top-left-radius 0
+            padding 30px 0px 25px
+            @media (min-width: $scr_sm)
+                background-color white
+                color black
+                padding 30px 15px 25px
             &--active
                 display block
-            .featureIcons
-                margin-top 20px
-                background url(/layout/images/divide.png) top center no-repeat
-                padding-top 30px
-                ul
-                    margin-bottom 0px
-                    li
-                        display inline
+
 
             p
                 margin-bottom 15px
-                padding-left 0px !important
+                @media (max-width: $scr_sm)
+                    padding 0 30px
+                @media (min-width: $scr_sm)
+                    padding-left 0px !important
                 small
                     font-size 10px
                 br
@@ -83,6 +117,8 @@
         overflow hidden
         margin-bottom 0px
         list-style square outside
+        @media (max-width: $scr_sm)
+            padding 0 30px 0 50px
         li
             margin-bottom 6px
     &__image
@@ -91,6 +127,14 @@
         padding-top 20px
         margin-top 20px
         background url(/layout/images/divide.png) top center no-repeat
+    &__icons
+        @media (max-width: $scr_sm)
+            padding 0 30px 0 30px
+            text-align center
+            img
+                background-color white
+                border-radius 50%
+                margin 0 10px 10px 0
     &__video
         position: relative
         display block
@@ -108,6 +152,8 @@
             border 0
     &__pdf
         padding-top 25px
+        @media (max-width: $scr_sm)
+            padding 25px 30px 0
         a
             color red
             font-size 14px
@@ -126,19 +172,28 @@
         background-size contain
         text-align center !important
         position relative
-        lost-column 6/12 0 0
-        min-height 460px
-        @media (min-width: $scr_md)
+        padding-bottom 100px
+        margin-bottom 30px
+        @media (min-width: $scr_s)
+            padding-bottom 130px
+            margin-top -40px
 
-            min-height 530px
+        @media (min-width: $scr_sm)
+            margin-top 0px
+            margin-bottom 0px
+            lost-column 6/12 0 0
+        @media (min-width: $scr_md)
+            padding-bottom 160px
         img
             max-width 85%
             display inline-block
     &__thumbs
         width 100%
         position absolute
-        bottom 20px
+        bottom 0px
         left 0
+        @media (min-width: $scr_s)
+            bottom 20px
     &__thumb
         size 75px
         border 1px solid white
@@ -179,5 +234,11 @@
                 border-width: 16px
                 margin-left: -16px
     &__artnumber
-        font-size 24px
         margin-top 0px
+        font-size 15px
+        @media (min-width: $scr_xs)
+            font-size 17px
+        @media (min-width: $scr_s)
+            font-size 20px
+        @media (min-width: $scr_sm)
+            font-size 24px

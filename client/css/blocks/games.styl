@@ -5,22 +5,27 @@
         margin-top -65px
     .game
         full-width()
-        position relative
         padding-top 20px
         min-height 241px
+        @media (max-width: $scr_s)
+            padding 20px 30px 0
+            text-align center
         &__content
-            lost-column 8/12 0 0
-            position absolute
-            left 0
-            top 50%
-            transform translateY(-50%)
+            @media (min-width: $scr_s)
+                lost-column 8/12 0 0
+                position absolute
+                left 0
+                top 50%
+                transform translateY(-50%)
         &__description
             line-height 1.4
             margin-bottom 25px
             max-width 97%
         &__flag
             @extend .title__flag
-
+            left 0
+            width 100px
+            top 30px
             @media (min-width: $scr_s)
                 width 100px
                 right 0
@@ -28,11 +33,16 @@
                 left auto
         &__image
             position relative
-            lost-column 4/12 0 0
-            float right !important
-            margin-right 0px
-            img
-                max-width 100%
+            @media (max-width: $scr_s)
+                display inline-block
+                margin-bottom 20px
+            @media (min-width: $scr_s)
+                text-align right
+                lost-column 4/12 0 0
+                float right !important
+                margin-right 0px
+                img
+                    max-width 100%
         &__line
             margin 20px 0 0
         &__title

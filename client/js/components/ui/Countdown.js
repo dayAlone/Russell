@@ -86,7 +86,7 @@ class Coundown extends Component {
             {
                 dateStart.toDate() < current ?
                 ( !this.props.hideButton ? <a href={this.props.link} className='countdown__button'>Участвовать</a> : false)
-                : <div className='countdown__frame'><div className='countdown__till'>До начала<br/>акции</div>{counter}</div>
+                : <div className='countdown__frame'><div className='countdown__till'>До начала <br/>акции</div>{counter}</div>
             }
         </div>
     }

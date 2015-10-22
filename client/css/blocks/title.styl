@@ -2,10 +2,14 @@
     full-width()
     position relative
     z-index 10
+
     &__line
 
         .title--counter &
-            margin-top 37px
+            @media (max-width: $scr_s)
+                margin-bottom 10px
+            @media (min-width: $scr_s)
+                margin-top 37px
         .title--small &
             display none
             @media (min-width: $scr_s)
@@ -14,14 +18,16 @@
         position absolute
         background-color #e6151d
         height 24px
-        font-size 15px
         font-weight bold
-        z-index 2
+        z-index 20
         line-height 26px
         padding 0 10px
         text-align center
         width 100%
+        bottom -10vh
+        font-size 13px
         @media (min-width: $scr_s)
+            font-size 15px
             left 0
             bottom 30px
             width auto
@@ -63,6 +69,7 @@
 
     &__image
         position relative
+
         .title--small &
             @media (min-width: $scr_s)
                 margin-bottom 25px
@@ -81,6 +88,9 @@
         @media (min-width: $scr_md)
             lost-column 8/12 0 0
             lost-move 4/12
+        .title--counter &
+            @media (max-width: $scr_s)
+                margin-bottom 20px
         img
             margin-right 12px
 
@@ -92,7 +102,9 @@
                 margin-top -74px
 
     &__counter
-        min-height 60px
+        min-height 20px
+        @media (min-width: $scr_s)
+            min-height 60px
         @media (min-width: $scr_s)
             lost-column 9/12 0
 

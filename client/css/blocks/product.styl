@@ -190,12 +190,12 @@
             display inline-block
 
     &__thumbs
-
+        text-align center
+        min-width 100%
         position absolute
         bottom 0px
         left 0
-        margin-right -15px
-        margin-left -15px
+
         @media (min-width: $scr_s)
             bottom 20px
     &__thumb
@@ -207,6 +207,24 @@
         margin 0 10px
         margin-top 10px
         position relative
+        max-width calc(30% - 10px)
+        &:nth-child(4n)
+            @media (max-width: $scr_s)
+                display none
+        &:last-of-type
+            margin-right 0px
+            @media (max-width: $scr_s)
+                .product__thumb-preview
+                    margin-left -248px
+                    &:before
+                        left 76%
+        &:first-of-type
+            margin-left 0px
+            @media (max-width: $scr_s)
+                .product__thumb-preview
+                    margin-left -64px
+                    &:before
+                        left 23%
         &:hover
             .product__thumb-preview
                 transform translateY(0)
@@ -224,6 +242,9 @@
             t all
             opacity 0
             background-size cover
+            @media (max-width: $scr_s)
+                size 320px
+                margin-left -160px
             &:before
                 top 100%
                 left 50%

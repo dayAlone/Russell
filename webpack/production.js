@@ -44,6 +44,10 @@ export default {
                             return config.cdn + m
                         }
                     }]}), 'css-loader', 'postcss', 'stylus-loader']
+            },
+            {
+                test: /\.css$/,
+                loaders: [ 'style-loader', 'css-raw-loader', 'postcss']
             }
         ]
     },

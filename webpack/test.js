@@ -32,6 +32,10 @@ export default {
             {
                 test: /\.styl$/,
                 loaders: [ 'style-loader', 'css-loader', 'postcss', 'stylus-loader']
+            },
+            {
+                test: /\.css$/,
+                loaders: [ 'style-loader', 'css-raw-loader', 'postcss']
             }
         ]
     },

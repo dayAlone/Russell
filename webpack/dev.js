@@ -16,7 +16,7 @@ let webpackConfig = {
         filename: '[name].js',
         pathinfo: true
     },
-    //devtool: 'eval-cheap-source-map',
+    devtool: 'eval-cheap-source-map',
     module: {
         noParse: [/moment.js/],
         loaders: [

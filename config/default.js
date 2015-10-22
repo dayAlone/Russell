@@ -1,5 +1,5 @@
-import path from 'path';
-import { deferConfig as defer } from 'config/defer';
+import path from 'path'
+import { deferConfig as defer } from 'config/defer'
 
 export default {
 
@@ -7,7 +7,7 @@ export default {
     version: process.env.VERSION || 'v1.2.3',
     domain: 'localhost',
     __dirname: defer(function(cfg) {
-        return cfg.root;
+        return cfg.root
     }),
     ftp: {
         host: 'ftp.selcdn.ru',
@@ -25,10 +25,10 @@ export default {
     },
     folders: {
         source: defer(function(cfg) {
-            return path.join(cfg.root, 'client/public/');
+            return path.join(cfg.root, 'client/public/')
         }),
         tmp: defer(function(cfg) {
-            return path.join(cfg.root, 'layout');
+            return path.join(cfg.root, 'layout')
         }),
     },
     secret: 'mysecret',
@@ -52,12 +52,12 @@ export default {
         }
     },
     '/': defer(function(cfg) {
-        return cfg.root;
+        return cfg.root
     }),
     template: {
         // template.root uses config.root
         root: defer(function(cfg) {
-            return path.join(cfg.root, 'client/templates');
+            return path.join(cfg.root, 'client/templates')
         })
     },
     facebook: {
@@ -83,4 +83,4 @@ export default {
         }
     },
     root: process.cwd()
-};
+}

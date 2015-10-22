@@ -48,7 +48,7 @@ export default {
         ]
     },
     postcss() {
-        return [autoprefixer(({ browsers: 'last 2 version' })), lost, willChange, mqpacker, cssnano]
+        return [autoprefixer(({ browsers: 'last 2 version' })), lost, willChange, mqpacker({sort: true}), cssnano]
     },
     plugins: [
         new webpack.ProvidePlugin({

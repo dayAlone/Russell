@@ -17,7 +17,7 @@ import {PhotoSwipe} from 'react-photoswipe'
 
 @connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Product extends Component {
-    state = { open: 'short', photoswipe: false }
+    state = { open: 'short', photoswipe: false, index: 0 }
     componentWillMount() {
         const { getProducts } = this.props.actions
         if (this.props.products.length === 0) getProducts()
@@ -32,7 +32,6 @@ class Product extends Component {
     }
     handleClick(e) {
         let href = e.target.href
-        console.log(e.target)
         this.setState({open: href.split('#')[1] })
         e.preventDefault()
         e.stopPropagation()
@@ -40,15 +39,17 @@ class Product extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.products.length === 0) this.getCurrent()
     }
-    openPhotoSwipe(e) {
-        e.preventDefault()
-        this.setState({photoswipe: true})
-        $('body').addClass('photoswipe-open')
+    openPhotoSwipe(i) {
+        return (e) => {
+            e.preventDefault()
+            this.setState({photoswipe: true, index: i})
+            $('body').addClass('photoswipe-open')
+        }
     }
     closePhotoSwipe() {
         $('body').removeClass('photoswipe-open')
         this.setState({photoswipe: false})
-        console.log(1)
+
     }
     render() {
         let { routes } = this.props
@@ -68,7 +69,7 @@ class Product extends Component {
                     <Helmet title={'Russell Hobbs | ' + name}/>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
-                    <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false}} items={images.map(el => ({src: el, w: 369, h: 362}))} onClose={this.closePhotoSwipe.bind(this)}/>
+                    <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false, index: this.state.index}} items={images.map(el => ({src: el, w: 369, h: 362}))} onClose={this.closePhotoSwipe.bind(this)}/>
                     <div className='product'>
                         <h2 className='product__name'>{name}</h2>
                         <h4 className='product__artnumber'>{artnumber}</h4>
@@ -78,7 +79,7 @@ class Product extends Component {
                             </div>
                             <div className='product__thumbs'>
                                 {images.map((el, i) => {
-                                    return <a href='#' onClick={this.openPhotoSwipe.bind(this)} className='product__thumb' key={i} style={{backgroundImage: `url(${el})`}}>
+                                    return <a href='#' onClick={this.openPhotoSwipe(i)} className='product__thumb' key={i} style={{backgroundImage: `url(${el})`}}>
                                         <div className='product__thumb-preview' style={{backgroundImage: `url(${el})`}}></div>
                                     </a>
                                 })}

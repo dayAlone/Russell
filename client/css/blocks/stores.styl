@@ -18,14 +18,15 @@
         @media (min-width: $scr_sm)
             lost-column 1/4 0 0
             padding-bottom 25%
+            &:hover
+                box-shadow 0 10px 20px 5px alpha(black, .5)
+                transform translateY(-10px) scale(1.01)
+                z-index 1
+                transition-delay .3s
         @media (min-width: $scr_md)
             lost-column 1/5 0 0
             padding-bottom 20%
-        &:hover
-            box-shadow 0 10px 20px 5px alpha(black, .5)
-            transform translateY(-10px) scale(1.01)
-            z-index 1
-            transition-delay .3s
+
         &--hover
             z-index 20
     & + p

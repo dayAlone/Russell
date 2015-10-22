@@ -20,7 +20,8 @@
         h2
             margin-bottom 20px
         .page--index &
-            text-align center
+            @media (max-width: $scr_s)
+                text-align center
 
     &__action
         full-width()

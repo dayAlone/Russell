@@ -55,7 +55,7 @@ class Carousel extends Component {
                     },
                 ] : false
             })
-        }, 300);
+        }, 300)
 
     }
     componentDidMount() {

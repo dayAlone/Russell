@@ -3,11 +3,13 @@
     position relative
     z-index 10
     &__line
-        display none
-        @media (min-width: $scr_s)
-            display block
+
         .title--counter &
             margin-top 37px
+        .title--small &
+            display none
+            @media (min-width: $scr_s)
+                display block
     &__flag
         position absolute
         background-color red
@@ -40,6 +42,7 @@
             lost-move -8/12 row 0
             font-size 24px
             line-height 27px
+
     &__heart
         position relative
         top 3px
@@ -53,20 +56,24 @@
             lost-column 3/12 0 0
             a.button
                 float right
+
     &__image
         position relative
         .title--small &
             @media (min-width: $scr_s)
                 margin-bottom 25px
+
     &__divider
         full-width()
+
     &__products
 
-        text-align right !important
+        text-align center
         position relative
         @media (min-width: $scr_s)
             lost-column 7/12 0 0
             lost-move 5/12
+            text-align right
         @media (min-width: $scr_md)
             lost-column 8/12 0 0
             lost-move 4/12
@@ -121,10 +128,12 @@
                 max-width 78%
             strong
                 font-weight bold
+
     &__love
         margin 25px 0 16px
         display none
         @media (min-width: $scr_s)
             display block
+
     & + .share-love
         margin-top -65px

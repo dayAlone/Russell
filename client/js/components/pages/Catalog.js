@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import Title from '../layout/Title';
-import Helmet from 'react-helmet';
-import ShareLove from '../ShareLove';
-import Categories from '../Categories';
+import React, { Component } from 'react'
+import Title from '../layout/Title'
+import Helmet from 'react-helmet'
+import ShareLove from '../ShareLove'
+import Categories from '../Categories'
 
 class PageCatalog extends Component {
     render() {
-        return <div className='page page--index'>
+        return <div className='page page--catalog'>
             <Helmet title={'Russell Hobbs | Продукты'}/>
             <Title />
             <Categories source='categories' routes={this.props.routes}>
@@ -22,8 +22,8 @@ class PageCatalog extends Component {
                 </div>
             </Categories>
             <ShareLove />
-        </div>;
+        </div>
     }
 }
 
-export default PageCatalog;
+export default PageCatalog

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 import { connect } from 'react-redux'
 @connect(state => ({ line: state.design.line }))
@@ -19,7 +19,7 @@ class Nav extends Component {
                 <Link to='/games/' className='nav__item' activeClassName='nav__item--active'>Выиграй мечту!</Link>
             </div>
             <div className='nav__line' style={{backgroundImage: `url(${this.props.line ? this.props.line : '/layout/images/menu.jpg'})`}}></div>
-        </div>;
+        </div>
     }
 }
-export default Nav;
+export default Nav

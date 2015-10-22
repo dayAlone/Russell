@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import t from 'tcomb-form'
-const Form = t.form.Form;
+const Form = t.form.Form
 
 import { connect } from 'react-redux'
 import * as actionCreators from '../../actions/catalog'
@@ -13,7 +13,7 @@ let Product = t.struct({
     images: t.list(t.String),
     description: t.String,
     short_description: t.String,
-});
+})
 
 let formLayout = (locals) => {
     return <div className='row'>
@@ -35,7 +35,7 @@ let formLayout = (locals) => {
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class EditProduct extends Component {
     save() {
-        var value = this.refs.form.getValue();
+        var value = this.refs.form.getValue()
         if (value) {
             console.log(value)
         }
@@ -73,7 +73,7 @@ class EditProduct extends Component {
                 optional: '',
                 required: ''
             }
-        };
+        }
         return <div>
             <Form
                 ref='form'

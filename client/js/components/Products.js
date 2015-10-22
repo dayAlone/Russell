@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet';
+import Helmet from 'react-helmet'
 
 import Page404 from './pages/404'
 import Spinner from './ui/Spinner'
@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../actions/catalog'
-import * as design from '../actions/design';
+import * as design from '../actions/design'
 
 @connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Products extends Component {
@@ -25,7 +25,7 @@ class Products extends Component {
             if (source === 'collections') getCollections()
             else getCategories()
         }
-        else this.getCurrent();
+        else this.getCurrent()
         
         if (products.length === 0) getProducts()
     }
@@ -37,20 +37,20 @@ class Products extends Component {
     }
     componentDidUpdate(prevProps) {
         this.activateAnimation()
-        if (prevProps[this.props.source].length === 0) this.getCurrent();
+        if (prevProps[this.props.source].length === 0) this.getCurrent()
     }
     getCurrent() {
-        let { code, source } = this.props;
-        let { setLine } = this.props.design;
+        let { code, source } = this.props
+        let { setLine } = this.props.design
         const current = this.props[source].filter(el => (el.code === code))[0]
-        setLine(current.line);
+        setLine(current.line)
         this.setState({current: current})
     }
     editProduct(code, e) {
         e.preventDefault()
         let { products } = this.props
-        const item = products.filter(el => (code === el.code))[0];
-        this.setState({edit: item});
+        const item = products.filter(el => (code === el.code))[0]
+        this.setState({edit: item})
         this.refs.modal.show()
     }
     activateAnimation() {
@@ -87,7 +87,7 @@ class Products extends Component {
     render() {
         let { products, routes, isEditor } = this.props
         if (this.state.current && products.length > 0) {
-            const current = this.state.current;
+            const current = this.state.current
             if (current) {
                 return <div className='products'>
                         <Helmet title={'Russell Hobbs | ' + current.name}/>

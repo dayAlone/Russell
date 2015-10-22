@@ -1,46 +1,46 @@
-import React, { Component } from 'react';
-import Helmet from 'react-helmet';
+import React, { Component } from 'react'
+import Helmet from 'react-helmet'
 
-import Page404 from '../pages/404';
-import Spinner from '../ui/Spinner';
-import Breadcrumbs from '../ui/Breadcrumbs';
-import Title from '../layout/Title';
-import ShareLove from '../ShareLove';
+import Page404 from '../pages/404'
+import Spinner from '../ui/Spinner'
+import Breadcrumbs from '../ui/Breadcrumbs'
+import Title from '../layout/Title'
+import ShareLove from '../ShareLove'
 
-import * as actionCreators from '../../actions/catalog';
-import * as design from '../../actions/design';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import * as actionCreators from '../../actions/catalog'
+import * as design from '../../actions/design'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 @connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Product extends Component {
     state = { open: 'short' }
     componentWillMount() {
-        const { getProducts } = this.props.actions;
-        if (this.props.products.length === 0) getProducts();
-        else this.getCurrent();
+        const { getProducts } = this.props.actions
+        if (this.props.products.length === 0) getProducts()
+        else this.getCurrent()
     }
     getCurrent() {
-        let {products, routeParams} = this.props;
-        let { setLine } = this.props.design;
+        let {products, routeParams} = this.props
+        let { setLine } = this.props.design
         let current = products.filter(el => (el.code === routeParams.code))[0]
-        setLine(current.line);
+        setLine(current.line)
         this.setState({current: current})
     }
     handleClick(e) {
-        let href = e.target.href;
-        this.setState({open: href.split('#')[1] });
-        e.preventDefault();
-        e.stopPropagation();
+        let href = e.target.href
+        this.setState({open: href.split('#')[1] })
+        e.preventDefault()
+        e.stopPropagation()
     }
     componentDidUpdate(prevProps) {
-        console.log(1);
-        if (prevProps.products.length === 0) this.getCurrent();
+        console.log(1)
+        if (prevProps.products.length === 0) this.getCurrent()
     }
     render() {
-        let { routes } = this.props;
+        let { routes } = this.props
         if (this.state.current) {
-            const current = this.state.current;
+            const current = this.state.current
             if (current) {
                 const { name,
                         artnumber,
@@ -50,9 +50,9 @@ class Product extends Component {
                         pdf,
                         features,
                         line,
-                        description} = current;
+                        description} = current
 
-                return <div className='page'>
+                return <div className='page page--product'>
                     <Helmet title={'Russell Hobbs | ' + name}/>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
@@ -67,7 +67,7 @@ class Product extends Component {
                                 {images.map((el, i) => {
                                     return <div className='product__thumb' key={i} style={{backgroundImage: `url(${el})`}}>
                                         <div className='product__thumb-preview' style={{backgroundImage: `url(${el})`}}></div>
-                                    </div>;
+                                    </div>
                                 })}
                             </div>
                         </div>
@@ -116,12 +116,12 @@ class Product extends Component {
                         </div>
                     </div>
                     <ShareLove />
-                </div>;
+                </div>
             }
-            return <Page404 />;
+            return <Page404 />
         }
-        return <Spinner />;
+        return <Spinner />
     }
 }
 
-export default Product;
+export default Product

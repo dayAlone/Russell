@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import Typograf from 'typograf';
-import Helmet from 'react-helmet';
+import React, { Component } from 'react'
+import Typograf from 'typograf'
+import Helmet from 'react-helmet'
 
-import Title from '../layout/Title';
-import Carousel from '../ui/Carousel';
-import Breadcrumbs from '../ui/Breadcrumbs';
+import Title from '../layout/Title'
+import Carousel from '../ui/Carousel'
+import Breadcrumbs from '../ui/Breadcrumbs'
 
 
 class PageHistorySlider extends Component {
@@ -32,28 +32,28 @@ class PageHistorySlider extends Component {
         ]
     }
     render() {
-        let tp = new Typograf({lang: 'ru'});
+        let tp = new Typograf({lang: 'ru'})
         return <div className='history'>
             <h2 className='history__title'>Детали</h2>
             <Carousel className='history__slider' slideToShow='1' arrowsType='black'>
                 {this.state.dates.map((item, i) => {
-                    const { year, text } = item;
+                    const { year, text } = item
                     return <div className='history__item' key={i}>
                         <div className='history__content'>
                             <div className='history__year'>{year}</div>
                             <div className='history__divider'></div>
                             <div className='history__text'>{tp.execute(text)}</div>
                         </div>
-                    </div>;
+                    </div>
                 })}
             </Carousel>
-        </div>;
+        </div>
     }
 }
 
 class PageHistory extends Component {
     render() {
-        return <div className='page page--index'>
+        return <div className='page page--history'>
                 <Helmet title='Russell Hobbs | История бренда' />
                 <Title />
                 <Breadcrumbs routes={this.props.routes} />
@@ -87,4 +87,4 @@ class PageHistory extends Component {
     }
 }
 
-export default PageHistory;
+export default PageHistory

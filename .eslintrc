@@ -22,8 +22,10 @@
 		"dot-notation": [0, {"allowKeywords": false}],
 		"consistent-this": [0, "that"],
 		"no-unused-vars": [1, {"args": "after-used", "varsIgnorePattern": "[rR]eact"}],
-
+		"one-var": 0,
 		"comma-dangle": 0,
+		"no-cond-assign": 0,
+		"no-nested-ternary": 0,
 		"spaced-comment": 0,
 		"guard-for-in": 0,
 		"camelcase": 0,

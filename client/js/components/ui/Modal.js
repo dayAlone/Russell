@@ -19,14 +19,14 @@ class Modal extends Component {
     }
 
     measureScrollbar() {
-        let scrollDiv = document.createElement('div');
-        $('body').append(scrollDiv);
+        let scrollDiv = document.createElement('div')
+        $('body').append(scrollDiv)
 
-        $(scrollDiv).css({ position: 'absolute', top: '-9999px', width: '50px', height: '50px', overflow: 'scroll' });
-        let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+        $(scrollDiv).css({ position: 'absolute', top: '-9999px', width: '50px', height: '50px', overflow: 'scroll' })
+        let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
         $(scrollDiv).remove()
 
-        return scrollbarWidth;
+        return scrollbarWidth
     }
     checkOwerflow() {
         setTimeout(() => {
@@ -36,13 +36,13 @@ class Modal extends Component {
             if (isOverflow) {
                 $('body')
                     .css('padding-right', bodyPadding + scrollbarWidth)
-                    .addClass('modal-overflow');
+                    .addClass('modal-overflow')
             } else {
                 $('body')
                     .css('padding-right', 0)
                     .removeClass('modal-overflow')
             }
-        }, 500);
+        }, 500)
     }
 
     show() {
@@ -60,8 +60,8 @@ class Modal extends Component {
             return React.cloneElement(child, {
                 hideModal: this.hide,
                 hello: 123
-            });
-        });
+            })
+        })
     }
     render() {
         return <div className={`modal-frame ${this.props.static ? 'modal-frame--static' : ''}`}>
@@ -74,4 +74,4 @@ class Modal extends Component {
     }
 }
 
-export default Modal;
+export default Modal

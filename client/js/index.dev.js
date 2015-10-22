@@ -30,7 +30,7 @@ const store = configureStore(reducerRegistry)
 render(<div>
     <Provider store={store}>
         <div>
-            <Router routes={routes} history={createBrowserHistory()}/>
+            <Router onUpdate={() => window.scrollTo(0, 0)} scrollBehavior='scrollToTop' routes={routes} history={createBrowserHistory()}/>
             <DevTools />
         </div>
     </Provider>

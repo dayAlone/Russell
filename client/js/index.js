@@ -19,6 +19,6 @@ const store = configureStore(reducerRegistry)
 
 render(<div>
     <Provider store={store}>
-        <Router routes={routes} history={createBrowserHistory()}/>
+        <Router onUpdate={() => window.scrollTo(0, 0)} routes={routes} history={createBrowserHistory()}/>
     </Provider>
 </div>, document.querySelector('#app'))

@@ -1,6 +1,7 @@
 .modal
-    transform: translate3d(-50%, -50%, 0) !important
-    lost-utility clearfix
+    width 100%
+    @media (min-width: $scr_s)
+        max-width 600px
     .modal-overflow &
         position relative !important
         top 0 !important
@@ -14,24 +15,26 @@
         size 100%
         top 0
         left 0
-        pointer-events none
         overflow auto
-        z-index -1
-        .modal-open &
-            pointer-events all
-            z-index 1000
-        &--static
-            .modal + div
-                pointer-events none
+        z-index 1000
     &-overflow
         overflow: hidden
-    & + div
-        background-color black !important
+    &-backdrop
+        background-color alpha(black, .9)
         overflow auto
     &--nav
-        background-color alpha(#cf1c2a, .9)
-        -webkit-backdrop-filter blur(40px)
         min-height 100%
+        width 100% !important
+        .modal
+            &__close
+                float right
+                margin 15px 20px 10px
+            &__content
+                background-color transparent
+                padding 0
+        & + .modal-backdrop
+            background-color alpha(#cf1c2a, .9)
+            -webkit-backdrop-filter blur(40px) !important
         .nav
             &__col
                 width 100%
@@ -52,8 +55,9 @@
                     font-weight bold
             &__line
                 display none
-        & + div
-            background-color transparent !important
+
+
+
 
     &__title
         margin-top 0px
@@ -62,6 +66,10 @@
     &__content
         padding 40px
         lost-utility clearfix
+        z-index 2000
+        width 100%
+        background-color white
+
     p
         color black
         &:last-item

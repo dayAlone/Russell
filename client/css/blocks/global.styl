@@ -79,8 +79,13 @@ a
         transform translateX(-50%)
         min-height 100px
 
-.pswp--svg .pswp__button:not(.pswp__button--arrow--left), .pswp--svg .pswp__button:not(.pswp__button--arrow--right), .pswp--svg .pswp__button--arrow--left:before, .pswp--svg .pswp__button--arrow--right:before
-    background-image url(/layout/images/default-skin.svg) !important
-
 .pswp
     z-index 20000 !important
+    &--svg
+        .pswp
+            &__button
+                background-image url(/layout/images/default-skin.svg) !important
+                &--arrow--left, &--arrow--right
+                    background-image none !important
+                    &:before
+                        background-image url(/layout/images/default-skin.svg) !important

@@ -3,6 +3,10 @@ import UserInfo from '../UserInfo'
 import { Link } from 'react-router'
 import Modal from '../ui/Modal'
 import Nav from './Nav'
+
+import { connect } from 'react-redux'
+
+@connect()
 class Header extends Component {
     openModal(e) {
         e.preventDefault()

@@ -22,7 +22,6 @@ class ShareLove extends Component {
         let { name, description, preview, video } = this.props.recepts[i]
         let modalContent = <div>
             <div className={`recept  ${video ? 'recept--video' : ''}`}>
-                <a href='#' className='modal__close' onClick={this.closeModal.bind(this)}><img src='/layout/images/svg/close.svg' alt='' /></a>
                 {video ?
                     <div className='recept__video'>
                         <iframe width='640' height='360' src={`https://www.youtube.com/embed/${video}`} frameBorder='0' allowFullScreen='' />
@@ -33,6 +32,7 @@ class ShareLove extends Component {
                     </div>
                 }
                 <div className='recept__content'>
+                    <a href='#' className='modal__close' onClick={this.closeModal.bind(this)}><img src='/layout/images/svg/close.svg' alt='' /></a>
                     {video ? <h4 className='recept__name'>{name}</h4> : false }
                     <p>{description}</p>
                 </div>

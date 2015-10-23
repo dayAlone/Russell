@@ -113,8 +113,7 @@ export default function(animation) {
                 transitionEvents.addEndEventListener(node, endListener)
             }
 
-            return <RenderInBody>
-                    <span className={`modal-frame ${this.props.static ? 'modal-frame--static' : ''}`}>
+            return <span className={`modal-frame ${this.props.static ? 'modal-frame--static' : ''}`}>
                     <div ref='modal' style={modalStyle} className={this.props.className}>
                         {sharp}
                         <div ref='content' tabIndex='-1' style={contentStyle} className='modal__content'>
@@ -124,7 +123,6 @@ export default function(animation) {
 
                     {backdrop}
                 </span>
-            </RenderInBody>
 
         },
 
@@ -141,8 +139,10 @@ export default function(animation) {
 
         show: function() {
             if (!this.hasHidden()) return
+            setTimeout(() => {
+                $('body').addClass('modal-open')
+            }, 500)
 
-            $('body').addClass('modal-open')
 
             this.checkOwerflow()
             $(window).on('resize', () => {

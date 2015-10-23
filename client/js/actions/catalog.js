@@ -1,4 +1,4 @@
-import { GET_CATEGORIES, GET_COLLECTIONS, GET_PRODUCTS } from '../constants/Catalog';
+import { GET_CATEGORIES, GET_COLLECTIONS, GET_PRODUCTS } from '../constants/Catalog'
 
 export function getCategories() {
     return dispatch => {
@@ -7,10 +7,10 @@ export function getCategories() {
                 dispatch({
                     type: GET_CATEGORIES,
                     data: data.result
-                });
+                })
             }
-        });
-    };
+        })
+    }
 }
 
 export function getCollections() {
@@ -20,10 +20,10 @@ export function getCollections() {
                 dispatch({
                     type: GET_COLLECTIONS,
                     data: data.result
-                });
+                })
             }
-        });
-    };
+        })
+    }
 }
 
 export function getProducts() {
@@ -33,8 +33,8 @@ export function getProducts() {
                 dispatch({
                     type: GET_PRODUCTS,
                     data: data.result
-                });
+                })
             }
-        });
-    };
+        })
+    }
 }

@@ -15,6 +15,5 @@ export default function(app) {
             this.set('Cache-Control', 'max-age=3600000, must-revalidate')
             this.body = { error: false, result: result }
         })
-    console.log(router.routes())
     app.use(router.routes())
 }

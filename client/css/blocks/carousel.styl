@@ -19,6 +19,8 @@
     overflow hidden
     margin 0
     padding 0
+    width calc(100% - 2px)
+    margin-left 1px
     &:focus
         outline none
     &.dragging
@@ -36,7 +38,7 @@
 .slick-track
     position relative
     top 0
-    left 0
+    left -1px
     display block
     &:after
         clear both

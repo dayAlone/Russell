@@ -1,7 +1,8 @@
 import fs from 'fs'
 const excludes = [
     'index.js',
-    'fixtures'
+    'fixtures',
+    '.DS_Store'
 ]
 const files = fs.readdirSync(__dirname)
     .filter(file => { return !excludes.includes(file) })

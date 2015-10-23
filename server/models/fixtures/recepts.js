@@ -1,25 +1,22 @@
-//import oid from '../../libs/oid'
+import oid from '../../libs/oid'
 import config from 'config'
-//import request from 'request'
 //import cheerio from 'cheerio'
-//import selectel from 'selectel-manager'
+import selectel from 'selectel-manager'
 import fs from 'fs'
-//import co from 'co'
-/*
-const uploadFile = (file) => {
-    return () => {
-        let path = config.__dirname + '/tmp/' + file.name
-        selectel.uploadFile(
-            path,
-            '/russell' + file.path + file.name,
-            (err) => {
-                if (err) console.error(err)
-                fs.unlink(path)
-            })
-    }
+import co from 'co'
+
+const uploadFile = (from, file) => {
+
+    let path = config.__dirname + '/client/public/images/recepts/' + from
+    selectel.uploadFile(
+        path,
+        '/russell' + file.path + file.name,
+        (err) => {
+            if (err) console.error(err)
+            //fs.unlink(path)
+        })
 }
 
-*/
 export default (Recept) => {
     let data = [
         {
@@ -28,18 +25,22 @@ export default (Recept) => {
             text: 'Сделайте свой утренний кофе особенным с помощью самодельных трафаретов и какао',
         },
         {
+            video: 'ySUU29H_BIE',
             title: 'Пирог в форме сердца',
             text: 'Проявите свою любовь, приготовив пирог в форме сердца из одного квадратного коржа и одного круглого, разрезанного пополам'
         },
         {
+            video: 'l8fWfy9RBuI',
             title: 'Улыбающийся тост',
             text: 'Нарисуйте смайлик водой на кусочке хлеба для тоста, и ваш завтрак наполнится радостью'
         },
         {
+            video: 'uDo7m2uDzlo',
             title: 'Яйца пашот в пищевой пленке',
             text: 'Яйца пашот будут всегда получаться идеально, если готовить их в мешочке из пищевой пленки. вскипятите воду в чайнике, чтобы сэкономить время'
         },
         {
+            video: '8pqu_lo1bzE',
             title: 'Легкий способ намазать холодное масло',
             text: 'Намажьте ненамазываемое. справиться с холодным маслом поможет терка'
         },
@@ -53,6 +54,7 @@ export default (Recept) => {
             text: 'Сложите футболку за мгновение, взяв ее в двух местах и встряхнув'
         },
         {
+            video: 'kBuvqADeuZU',
             title: 'Яркие сочетания вкусов',
             text: 'Наливайте соусы слоями, чтобы получить яркие сочетания вкусов'
         },
@@ -149,7 +151,43 @@ export default (Recept) => {
         .sort((a, b) => {
             return parseInt(a.match(/_00(\d{2})/)[1], 10) - parseInt(b.match(/_00(\d{2})/)[1], 10)
         })
-    data.forEach((el, i) => {
+
+    selectel.authorize(config.selectel.login, config.selectel.password, () => {
+        let exist = {}
+        let upload = {}
+        co(function*() {
+            let result = yield new Promise((fulfill, reject) => {
+                selectel.getContainerFiles('russell', (err, data) => {
+                    if (err) reject(err)
+                    fulfill(data)
+                }, { format: 'json', path: ['upload/recepts/'] })
+            })
+            JSON.parse(result.files).map(el => {
+                exist['/' + el.name] = true
+            })
+            data.map((el, i) => {
+                let image = {
+                    name: `${oid(files[i])}.jpg`,
+                    path: '/upload/recepts/'
+                }
+                upload[files[i]] = image
+                let result = {
+                    name: el.title,
+                    preview: config.cdn + image.path + image.name,
+                    description: el.text,
+                    video: el.video ? el.video : null
+                }
+                Recept.create(result)
+            })
+            for (let i in upload) {
+                let file = upload[i]
+                if (!exist[file.path + file.name]) {
+                    if (i) {
+                        uploadFile(i, file)
+                    }
+                }
+            }
+        }).catch(err=>(console.error(err)))
 
     })
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import insertKeyframesRule from 'react-kit/insertKeyframesRule'
 import appendVendorPrefix from 'react-kit/appendVendorPrefix'
 import modalFactory from './modalFactory'
+
 var animation = {
     show: {
         animationDuration: '0.3s',

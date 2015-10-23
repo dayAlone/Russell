@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import transitionEvents from 'react-kit/transitionEvents'
+import RenderInBody from './RenderInBody'
 
 export default function(animation) {
 
@@ -112,16 +113,18 @@ export default function(animation) {
                 transitionEvents.addEndEventListener(node, endListener)
             }
 
-            return <span className={`modal-frame ${this.props.static ? 'modal-frame--static' : ''}`}>
-                <div ref='modal' style={modalStyle} className={this.props.className}>
-                    {sharp}
-                    <div ref='content' tabIndex='-1' style={contentStyle} className='modal__content'>
-                        {this.props.children}
+            return <RenderInBody>
+                    <span className={`modal-frame ${this.props.static ? 'modal-frame--static' : ''}`}>
+                    <div ref='modal' style={modalStyle} className={this.props.className}>
+                        {sharp}
+                        <div ref='content' tabIndex='-1' style={contentStyle} className='modal__content'>
+                            {this.props.children}
+                        </div>
                     </div>
-                </div>
 
-                {backdrop}
-            </span>
+                    {backdrop}
+                </span>
+            </RenderInBody>
 
         },
 

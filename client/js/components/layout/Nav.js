@@ -30,7 +30,7 @@ class Nav extends Component {
                 if ($(window).width() > 1024) {
                     clearTimeout(timeOut)
                     $(nav).show()
-                    setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
+                    timeOut = setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
                     $(document).one('click', () => {
                         if ($(frame).hasClass('nav__col--hover')) {
                             hideNav()
@@ -38,13 +38,19 @@ class Nav extends Component {
                     })
                 }
             },
-            () => { timeOut = setTimeout(hideNav, 400) }
+            () => {
+                clearTimeout(timeOut)
+                timeOut = setTimeout(hideNav, 400)
+            }
         ).options({
             interval: 50
         })
         hoverintent(nav,
             () => clearTimeout(timeOut),
-            () => { timeOut = setTimeout(hideNav, 200) }
+            () => {
+                clearTimeout(timeOut)
+                timeOut = setTimeout(hideNav, 200)
+            }
         ).options({
             interval: 50
         })

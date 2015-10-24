@@ -14,10 +14,6 @@ class Nav extends Component {
         if (this.props.collections.length === 0) getCollections()
         if (this.props.categories.length === 0) getCategories()
     }
-    hideFrame() {
-        let frame = findDOMNode(this.refs.sub_frame)
-        $(frame).removeClass('nav__col--hover')
-    }
     componentDidMount() {
 
         let item = findDOMNode(this.refs.sub_item)
@@ -26,6 +22,7 @@ class Nav extends Component {
         let timeOut = false
         let hideNav = () => {
             $(frame).removeClass('nav__col--hover')
+            $(document).off('click')
             setTimeout(() => $(nav).hide(), 300)
         }
         hoverintent(item,
@@ -34,6 +31,11 @@ class Nav extends Component {
                     clearTimeout(timeOut)
                     $(nav).show()
                     setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
+                    $(document).one('click', () => {
+                        if ($(frame).hasClass('nav__col--hover')) {
+                            hideNav()
+                        }
+                    })
                 }
             },
             () => { timeOut = setTimeout(hideNav, 400) }
@@ -46,6 +48,7 @@ class Nav extends Component {
         ).options({
             interval: 50
         })
+
     }
     render() {
         return <div className='nav'>
@@ -55,9 +58,12 @@ class Nav extends Component {
             <div className='nav__col center' ref='sub_frame'>
                 <Link to='/catalog/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Продукты</Link>
                 <div className='nav__frame' ref='sub_nav'>
-                    {[{name: 'Продукция', type: 'categories'}, {name: 'Коллекции', type: 'collections'}].map((el, i) => {
+                    {[
+                        {name: 'Каталог продукции', type: 'categories', link: '/catalog/'},
+                        {name: 'Коллекции', type: 'collections', link: '/catalog/collections/'}
+                    ].map((el, i) => {
                         return <div className='nav__category' key={i}>
-                            <Link to={`/catalog/${el.type}/`} className='nav__title'><span>{el.name}</span></Link>
+                            <Link to={el.link} className='nav__title'><span>{el.name}</span></Link>
                             {this.props[el.type].map((item, key) => {
                                 return <Link key={key} className='nav__item' to={`/catalog/${el.type}/${item.code}/`}><span>{item.name}</span></Link>
                             })}

@@ -55,6 +55,7 @@
     "jade": "^1.11.0",
     "jeet": "^6.1.2",
     "jquery": "^2.1.4",
+    "jquery-touch-events": "^1.0.3",
     "kcors": "^1.0.1",
     "koa": "^1.0.0",
     "koa-basic-auth": "^1.1.2",

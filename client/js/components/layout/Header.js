@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import UserInfo from '../UserInfo'
 import { Link } from 'react-router'
 import Modal from '../ui/Modal'
-import Nav from './Nav'
+import Nav from './MobileNav'
 
 import { connect } from 'react-redux'
 

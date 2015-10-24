@@ -30,9 +30,11 @@ class Nav extends Component {
         }
         hoverintent(item,
             () => {
-                clearTimeout(timeOut)
-                $(nav).show()
-                setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
+                if ($(window).width() > 1024) {
+                    clearTimeout(timeOut)
+                    $(nav).show()
+                    setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
+                }
             },
             () => { timeOut = setTimeout(hideNav, 400) }
         ).options({
@@ -53,7 +55,7 @@ class Nav extends Component {
             <div className='nav__col center' ref='sub_frame'>
                 <Link to='/catalog/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Продукты</Link>
                 <div className='nav__frame' ref='sub_nav'>
-                    {[{name: 'Каталог продукции', type: 'categories'}, {name: 'Коллекции', type: 'collections'}].map((el, i) => {
+                    {[{name: 'Продукция', type: 'categories'}, {name: 'Коллекции', type: 'collections'}].map((el, i) => {
                         return <div className='nav__category' key={i}>
                             <Link to={`/catalog/${el.type}/`} className='nav__title'><span>{el.name}</span></Link>
                             {this.props[el.type].map((item, key) => {

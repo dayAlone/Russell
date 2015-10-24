@@ -24,20 +24,21 @@ class Nav extends Component {
         let frame = findDOMNode(this.refs.sub_frame)
         let nav = findDOMNode(this.refs.sub_nav)
         let timeOut = false
+        let hideNav = () => {
+            $(frame).removeClass('nav__col--hover')
+            setTimeout(() => $(nav).hide(), 300)
+        }
         hoverintent(item,
             () => {
                 clearTimeout(timeOut)
-                $(frame).addClass('nav__col--hover')
+                $(nav).show()
+                setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
             },
-            () => {
-                timeOut = setTimeout(()=>{$(frame).removeClass('nav__col--hover')}, 500)
-            }
+            () => { timeOut = setTimeout(hideNav, 500) }
         )
         hoverintent(nav,
             () => clearTimeout(timeOut),
-            () => {
-                timeOut = setTimeout(()=>{$(frame).removeClass('nav__col--hover')}, 200)
-            }
+            () => { timeOut = setTimeout(hideNav, 500) }
         )
     }
     render() {

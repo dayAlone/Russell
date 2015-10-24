@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import Typograf from 'typograf'
-import { FacebookButton } from 'react-social'
+import { FacebookButton, TwitterButton, VKontakteButton } from 'react-social'
 
 import Carousel from './ui/Carousel'
 import Spinner from './ui/Spinner'
 import Modal from './ui/Modal'
-import Helmet from 'react-helmet'
 
 import { connect } from 'react-redux'
 import * as actionCreators from '../actions/recepts'
@@ -54,18 +53,11 @@ class ShareLove extends Component {
                     {video ? <h4 className='recept__name'>{name}</h4> : false }
                     <p>{description}</p>
                     <div className='recept__share'>
-                        <FacebookButton url={url}/>
-
-                        </div>
+                        <FacebookButton url={url}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
+                        <TwitterButton url={url} message={name}> <img src='/layout/images/svg/tw.svg' alt='' /></TwitterButton>
+                        <VKontakteButton url={url}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
+                    </div>
                 </div>
-                <Helmet
-                    title={`Russell Hobbs | ${name}`}
-                    meta={[
-                        {property: 'og:image', content: preview },
-                        {property: 'og:title', content: `Russell Hobbs | ${name}` },
-                        {property: 'og:description', content: description }
-                    ]}
-                    />
             </div>
 
         </div>

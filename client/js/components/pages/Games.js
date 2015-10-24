@@ -5,7 +5,6 @@ import moment from 'moment'
 import 'moment/locale/ru'
 
 import Title from '../layout/Title'
-import ShareLove from '../ShareLove'
 import Countdown from '../ui/Countdown'
 
 @connect(state => ({ games: state.games.list }))
@@ -30,8 +29,7 @@ class PageGames extends Component {
                         <div className='game__description' dangerouslySetInnerHTML={{__html: description}} />
                         <Countdown dateStart={dateStart} dateStop={dateStop} link={link} />
                     </div>
-
-                    <img src='/layout/images/line.png' width='100%' className='game__line' />
+                    { i+1 !== this.props.games.length ? <img src='/layout/images/line.png' width='100%' className='game__line' /> : null }
                 </div>
             }
         })
@@ -39,8 +37,6 @@ class PageGames extends Component {
             <Helmet title={'Russell Hobbs | Выиграй мечту!'}/>
             <Title type='counter' />
             <div className='games'>{games}</div>
-            <ShareLove />
-
         </div>
     }
 }

@@ -102,6 +102,7 @@
     "react-photoswipe": "^0.4.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
+    "react-social": "^0.1.9",
     "react-spin": "^0.4.0",
     "redux": "^3.0.2",
     "redux-devtools": "^3.0.0-beta-3",

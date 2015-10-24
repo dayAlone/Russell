@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import oid from '../../../../server/libs/oid'
 import Helmet from 'react-helmet'
 
 import Title from '../layout/Title'
-import ShareLove from '../ShareLove'
 import Categories from '../Categories'
 
 class PageIndex extends Component {
@@ -20,7 +18,6 @@ class PageIndex extends Component {
 
                 </div>
             </Categories>
-            <ShareLove />
         </div>
     }
 }

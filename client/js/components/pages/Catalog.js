@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Title from '../layout/Title'
 import Helmet from 'react-helmet'
-import ShareLove from '../ShareLove'
 import Categories from '../Categories'
 
 class PageCatalog extends Component {
@@ -21,7 +20,6 @@ class PageCatalog extends Component {
 
                 </div>
             </Categories>
-            <ShareLove />
         </div>
     }
 }

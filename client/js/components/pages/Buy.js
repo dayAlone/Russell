@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import Breadcrumbs from '../ui/Breadcrumbs'
 import Title from '../layout/Title'
-import ShareLove from '../ShareLove'
 
 import { connect } from 'react-redux'
 
@@ -32,7 +31,6 @@ class PageBuy extends Component {
                 {items}
             </div>
             <p>*Внимание: не все продукты Russell Hobbs могут быть доступны на складе</p>
-            <ShareLove />
         </div>
     }
 }

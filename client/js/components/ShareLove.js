@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Typograf from 'typograf'
+import { FacebookButton } from 'react-social'
 
 import Carousel from './ui/Carousel'
 import Spinner from './ui/Spinner'
 import Modal from './ui/Modal'
+import Helmet from 'react-helmet'
 
 import { connect } from 'react-redux'
 import * as actionCreators from '../actions/recepts'
@@ -17,9 +19,25 @@ class ShareLove extends Component {
         if (this.props.recepts.length === 0) {
             this.props.actions.getRecepts()
         }
+        this.checkModal()
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.recepts.length === 0) this.checkModal()
+    }
+    checkModal() {
+        let recept = this.props.routes.query.recept
+        let recepts = this.props.recepts
+        if (recept && recepts.length > 0) {
+            recepts.forEach((el, i) => {
+                if (el._id === recept) {
+                    console.log(this.openModal(i)(false))
+                }
+            })
+        }
     }
     openModal(i) {
-        let { name, description, preview, video } = this.props.recepts[i]
+        let { name, description, preview, video, _id } = this.props.recepts[i]
+        let url = `http://${document.domain}/?recept=${_id}`
         let modalContent = <div>
             <div className={`recept  ${video ? 'recept--video' : ''}`}>
                 {video ?
@@ -35,14 +53,26 @@ class ShareLove extends Component {
                     <a href='#' className='modal__close' onClick={this.closeModal.bind(this)}><img src='/layout/images/svg/close.svg' alt='' /></a>
                     {video ? <h4 className='recept__name'>{name}</h4> : false }
                     <p>{description}</p>
+                    <div className='recept__share'>
+                        <FacebookButton url={url}/>
+
+                        </div>
                 </div>
+                <Helmet
+                    title={`Russell Hobbs | ${name}`}
+                    meta={[
+                        {property: 'og:image', content: preview },
+                        {property: 'og:title', content: `Russell Hobbs | ${name}` },
+                        {property: 'og:description', content: description }
+                    ]}
+                    />
             </div>
 
         </div>
         return (e) => {
             this.setState({modalContent: modalContent})
             this.refs.modal.show()
-            e.preventDefault()
+            if (e) e.preventDefault()
         }
     }
     closeModal(e) {
@@ -52,12 +82,11 @@ class ShareLove extends Component {
     }
     render() {
         let tp = new Typograf({lang: 'ru'})
-        return <div className='share-love'>
-            <div className='share-love__title'>
-                <img src='/layout/images/svg/title.svg' alt='' className='' />
-            </div>
-            {this.props.recepts.length > 0 ?
-                <div>
+        return this.props.recepts.length > 0 ? <div>
+                <div className='share-love'>
+                    <div className='share-love__title'>
+                        <img src='/layout/images/svg/title.svg' alt='' className='' />
+                    </div>
                     <Carousel className='share-love__slider' slideToShow='5' responsive={true}>
                         {this.props.recepts.map((item, i) => {
                             const { name, preview, video } = item
@@ -67,12 +96,11 @@ class ShareLove extends Component {
                             </a>
                         })}
                     </Carousel>
-                    <Modal ref='modal' className='modal modal--recept'>
-                        {this.state.modalContent}
-                    </Modal>
-                </div> : <Spinner/>}
-
-        </div>
+                </div>
+                <Modal ref='modal' className='modal modal--recept'>
+                    {this.state.modalContent}
+                </Modal>
+            </div> : <Spinner/>
     }
 }
 

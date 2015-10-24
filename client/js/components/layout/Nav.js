@@ -53,7 +53,7 @@ class Nav extends Component {
             <div className='nav__col center' ref='sub_frame'>
                 <Link to='/catalog/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Продукты</Link>
                 <div className='nav__frame' ref='sub_nav'>
-                    {[{name: 'Продукция', type: 'categories'}, {name: 'Коллекции', type: 'collections'}].map((el, i) => {
+                    {[{name: 'Каталог продукции', type: 'categories'}, {name: 'Коллекции', type: 'collections'}].map((el, i) => {
                         return <div className='nav__category' key={i}>
                             <Link to={`/catalog/${el.type}/`} className='nav__title'><span>{el.name}</span></Link>
                             {this.props[el.type].map((item, key) => {

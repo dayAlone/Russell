@@ -35,11 +35,15 @@ class Nav extends Component {
                 setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
             },
             () => { timeOut = setTimeout(hideNav, 400) }
-        )
+        ).options({
+            interval: 50
+        })
         hoverintent(nav,
             () => clearTimeout(timeOut),
             () => { timeOut = setTimeout(hideNav, 200) }
-        )
+        ).options({
+            interval: 50
+        })
     }
     render() {
         return <div className='nav'>

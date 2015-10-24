@@ -49,6 +49,7 @@
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.5",
     "history": "^1.12.4",
+    "hoverintent": "^0.2.2",
     "imgur": "^0.1.6",
     "imports-loader": "^0.6.4",
     "jade": "^1.11.0",

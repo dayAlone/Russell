@@ -141,7 +141,7 @@ export default function(animation) {
             if (!this.hasHidden()) return
             setTimeout(() => {
                 $('body').addClass('modal-open')
-            }, 500)
+            }, 250)
 
 
             this.checkOwerflow()

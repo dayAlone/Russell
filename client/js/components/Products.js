@@ -14,19 +14,22 @@ import { bindActionCreators } from 'redux'
 import * as actionCreators from '../actions/catalog'
 import * as design from '../actions/design'
 
-@connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
+@connect(state => ({
+    products: state.catalog.products,
+    collections: state.catalog.collections,
+    categories: state.catalog.categories,
+    isEditor: state.login.isEditor
+}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Products extends Component {
     static defaultProps = { source: 'categories' }
     state = { edit: false }
     componentWillMount() {
-        const { getCollections, getCategories, getProducts } = this.props.actions
+        const { getProducts } = this.props.actions
         let { products, source } = this.props
-        if (this.props[source].length === 0) {
-            if (source === 'collections') getCollections()
-            else getCategories()
+        if (this.props[source].length > 0) {
+            this.getCurrent()
         }
-        else this.getCurrent()
-        
+
         if (products.length === 0) getProducts()
     }
     componentDidMount() {
@@ -35,15 +38,18 @@ class Products extends Component {
         })
         this.activateAnimation()
     }
+    componentWillUpdate(nextProps) {
+        if (nextProps.code !== this.props.code) this.setState({current: false})
+    }
     componentDidUpdate(prevProps) {
         this.activateAnimation()
-        if (prevProps[this.props.source].length === 0) this.getCurrent()
+        if (prevProps[this.props.source].length === 0 || !this.state.current) this.getCurrent()
     }
     getCurrent() {
         let { code, source } = this.props
         let { setLine } = this.props.design
         const current = this.props[source].filter(el => (el.code === code))[0]
-        setLine(current.line)
+        //setLine(current.line)
         this.setState({current: current})
     }
     editProduct(code, e) {

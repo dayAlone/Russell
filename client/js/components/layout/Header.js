@@ -32,7 +32,7 @@ class Header extends Component {
                         </Link>
                     </div>
                     <div className='header__col right'>
-                        <a href='#' onClick={this.openModal.bind(this)}><img src={`/layout/images/svg/title-description.svg`} className='header__title' /></a>
+                        <a href='#' onClick={this.openModal.bind(this)}><img src={`/layout/images/svg/title-description-mobile.svg`} className='header__title' /></a>
                     </div>
                     <UserInfo />
                 </div>

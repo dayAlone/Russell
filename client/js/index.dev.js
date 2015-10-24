@@ -26,7 +26,6 @@ const routes = configureRoutes(reducerRegistry)
 const store = configureStore(reducerRegistry)
 
 
-
 render(<div>
     <Provider store={store}>
         <div>

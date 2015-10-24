@@ -26,6 +26,7 @@ class Carousel extends Component {
                     slidesToScroll: 1,
                     infinite: true,
                     autoplay: true,
+                    autoplaySpeed: 3000,
                     adaptiveHeight: false,
                     slidesToShow: slideToShow,
                     nextArrow: `<button type='button' class='slick-next ${arrowClass}'><img src='/layout/images/${imgNext}' /></button>`,

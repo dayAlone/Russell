@@ -54,8 +54,6 @@ class ReactSpinner extends Component {
 
         if (newProps.stopped) {
             this.spinner.stop()
-        } else {
-            this.spinner.spin(this.refs.container)
         }
     }
 

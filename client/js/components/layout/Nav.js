@@ -1,16 +1,63 @@
 import React, { Component } from 'react'
+import hoverintent from 'hoverintent'
 import { Link } from 'react-router'
+import * as actionCreators from '../../actions/catalog'
+
+import { findDOMNode } from 'react-dom'
 
 import { connect } from 'react-redux'
-@connect(state => ({ line: state.design.line }))
+import { bindActionCreators } from 'redux'
+@connect(state => ({ line: state.design.line, collections: state.catalog.collections, categories: state.catalog.categories }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Nav extends Component {
+    componentWillMount() {
+        const { getCollections, getCategories } = this.props.actions
+        if (this.props.collections.length === 0) getCollections()
+        if (this.props.categories.length === 0) getCategories()
+    }
+    hideFrame() {
+        let frame = findDOMNode(this.refs.sub_frame)
+        $(frame).removeClass('nav__col--hover')
+    }
+    componentDidMount() {
+
+        let item = findDOMNode(this.refs.sub_item)
+        let frame = findDOMNode(this.refs.sub_frame)
+        let nav = findDOMNode(this.refs.sub_nav)
+        let timeOut = false
+        hoverintent(item,
+            () => {
+                clearTimeout(timeOut)
+                $(frame).addClass('nav__col--hover')
+            },
+            () => {
+                timeOut = setTimeout(()=>{$(frame).removeClass('nav__col--hover')}, 500)
+            }
+        )
+        hoverintent(nav,
+            () => clearTimeout(timeOut),
+            () => {
+                timeOut = setTimeout(()=>{$(frame).removeClass('nav__col--hover')}, 200)
+            }
+        )
+    }
     render() {
         return <div className='nav'>
             <div className='nav__col'>
                 <Link to='/history/' className='nav__item' activeClassName='nav__item--active'>История бренда</Link>
             </div>
-            <div className='nav__col center'>
-                <Link to='/catalog/' className='nav__item' activeClassName='nav__item--active'>Продукты</Link>
+            <div className='nav__col center' ref='sub_frame'>
+                <Link to='/catalog/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Продукты</Link>
+                <div className='nav__frame' ref='sub_nav'>
+                    {[{name: 'Продукция', type: 'categories'}, {name: 'Коллекции', type: 'collections'}].map((el, i) => {
+                        return <div className='nav__category' key={i}>
+                            <Link to={`/catalog/${el.type}/`} className='nav__title'><span>{el.name}</span></Link>
+                            {this.props[el.type].map((item, key) => {
+                                return <Link key={key} className='nav__item' to={`/catalog/${el.type}/${item.code}/`}><span>{item.name}</span></Link>
+                            })}
+                        </div>
+                    })}
+
+                </div>
             </div>
             <div className='nav__col center'>
                 <Link to='/buy/' className='nav__item' activeClassName='nav__item--active'>Где купить</Link>

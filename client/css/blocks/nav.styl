@@ -26,6 +26,8 @@
         border-top-right-radius 4px
         border-top-left-radius 4px
         font-size 15px
+        position relative
+        z-index 30
         padding 11px 15px 9px
         @media (min-width: $scr_sm)
             font-size 17px
@@ -38,5 +40,67 @@
             &, &:hover
                 color white
                 background-color #ed1c13
+        &--sub:hover, .nav__col--hover &
+            background-color white
+            color red
+
+    &__category
+        width 50%
+        float left
+        min-width 200px
+        padding-right 40px
+        &:last-of-type
+            padding-right 0px
+            padding-left 40px
+    &__title
+        font-weight bold
+        color black
+        font-size 16px
+        padding-bottom 20px
+        background url(/layout/images/divide.png) bottom center no-repeat
+        background-size 100% 9px
+        float left
+        width 120%
+        margin-left -25px
+        padding-left 25px
+        margin-bottom 5px
+        span
+            color black
+            border-line alpha(black, .3)
+            t color
+            &:hover
+                color red
+                border-line alpha(red, .3)
+    &__frame
+        position absolute
+        background-color white
+        top 38px
+        text-align left
+        padding 20px
+        z-index 10
+        opacity 0
+        t all
+        pointer-events none
+        transform translateY(-20px)
+        .nav__col--hover &
+
+            opacity 1
+            transform translateY(0)
+            pointer-events all
+        .nav__item
+            line-height 1.2
+            padding 5px 0
+            font-size 14px
+
+            float left
+            clear both
+            max-width 90%
+            span
+                t color
+                color black
+                border-line alpha(black, .3)
+                &:hover
+                    color red
+                    border-line alpha(red, .3)
 #app
     overflow hidden

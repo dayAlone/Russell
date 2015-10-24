@@ -1,5 +1,5 @@
 import React from 'react'
-import { IndexRoute, Route } from 'react-router'
+import { IndexRoute, Route, Redirect } from 'react-router'
 import App from '../containers/App'
 
 import Index from '../components/pages/Index'
@@ -27,6 +27,7 @@ export default function configureRoutes(reducerRegistry) {
 
         <Route path='catalog/' name='Продукты'>
                 <IndexRoute component={Catalog} />
+                <Redirect from='categories/' to='./' />
                 <Route path='categories/:code' component={Category} source='categories'/>
                 <Route path='product/:code' component={Product} />
 

@@ -25,7 +25,7 @@ export default function configureRoutes(reducerRegistry) {
 
         }}/>
 
-        <Route path='catalog/' name='Продукты'>
+        <Route path='catalog/' name='Каталог продукции'>
                 <IndexRoute component={Catalog} />
                 <Redirect from='categories/' to='./' />
                 <Route path='categories/:code' component={Category} source='categories'/>

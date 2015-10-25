@@ -12,14 +12,13 @@ export default function(app) {
             if (this.query.recept) {
                 let data = yield Recepts.find({})
                 let recept = data.filter(el => {
-                    //console.log(el._id, this.query.recept.toString())
                     return el._id.toString() === this.query.recept
                 })[0]
                 if (recept) {
                     meta = {
                         image: recept.preview,
                         title: recept.name,
-                        description: recept.description
+                        //description: recept.description
                     }
                 }
             }

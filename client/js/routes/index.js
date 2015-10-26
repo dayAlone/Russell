@@ -10,8 +10,6 @@ import Collections from '../components/pages/Collections'
 import Page404 from '../components/pages/404'
 import Category from '../components/pages/Category'
 import Product from '../components/pages/Product'
-//import Buy from '../components/pages/Buy'
-
 export default function configureRoutes(reducerRegistry) {
     return <Route path='/' component={App} name='Начальная страница'>
 
@@ -23,13 +21,47 @@ export default function configureRoutes(reducerRegistry) {
                 callback(false, require('../components/pages/Buy'))
             })
         }}/>
-        <Route path='profile/' name='Личный кабинет' getComponent={(location, callback) => {
-            require.ensure([], require => {
-                reducerRegistry.register({profile: require('../reducers/profile')})
-                callback(false, require('../components/pages/Profile'))
-            })
-
-        }}/>
+        <Route path='profile/' name='Личный кабинет'
+            getComponent={(location, callback) => {
+                require.ensure([], require => {
+                    reducerRegistry.register({profile: require('../reducers/profile')})
+                    callback(false, require('../containers/Profile'))
+                })
+            }}
+            getIndexRoute={(location, callback) => {
+                console.log(1)
+                require.ensure([], require => {
+                    callback(null, {
+                        component: require('../components/profile/Index'),
+                    })
+                })
+            }}
+            getChildRoutes={(location, callback) => {
+                require.ensure([], require => {
+                    callback(null, [
+                        {
+                            path: 'checks',
+                            component: require('../components/profile/Checks')
+                        },
+                        {
+                            path: 'favorites',
+                            component: require('../components/profile/Favorites')
+                        },
+                        {
+                            path: 'statistic',
+                            component: require('../components/profile/Statistic')
+                        },
+                        {
+                            path: 'prizes',
+                            component: require('../components/profile/Prizes')
+                        },
+                        {
+                            path: 'feedback',
+                            component: require('../components/profile/Feedback')
+                        }
+                    ])
+                })
+            }}/>
         <Route path='catalog/' name='Каталог продукции'>
                 <IndexRoute component={Catalog} />
                 <Redirect from='categories/' to='./' />

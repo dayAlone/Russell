@@ -17,7 +17,7 @@ export default {
     },
     output: {
         path: config.__dirname + '/client/public/js/',
-        publicPath: '/layout/js/',
+        publicPath: `${config.cdn}/layout/js/${config.version}/`,
         filename: '[name].js',
         pathinfo: true
     },

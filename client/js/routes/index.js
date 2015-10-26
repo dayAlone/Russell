@@ -22,9 +22,14 @@ export default function configureRoutes(reducerRegistry) {
                 reducerRegistry.register({stores: require('../reducers/stores')})
                 callback(false, require('../components/pages/Buy'))
             })
+        }}/>
+        <Route path='profile/' name='Личный кабинет' getComponent={(location, callback) => {
+            require.ensure([], require => {
+                reducerRegistry.register({profile: require('../reducers/profile')})
+                callback(false, require('../components/pages/Profile'))
+            })
 
         }}/>
-
         <Route path='catalog/' name='Каталог продукции'>
                 <IndexRoute component={Catalog} />
                 <Redirect from='categories/' to='./' />

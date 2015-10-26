@@ -23,14 +23,14 @@ class Nav extends Component {
         let hideNav = () => {
             $(frame).removeClass('nav__col--hover')
             $(document).off('click')
-            setTimeout(() => $(nav).hide(), 300)
+            timeOut = setTimeout(() => $(nav).hide(), 300)
         }
         hoverintent(item,
             () => {
                 if ($(window).width() > 1024) {
                     clearTimeout(timeOut)
                     $(nav).show()
-                    timeOut = setTimeout(() => $(frame).addClass('nav__col--hover'), 100)
+                    timeOut = setTimeout(() => $(frame).addClass('nav__col--hover'), 10)
                     $(document).one('click', () => {
                         if ($(frame).hasClass('nav__col--hover')) {
                             hideNav()
@@ -62,7 +62,7 @@ class Nav extends Component {
                 <Link to='/history/' className='nav__item' activeClassName='nav__item--active'>История бренда</Link>
             </div>
             <div className='nav__col center' ref='sub_frame'>
-                <Link to='/catalog/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Продукты</Link>
+                <Link to='/catalog/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Каталог продукции</Link>
                 <div className='nav__frame' ref='sub_nav'>
                     {[
                         {name: 'Каталог продукции', type: 'categories', link: '/catalog/'},

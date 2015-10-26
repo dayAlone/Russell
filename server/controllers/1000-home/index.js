@@ -5,9 +5,9 @@ export default function(app) {
     router
         .get('*', function* () {
             let meta = {
-                image: null,
-                title: null,
-                description: null
+                image: '',
+                title: '',
+                description: ''
             }
             if (this.query.recept) {
                 let data = yield Recepts.find({})
@@ -18,7 +18,7 @@ export default function(app) {
                     meta = {
                         image: recept.preview,
                         title: recept.name,
-                        //description: recept.description
+                        description: ''//recept.description
                     }
                 }
             }

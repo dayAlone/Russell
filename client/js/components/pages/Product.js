@@ -1,44 +1,74 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import Helmet from 'react-helmet'
 
-import Helmet from 'react-helmet';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../actions/catalog';
-import { bindActionCreators } from 'redux';
+import Page404 from '../pages/404'
+import Spinner from '../ui/Spinner'
+import Breadcrumbs from '../ui/Breadcrumbs'
+import Title from '../layout/Title'
 
-import Page404 from '../pages/404';
-import Spinner from '../ui/Spinner';
-import Breadcrumbs from '../ui/Breadcrumbs';
-import Title from '../layout/Title';
+import * as actionCreators from '../../actions/catalog'
+import * as design from '../../actions/design'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-@connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+import 'react-photoswipe/lib/photoswipe.css'
+import {PhotoSwipe} from 'react-photoswipe'
+
+@connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Product extends Component {
-    state = { open: 'short' }
+    state = { open: 'short', photoswipe: false, index: 0 }
     componentWillMount() {
-        const { getProducts } = this.props.actions;
-        if (this.props.products.length === 0) getProducts();
+        const { getProducts } = this.props.actions
+        if (this.props.products.length === 0) getProducts()
+        else this.getCurrent()
+    }
+    getCurrent() {
+        let {products, routeParams} = this.props
+        let { setLine } = this.props.design
+        let current = products.filter(el => (el.code === routeParams.code))[0]
+        setLine(current.line)
+        this.setState({current: current})
     }
     handleClick(e) {
-        let href = e.target.href;
-        console.log(href);
-        this.setState({open: href.split('#')[1] });
-        e.preventDefault();
-        e.stopPropagation();
+        let href = e.target.href
+        this.setState({open: href.split('#')[1] })
+        e.preventDefault()
+        e.stopPropagation()
+    }
+    componentDidUpdate(prevProps) {
+        if (prevProps.products.length === 0) this.getCurrent()
+    }
+    openPhotoSwipe(i) {
+        return (e) => {
+            e.preventDefault()
+            this.setState({photoswipe: true, index: i})
+            $('body').addClass('photoswipe-open')
+        }
+    }
+    closePhotoSwipe() {
+        $('body').removeClass('photoswipe-open')
+        this.setState({photoswipe: false})
+
     }
     render() {
-        let { products, routeParams, routes } = this.props;
-        if (products.length > 0) {
-            const current = products.filter(el => (el.code === routeParams.code))[0];
+        let { routes } = this.props
+        if (this.state.current) {
+            const current = this.state.current
             if (current) {
                 const { name,
                         artnumber,
                         preview,
                         images,
-                        short_description,
-                        description} = current;
-                return <div className='page'>
+                        video,
+                        pdf,
+                        features,
+                        description} = current
+
+                return <div className='page page--product'>
                     <Helmet title={'Russell Hobbs | ' + name}/>
                     <Title />
                     <Breadcrumbs routes={routes} current={current} />
+                    <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false, index: this.state.index}} items={images.map(el => ({src: el, w: 369, h: 362}))} onClose={this.closePhotoSwipe.bind(this)}/>
                     <div className='product'>
                         <h2 className='product__name'>{name}</h2>
                         <h4 className='product__artnumber'>{artnumber}</h4>
@@ -48,9 +78,9 @@ class Product extends Component {
                             </div>
                             <div className='product__thumbs'>
                                 {images.map((el, i) => {
-                                    return <div className='product__thumb' key={i} style={{backgroundImage: `url(${el})`}}>
+                                    return <a href='#' onClick={this.openPhotoSwipe(i)} className='product__thumb' key={i} style={{backgroundImage: `url(${el})`}}>
                                         <div className='product__thumb-preview' style={{backgroundImage: `url(${el})`}}></div>
-                                    </div>;
+                                    </a>
                                 })}
                             </div>
                         </div>
@@ -71,22 +101,39 @@ class Product extends Component {
                             </div>
                             <div
                                 className={`product__tabs-content ${this.state.open === 'short' ? 'product__tabs-content--active' : null}`}
-                                dangerouslySetInnerHTML={{__html: short_description.replace('<p>&nbsp;</p>', '')}}
                                 ref='short'
-                                />
+                                >
+                                <span dangerouslySetInnerHTML={{__html: description }} />
+                                { video ? <div className='product__video'><iframe width='440' height='248' src={video} frameBorder='0' allowFullScreen=''></iframe></div> : false}
+                                { pdf ? <div className='product__pdf'><a href={pdf} target='_blank'><img src='/layout/images/svg/pdf.svg' />Скачать инструкции</a></div> : false}
+                            </div>
                             <div
                                 className={`product__tabs-content ${this.state.open === 'full' ? 'product__tabs-content--active' : null}`}
-                                dangerouslySetInnerHTML={{__html: description.replace('<p>&nbsp;</p>', '')}}
                                 ref='full'
-                                />
+                                >
+                                {features.list.length > 0 ?
+                                    <ul className='product__features'>
+                                        {features.list.map((el, i) => {
+                                            return <li key={i}>{el}</li>
+                                        })}
+                                    </ul>
+                                    : false }
+                                {features.icons.length > 0 ?
+                                    <div className='product__icons'>
+                                        {features.icons.map((el, i) => {
+                                            return <img key={i} src={el.image} alt={el.title}/>
+                                        })}
+                                    </div>
+                                    : false}
+                            </div>
                         </div>
                     </div>
-                </div>;
+                </div>
             }
-            return <Page404 />;
+            return <Page404 />
         }
-        return <Spinner />;
+        return <Spinner />
     }
 }
 
-export default Product;
+export default Product

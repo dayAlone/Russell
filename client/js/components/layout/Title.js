@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
-import moment from 'moment';
-import 'moment/locale/ru';
+import moment from 'moment'
+import 'moment/locale/ru'
 
-import Countdown from '../ui/Countdown';
+import Countdown from '../ui/Countdown'
 
 @connect(state => ({ game: state.games.list[0] }))
 class Title extends Component {
     static defaultProps = { type: 'small' }
     render() {
-        let content = '';
-        let { image, dateStart, dateStop, description, link, flag } = this.props.game;
-        let start = moment(dateStart, 'DD.MM.YYYY').format('D MMMM');
-        let end = moment(dateStop, 'DD.MM.YYYY').format('D MMMM');
+        let content = ''
+        let { image, dateStart, dateStop, description, link, flag } = this.props.game
+        let start = moment(dateStart, 'DD.MM.YYYY').format('D MMMM')
+        let end = moment(dateStop, 'DD.MM.YYYY').format('D MMMM')
         description = description.replace('#start#', start).replace('#end#', end)
 
         switch (this.props.type) {
@@ -23,10 +23,11 @@ class Title extends Component {
             content = <div>
                 <div className='title__image'>
                     {this.props.type === 'counter' ? <div className='title__flag'>{flag}</div> : false}
-                    <img src={`/layout/images/header.jpg`} width='100%' height='322' />
+                    <img src={`/layout/images/header.jpg`} width='100%' />
                 </div>
-                <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
                 <div className='title__products'><img src={image} /></div>
+                <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
+                <div className='title__divider'></div>
                 <div className='title__description'>
                     <p dangerouslySetInnerHTML={{__html: description}} />
                 </div>
@@ -36,17 +37,17 @@ class Title extends Component {
                 <div className='title__actions'>
                     {this.props.type !== 'counter' ? <Link to='/games/' className='button button--big'>Выиграть!</Link> : false }
                 </div>
-            </div>;
-            break;
+            </div>
+            break
         default:
-            content = <Link to='/games/'><img src={`/layout/images/header-small.jpg`} width='100%' className='title__image' height='162'/></Link>;
+            content = <Link to='/games/'><img src={`/layout/images/header-small.jpg`} width='100%' className='title__image' /></Link>
         }
         return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
             <img src={`/layout/images/svg/love.svg`} height='29' className='title__love' />
             {content}
             <img src={`/layout/images/line.png`} width='100%' className='title__line' height='2'/>
-        </div>;
+        </div>
     }
 }
 
-export default Title;
+export default Title

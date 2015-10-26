@@ -1,11 +1,22 @@
 .page
-    cf()
+    lost-utility clearfix
+    
+    full-width()
     & + .footer
         margin-top -5px
     &__title
         margin-top 0px
     &--stores
-        background url(/layout/images/texture.jpg) top center
+        background url(/layout/images/texture.jpg) bottom center no-repeat
+        background-size 140% auto
+        @media (max-width: $scr_sm)
+            .text
+                padding-bottom 5px
+        @media (min-width: $scr_sm)
+            background-size auto 100%
+            background-position top center
+    &--games
+        margin-bottom 23px
     &--index
         & + .share-love
             margin-top -65px

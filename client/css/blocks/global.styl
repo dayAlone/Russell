@@ -1,18 +1,28 @@
 global-reset()
 
-
-//
-$body-color        = white
-$gotham            = 'MainFont', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
-$body-font         = $gotham
-$header-font       = $gotham
-$max-font          = 15px
-$mw                = 970px
-$line-height-ratio = 1.4
+$body-color         = white
+$gotham             = 'MainFont', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
+$body-font          = $gotham
+$header-font        = $gotham
+$max-font           = 15px
+$min-font           = 13px
+$line-height-ratio  = 1.4
 $header-font-weight = 600
 $header-color       = white
-$header-ratio      = $minor-seventh
+$header-ratio       = $minor-seventh
 typographic()
+
+
+$mw = 970px
+$sw = 720px
+$xsw = 640px
+
+$scr_xs = 375px
+$scr_s = 660px
+$scr_sm = 760px
+$scr_md = 990px
+$scr_lg = 1170px
+
 
 body, html
     height 100%
@@ -28,7 +38,10 @@ body
     background black
     color white
     overflow-x hidden
-    min-width 1000px
+    padding-top 70px
+    -webkit-text-size-adjust: 100%
+    @media (min-width: $scr_s)
+        padding-top 0px
 a
     text-decoration none
     t color
@@ -43,7 +56,12 @@ a
     text-align right !important
 
 .wrap
-    center($mw)
+    @media (min-width: $scr_s)
+        lost-center $xsw
+    @media (min-width: $scr_sm)
+        lost-center $sw
+    @media (min-width: $scr_md)
+        lost-center $mw
 
 .ReactModal
     &__Overlay
@@ -60,3 +78,14 @@ a
             opacity 1
         transform translateX(-50%)
         min-height 100px
+
+.pswp
+    z-index 20000 !important
+    &--svg
+        .pswp
+            &__button
+                background-image url(/layout/images/default-skin.svg) !important
+                &--arrow--left, &--arrow--right
+                    background-image none !important
+                    &:before
+                        background-image url(/layout/images/default-skin.svg) !important

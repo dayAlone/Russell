@@ -27,10 +27,10 @@ class Login extends Component {
                 link: '/auth/vk/login',
                 name: 'Вконтакте'
             },
-        };
-        let socials = [];
+        }
+        let socials = []
         for (let el in list) {
-            let {name, link} = list[el];
+            let {name, link} = list[el]
             socials.push(<a
                 key={el}
                 href={link}
@@ -38,7 +38,7 @@ class Login extends Component {
                 className={`button button--${el}`}>
                 <img src={`/layout/images/svg/${el}.svg`} alt='' />
                 {name}
-            </a>);
+            </a>)
         }
         return <div>
             {error ? <div className='alert alert-danger' role='alert'>{error}</div> : false}

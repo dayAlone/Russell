@@ -1,38 +1,60 @@
 .history
     full-width()
     padding 30px 30px 50px
-    background url(/layout/images/share-love.jpg) center bottom no-repeat
-    background-size 120% auto
+
+    background-size cover
+    @media (min-width: $scr_s)
+        background url(/layout/images/share-love.jpg) center bottom no-repeat
+    @media (min-width: $scr_sm)
+        background-size 120% auto
     &:before
         @extend .share-love:before
         top 0
     &__slider
         background url(/layout/images/history.jpg) top center no-repeat
         background-size cover
+        @media (max-width: $scr_xs)
+            background-image url(/layout/images/history-mobile.jpg)
     &__title
         @extend .text h2
-        margin-left -30px
+
         margin-top 0px
         margin-bottom 20px
+        @media (min-width: $scr_sm)
+            margin-left -30px
     &__item
-        height 300px
+
         text-align center
         position relative
         full-width()
         pointer-events none
+        height 250px
+        @media (min-width: $scr_s)
+            height 300px
     &__year
-        font-size 33px
+        font-size 27px
         font-weight bold
+        @media (min-width: $scr_s)
+            font-size 33px
     &__text
-        padding 0 20%
-        font-size 16px
-        line-height 20px
+        padding 0 10%
+        font-size 12px
+        line-height 15px
+        @media (min-width: $scr_s)
+            padding 0 20%
+            font-size 14px
+            line-height 17px
+        @media (min-width: $scr_sm)
+            font-size 16px
+            line-height 20px
     &__divider
         max-width 300px
         width 50%
         margin 0 auto
         border-bottom 1px solid white
-        margin 30px auto
+        margin 20px auto 25px
+        @media (min-width: $scr_s)
+            margin 30px auto
     &__content
         position absolute
         top 50%

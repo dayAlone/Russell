@@ -1,14 +1,23 @@
 .share-love
-    padding 60px 30px 0
-    margin-top -60px
     full-width()
+    lost-utility clearfix
+    margin-top -59px
     background url(/layout/images/share-love.jpg) center bottom no-repeat
+    z-index 1
+    padding 60px 40px 40px
+    background-size 160% auto
+    @media (min-width: $scr_s)
+        background-size 145% auto
+        padding 60px 30px 40px
+    @media (min-width: $scr_md)
+        background-size 100% auto
+    .page--stores &
+        background-image none
     &:before
         position absolute
         top 60px
         width 100%
         height 2px
-        left 0
         background url(/layout/images/line.png) center top repeat-y
         background-size contain
         content ""
@@ -16,16 +25,31 @@
         padding 40px 0 65px
         full-width()
     &__title
+        text-align center
         margin 28px 0 24px
-        max-width 222px
+        img
+            max-width 200px
+        @media (min-width: $scr_s)
+            text-align left
+            img
+
+                max-width 222px
     &__item
-        span(1/5)
-        min-height: 182px !important
+
         background-size cover
         background-position center
         position relative
         color white
         display block
+        min-height 230px !important
+        @media (min-width: 400px)
+            min-height: 152px !important
+        @media (min-width: 500px)
+            min-height 230px !important
+        @media (min-width: 600px)
+            min-height 180px !important
+        @media (min-width: $scr_md)
+            min-height: 182px !important
         *
             position relative
             z-index 2
@@ -34,7 +58,7 @@
             top 0
             left 0
             size 100%
-            min-height: 182px
+            min-height: 100%
             content ""
             opacity .6
             t opacity
@@ -46,12 +70,15 @@
         font-size 16px
         padding 9px 11px
         line-height 20px
+
     &__author
         position absolute
         bottom 0
         padding 9px 11px
-        font-size 11px
+        font-size 12px
         line-height 15px
+        @media (min-width: $scr_s)
+            font-size 11px
     &__icon
         width 44px
         position absolute

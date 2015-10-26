@@ -1,6 +1,12 @@
 .text
     line-height 1.4
-    padding 22px 0 20px
+    padding 22px 30px 20px
+    @media (min-width: $scr_s)
+        padding 22px 0 20px
+    .products &
+        @media (max-width: $scr_s)
+            padding-left 0px
+            padding-right 0px
     &--no-padding
         padding 0
     &--black
@@ -10,7 +16,9 @@
     p
         max-width 97%
         & + h2
-            margin-top 70px
+            margin-top 30px
+            @media (min-width: $scr_sm)
+                margin-top 55px
     a
         color white
         border-line(alpha(white, .5))
@@ -18,12 +26,19 @@
             color red
             border-line(alpha(red, .5))
     h2
-        font-size 33px
+        margin-bottom 20px
+        font-size 20px
+        @media (min-width: $scr_s)
+            font-size 27px
+        @media (min-width: $scr_sm)
+            font-size 33px
         .text--no-padding&
             &:first-child
                 margin-top 0px
         & + div
             margin-top 20px
+    h5
+        font-size 14px
     strong
         font-weight bold
     &--small

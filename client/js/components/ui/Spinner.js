@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Spinner from 'spin.js';
+import React, { Component } from 'react'
+import Spinner from 'spin.js'
 
 class ReactSpinner extends Component {
     static defaultProps = {
@@ -42,30 +42,28 @@ class ReactSpinner extends Component {
     }
 
     componentDidMount() {
-        this.spinner = new Spinner(this.props.config);
-        this.spinner.spin(this.refs.container);
+        this.spinner = new Spinner(this.props.config)
+        this.spinner.spin(this.refs.container)
     }
 
     componentWillReceiveProps(newProps) {
 
         if (this.props.stopped) {
-            return;
+            return
         }
 
         if (newProps.stopped) {
-            this.spinner.stop();
-        } else {
-            this.spinner.spin(this.refs.container);
+            this.spinner.stop()
         }
     }
 
     componentWillUnmount() {
-        this.spinner.stop();
+        this.spinner.stop()
     }
 
     render() {
-        return <div ref='container' style={this.props.style} />;
+        return <div ref='container' style={this.props.style} />
     }
-};
+}
 
-module.exports = ReactSpinner;
+module.exports = ReactSpinner

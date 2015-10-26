@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet';
-import { Link } from 'react-router'
-import { connect } from 'react-redux'
-import * as actionCreators from '../actions/catalog'
-import { bindActionCreators } from 'redux'
+import Helmet from 'react-helmet'
 
 import Page404 from './pages/404'
 import Spinner from './ui/Spinner'
@@ -11,23 +7,30 @@ import Breadcrumbs from './ui/Breadcrumbs'
 import EditProduct from './edit/Product'
 import Modal from './ui/Modal'
 
-@connect(state => ({ products: state.catalog.products, collections: state.catalog.collections, categories: state.catalog.categories, isEditor: state.login.isEditor }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import * as actionCreators from '../actions/catalog'
+import * as design from '../actions/design'
+
+@connect(state => ({
+    products: state.catalog.products,
+    collections: state.catalog.collections,
+    categories: state.catalog.categories,
+    isEditor: state.login.isEditor
+}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
 class Products extends Component {
     static defaultProps = { source: 'categories' }
     state = { edit: false }
     componentWillMount() {
-        const { getCollections, getCategories, getProducts } = this.props.actions
+        const { getProducts } = this.props.actions
         let { products, source } = this.props
-        if (this.props[source].length === 0) {
-            if (source === 'collections') getCollections()
-            else getCategories()
+        if (this.props[source].length > 0) {
+            this.getCurrent()
         }
+
         if (products.length === 0) getProducts()
-    }
-    activateAnimation() {
-        setTimeout(() => {
-            $('.products').removeClass('products--ready').addClass('products--ready')
-        }, 500)
     }
     componentDidMount() {
         $(document).ready(() => {
@@ -35,15 +38,31 @@ class Products extends Component {
         })
         this.activateAnimation()
     }
-    componentDidUpdate() {
+    componentWillUpdate(nextProps) {
+        if (nextProps.code !== this.props.code) this.setState({current: false})
+    }
+    componentDidUpdate(prevProps) {
         this.activateAnimation()
+        if (prevProps[this.props.source].length === 0 || !this.state.current) this.getCurrent()
+    }
+    getCurrent() {
+        let { code, source } = this.props
+        let { setLine } = this.props.design
+        const current = this.props[source].filter(el => (el.code === code))[0]
+        //setLine(current.line)
+        this.setState({current: current})
     }
     editProduct(code, e) {
         e.preventDefault()
         let { products } = this.props
-        const item = products.filter(el => (code === el.code))[0];
-        this.setState({edit: item});
+        const item = products.filter(el => (code === el.code))[0]
+        this.setState({edit: item})
         this.refs.modal.show()
+    }
+    activateAnimation() {
+        setTimeout(() => {
+            $('.products').removeClass('products--ready').addClass('products--ready')
+        }, 500)
     }
     getItems(current) {
         let { products, source, isEditor } = this.props
@@ -72,9 +91,9 @@ class Products extends Component {
     }
 
     render() {
-        let { code, products, source, routes, isEditor } = this.props
-        if (this.props[source].length && products.length > 0) {
-            const current = this.props[source].filter(el => (el.code === code))[0]
+        let { products, routes, isEditor } = this.props
+        if (this.state.current && products.length > 0) {
+            const current = this.state.current
             if (current) {
                 return <div className='products'>
                         <Helmet title={'Russell Hobbs | ' + current.name}/>

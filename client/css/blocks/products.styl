@@ -1,9 +1,21 @@
 .products
     full-width()
-    background url(/layout/images/texture.jpg) top center
+    position relative
+    z-index 20
+
+    padding 0 30px
     padding-bottom 20px
+    @media (min-width: $scr_s)
+        padding 0
+        background url(/layout/images/texture.jpg) bottom center no-repeat
+        background-size 150% auto
+    @media (min-width: $scr_md)
+        background-size 155% auto
+        background-position top center
+
     .text
         padding-top 0px
+
     &__line
         margin 0px 0 40px
 
@@ -15,37 +27,56 @@
             max-width 100%
             max-height 100%
             middle()
+    &__items
+        lost-utility clearfix
     &__item
-        column(1/5, cycle: 5)
+
         height 305px
         background url(/layout/images/products.bg.png) top center
         background-size cover
         border-radius 8px
         padding 10px
-        text-align center
+
         margin-bottom 30px
-        t all
+        transition .3s transform, .3s opacity, .3s box-shadow, 0s width
         box-shadow 0 0 0 0 alpha(black, 0)
         transform scale(.9)
         opacity 0
         position relative
+        text-align center !important
+        max-width 180px
+        left 50%
+        transform translateX(-50%)
+        @media (min-width: $scr_xs)
+            left 0
+            transform none
+            max-width none
+            lost-column 1/2 2
+        @media (min-width: $scr_s)
+            lost-column 1/3 3
+            &:hover
+                transition-delay 0s !important
+                background-color black
+                transform translateY(-10px)
+                box-shadow 0 6px 15px 2px alpha(black, .5)
+                z-index 10
+                .edit
+                    pointer-events all
+                    opacity 1
+        @media (min-width: $scr_md)
+            lost-column 1/4 4
+        @media (min-width: $scr_md)
+            lost-column 1/5 5
         .edit
             opacity 0
             pointer-events none
             t opacity
-            
         .products--ready &
-            transform scale(1)
+            transform translateX(-50%) scale(1)
+            @media (min-width: $scr_xs)
+                transform scale(1)
             opacity 1
-        &:hover
-            transition-delay 0s !important
-            background-color black
-            transform translateY(-10px)
-            box-shadow 0 6px 15px 2px alpha(black, .5)
-            z-index 10
-            .edit
-                pointer-events all
-                opacity 1
+
     &__link
         color white
         min-height 295px

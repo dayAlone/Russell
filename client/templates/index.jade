@@ -3,16 +3,17 @@ html
   head
     title Russell Hobbs
     meta(charset="utf-8")
-    meta(name="viewport",content="width=1024")
+    meta(name="viewport",content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1")
     meta(name="apple-mobile-web-app-capable", content="yes")
     meta(name="mobile-web-app-capable", content="yes")
     meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
     meta(name='yandex-verification', content='6412fd376024938f')
-    script.
-        var cdn = '#{cdn}';
-        var version = '#{version}';
+    meta(property='og:image', content='#{meta.image}')
+    meta(property='og:title', content='#{meta.title}')
+    meta(property='og:description', content='#{meta.description}')
+    link(rel='image_src', href='#{meta.image}')
   body
-    #app
+    #app=data
     script(type="application/javascript", src="#{app}", async, defer)
     noscript
         div
@@ -23,4 +24,5 @@ html
 
         ga('create', 'UA-68931467-1', 'auto');
         ga('send', 'pageview');
-    //-link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css')
+    if dev == 'Y'
+        link(rel='stylesheet', href='/layout/css/style.css')

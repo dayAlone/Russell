@@ -2,7 +2,7 @@ const initialState = {
     list: [
         {
             title: 'Вы мечтаете о стильной технике для кухни?',
-            description: 'С #start# по #end# приобретайте технику <strong>Russell Hobbs</strong>, сохраняйте чеки от покупок и участвуйте в акции &laquo;Выиграй мечту!&raquo;. Вы сможете выиграть именно то, что вы &nbsp;&nbsp;<img class="title__heart" src="/layout/images/svg/heart.svg" width="17" />',
+            description: 'С #start# по #end# приобретайте технику <strong>Russell Hobbs</strong>, сохраняйте чеки от покупок и участвуйте в акции &laquo;Выиграй мечту!&raquo;. Вы сможете выиграть именно то, что <nobr>вы &nbsp;&nbsp;<img class="title__heart" src="/layout/images/svg/heart.svg" width="17" /></nobr>',
             dateStart: '12.10.2015',
             dateStop: '30.12.2015',
             image: '/layout/images/products.png',

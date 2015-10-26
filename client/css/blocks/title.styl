@@ -2,65 +2,154 @@
     full-width()
     position relative
     z-index 10
+
     &__line
+
         .title--counter &
-            margin-top 37px
+            @media (max-width: $scr_s)
+                margin-bottom 10px
+            @media (min-width: $scr_s)
+                margin-top 37px
+        .title--small &
+            display none
+            @media (min-width: $scr_s)
+                display block
     &__flag
         position absolute
-        background-color red
+        background-color #e6151d
         height 24px
-        font-size 15px
         font-weight bold
-        z-index 2
+        z-index 20
         line-height 26px
         padding 0 10px
-        left 0
-        bottom 30px
+        text-align center
+        width 100%
+        font-size 13px
+        bottom -16.5vw
+        @media (min-width: $scr_s)
+            font-size 15px
+            left 0
+            bottom 30px
+            width auto
+
     &__question
-        span(4/12)
-        font-size 24px
         font-weight bold
         padding 10px 0
-        line-height 27px
+        font-size 20px
+        line-height 21px
+        text-align center
+        padding 20px 10% 10px
+        @media (min-width: $scr_s)
+            padding 0
+            text-align left
+            lost-column 5/12 0 0
+            lost-move -7/12 row 0
+        @media (min-width: $scr_sm)
+            font-size 22px
+            line-height 23px
+        @media (min-width: $scr_md)
+            lost-column 4/12 0 0
+            lost-move -8/12 row 0
+            font-size 24px
+            line-height 27px
+
     &__heart
         position relative
         top 3px
+
     &__actions
-        span(3/12)
-        text-align right
+        text-align center
+        margin-bottom 25px
+        @media (min-width: $scr_s)
+            margin-bottom 0px
+            text-align right
+            lost-column 3/12 0 0
+            a.button
+                float right
+
     &__image
         position relative
+
         .title--small &
-            margin-bottom 25px
+            @media (min-width: $scr_s)
+                margin-bottom 25px
+
+    &__divider
+        full-width()
+
     &__products
-        span(8/12)
-        min-height 74px
-        text-align right
+
+        text-align center
+        position relative
+        @media (min-width: $scr_s)
+            lost-column 7/12 0 0
+            lost-move 5/12
+            text-align right
+        @media (min-width: $scr_md)
+            lost-column 8/12 0 0
+            lost-move 4/12
+        .title--counter &
+            @media (max-width: $scr_s)
+                margin-bottom 20px
         img
             margin-right 12px
-            margin-top -74px
+
             position relative
             z-index 3
+            max-width 100%
+            margin-top -44px
+            @media (min-width: $scr_md)
+                margin-top -74px
+
     &__counter
-        span(9/12)
-        min-height 60px
+        min-height 20px
+        @media (min-width: $scr_s)
+            min-height 60px
+        @media (min-width: $scr_s)
+            lost-column 9/12 0
+
     &__description
-        span(9/12)
-        font-size 16px
-        line-height 21px
         padding-top 9px
-        margin-bottom 14px
+
+        font-size 14px
+        line-height 19px
+        padding 5px 25px 15px
+        text-align center
+        width 100%
+        margin-bottom 10px
+        @media (min-width: $scr_s)
+            margin-bottom 14px
+            text-align left
+            padding 0
+            lost-column 9/12 0 0
+        @media (min-width: $scr_md)
+            font-size 16px
+            line-height 21px
+        nobr
+            position relative
+            img
+                position absolute
+                top -3px
+                right -10px
         .title--counter &
             width 100%
             margin-bottom 11px
             p
                 max-width none
         p
-            max-width 78%
             margin-bottom 0px
+            @media (min-width: $scr_s)
+                max-width 85%
+            @media (min-width: $scr_md)
+                max-width 78%
             strong
                 font-weight bold
+
     &__love
         margin 25px 0 16px
+        display none
+        @media (min-width: $scr_s)
+            display block
+
     & + .share-love
         margin-top -65px

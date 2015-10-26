@@ -60,9 +60,9 @@ categorySchema.pre('save', function(next) {
 });
 
 const Category = mongoose.model('Category', categorySchema);
-Category.count({}, (err, count) => {
-    //if (count === 0) require('./fixtures/category')();
-})
 
+Category.count({}, (err, count) => {
+    if (count === 0) require('./fixtures/category')(Category, 'https://ru.russellhobbs.com/russell-hobbs-products/');
+})
 
 export default Category;

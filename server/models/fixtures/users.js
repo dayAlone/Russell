@@ -1,8 +1,13 @@
-var oid = require('../../libs/oid');
+import oid from '../../libs/oid'
 
-exports.User = [{
-    _id:      oid('user'),
-    displayName: 'Тестовый пользователь',
-    email:    'ak@radia.ru',
-    password: 'ak@radia.ru'
-}];
+export default (User) => {
+    let users = [{
+        _id: oid('user'),
+        displayName: 'Тестовый пользователь',
+        email: 'test@test.ru',
+        password: 'test@test.ru'
+    }]
+    users.forEach(el => {
+        User.create(el, err => (console.log(err)))
+    })
+}

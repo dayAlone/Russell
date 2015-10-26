@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Header from '../components/layout/Header'
 import Nav from '../components/layout/Nav'
 import Footer from '../components/layout/Footer'
+import AuthModal from '../components/modals/Auth'
 
 import * as design from '../actions/design'
 import { bindActionCreators } from 'redux'
@@ -25,6 +26,7 @@ class App extends Component {
             <Nav routes={this.props.location} />
             {this.props.children}
             <Footer routes={this.props.location} />
+            <AuthModal />
         </div>
     }
 }

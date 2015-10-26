@@ -70,13 +70,20 @@
         line-height 1.2
         margin-left 10px
         color white
+        position relative
         span
             border-line(alpha(white, .2))
+        &:hover
+            span
+                color red
+                border-line(alpha(red, .2))
         img
             position absolute
             right 100%
             background-color white
             size 40px
+            margin-right 12px
+            top -6px
     img&__title
         position relative
         max-width 100%

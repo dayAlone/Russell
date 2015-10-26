@@ -114,7 +114,7 @@ class Product extends Component {
                                 {features.list.length > 0 ?
                                     <ul className='product__features'>
                                         {features.list.map((el, i) => {
-                                            return <li key={i}>{el}</li>
+                                            return <li key={i} dangerouslySetInnerHTML={{__html: el }} />
                                         })}
                                     </ul>
                                     : false }

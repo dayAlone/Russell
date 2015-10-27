@@ -6,7 +6,7 @@ import Categories from '../Categories'
 class PageCatalog extends Component {
     render() {
         return <div className='page page--catalog'>
-            <Helmet title={'Russell Hobbs | Продукты'}/>
+            <Helmet title={'Russell Hobbs | Каталог продукции'}/>
             <Title />
             <Categories source='categories' routes={this.props.routes}>
                 <div className='text text--small'>

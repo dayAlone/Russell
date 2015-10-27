@@ -25,7 +25,7 @@ export default function(app) {
                         from_email: email,
                         from_name: name,
                         subject: `Обратная связь RussellHobbs-Promo | ${subject}`,
-                        text: `Сообщение отправлено с сайта RussellHobbs-Promo\n\nПользователь: ${name} (${email})\nТелефон: ${phone}\nТема: ${subject}\nСообщение: \n ${message}`
+                        text: `Сообщение отправлено с сайта RussellHobbs-Promo\n\nПользователь: ${name} (${email})\nТелефон: ${phone}\n\nТема: ${subject}\nСообщение: \n${message}`
                     }
                 }, (error, response) => {
                     if (error) reject(error)

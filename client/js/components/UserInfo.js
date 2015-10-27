@@ -22,7 +22,7 @@ class UserInfo extends Component {
                 name = name.split(' ')
                 return <div className='header__profile header__col'>
                     <Link to='/profile/' className='header__name'>
-                        <img src={photo} alt='' width='40'/> <span>{name[0]}<br/>{name[1]}</span>
+                        <img src={photo ? photo : '/layout/images/svg/avatar.svg'} alt='' width='40'/> <span>{name[0]}<br/>{name[1]}</span>
                     </Link>
                 </div>
             }

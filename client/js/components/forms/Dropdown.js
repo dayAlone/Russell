@@ -1,6 +1,7 @@
 import React from 'react'
 import { Mixin } from 'formsy-react'
-
+import { findDOMNode } from 'react-dom'
+import hoverintent from 'hoverintent'
 const Dropdown = React.createClass({
 
     mixins: [Mixin],
@@ -11,21 +12,41 @@ const Dropdown = React.createClass({
         return (e) => {
             let el = this.props.items[i]
             this.setState({
-                trigger: el.name,
-                active: i,
-                error: false
+                trigger: el.name
             })
+            $(findDOMNode(this.refs.block)).removeClass('dropdown--hover')
             this.setValue(el.code ? el.code : el.name)
             e.preventDefault()
         }
+    },
+    onChange(e) {
+        let value = e.target.value
+        let el = this.props.items.filter(el => (el.code === value || el.name === value))[0]
+        this.setState({
+            trigger: el.name
+        })
+        this.setValue(e.target.value)
+    },
+    componentDidMount() {
+        let el = findDOMNode(this.refs.block)
+        hoverintent(el,
+            () => {
+                $(el).addClass('dropdown--hover')
+            },
+            () => {
+                $(el).removeClass('dropdown--hover')
+            }
+        ).options({
+            interval: 50
+        })
     },
     render() {
         let {items, title, name} = this.props
         const errorMessage = this.getErrorMessage()
         return <div className='form-group'>
                 {title ? <label htmlFor={name}>{title}</label> : null}
-                <div className={`dropdown ${this.showError() && !this.isPristine() ? 'dropdown--error' : ''}`}>
-                <a href='#' className='dropdown__trigger'>
+                <div className={`dropdown ${this.showError() && !this.isPristine() ? 'dropdown--error' : ''}`} ref='block'>
+                <a href='#' className='dropdown__trigger' onClick={e => (e.preventDefault())}>
                     {this.state.trigger} <img src='/layout/images/svg/down.svg' alt='' />
                 </a>
                 <span className='dropdown__frame'>
@@ -33,7 +54,7 @@ const Dropdown = React.createClass({
                         return <a key={i} onClick={this.onClick(i).bind(this)} href='#' className='dropdown__item'>{el.name}</a>
                     })}
                 </span>
-                <select name={name} className='dropdown__select' value={this.getValue()}>
+                <select name={name} className='dropdown__select' value={this.getValue()} onChange={this.onChange}>
                     <option value=''>{this.props.trigger}</option>
                     {items.map((el, i) => {
                         return <option

@@ -1,0 +1,56 @@
+.form
+    .alert
+        font-size 11px
+        border alpha(white, .5)
+        padding 11px 20px 7px
+        border-radius 5px
+        line-height 13px
+    input
+        &:focus
+            outline 0
+        &[type='submit']
+            size 149px 41px
+            background-color #e6141d
+            border-radius 5px
+            border 0
+            color white
+            font-weight bold
+            transition .3s background, .3s opacity
+            white-space no-wrap
+            img
+                middle()
+                margin-right 5px
+            &:hover
+                background-color #ff000b
+            &:disabled
+                background-color #383c41
+                opacity .5
+        &[type='text']
+            width 100%
+            background-color #383c41
+            color white
+            padding 0 15px
+            border 0
+            line-height 31px
+            margin-bottom 15px
+            &:focus, &:active
+                outline 0
+    button
+        @extend .form input[type='submit']
+        &:focus, &:active
+            outline 0
+    input, textarea
+        &.error
+            box-shadow inset 0 0 0 1px red
+    textarea
+        background-color #383c41
+        height 220px
+        border 0
+        padding 10px 15px
+        resize none
+        margin 0
+        width 100%
+        margin-bottom 20px
+        color white
+        &:focus
+            outline 0

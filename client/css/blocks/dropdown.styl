@@ -10,7 +10,7 @@
         left 0
         top 0
         opacity 0
-        @media (min-width: $scr_sm)
+        @media (min-width: $scr_md)
             display none
     a&__trigger
         position relative
@@ -50,10 +50,12 @@
         &:hover
             color white
             background-color alpha(white, .1)
-    &:hover
-        .dropdown
-            &__frame
-                opacity 1
-                visibility visible
-            &__trigger
-                background red
+    @media (min-width: $scr_md)
+        &--hover
+            .dropdown
+                &__frame
+                    opacity 1
+                    visibility visible
+                &__trigger
+                    background red
+        

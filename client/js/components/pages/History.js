@@ -38,11 +38,12 @@ class PageHistorySlider extends Component {
             <Carousel className='history__slider' slideToShow='1' arrowsType='black'>
                 {this.state.dates.map((item, i) => {
                     const { year, text } = item
-                    return <div className='history__item' key={i}>
-                        <div className='history__content'>
-                            <div className='history__year'>{year}</div>
-                            <div className='history__divider'></div>
-                            <div className='history__text'>{tp.execute(text)}</div>
+                    return <div key={i}><div className='history__item'>
+                            <div className='history__content'>
+                                <div className='history__year'>{year}</div>
+                                <div className='history__divider'></div>
+                                <div className='history__text'>{tp.execute(text)}</div>
+                            </div>
                         </div>
                     </div>
                 })}

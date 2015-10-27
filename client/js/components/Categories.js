@@ -47,7 +47,11 @@ class Categories extends Component {
             if (type === 'carousel') {
                 return <div className='categories'>
                     {children}
-                    <Carousel responsive={true} className='categories__slider' slideToShow='4'>{categories}</Carousel>
+                    <Carousel responsive={true} className='categories__slider' slideToShow='4'>
+                        {categories.map((el, key) => {
+                            return <div key={key}>{el}</div>
+                        })}
+                    </Carousel>
                     <div className='categories__action center'>
                         { source === 'collections' ? <Link to={`/catalog/collections/`} className='button'>Все коллекции</Link> : false }
                     </div>

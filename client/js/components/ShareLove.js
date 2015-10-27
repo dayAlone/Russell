@@ -54,7 +54,6 @@ class ShareLove extends Component {
                     <p>{description}</p>
                     <div className='recept__share'>
                         <FacebookButton url={url}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
-                        <TwitterButton url={url} message={name}> <img src='/layout/images/svg/tw.svg' alt='' /></TwitterButton>
                         <VKontakteButton url={url}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
                     </div>
                 </div>
@@ -82,10 +81,10 @@ class ShareLove extends Component {
                     <Carousel className='share-love__slider' slideToShow='5' responsive={true}>
                         {this.props.recepts.map((item, i) => {
                             const { name, preview, video } = item
-                            return <a href='#' onClick={this.openModal(i)} key={i} className='share-love__item' style={{backgroundImage: `url(${preview})`}}>
+                            return <div key={i}><a href='#' onClick={this.openModal(i)} className='share-love__item' style={{backgroundImage: `url(${preview})`}}>
                                 <div className='share-love__name'>{tp.execute(name)}</div>
                                 {video ? <img src='/layout/images/svg/video.svg' className='share-love__icon' /> : false}
-                            </a>
+                            </a></div>
                         })}
                     </Carousel>
                 </div>

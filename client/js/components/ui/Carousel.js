@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
-import slick from 'slick-carousel'
+import Slick from 'react-slick'
+
+let customArrow = (arrowClass, img) => {
+    return class extends Component {
+        render() {
+            return <button type='button' data-role='none' onClick={this.props.onClick} className={arrowClass}><img src={`/layout/images/${img}`} /></button>
+        }
+    }
+}
 
 class Carousel extends Component {
     static defaultProps = {
@@ -7,71 +15,54 @@ class Carousel extends Component {
         imgPrev: 'svg/prev.svg',
         arrowClass: false
     }
-    initSlick() {
-        const $el = $(this.refs.carousel)
+    render() {
         let { imgNext, imgPrev, arrowClass, arrowsType, slideToShow} = this.props
-        //if ($el.hasClass('slick-initialized')) $el.slick('unslick')
-
         if (arrowsType === 'black') {
             imgNext = 'next.png'
             imgPrev = 'prev.png'
             arrowClass = 'black'
         }
-        setTimeout(()=>{
-            $el
-                .on('init setPosition afterChange', () => {
-                    $('.slick-cloned, .slick-cloned *').removeAttr('data-reactid')
-                }).slick({
-                    accessibility: false,
-                    slidesToScroll: 1,
-                    infinite: true,
-                    autoplay: true,
-                    autoplaySpeed: 3000,
-                    adaptiveHeight: false,
-                    slidesToShow: slideToShow,
-                    nextArrow: `<button type='button' class='slick-next ${arrowClass}'><img src='/layout/images/${imgNext}' /></button>`,
-                    prevArrow: `<button type='button' class='slick-prev  ${arrowClass}'><img src='/layout/images/${imgPrev}' /></button>`,
-                    responsive: this.props.responsive ? [
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 3
-                            }
-                        },
-                        {
-                            breakpoint: 620,
-                            settings: {
-                                slidesToShow: 2
-                            }
-                        },
-                        {
-                            breakpoint: 400,
-                            settings: {
-                                slidesToShow: 1,
-                                adaptiveHeight: true
-                            }
-                        },
-                        {
-                            breakpoint: 300,
-                            settings: {
-                                slidesToShow: 1
-                            }
-                        },
-                    ] : false
-                })
-        }, 300)
-
-    }
-    componentDidMount() {
-        this.initSlick()
-    }
-    componentDidUpdate() {
-        //this.initSlick()
-    }
-    render() {
-        return <div ref='carousel' className={this.props.className}>
+        let options = {
+            accessibility: false,
+            slidesToScroll: 1,
+            infinite: true,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            adaptiveHeight: false,
+            slidesToShow: slideToShow,
+            prevArrow: customArrow(`slick-prev slick-arrow ${arrowClass}`, imgPrev),
+            nextArrow: customArrow(`slick-next slick-arrow ${arrowClass}`, imgNext),
+            responsive: this.props.responsive ? [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 620,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 400,
+                    settings: {
+                        slidesToShow: 1,
+                        adaptiveHeight: true
+                    }
+                },
+                {
+                    breakpoint: 300,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                },
+            ] : false
+        }
+        return <div className={this.props.className}><Slick {...options}>
             {this.props.children}
-        </div>
+        </Slick></div>
     }
 }
 

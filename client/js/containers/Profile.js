@@ -12,10 +12,10 @@ class Profile extends Component {
                 <div className='profile__nav'>
                     {[
                         {name: 'Общая информация', link: '/profile/'},
-                        {name: 'Мои чеки', link: '/profile/checks/'},
-                        {name: 'Избранное', link: '/profile/favorites/'},
-                        {name: 'Статистика', link: '/profile/statistic/'},
-                        {name: 'Мои выигрыши', link: '/profile/prizes/'},
+                        //{name: 'Мои чеки', link: '/profile/checks/'},
+                        //{name: 'Избранное', link: '/profile/favorites/'},
+                        //{name: 'Статистика', link: '/profile/statistic/'},
+                        //{name: 'Мои выигрыши', link: '/profile/prizes/'},
                         {name: 'Обратная связь', link: '/profile/feedback/'},
                     ].map((el, i) => {
                         if (i === 0 && this.props.location.pathname !== '/profile/') {
@@ -27,7 +27,6 @@ class Profile extends Component {
 
                 </div>
                 {this.props.children}
-                <br/><br/><br/>
             </div>
         </div>
     }

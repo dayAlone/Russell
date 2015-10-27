@@ -21,7 +21,7 @@ let webpackConfig = {
         noParse: [/moment.js/],
         loaders: [
             {
-                test: /\.js$/,
+                test: /(\.js|\.jsx)$/,
                 exclude: /node_modules/,
                 loaders: ['react-hot', 'babel?cacheDirectory']
             },

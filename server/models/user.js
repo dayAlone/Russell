@@ -14,6 +14,10 @@ const ProviderSchema = new mongoose.Schema({
 })
 
 const userSchema = new mongoose.Schema({
+    active: {
+        type: Boolean,
+        default: true
+    },
     role: {
         type: String,
         default: 'user'

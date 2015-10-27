@@ -5,10 +5,11 @@ export default {
 
     cdn: `http://164623.selcdn.com/russell`,
     version: process.env.VERSION || 'v1.2.10',
-    domain: 'localhost',
+    domain: 'localhost:8000',
     __dirname: defer(function(cfg) {
         return cfg.root
     }),
+    mandrill: '1EAsaRQ9dKfahICQfaybRw',
     ftp: {
         host: 'ftp.selcdn.ru',
         folder: `/russell`,

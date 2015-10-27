@@ -1,4 +1,6 @@
 .profile
+    &__col
+        lost-column 1/2 0 30px
     &__nav
         width 100%
         background-color transparent
@@ -6,7 +8,7 @@
         margin-top 50px !important
         margin-bottom 40px
     a&__link
-        padding 12px 20px 6px
+        padding 12px 20px 7px
         background transparent
         margin-right 2px
         font-size 16px
@@ -18,3 +20,86 @@
             &, &:hover
                 background-color #393c41
                 color white
+    .feedback
+        &__text
+            color #383c41
+            border-top 1px solid #383c41
+            margin-top 30px
+            padding-top 30px
+            full-width()
+        input
+            &:focus
+                outline 0
+            &[type='submit']
+                size 149px 41px
+                background-color #e6141d
+                border-radius 5px
+                border 0
+                color white
+                font-weight bold
+                transition .3s background, .3s opacity
+                &:hover
+                    background-color #ff000b
+                &:disabled
+                    background-color #383c41
+                    opacity .5
+            &[type='text']
+                width 100%
+                background-color #383c41
+                color white
+                padding 0 15px
+                border 0
+                line-height 31px
+                margin-bottom 15px
+                &:focus
+                    outline 0
+        input, textarea
+            &.error
+                box-shadow 0 0 0 1px red
+        textarea
+            background-color #383c41
+            height 220px
+            border 0
+            padding 10px 15px
+            resize none
+            margin 0
+            width 100%
+            margin-bottom 20px
+            color white
+            &:focus
+                outline 0
+    .info
+        &__photo
+            float left
+            size 70px
+            border-radius 5px
+            background-color white
+            margin-right 20px
+        &__name
+            font-size 15px
+            line-height 1.2
+            display inline-block
+            margin-top 7px
+        &__links
+            float left
+            clear left
+            margin-top 30px
+            line-height 2.1
+        &__date
+            color #9a9ca0
+            font-size 12px
+        &__link
+            background transparent
+            position relative
+            margin-left 30px
+            img
+                position absolute
+                left -17px
+                top 50%
+                transform translateY(-50%) translateX(-50%)
+        a
+            span
+                border-line(alpha(white, .3))
+            &:hover
+                span
+                    border-line(alpha(red, .3))

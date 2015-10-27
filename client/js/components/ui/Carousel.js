@@ -20,7 +20,7 @@ class Carousel extends Component {
         setTimeout(()=>{
             $el
                 .on('init setPosition afterChange', () => {
-                    $('.slick-cloned').removeAttr('data-reactid')
+                    $('.slick-cloned, .slick-cloned *').removeAttr('data-reactid')
                 }).slick({
                     accessibility: false,
                     slidesToScroll: 1,

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import Helmet from 'react-helmet'
+import Info from './blocks/Info'
 
-import { connect } from 'react-redux'
-@connect()
 class ProfileIndex extends Component {
 
     render() {
         return <div>
-            123
+            <Helmet title='Russell Hobbs | Личный кабинет'/>
+            <div className='info__col'><Info /></div>
         </div>
     }
 }

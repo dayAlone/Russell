@@ -29,7 +29,6 @@ export default function configureRoutes(reducerRegistry) {
                 })
             }}
             getIndexRoute={(location, callback) => {
-                console.log(1)
                 require.ensure([], require => {
                     callback(null, {
                         component: require('../components/profile/Index'),

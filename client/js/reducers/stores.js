@@ -43,10 +43,10 @@ const initialState = {
             color: '#ffffff'
         },
         {
-            title: 'МедиаМаркт',
-            image: '/layout/images/store-5.jpg',
-            link: 'https://www.mediamarkt.ru/search?q=russell+hobbs',
-            color: '#e4007b'
+            title: 'Энтер',
+            image: '/layout/images/store-11.jpg',
+            link: 'http://www.enter.ru/search?q=russell+hobbs',
+            color: '#000000'
         },
         {
             title: 'Озон',
@@ -79,11 +79,11 @@ const initialState = {
             color: '#ffffff'
         },
         {
-            title: 'Энтер',
-            image: '/layout/images/store-11.jpg',
-            link: 'http://www.enter.ru/search?q=russell+hobbs',
-            color: '#000000'
-        }
+            title: 'МедиаМаркт',
+            image: '/layout/images/store-5.jpg',
+            link: 'https://www.mediamarkt.ru/search?q=russell+hobbs',
+            color: '#e4007b'
+        },
     ]
 };
 

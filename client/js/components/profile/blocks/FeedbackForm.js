@@ -42,9 +42,9 @@ class FeedbackForm extends Component {
                         {name: 'Вопрос по чекам'},
                         {name: 'Получение выигрыша'},
                         {name: 'Другая тема'},
-                    ]} validations='minLengthOrEmpty:1'/>
-                    <Input name='phone' placeholder='Телефон для связи' validations='minLengthOrEmpty:1'/>
-                    <Textarea name='message' placeholder='Ваше сообщение' validations='minLengthOrEmpty:1'/>
+                    ]} validations='minLengthOrEmpty:1' value=''/>
+                    <Input name='phone' placeholder='Телефон для связи' validations='minLengthOrEmpty:1' value=''/>
+                    <Textarea name='message' placeholder='Ваше сообщение' validations='minLengthOrEmpty:1' value=''/>
                     <button type='submit' disabled={this.state.disabled}>
                         {this.state.disabled ? <img src='/layout/images/loading.gif' /> : null}
                         Отправить

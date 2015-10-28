@@ -26,15 +26,16 @@
                 background-color #383c41
                 opacity .5
         &[type='text']
-            width 100%
-            background-color #383c41
-            color white
-            padding 0 15px
-            border 0
-            line-height 31px
-            margin-bottom 15px
-            &:focus, &:active
-                outline 0
+            &, &:-webkit-autofill
+                width 100%
+                background-color #383c41
+                color white
+                padding 0 15px
+                border 0
+                line-height 31px
+                margin-bottom 15px
+                &:focus, &:active
+                    outline 0
     button
         @extend .form input[type='submit']
         &:focus, &:active

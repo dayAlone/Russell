@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { IndexLink, Link } from 'react-router'
 
 import { connect } from 'react-redux'
-@connect()
+@connect(state => ({isLogin: state.login.isLogin}))
 class Profile extends Component {
-
+    componentDidUpdate() {
+        if (!this.props.isLogin) location.href = '/'
+    }
     render() {
         return <div className='page page--profile profile'>
             <div className='text'>

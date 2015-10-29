@@ -10,7 +10,8 @@ export default (Game) => {
             image: '/layout/images/products.png',
             code: 'dream',
             flag: 'А также призы от RH каждую неделю!',
-            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00']
+            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00'],
+            sort: 100
         },
         {
             name: 'Cобери коллекцию',
@@ -20,7 +21,8 @@ export default (Game) => {
             image: '/layout/images/banner-2.jpg',
             code: 'collection',
             flag: 'Конкурс!',
-            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00']
+            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00'],
+            sort: 200
         },
         {
             name: 'История в деталях',
@@ -30,7 +32,8 @@ export default (Game) => {
             image: '/layout/images/banner-3.jpg',
             code: 'details',
             flag: 'Конкурс!',
-            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00']
+            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00'],
+            sort: 300
         },
         {
             name: 'В подарок. Для себя',
@@ -40,7 +43,8 @@ export default (Game) => {
             image: '/layout/images/banner-4.jpg',
             code: 'present',
             flag: 'Акция!',
-            raffles: ['30.11.2015 18:00', '14.12.2015 18:00', '28.12.2015 18:00']
+            raffles: ['30.11.2015 18:00', '14.12.2015 18:00', '28.12.2015 18:00'],
+            sort: 400
         }
     ]
     games.forEach(el => {

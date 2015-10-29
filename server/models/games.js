@@ -11,7 +11,8 @@ const gameSchema = new mongoose.Schema({
     flag: String,
     description: String,
     image: String,
-    raffles: [Date]
+    raffles: [Date],
+    sort: Number
 })
 
 gameSchema.pre('save', function(next) {

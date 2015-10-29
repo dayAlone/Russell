@@ -7,7 +7,11 @@ export default function(app) {
         .get('/games/get/', function* () {
             let result
             try {
-                result = yield Games.find()
+                result = yield Games.find({}, {}, {
+                    sort: {
+                        sort: 1
+                    }
+                })
             } catch (e) {
                 this.body = { error: e }
             }

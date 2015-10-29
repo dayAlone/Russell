@@ -11,7 +11,7 @@ export default (Check) => {
         total: '3565.56',
         kpk_number: '12356789',
         kpk_value: '1234789',
-        photo: '',
+        photo: '/layout/images/check.jpg',
         status: '',
         status_comment: '',
         count: 1,
@@ -28,7 +28,7 @@ export default (Check) => {
         total: '3565.56',
         kpk_number: '1256789',
         kpk_value: '123456789',
-        photo: '',
+        photo: '/layout/images/check.jpg',
         status: 'canceled',
         status_comment: 'Чек не прошел автоматическую проверку',
         count: 0,
@@ -45,7 +45,7 @@ export default (Check) => {
         total: '3565.56',
         kpk_number: '123456789',
         kpk_value: '123456789',
-        photo: '',
+        photo: '/layout/images/check.jpg',
         status: 'active',
         status_comment: '',
         count: 1,
@@ -62,7 +62,7 @@ export default (Check) => {
         total: '3565.56',
         kpk_number: '12123456789',
         kpk_value: '123456789',
-        photo: '',
+        photo: '/layout/images/check.jpg',
         status: 'active',
         status_comment: '',
         count: 2,
@@ -71,6 +71,6 @@ export default (Check) => {
         user: oid('user')
     }]
     checks.forEach(el => {
-        Check.create(el, err => (console.log(err.message, err.code)))
+        Check.create(el, err => (console.log(err)))
     })
 }

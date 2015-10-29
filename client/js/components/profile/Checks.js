@@ -7,12 +7,27 @@ import { connect } from 'react-redux'
 
 import moment from 'moment'
 
+import 'react-photoswipe/lib/photoswipe.css'
+import {PhotoSwipe} from 'react-photoswipe'
+
 class Check extends Component {
-    state = {hidden: true}
+    state = {hidden: true, sizes: false}
     handleClick(e) {
         this.setState({hidden: !this.state.hidden})
 
         e.preventDefault()
+    }
+    handleClickPreview(e) {
+        this.props.openPhotoSwipe(this.props.data.photo, this.state.sizes)
+        e.preventDefault()
+    }
+    componentDidMount() {
+        let img = new Image()
+        let photo = this.props.data.photo
+        img.onload = () => {
+            this.setState({sizes: {w: img.width, h: img.height}})
+        }
+        img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : null}${photo}` : photo
     }
     render() {
         let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo, status, status_comment, count, vinner, products, until, created} = this.props.data
@@ -55,7 +70,7 @@ class Check extends Component {
                     <span>Сумма: {total}</span><br/>
                     <span>Номер КПК: {kpk_number}</span><br/>
                     <span>Значение КПК: {kpk_value}</span><br/>
-                    <div className='check__preview'>{photo}</div>
+                    <a href='#'  onClick={this.handleClickPreview.bind(this)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
                 </div>
                 <a href='#' className='check__show' onClick={this.handleClick.bind(this)}>{!this.state.hidden ? 'Скрыть' : 'Показать'} детали</a>
             </div>
@@ -67,7 +82,7 @@ class Check extends Component {
             <div className='table__col'>
                 {products.length > 0 ?
                     products.map((el, i) => {
-                        return <Link to={`/catalog/product/${el.code}/`} key={i}>{el.name}</Link>
+                        return <a href={`/catalog/product/${el.code}/`} target='_blank' key={i}>{el.name}</a>
                     })
                     : 'нет'}
             </div>
@@ -84,13 +99,25 @@ class Check extends Component {
 
 @connect(state => ({checks: state.profile.checks}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileChecks extends Component {
+    state = {photoswipe: false, image: []}
+    openPhotoSwipe(image, sizes) {
+
+        this.setState({photoswipe: true, image: [{src: image, w: sizes.w, h: sizes.h}]})
+        $('body').addClass('photoswipe-open')
+
+    }
+    closePhotoSwipe() {
+        $('body').removeClass('photoswipe-open')
+        this.setState({photoswipe: false})
+
+    }
     componentDidMount() {
         if (this.props.checks.length === 0) {
             this.props.actions.getChecks()
         }
     }
     render() {
-        let checks = this.props.checks.map((el, i) => (<Check key={i} data={el}/>))
+        let checks = this.props.checks.map((el, i) => (<Check openPhotoSwipe={this.openPhotoSwipe.bind(this)} key={i} data={el}/>))
         return <div className='checks'>
             <Helmet title='Russell Hobbs | Личный кабинет | Чеки'/>
             <div className='table checks__table'>
@@ -110,6 +137,7 @@ class ProfileChecks extends Component {
                 : checks}
             </div>
 
+            <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false, index: this.state.index}} items={this.state.image} onClose={this.closePhotoSwipe.bind(this)}/>
         </div>
     }
 }

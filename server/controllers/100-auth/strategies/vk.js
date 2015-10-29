@@ -16,8 +16,6 @@ export default new VKontakteStrategy({
                 return done(null, false, {message: 'При входе разрешите доступ к эл. почте. Она используется для идентификации пользователя.'});
             }
 
-            profile.phone = profile._json.home_phone || profile._json.mobile_phone
-
             profile.emails = [
                 {value: params.email}
             ];

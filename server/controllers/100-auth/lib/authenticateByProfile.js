@@ -31,6 +31,10 @@ function* mergeProfile(user, profile) {
         user.gender = profile.gender;
     }
 
+
+    user.phone = profile._json.home_phone || profile._json.mobile_phone
+
+
     // remove previous profile from the same provider, replace by the new one
     var nameId = makeProviderId(profile);
     for (var i = 0; i < user.providers.length; i++) {

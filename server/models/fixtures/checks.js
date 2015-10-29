@@ -16,7 +16,7 @@ export default (Check) => {
         status_comment: '',
         count: 1,
         vinner: true,
-        products: [Types.ObjectId('9a138ed91dd4e66125f4fd90')],
+        products: [{product: Types.ObjectId('9a138ed91dd4e66125f4fd90')}],
         user: oid('user'),
         until: new Date('2014-01-22T14:56:59.301Z')
     }, {
@@ -50,7 +50,7 @@ export default (Check) => {
         status_comment: '',
         count: 1,
         vinner: false,
-        products: [Types.ObjectId('bb2e16fdbad55b0ff00e4d96')],
+        products: [{product: Types.ObjectId('bb2e16fdbad55b0ff00e4d96')}],
         user: oid('user')
     }, {
         active: false,

@@ -21,18 +21,42 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'user') {
                 let result
                 try {
-                    result = yield yield Check.find({
+                    result = yield Check.find({
                         user: this.req.user._id
                     }, {}, {
                         sort: {
                             created: -1 //Sort by Date Added DESC
                         }
-                    }).populate('products')
+                    }).populate('products.product')
                 } catch (e) {
                     this.body = { error: e }
                 }
                 this.body = { error: false, result: result }
             }
+        })
+        .post('/profile/checks/remove-product/', function* () {
+            if (this.req.user && this.req.user.role === 'user') {
+                let {product, check} = this.request.body
+                let result
+                try {
+                    yield Check.findOneAndUpdate(
+                        { _id: check, user: this.req.user._id },
+                        { $pull: { products: {_id: product} } },
+                        { safe: true, upsert: true }
+                    )
+                    result = yield Check.find({
+                        user: this.req.user._id
+                    }, {}, {
+                        sort: {
+                            created: -1 //Sort by Date Added DESC
+                        }
+                    }).populate('products.product')
+                } catch (e) {
+                    this.body = { error: e }
+                }
+                this.body = { error: false, result: result }
+            }
+
         })
         .post('/profile/feedback/send/', function* () {
             let mandrill = require('node-mandrill')(config.mandrill)

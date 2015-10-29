@@ -70,7 +70,7 @@ class Check extends Component {
                     <span>Сумма: {total}</span><br/>
                     <span>Номер КПК: {kpk_number}</span><br/>
                     <span>Значение КПК: {kpk_value}</span><br/>
-                    <a href='#'  onClick={this.handleClickPreview.bind(this)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
+                    <a href='#' onClick={this.handleClickPreview.bind(this)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
                 </div>
                 <a href='#' className='check__show' onClick={this.handleClick.bind(this)}>{!this.state.hidden ? 'Скрыть' : 'Показать'} детали</a>
             </div>
@@ -82,7 +82,7 @@ class Check extends Component {
             <div className='table__col'>
                 {products.length > 0 ?
                     products.map((el, i) => {
-                        return <a href={`/catalog/product/${el.code}/`} target='_blank' key={i}>{el.name}</a>
+                        return <a href={`/catalog/product/${el.product.code}/`} target='_blank' key={i}>{el.product.name}</a>
                     })
                     : 'нет'}
             </div>

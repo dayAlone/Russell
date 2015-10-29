@@ -37,7 +37,7 @@ const checkSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    products: [{ added: { type: Date, default: Date.now }, product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } }],
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     until: Date
 })

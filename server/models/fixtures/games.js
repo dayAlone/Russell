@@ -45,7 +45,7 @@ export default (Game) => {
     ]
     games.forEach(el => {
         el.start = moment(el.start, 'DD.MM.YYYY').toDate()
-        el.end = moment(el.end, 'DD.MM.YYYY').toDate()
+        el.end = moment(el.stop, 'DD.MM.YYYY').toDate()
         el.raffles = el.raffles.map(r => {
             return moment(r, 'DD.MM.YYYY HH:mm').toDate()
         })

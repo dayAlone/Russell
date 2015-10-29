@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { IndexLink, Link } from 'react-router'
 
 import { connect } from 'react-redux'
+
 @connect(state => ({isLogin: state.login.isLogin}))
 class Profile extends Component {
     componentDidUpdate() {

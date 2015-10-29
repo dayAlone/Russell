@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import Helmet from 'react-helmet'
-
+import { bindActionCreators } from 'redux'
+import * as actionCreators from '../../actions/profile'
 import { connect } from 'react-redux'
-@connect()
+
+@connect(state => ({checks: state.profile.checks}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileChecks extends Component {
 
     render() {

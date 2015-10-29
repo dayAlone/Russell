@@ -69,8 +69,8 @@ class Coundown extends Component {
         clearInterval(this.state.timeout)
     }
     tick() {
-        let { dateStop, current } = this.state
-        if (dateStop.toDate() > current) {
+        let { dateStart, current } = this.state
+        if (dateStart.toDate() > current) {
             this.setState({current: new Date()})
         } else {
             clearInterval(this.state.timeout)

@@ -4,8 +4,8 @@ import 'moment/locale/ru'
 
 class Coundown extends Component {
     state = {
-        dateStart: moment(this.props.dateStart, 'DD.MM.YYYY'),
-        dateStop: moment(this.props.dateStop, 'DD.MM.YYYY'),
+        dateStart: moment(this.props.dateStart),
+        dateStop: moment(this.props.dateStop),
         current: new Date(),
         timeout: false
     }

@@ -9,12 +9,17 @@ const files = fs.readdirSync(__dirname)
     .map(file => { return file.replace('.js', '') })
     .sort()
 
-const models = {}
 
-files.forEach(file => {
-    models[file.charAt(0).toUpperCase()] = require(`./${file}`)()
-})
+export default function(connection) {
+    const models = {}
 
-export default function() {
+    files.forEach(file => {
+        let result = require(`./${file}`)
+        if (typeof result === 'function') {
+            models[file.charAt(0).toUpperCase()] = result(connection)
+        } else if (typeof result === 'object') {
+            models[file.charAt(0).toUpperCase()] = result
+        }
+    })
     return models
 }

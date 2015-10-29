@@ -12,7 +12,7 @@ class Profile extends Component {
                 <div className='profile__nav'>
                     {[
                         {name: 'Общая информация', link: '/profile/'},
-                        //{name: 'Мои чеки', link: '/profile/checks/'},
+                        {name: 'Мои чеки', link: '/profile/checks/'},
                         //{name: 'Избранное', link: '/profile/favorites/'},
                         //{name: 'Статистика', link: '/profile/statistic/'},
                         //{name: 'Мои выигрыши', link: '/profile/prizes/'},

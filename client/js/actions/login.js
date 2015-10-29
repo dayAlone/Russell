@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_SHOW_MODAL, LOGIN_HIDE_MODAL } from '../constants/Login'
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_SHOW_MODAL, LOGIN_HIDE_MODAL, LOGIN_EXIT } from '../constants/Login'
 
 export function authCheck() {
     return dispatch => {
@@ -65,5 +65,14 @@ export function hideModal() {
             type: LOGIN_HIDE_MODAL,
             status: false
         })
+    }
+}
+
+export function authExit() {
+    return dispatch => {
+        dispatch({
+            type: LOGIN_EXIT
+        })
+        $.get('/auth/logout/')
     }
 }

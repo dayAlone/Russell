@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_SHOW_MODAL, LOGIN_HIDE_MODAL } from '../constants/Login'
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_SHOW_MODAL, LOGIN_HIDE_MODAL, LOGIN_EXIT } from '../constants/Login'
 
 const initialState = {
     isLogin: false,
@@ -25,6 +25,11 @@ export default (state = initialState, action) => {
         return Object.assign({}, state, {
             modal: action.status,
             error: false
+        })
+    case LOGIN_EXIT:
+        return Object.assign({}, state, {
+            isLogin: false,
+            data: false
         })
     default:
         return state

@@ -15,15 +15,23 @@ class UserInfo extends Component {
         openModal()
         e.preventDefault()
     }
+    handleExit(e) {
+        const { authExit } = this.props.actions
+        authExit()
+        e.preventDefault()
+    }
     render() {
         if (this.props.isLogin) {
             let { displayName: name, photo } = this.props.user
             if (name) {
                 name = name.split(' ')
                 return <div className='header__profile header__col'>
-                    <Link to='/profile/' className='header__name'>
-                        <img src={photo ? photo : '/layout/images/svg/avatar.svg'} alt='' width='40'/> <span>{name[0]}<br/>{name[1]}</span>
-                    </Link>
+                    <div className='header__profile-frame'>
+                        <Link to='/profile/' className='header__name'>
+                            <img src={photo ? photo : '/layout/images/svg/avatar.svg'} alt='' width='40'/> <span>{name[0]}<br/>{name[1]}</span>
+                        </Link>
+                        <a href='#' className='header__exit' onClick={this.handleExit.bind(this)}>Выход</a>
+                    </div>
                 </div>
             }
         }

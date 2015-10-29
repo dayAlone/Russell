@@ -1,4 +1,5 @@
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGIN_EXIT = 'LOGIN_EXIT'
 export const LOGIN_SHOW_MODAL = 'LOGIN_SHOW_MODAL'
 export const LOGIN_HIDE_MODAL = 'LOGIN_HIDE_MODAL'

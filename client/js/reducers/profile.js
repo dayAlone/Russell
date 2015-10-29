@@ -1,4 +1,4 @@
-//import { GET_CATEGORIES, GET_COLLECTIONS, GET_PRODUCTS } from '../constants/Catalog'
+import { GET_PROFILE } from '../constants/Profile'
 
 const initialState = {
     checks: [],

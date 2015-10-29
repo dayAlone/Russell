@@ -15,8 +15,8 @@ export default function(connection) {
 
     files.forEach(file => {
         let result = require(`./${file}`)
-        if (typeof result === 'function') {
-            models[file.charAt(0).toUpperCase()] = result(connection)
+        if (typeof result.init === 'function') {
+            models[file.charAt(0).toUpperCase()] = result.init(connection)
         } else if (typeof result === 'object') {
             models[file.charAt(0).toUpperCase()] = result
         }

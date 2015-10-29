@@ -7,7 +7,7 @@ export default new VKontakteStrategy({
         clientSecret: config.get('vk.client.secret'),
         callbackURL: config.get('vk.callback.url'),
         passReqToCallback: true,
-        profileFields: ['id', 'verified', 'name', 'link', 'photo_max', 'email', 'sex'],
+        profileFields: ['id', 'verified', 'name', 'link', 'photo_max', 'email', 'sex', 'contacts'],
     },
     (req, accessToken, refreshToken, params, profile, done) => {
         process.nextTick(() => {
@@ -15,6 +15,8 @@ export default new VKontakteStrategy({
             if (!params.email) {
                 return done(null, false, {message: 'При входе разрешите доступ к эл. почте. Она используется для идентификации пользователя.'});
             }
+
+            profile.phone = profile._json.home_phone || profile._json.mobile_phone
 
             profile.emails = [
                 {value: params.email}

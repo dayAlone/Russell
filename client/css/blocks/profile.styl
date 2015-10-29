@@ -61,3 +61,62 @@
             &:hover
                 span
                     border-line(alpha(red, .3))
+    .checks
+        &__table
+            .table__col
+                lost-column 1.1/8 0 0
+
+                &:first-of-type
+                    lost-column 1.4/8 0 0
+        .check
+            &__show, &__vinner
+                font-size 10px
+                color red
+                border-line(alpha(red, .3))
+            &__connect, &__vinner
+                font-size 11px
+            &__comment
+                size 20px
+                background-color #6d6f73
+                display inline-block
+                border-radius 50%
+                text-align center
+                line-height 22px
+                margin-top 5px
+                position relative
+                cursor pointer
+                &:after
+                    content attr(data-text)
+                    position absolute
+                    font-size 11px
+                    background-color #6d6f73
+                    max-width 200px
+                    line-height 1
+                    padding 10px
+                    border-radius 5px
+                    left 100%
+                    top 50%
+                    margin-left 10px
+                    transform translateY(-50%) translateX(-10px)
+                    opacity 0
+                    pointer-events none
+                    t all
+                &:hover:after
+                    transform translateY(-50%)
+                    opacity 1
+            &__status
+                &--inactive
+                    color #474a51
+                &--canceled
+                    color red
+                &--active
+                    color #00d95a
+            &__info
+                display none
+                padding-top 8px
+                font-size 12px
+                &--visible
+                    display block
+                > span
+                    display inline-block
+                    margin-bottom 8px

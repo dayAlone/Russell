@@ -12,12 +12,13 @@ export default (Check) => {
         kpk_number: '12356789',
         kpk_value: '1234789',
         photo: '',
-        status: 'autocheck',
+        status: '',
         status_comment: '',
         count: 1,
-        vinner: false,
-        products: [],
-        user: oid('user')
+        vinner: true,
+        products: [Types.ObjectId('9a138ed91dd4e66125f4fd90')],
+        user: oid('user'),
+        until: new Date('2014-01-22T14:56:59.301Z')
     }, {
         organisation: 'ООО “М.Видео менеджмент”',
         inn: '007707548740',
@@ -30,9 +31,9 @@ export default (Check) => {
         photo: '',
         status: 'canceled',
         status_comment: 'Чек не прошел автоматическую проверку',
-        count: 2,
+        count: 0,
         vinner: false,
-        products: [Types.ObjectId('562635138e2baa2b921be277')],
+        products: [],
         user: oid('user')
     }, {
         active: false,
@@ -45,11 +46,28 @@ export default (Check) => {
         kpk_number: '123456789',
         kpk_value: '123456789',
         photo: '',
-        status: 'autocheck',
+        status: 'active',
         status_comment: '',
         count: 1,
-        vinner: true,
-        products: [Types.ObjectId('5626350e8e2baa2b921be270')],
+        vinner: false,
+        products: [Types.ObjectId('bb2e16fdbad55b0ff00e4d96')],
+        user: oid('user')
+    }, {
+        active: false,
+        organisation: 'ООО “М.Видео менеджмент”',
+        inn: '007707548740',
+        eklz: '1452788789',
+        date: '15.05.2015',
+        time: '21:16',
+        total: '3565.56',
+        kpk_number: '12123456789',
+        kpk_value: '123456789',
+        photo: '',
+        status: 'active',
+        status_comment: '',
+        count: 2,
+        vinner: false,
+        products: [],
         user: oid('user')
     }]
     checks.forEach(el => {

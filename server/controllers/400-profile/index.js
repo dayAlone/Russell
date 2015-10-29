@@ -1,5 +1,7 @@
 import Router from 'koa-router'
 import config from 'config'
+import { check as Check } from '../../models/check'
+
 export default function(app) {
     const router = new Router()
     router
@@ -13,6 +15,23 @@ export default function(app) {
                 this.body = this.render('index', {meta: meta})
             } else {
                 this.redirect('/')
+            }
+        })
+        .get('/profile/checks/get/', function* () {
+            if (this.req.user && this.req.user.role === 'user') {
+                let result
+                try {
+                    result = yield yield Check.find({
+                        user: this.req.user._id
+                    }, {}, {
+                        sort: {
+                            created: -1 //Sort by Date Added DESC
+                        }
+                    }).populate('products')
+                } catch (e) {
+                    this.body = { error: e }
+                }
+                this.body = { error: false, result: result }
             }
         })
         .post('/profile/feedback/send/', function* () {

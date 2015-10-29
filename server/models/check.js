@@ -4,10 +4,6 @@ import autoIncrement from 'mongoose-auto-increment'
 import Game from './games'
 
 const checkSchema = new mongoose.Schema({
-    active: {
-        type: Boolean,
-        default: true
-    },
     created: {
         type: Date,
         default: Date.now
@@ -72,10 +68,12 @@ Check.count({}, (err, count) => {
     if (count === 0) require('./fixtures/checks')(Check)
 })
 
-export default (connection) => {
+export const init = (connection) => {
 
     autoIncrement.initialize(connection)
     checkSchema.plugin(autoIncrement.plugin, 'Check')
 
     return Check
 }
+
+export const check = Check

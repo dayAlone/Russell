@@ -27,7 +27,7 @@ class Check extends Component {
         img.onload = () => {
             this.setState({sizes: {w: img.width, h: img.height}})
         }
-        img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : null}${photo}` : photo
+        img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
     }
     render() {
         let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo, status, status_comment, count, vinner, products, until, created} = this.props.data

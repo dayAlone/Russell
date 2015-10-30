@@ -1,62 +1,74 @@
 import Router from 'koa-router'
 import config from 'config'
 import { check as Check } from '../../models/check'
+import moment from 'moment'
+const getUserChecks = function* (user, pre, after) {
+    if (user && user.role === 'user') {
+        let result
+        try {
+            if (typeof pre === 'function') yield pre(user)
+            result = yield Check.find({
+                user: user._id
+            }, {}, {
+                sort: {
+                    created: -1
+                }
+            }).populate('products.product')
+            if (typeof after === 'function') result = yield after(result)
+        } catch (e) {
+            return { error: e }
+        }
+        return { error: false, result: result }
+    }
+}
+
+const getUserFavorites = function* (raw) {
+    let favorites = []
+    raw.map(el => {
+        if (moment(el.until) > moment()) {
+            el.products.map(p => {
+                favorites.push(p.product._id)
+            })
+        }
+    })
+    return favorites
+}
 
 export default function(app) {
     const router = new Router()
     router
         .get('/profile/', function* () {
             if (this.req.user) {
-                let meta = {
-                    image: '',
-                    title: '',
-                    description: ''
-                }
-                this.body = this.render('index', {meta: meta})
+                this.body = this.render('index')
             } else {
                 this.redirect('/')
             }
         })
         .get('/profile/checks/get/', function* () {
-            if (this.req.user && this.req.user.role === 'user') {
-                let result
-                try {
-                    result = yield Check.find({
-                        user: this.req.user._id
-                    }, {}, {
-                        sort: {
-                            created: -1 //Sort by Date Added DESC
-                        }
-                    }).populate('products.product')
-                } catch (e) {
-                    this.body = { error: e }
-                }
-                this.body = { error: false, result: result }
-            }
+            let result = yield getUserChecks(this.req.user)
+            this.body = result
+        })
+        .get('/profile/favorites/get/', function* () {
+            let result = yield getUserChecks(this.req.user, false, getUserFavorites)
+            this.body = result
         })
         .post('/profile/checks/remove-product/', function* () {
-            if (this.req.user && this.req.user.role === 'user') {
-                let {product, check} = this.request.body
-                let result
-                try {
-                    yield Check.findOneAndUpdate(
-                        { _id: check, user: this.req.user._id },
-                        { $pull: { products: {_id: product} } },
-                        { safe: true, upsert: true }
-                    )
-                    result = yield Check.find({
-                        user: this.req.user._id
-                    }, {}, {
-                        sort: {
-                            created: -1 //Sort by Date Added DESC
-                        }
-                    }).populate('products.product')
-                } catch (e) {
-                    this.body = { error: e }
+            let {product, check} = this.request.body
+            let result = yield getUserChecks(this.req.user, function*(user) {
+                yield Check.findOneAndUpdate(
+                    { _id: check, user: user._id },
+                    { $pull: { products: {_id: product} } },
+                    { safe: true, upsert: true }
+                )
+            }, function*(raw) {
+                let favorites = yield getUserFavorites(raw)
+                let data = {
+                    checks: raw,
+                    favorites: favorites
                 }
-                this.body = { error: false, result: result }
-            }
-
+                return data
+            })
+            this.body = result
         })
         .post('/profile/feedback/send/', function* () {
             let mandrill = require('node-mandrill')(config.mandrill)

@@ -75,6 +75,15 @@
         border-line(alpha(red, .4))
         display inline-block
         line-height 1
+    &__image
+        position absolute
+        right 100%
+        size 40px
+        margin-right 12px
+        top -6px
+        background-position top center
+        background-size cover
+        border-radius 5px
     &__name
         middle()
         text-align left
@@ -89,12 +98,7 @@
             span
                 color red
                 border-line(alpha(red, .2))
-        img
-            position absolute
-            right 100%
-            size 40px
-            margin-right 12px
-            top -6px
+
     img&__title
         position relative
         max-width 100%

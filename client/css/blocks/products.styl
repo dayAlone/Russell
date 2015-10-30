@@ -32,11 +32,9 @@
     &__item
 
         height 305px
-        background url(/layout/images/products.bg.png) top center
         background-size cover
         border-radius 8px
         padding 10px
-
         margin-bottom 30px
         transition .3s transform, .3s opacity, .3s box-shadow, 0s width
         box-shadow 0 0 0 0 alpha(black, 0)
@@ -71,6 +69,8 @@
             opacity 0
             pointer-events none
             t opacity
+        .products__items--favorites &
+            height 375px
         .products--ready &
             transform translateX(-50%) scale(1)
             @media (min-width: $scr_xs)
@@ -81,6 +81,13 @@
         color white
         min-height 295px
         display inline-block
+        background url(/layout/images/products.bg.png) top center
+        margin-right -10px
+        margin-left -10px
+        border-radius 8px
+        padding 0 10px
+        .products__items--favorites &
+            border-radius 8px 8px 0 0
     &__artnumber
         font-size 11px
     &__name
@@ -88,3 +95,13 @@
         line-height 16px
         width 100%
         margin-bottom 8px
+    &__favorite
+        height 70px
+        line-height 70px
+        background url(/layout/images/favorites.bg.png) top center
+        background-size cover
+        margin-right -10px
+        margin-left -10px
+        border-radius 0 0 8px 8px
+        img
+            middle()

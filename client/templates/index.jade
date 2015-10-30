@@ -8,9 +8,10 @@ html
     meta(name="mobile-web-app-capable", content="yes")
     meta(name="apple-mobile-web-app-status-bar-style", content="black-translucent")
     meta(name='yandex-verification', content='6412fd376024938f')
-    meta(property='og:image', content='#{meta.image}')
-    meta(property='og:title', content='#{meta.title}')
-    meta(property='og:description', content='#{meta.description}')
+    if meta
+        meta(property='og:image', content='#{meta.image}')
+        meta(property='og:title', content='#{meta.title}')
+        meta(property='og:description', content='#{meta.description}')
     link(rel='image_src', href='#{meta.image}')
   body
     #app=data

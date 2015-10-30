@@ -5,6 +5,6 @@ export default {
     catalog: require('./catalog'),
     design: require('./design'),
     recepts: require('./recepts'),
-    //stores: require('./stores'),
+    profile: require('./profile'),
     //router: routerStateReducer
 }

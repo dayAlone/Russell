@@ -145,7 +145,6 @@
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^1.1.1",
-    "gulp": "^3.9.0",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1"
   }

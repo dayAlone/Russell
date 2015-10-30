@@ -9,11 +9,12 @@
             @media (max-width: $scr_s)
                 margin-bottom 10px
             @media (min-width: $scr_s)
-                margin-top 37px
+                margin-top 0px
         .title--small &
             display none
             @media (min-width: $scr_s)
                 display block
+                margin-top 15px
     &__flag
         position absolute
         background-color #e6151d
@@ -31,7 +32,68 @@
             left 0
             bottom 30px
             width auto
+    &__number
+        position relative
+        size 30px
+        border 2px solid red
+        text-align center
+        line-height 28px
+        margin-right 10px
+        font-size 15px
+        border-radius 50%
+        font-weight bold
+        display inline-block
 
+        margin-top -7px
+        margin-bottom 5px
+        @media (min-width: $scr_s)
+            float left
+
+        @media (min-width: $scr_md)
+            margin-top 0px
+            margin-bottom 20px
+    &__group
+        & + .title__col
+            margin-bottom 20px
+            @media (min-width: $scr_md)
+                padding-right 0px
+                text-align right
+        @media (min-width: $scr_s) and (max-width: $scr_md)
+            lost-column 3/4 0 0
+            .title__col
+                lost-column 1 0 0
+                text-align left
+            & + .title__col
+                lost-column 1/4 0 0
+                float right
+    &__col
+        font-size 12px
+        margin-top 15px
+        lost-column 1 0 0
+        text-align center
+        @media (min-width: $scr_s)
+            text-align left
+        p
+            line-height 18px
+
+            padding 0 20px
+            @media (min-width: $scr_s)
+                margin-bottom 0px
+                padding 0
+                float right
+                text-align left
+                width calc(100% - 45px)
+        @media (min-width: $scr_md)
+            lost-column 1/4 0 0
+            padding-right 30px
+
+            .button
+                width 100%
+    &__slider
+        @media (max-width: $scr_s)
+            padding 0 20px
+        img
+            max-width 100%
     &__question
         font-weight bold
         padding 10px 0
@@ -146,7 +208,7 @@
                 font-weight bold
 
     &__love
-        margin 25px 0 16px
+        margin 25px 0 0px
         display none
         @media (min-width: $scr_s)
             display block

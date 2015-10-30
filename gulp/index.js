@@ -11,6 +11,9 @@ import chalk from 'chalk'
 const gp = require('gulp-load-plugins')()
 import lost from 'lost'
 import mqpacker from 'css-mqpacker'
+import willChange from 'postcss-will-change'
+import cssnano from 'cssnano'
+
 const { postcss, watch, stylus, nodemon, svgmin, replace, imageOptimization } = gp
 let browserSync = require('browser-sync').create();
 let { source, tmp } = config.folders
@@ -167,7 +170,7 @@ gulp.task('build_js', () => {
 gulp.task('stylus', () => {
     gulp.src(`${source}../css/style.styl`)
     .pipe(stylus())
-    .pipe(postcss([lost, mqpacker({sort: true})]))
+    .pipe(postcss([lost, mqpacker({sort: true}), cssnano]))
     .pipe(gulp.dest(`${source}/css`))
 
     .pipe(browserSync.stream())

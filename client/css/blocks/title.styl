@@ -89,7 +89,7 @@
 
             .button
                 width 100%
-                animation: zoomZoom .5s infinite alternate
+                animation: zoomZoom .8s infinite
     &__slider
         @media (max-width: $scr_s)
             padding 0 20px
@@ -220,5 +220,7 @@
 @keyframes zoomZoom
     0%
       transform scale(1)
+    50%
+      transform scale(1.07)
     100%
-      transform scale(1.05)
+      transform scale(1)

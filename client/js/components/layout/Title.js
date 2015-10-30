@@ -21,7 +21,7 @@ class Title extends Component {
     }
     render() {
         if (this.props.game) {
-            let content = ''
+            let content = []
             let { image, start: dateStart, end: dateStop, description, link, flag } = this.props.game
             let start = moment(dateStart).format('D MMMM')
             let end = moment(dateStop).format('D MMMM')

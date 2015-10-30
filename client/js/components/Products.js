@@ -43,13 +43,13 @@ class Products extends Component {
     }
     componentDidUpdate(prevProps) {
         this.activateAnimation()
-        if (prevProps[this.props.source].length === 0 || !this.state.current) this.getCurrent()
+        if (prevProps[this.props.source].length === 0 && this.props[this.props.source].length > 0 && !this.state.current) this.getCurrent()
     }
     getCurrent() {
         let { code, source } = this.props
         let { setLine } = this.props.design
         const current = this.props[source].filter(el => (el.code === code))[0]
-        //setLine(current.line)
+        setLine(current.line)
         this.setState({current: current})
     }
     editProduct(code, e) {

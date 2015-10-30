@@ -35,7 +35,8 @@ class Title extends Component {
                 autoplay: true,
                 autoplaySpeed: 3000,
                 fade: true,
-                speed: 2000
+                speed: 2000,
+                swipe: false
             }
             return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
                 <img src={`/layout/images/svg/love.svg`} height='23' className='title__love' />

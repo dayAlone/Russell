@@ -18,33 +18,6 @@ class Title extends Component {
         let end = moment(dateStop, 'DD.MM.YYYY').format('D MMMM')
         description = description.replace('#start#', start).replace('#end#', end)
 
-        /*
-        switch (this.props.type) {
-        case 'counter':
-        case 'big':
-            content = <div>
-                <div className='title__image'>
-                    {this.props.type === 'counter' ? <div className='title__flag'>{flag}</div> : false}
-                    <img src={`/layout/images/header.jpg`} width='100%' />
-                </div>
-                <div className='title__products'><img src={image} /></div>
-                <div className='title__question'>Вы мечтаете о стильной технике для кухни?</div>
-                <div className='title__divider'></div>
-                <div className='title__description'>
-                    <p dangerouslySetInnerHTML={{__html: description}} />
-                </div>
-                {this.props.type === 'counter' ? <div className='title__counter'>
-                    <Countdown dateStart={dateStart} dateStop={dateStop} link={link} hideButton={true}/>
-                </div> : false}
-                <div className='title__actions'>
-                    {this.props.type !== 'counter' ? <Link to='/games/' className='button button--big'>Выиграть!</Link> : false }
-                </div>
-            </div>
-            break
-        default:
-            content = <Link to='/games/'><img src={`/layout/images/header-small.jpg`} width='100%' className='title__image' /></Link>
-        }
-        */
         for (let i = 1; i < 12; i++) {
             content.push(<Link to='/games/'><img key={i} src={`/layout/images/b-${i}.jpg`} alt='' /></Link>)
         }
@@ -54,7 +27,8 @@ class Title extends Component {
             autoplay: true,
             autoplaySpeed: 3000,
             fade: true,
-            speed: 2000
+            speed: 2000,
+            swipe: false
         }
         return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
             <img src={`/layout/images/svg/love.svg`} height='23' className='title__love' />

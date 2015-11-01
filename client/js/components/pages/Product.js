@@ -128,7 +128,7 @@ class Product extends Component {
                                 { isLogin ?
                                     <div className='product__favorite'>
                                         {typeof favorites === 'object' && favorites.indexOf(_id) === -1
-                                            ? <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}><img src='/layout/images/svg/heart-border-red.svg' alt='' width='22'/>Добавить в избранное</a>
+                                            ? <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}><img src='/layout/images/svg/heart-border-red.svg' alt='' width='22'/>В избранное</a>
                                         : <Link to='/profile/favorites/'><img src='/layout/images/svg/heart.svg' alt='' width='22'/> Уже в избранном</Link>
                                         }
                                     </div>

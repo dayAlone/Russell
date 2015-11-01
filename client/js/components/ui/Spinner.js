@@ -42,6 +42,7 @@ class ReactSpinner extends Component {
     }
 
     componentDidMount() {
+        if (this.props.color) this.props.config.color = this.props.color
         this.spinner = new Spinner(this.props.config)
         this.spinner.spin(this.refs.container)
     }

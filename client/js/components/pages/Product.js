@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
+import { Link } from 'react-router'
 
 import Page404 from '../pages/404'
 import Spinner from '../ui/Spinner'
 import Breadcrumbs from '../ui/Breadcrumbs'
 import Title from '../layout/Title'
+import CheckAssignModal from '../profile/blocks/CheckAssignModal'
 
 import * as actionCreators from '../../actions/catalog'
 import * as design from '../../actions/design'
@@ -13,8 +15,16 @@ import { connect } from 'react-redux'
 
 import 'react-photoswipe/lib/photoswipe.css'
 import {PhotoSwipe} from 'react-photoswipe'
+import * as profileActionCreators from '../../actions/profile'
 
-@connect(state => ({ products: state.catalog.products }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch), design: bindActionCreators(design, dispatch)}))
+@connect(
+    state => ({ products: state.catalog.products, isLogin: state.login.isLogin, favorites: state.profile.favorites }),
+    dispatch => ({
+        actions: bindActionCreators(actionCreators, dispatch),
+        design: bindActionCreators(design, dispatch),
+        profile: bindActionCreators(profileActionCreators, dispatch)
+    })
+)
 class Product extends Component {
     state = { open: 'short', photoswipe: false, index: 0 }
     componentWillMount() {
@@ -26,7 +36,7 @@ class Product extends Component {
         let {products, routeParams} = this.props
         let { setLine } = this.props.design
         let current = products.filter(el => (el.code === routeParams.code))[0]
-        setLine(current.line)
+        if (current) setLine(current.line)
         this.setState({current: current})
     }
     handleClick(e) {
@@ -36,7 +46,11 @@ class Product extends Component {
         e.stopPropagation()
     }
     componentDidUpdate(prevProps) {
-        if (prevProps.products.length === 0) this.getCurrent()
+        let {products, profile, favorites, isLogin} = this.props
+        if (prevProps.products.length === 0 && products.length > 0) this.getCurrent()
+        if (isLogin && !favorites) {
+            profile.getFavorites()
+        }
     }
     openPhotoSwipe(i) {
         return (e) => {
@@ -50,12 +64,20 @@ class Product extends Component {
         this.setState({photoswipe: false})
 
     }
+    openAssignModal(name, id) {
+        return (e) => {
+            e.preventDefault()
+            this.refs.modal.getWrappedInstance().show(name, id)
+        }
+    }
     render() {
-        let { routes } = this.props
+        let { routes, favorites } = this.props
         if (this.state.current) {
             const current = this.state.current
             if (current) {
-                const { name,
+                const {isLogin, favorites} = this.props
+                const { _id,
+                        name,
                         artnumber,
                         preview,
                         images,
@@ -103,6 +125,14 @@ class Product extends Component {
                                 className={`product__tabs-content ${this.state.open === 'short' ? 'product__tabs-content--active' : null}`}
                                 ref='short'
                                 >
+                                { isLogin ?
+                                    <div className='product__favorite'>
+                                        {typeof favorites === 'object' && favorites.indexOf(_id) === -1
+                                            ? <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}><img src='/layout/images/svg/heart-border-red.svg' alt='' width='22'/>Добавить в избранное</a>
+                                        : <Link to='/profile/favorites/'><img src='/layout/images/svg/heart.svg' alt='' width='22'/> Уже в избранном</Link>
+                                        }
+                                    </div>
+                                    : null}
                                 <span dangerouslySetInnerHTML={{__html: description }} />
                                 { video ? <div className='product__video'><iframe width='440' height='248' src={video} frameBorder='0' allowFullScreen=''></iframe></div> : false}
                                 { pdf ? <div className='product__pdf'><a href={pdf} target='_blank'><img src='/layout/images/svg/pdf.svg' />Скачать инструкции</a></div> : false}
@@ -128,6 +158,7 @@ class Product extends Component {
                             </div>
                         </div>
                     </div>
+                    <CheckAssignModal ref='modal'/>
                 </div>
             }
             return <Page404 />

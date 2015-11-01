@@ -27,7 +27,7 @@ class Title extends Component {
             let end = moment(dateStop).format('D MMMM')
             description = description.replace('#start#', start).replace('#end#', end)
             for (let i = 1; i < 12; i++) {
-                content.push(<Link to='/games/'><img key={i} src={`/layout/images/b-${i}.jpg`} alt='' /></Link>)
+                content.push(<Link key={i} to='/games/'><img src={`/layout/images/b-${i}.jpg`} alt='' /></Link>)
             }
             let options = {
                 arrows: false,

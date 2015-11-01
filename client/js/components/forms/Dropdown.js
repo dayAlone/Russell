@@ -15,6 +15,7 @@ const Dropdown = React.createClass({
                 trigger: el.name
             })
             $(findDOMNode(this.refs.block)).removeClass('dropdown--hover')
+            if (this.props.onChange) this.props.onChange(el, i)
             this.setValue(el.code ? el.code : el.name)
             e.preventDefault()
         }
@@ -25,6 +26,7 @@ const Dropdown = React.createClass({
         this.setState({
             trigger: el ? el.name : this.props.trigger
         })
+        if (this.props.onChange) this.props.onChange(el)
         this.setValue(e.target.value)
     },
     componentDidUpdate(prevProps, prevState) {
@@ -48,13 +50,13 @@ const Dropdown = React.createClass({
         })
     },
     render() {
-        let {items, title, name} = this.props
+        let {items, title, name, trigger} = this.props
         const errorMessage = this.getErrorMessage()
         return <div className='form-group'>
                 {title ? <label htmlFor={name}>{title}</label> : null}
                 <div className={`dropdown ${this.showError() && !this.isPristine() ? 'dropdown--error' : ''}`} ref='block'>
                 <a href='#' className='dropdown__trigger' onClick={e => (e.preventDefault())}>
-                    {this.state.trigger} <img src='/layout/images/svg/down.svg' alt='' />
+                    {this.state.trigger ? this.state.trigger : items ? items[0].name : null} <img src='/layout/images/svg/down.svg' alt='' />
                 </a>
                 <span className='dropdown__frame'>
                     {items.map((el, i) => {
@@ -62,7 +64,7 @@ const Dropdown = React.createClass({
                     })}
                 </span>
                 <select name={name} className='dropdown__select' value={this.getValue()} onChange={this.onChange}>
-                    <option value=''>{this.props.trigger}</option>
+                    {trigger ? <option value=''>{trigger}</option> : null }
                     {items.map((el, i) => {
                         return <option
                                     value={el.code ? el.code : el.name}

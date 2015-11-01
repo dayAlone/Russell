@@ -1,4 +1,4 @@
-import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK } from '../constants/Profile'
+import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK } from '../constants/Profile'
 
 export function getChecks() {
     return dispatch => {
@@ -13,6 +13,7 @@ export function getChecks() {
     }
 }
 
+
 export function getFavorites() {
     return dispatch => {
         $.get('/profile/favorites/get/', data => {
@@ -26,11 +27,24 @@ export function getFavorites() {
     }
 }
 
+export function assignProduct(check, product) {
+    return dispatch => {
+        $.post('/profile/checks/assign-product/', {check: check, product: product}, data => {
+            if (!data.error) {
+                dispatch({
+                    type: ASSIGN_PRODUCT_TO_CHECK,
+                    data: data.result
+                })
+
+            }
+        })
+    }
+}
+
 export function removeProduct(check, product) {
     return dispatch => {
         $.post('/profile/checks/remove-product/', {check: check, product: product}, data => {
             if (!data.error) {
-                getFavorites()
                 dispatch({
                     type: REMOVE_PRODUCT_FROM_CHECK,
                     data: data.result

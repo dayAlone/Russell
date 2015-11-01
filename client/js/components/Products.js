@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import Page404 from './pages/404'
 import Spinner from './ui/Spinner'
 import Breadcrumbs from './ui/Breadcrumbs'
-import Modal from './ui/Modal'
+import CheckAssignModal from './profile/blocks/CheckAssignModal'
 
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
@@ -69,6 +69,12 @@ class Products extends Component {
             $('.products').removeClass('products--ready').addClass('products--ready')
         }, 500)
     }
+    openAssignModal(name, id) {
+        return (e) => {
+            e.preventDefault()
+            this.refs.modal.getWrappedInstance().show(name, id)
+        }
+    }
     getItems(current) {
         let { products, source, isLogin, favorites } = this.props
 
@@ -76,7 +82,7 @@ class Products extends Component {
         const items = products
             .filter(el => (el[source] === current._id))
             .map((el, i) => {
-                const { name, artnumber, preview, code } = el
+                const { name, artnumber, preview, code, _id } = el
                 if (i > 0) delay += 0.1
                 return <div key={i}
                             className='products__item'
@@ -91,8 +97,8 @@ class Products extends Component {
                         </Link>
                         { isLogin ?
                             <div className='products__favorite'>
-                                {typeof favorites === 'object' && favorites.indexOf(el._id) === -1
-                                    ? <a href='#'><img src='/layout/images/svg/heart-border.svg' alt='' /></a>
+                                {typeof favorites === 'object' && favorites.indexOf(_id) === -1
+                                    ? <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}><img src='/layout/images/svg/heart-border.svg' alt='' /></a>
                                     : <Link to='/profile/favorites/'><img src='/layout/images/svg/heart.svg' alt='' /></Link>
                                 }
                             </div>
@@ -116,6 +122,7 @@ class Products extends Component {
                         </div>
                         <img src='/layout/images/line.png' width='100%' className='products__line' />
                         <div className={`products__items ${isLogin ? 'products__items--favorites' : ''}`}>{this.getItems(current)}</div>
+                        <CheckAssignModal ref='modal'/>
                     </div>
             }
             return <Page404 hideTitle={true}/>

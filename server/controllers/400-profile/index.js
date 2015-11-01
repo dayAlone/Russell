@@ -70,6 +70,24 @@ export default function(app) {
             })
             this.body = result
         })
+        .post('/profile/checks/assign-product/', function* () {
+            let {product, check} = this.request.body
+            let result = yield getUserChecks(this.req.user, function*(user) {
+                yield Check.findOneAndUpdate(
+                    { _id: check, user: user._id },
+                    { $push: { products: {product: product} } },
+                    { safe: true, upsert: true }
+                )
+            }, function*(raw) {
+                let favorites = yield getUserFavorites(raw)
+                let data = {
+                    checks: raw,
+                    favorites: favorites
+                }
+                return data
+            })
+            this.body = result
+        })
         .post('/profile/feedback/send/', function* () {
             let mandrill = require('node-mandrill')(config.mandrill)
             let {subject, phone, message, name, email} = this.request.body

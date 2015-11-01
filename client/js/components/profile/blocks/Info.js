@@ -16,7 +16,7 @@ class ProfileInfo extends Component {
             name = name.split(' ')
             created = moment(created).format('DD.MM.YYYY')
             return <div className='info'>
-                    <img src={photo ? photo : '/layout/images/svg/avatar.svg'} alt='' width='70' className='info__photo'/>
+                    <div className='info__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
                     <div className='info__frame'>
                         <span className='info__name'>{name[0]}<br/>{name[1]}</span><br/>
                         <span className='info__date'>Дата регистрации: {created}</span>

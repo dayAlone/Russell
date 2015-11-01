@@ -82,7 +82,7 @@ class Check extends Component {
             <div className='table__col'>
                 {products.length > 0 ?
                     products.map((el, i) => {
-                        return <a href={`/catalog/product/${el.product.code}/`} target='_blank' key={i}>{el.product.name}</a>
+                        return <div><a href={`/catalog/product/${el.product.code}/`} target='_blank' key={i}>{el.product.name}</a><br/><br/></div>
                     })
                     : 'нет'}
             </div>

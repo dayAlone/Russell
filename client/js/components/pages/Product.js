@@ -130,7 +130,7 @@ class Product extends Component {
                                         <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}>
                                         {typeof favorites === 'object' && favorites.indexOf(_id) === -1
                                             ? <span><img src='/layout/images/svg/heart-border-red.svg' alt='' width='22'/>В избранное</span>
-                                            : <span><img src='/layout/images/svg/heart.svg' alt='' width='22'/> Уже в избранном</span>
+                                        : <span><img src='/layout/images/svg/heart.svg' alt='' width='22'/> Привязать к еще одному чеку</span>
                                         }
                                         </a>
                                     </div>

@@ -170,7 +170,7 @@ gulp.task('build_js', () => {
 gulp.task('stylus', () => {
     gulp.src(`${source}../css/style.styl`)
     .pipe(stylus())
-    .pipe(postcss([lost, mqpacker({sort: true}), cssnano]))
+    .pipe(postcss([lost, mqpacker({sort: true})]))
     .pipe(gulp.dest(`${source}/css`))
 
     .pipe(browserSync.stream())

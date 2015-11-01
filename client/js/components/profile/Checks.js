@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import { bindActionCreators } from 'redux'
 import * as actionCreators from '../../actions/profile'
 import { connect } from 'react-redux'
+import AddCheckModal from './blocks/AddCheckModal'
 
 import moment from 'moment'
 
@@ -116,10 +117,15 @@ class ProfileChecks extends Component {
             this.props.actions.getChecks()
         }
     }
+    openModal(e) {
+        e.preventDefault()
+        this.refs.modal.getWrappedInstance().show()
+    }
     render() {
         let checks = this.props.checks.map((el, i) => (<Check openPhotoSwipe={this.openPhotoSwipe.bind(this)} key={i} data={el}/>))
         return <div className='checks'>
             <Helmet title='Russell Hobbs | Личный кабинет | Чеки'/>
+            <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Добавить чек</a>
             <div className='table checks__table'>
                 <div className='table__title'>
                     <div className='table__col'>Данные<br/> чека</div>
@@ -136,7 +142,7 @@ class ProfileChecks extends Component {
                     </div>
                 : checks}
             </div>
-
+            <AddCheckModal ref='modal' />
             <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false, index: this.state.index}} items={this.state.image} onClose={this.closePhotoSwipe.bind(this)}/>
         </div>
     }

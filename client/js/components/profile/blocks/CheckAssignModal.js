@@ -34,13 +34,22 @@ class ChecksAssignModal extends Component {
     render() {
         let checks = []
         if (this.props.checks.length > 0) {
-            this.props.checks.filter(el => (el.count - el.products.length > 0)).map((el, i) => {
-                checks.push({
-                    code: el._id,
-                    name: 'ID: ' + el._id + ' – ' + el.organisation,
-                    count: el.count - el.products.length
+            this.props.checks
+                .filter(el => (el.count - el.products.length > 0))
+                .filter(el => {
+                    let exist = false
+                    el.products.map(p => {
+                        if (p.product._id === this.state.id) exist = true
+                    })
+                    return !exist
                 })
-            })
+                .map(el => {
+                    checks.push({
+                        code: el._id,
+                        name: 'ID: ' + el._id + ' – ' + el.organisation,
+                        count: el.count - el.products.length
+                    })
+                })
         }
         return <Modal ref='modal' className='modal modal--checks'>
             {this.props.checks.length ?

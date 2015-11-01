@@ -97,7 +97,12 @@ class Products extends Component {
                         </Link>
                         { isLogin ?
                             <div className='products__favorite'>
-                                <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}><img src='/layout/images/svg/heart-border.svg' alt='' /></a>
+                                <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}>
+                                    {typeof favorites === 'object' && favorites.indexOf(_id) === -1
+                                    ? <img src='/layout/images/svg/heart-border.svg' alt='' />
+                                    : <img src='/layout/images/svg/heart.svg' alt='' />
+                                    }
+                                </a>
                             </div>
                             : null}
                     </div>

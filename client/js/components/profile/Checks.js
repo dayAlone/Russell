@@ -37,6 +37,7 @@ class Check extends Component {
         let available = count - products.length
         let condition
         switch (status) {
+        case 'incorrect':
         case 'canceled':
             condition = {
                 message: 'Отклонен',
@@ -61,6 +62,7 @@ class Check extends Component {
                 class: 'inactive'
             }
         }
+        if (status === 'incorrect') status_comment = 'Чек не прошел автоматическую проверку'
         return <div className='table__row check'>
             <div className='table__col left'>
                 <span>ID: {_id}</span><br/>

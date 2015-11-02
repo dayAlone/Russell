@@ -30,6 +30,7 @@
     "compression-webpack-plugin": "^0.2.0",
     "config": "^1.16.0",
     "countdown": "^2.6.0",
+    "cron": "^1.0.9",
     "css-loader": "^0.21.0",
     "css-mqpacker": "^4.0.0",
     "css-raw-loader": "^0.1.1",

@@ -3,7 +3,6 @@ import config from 'config'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import moment from 'moment'
-//import getCheckStatus from '../../libs/getCheckStatus'
 import { Types } from 'mongoose'
 const getUserChecks = function* (user, pre, after) {
     if (user && user.role === 'user') {

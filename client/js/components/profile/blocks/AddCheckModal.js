@@ -73,30 +73,30 @@ class AddCheckModal extends Component {
                 {this.state.error ? <div className='alert alert--error' role='alert'>{this.state.error}</div> : null}
                 <div className='form__title'>Информация об организации</div>
                 <Input name='organisation' title='Наименование' value=''/>
-                <Input name='inn' title='ИНН*' validations='minLengthOrEmpty:1' value=''/>
+                <Input name='inn' title='ИНН*' validations='isNumeric,minLengthOrEmpty:1' value=''/>
                 <div className='form__title'>Реквизиты чека</div>
-                <Input name='eklz' title='Рег. номер ЭКЛЗ*' validations='minLengthOrEmpty:1' value=''/>
+                <Input name='eklz' title='Рег. номер ЭКЛЗ*' validations='isNumeric,minLengthOrEmpty:1' value=''/>
                 <div className='form__date'>
                     <label>Дата*</label>
-                    <Input name='date__day' placeholder='ДД' maxLength='2' validations='minLengthOrEmpty:2' value=''/>
-                    <Input name='date__month' placeholder='MM' maxLength='2' validations='minLengthOrEmpty:2' value=''/>
-                    <Input name='date__year' placeholder='ГГ' maxLength='2' validations='minLengthOrEmpty:2' value=''/>
+                    <Input name='date__day' placeholder='ДД' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
+                    <Input name='date__month' placeholder='MM' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
+                    <Input name='date__year' placeholder='ГГ' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
                     <label>Время*</label>
-                    <Input name='time__hours' placeholder='ЧЧ' maxLength='2' validations='minLengthOrEmpty:2' value=''/>
-                    <Input name='time__minutes' placeholder='MM' maxLength='2' validations='minLengthOrEmpty:2' value=''/>
+                    <Input name='time__hours' placeholder='ЧЧ' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
+                    <Input name='time__minutes' placeholder='MM' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
                 </div>
                 <div className='form__total'>
                     <label>Сумма*</label>
-                    <Input name='total__rubles' validations='minLengthOrEmpty:1' value=''/>
+                    <Input name='total__rubles' validations='isNumeric,minLengthOrEmpty:1' value=''/>
                     <label>руб.</label>
                     <Input name='total__cents' value=''/>
                     <label>коп.</label>
                 </div>
                 <div className='form__kpk'>
                     <label htmlFor=''>Номер КПК*</label>
-                    <Input name='kpk_number' title='' validations='minLengthOrEmpty:1' value=''/>
+                    <Input name='kpk_number' title='' validations='isNumeric,minLengthOrEmpty:1' value=''/>
                     <label htmlFor=''>Значение&nbsp;КПК*</label>
-                    <Input name='kpk_value' validations='minLengthOrEmpty:1' value=''/>
+                    <Input name='kpk_value' validations='isNumeric,minLengthOrEmpty:1' value=''/>
                 </div>
 
 

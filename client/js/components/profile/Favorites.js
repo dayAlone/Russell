@@ -62,7 +62,7 @@ class ProfileFavorites extends Component {
                     favorites
                     :
                     <div className='table__row table__row--message center'>
-                        У вас нет ни одно товара в избранном.<br/><Link to='/catalog/'>Выбрать товары из каталога</Link>
+                        У вас нет ни одного товара в избранном.<br/><Link to='/catalog/'>Выбрать товары из каталога</Link>
                     </div>}
             </div>
 

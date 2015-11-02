@@ -1,5 +1,6 @@
 .form
     lost-utility clearfix
+
     .alert
         font-size 11px
         border 1px solid alpha(white, .5)
@@ -73,22 +74,21 @@
                 background-color #383c41
                 opacity .5
         &[type='text']
-            &, &:-webkit-autofill
-                width 100%
-                background-color #383c41
-                color white
-                padding 0 15px
-                border 0
-                line-height 31px
-                margin-bottom 15px
-                .modal &
-                    background-color white
-                    box-shadow inset 0 0 0 1px #383c41
-                    color #383c41
-                    &:focus
-                        box-shadow inset 0 0 0 1px #005b9c
-                &:focus, &:active
-                    outline 0
+            width 100%
+            background-color #383c41
+            color white
+            padding 0 15px
+            border 0
+            line-height 31px
+            margin-bottom 15px
+            .modal &
+                background-color white
+                box-shadow inset 0 0 0 1px #383c41
+                color #383c41
+                &:focus
+                    box-shadow inset 0 0 0 1px #005b9c
+            &:focus, &:active
+                outline 0
     button
         @extend .form input[type='submit']
         &:focus, &:active

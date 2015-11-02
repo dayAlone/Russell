@@ -37,6 +37,21 @@ export default function* (next) {
             this.request.body[part.fieldname] = config.cdn + '/upload/users/' + filename
 
             part.pipe(stream)
+            stream.on('finish', () => {
+                selectel.authorize(config.selectel.login, config.selectel.password, (err) => {
+                    if (!err) {
+                        selectel.uploadFile(
+                            path,
+                            '/russell/upload/users/' + filename,
+                            () => {
+                                if (fs.existsSync(path)) fs.unlink(path)
+                            }
+                        )
+                    }
+
+                })
+            })
+            /*
             yield new Promise((fulfill, reject) => {
                 stream.on('finish', () => (fulfill()))
             })
@@ -50,7 +65,7 @@ export default function* (next) {
                         fulfill()
                     }
                 )
-            })
+            })*/
 
         }
     }

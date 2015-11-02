@@ -49,7 +49,6 @@ class AddCheckModal extends Component {
                 data: formData
             })
             .done(data => {
-                console.log(data)
                 if (data.status === 'success') {
                     this.props.profile.getChecks()
                     this.refs.form.reset()

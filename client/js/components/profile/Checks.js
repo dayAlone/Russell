@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import AddCheckModal from './blocks/AddCheckModal'
 
 import moment from 'moment'
+import { findDOMNode } from 'react-dom'
 
 import 'react-photoswipe/lib/photoswipe.css'
 import {PhotoSwipe} from 'react-photoswipe'
@@ -26,6 +27,7 @@ class Check extends Component {
         let img = new Image()
         let photo = this.props.data.photo
         img.onload = () => {
+            if(img.width > 0) $(findDOMNode(this.refs.photo)).addClass('check__preview--active')
             this.setState({sizes: {w: img.width, h: img.height}})
         }
         img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
@@ -71,7 +73,7 @@ class Check extends Component {
                     <span>Сумма: {total}</span><br/>
                     <span>Номер КПК: {kpk_number}</span><br/>
                     <span>Значение КПК: {kpk_value}</span><br/>
-                    <a href='#' onClick={this.handleClickPreview.bind(this)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
+                    <a href='#' ref='photo' onClick={this.handleClickPreview.bind(this)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
                 </div>
                 <a href='#' className='check__show' onClick={this.handleClick.bind(this)}>{!this.state.hidden ? 'Скрыть' : 'Показать'} детали</a>
             </div>

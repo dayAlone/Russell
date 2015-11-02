@@ -40,7 +40,6 @@ class AddCheckModal extends Component {
 
     }
     componentWillMount() {
-        console.log(this.emprtyFields)
         this.setState({fields: this.emprtyFields})
     }
     show(fields) {
@@ -55,6 +54,7 @@ class AddCheckModal extends Component {
     }
 
     submitForm(fields) {
+        let _this = this
         this.setState({
             disabled: true,
             message: false,
@@ -94,8 +94,8 @@ class AddCheckModal extends Component {
                     disabled: false
                 })
             })
-            .fail(function() {
-                this.setState({
+            .fail(() => {
+                _this.setState({
                     disabled: false,
                     error: 'Что-то пошло не так, повторите попытку через пару минут'
                 })

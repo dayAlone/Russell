@@ -44,7 +44,6 @@ export const getCheckStatus = function*(jar, id) {
         jar: jar
     })
     let $ = cheerio.load(status.body, {decodeEntities: false})
-    console.log($('#v' + id).attr('class').split(' '))
     return getStatus($('#v' + id).attr('class').split(' ')[1])
 }
 export const addCheck = function* (jar, income) {
@@ -73,7 +72,7 @@ export const addCheck = function* (jar, income) {
             pagePart$ctl02$docDateMinute: time.split(':')[1],
             // Сумма
             pagePart$ctl02$docSumRub: total.split('.')[0] ? total.split('.')[0] : total,
-            pagePart$ctl02$docSumCop: total.split('.')[1] ? total.split('.')[1] : false,
+            pagePart$ctl02$docSumCop: total.split('.')[1] ? total.split('.')[1] : '',
 
             // Номер КПК
             pagePart$ctl02$docCvcNumber: kpk_number,
@@ -83,6 +82,8 @@ export const addCheck = function* (jar, income) {
 
             pagePart$documentSubmit: 'Проверить'
         }
+
+
     let status = yield request.post({
         url: 'https://kpkcheck.ru/System/Control.aspx?name=VerifyDocument&type=0',
         headers: headers,
@@ -90,7 +91,6 @@ export const addCheck = function* (jar, income) {
         followAllRedirects: true,
         jar: jar
     })
-
     let $ = cheerio.load(status.body, {decodeEntities: false})
     let result = false
     $('#dataForm tbody tr').map((i, el) => {

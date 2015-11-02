@@ -39,7 +39,7 @@ const getUserFavorites = function* (raw) {
 
 const addOrUpdateCheck = function* () {
     let ctx = this
-    let {id, photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value, kpk_id} = this.request.body
+    let {id, photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value} = this.request.body
 
     let until = yield Game.findCurrentRaffle('dream')
     let error = false
@@ -61,7 +61,8 @@ const addOrUpdateCheck = function* () {
     }
     try {
         if (parseInt(id, 10) > 0) {
-            fields['status'] = kpk_id.length > 0 ? 'processing' : 'added'
+            fields['status'] = 'added'
+            fields['kpk_id'] = ''
             fields['status_comment'] = 'Чек в очереди на автоматическую проверку'
             delete(fields.user)
             let result = yield Check.findOneAndUpdate(

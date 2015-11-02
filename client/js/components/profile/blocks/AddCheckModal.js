@@ -102,16 +102,13 @@ class AddCheckModal extends Component {
             })
     }
     render() {
-        let {_id, organisation, inn, eklz, date, time, total, kpk_id, kpk_number, kpk_value, photo} = this.state.fields
+        let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo} = this.state.fields
         return <Modal ref='modal' className='modal modal--add-check' onValidSubmit={this.submitForm.bind(this)}>
             <h3 className='modal__title modal__title--border'>{ !_id ? 'Добавление чека' : 'Редактрирование чека' }</h3>
             <Formsy.Form ref='form' onValidSubmit={this.submitForm.bind(this)} className='form'>
                 {this.state.message ? <div className='alert' role='alert'>{this.state.message}</div> : null}
                 {this.state.error ? <div className='alert alert--error' role='alert'>{this.state.error}</div> : null}
-                { _id ? <div>
-                    <Input name='id' type='hidden' value={_id}/>
-                    <Input name='kpk_id' type='hidden' value={kpk_id}/>
-                </div> : null }
+                { _id ? <Input name='id' type='hidden' value={_id}/> : null }
                 <div className='form__title'>Информация об организации</div>
                 <Input name='organisation' title='Наименование' value={organisation}/>
                 <Input name='inn' title='ИНН*' validations='isNumeric,minLengthOrEmpty:1' value={inn}/>

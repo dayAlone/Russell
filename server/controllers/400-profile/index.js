@@ -108,7 +108,7 @@ export default function(app) {
                     //kpk_id: status ? status.id : null,
                     kpk_number: kpk_number,
                     kpk_value: kpk_value,
-                    total: total__rubles + '.' + total__cents,
+                    total: total__rubles + total__cents ? '.' + total__cents : '',
                     date: date__day + '.' + date__month + '.' + date__year,
                     time: time__hours + ':' + time__minutes,
                     until: until,

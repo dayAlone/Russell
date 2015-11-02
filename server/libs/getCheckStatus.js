@@ -68,8 +68,8 @@ export const addCheck = function* (jar, income) {
             pagePart$ctl02$docDateHour: time.split(':')[0],
             pagePart$ctl02$docDateMinute: time.split(':')[1],
             // Сумма
-            pagePart$ctl02$docSumRub: total.split('.')[0],
-            pagePart$ctl02$docSumCop: total.split('.')[1],
+            pagePart$ctl02$docSumRub: total.split('.')[0] ? total.split('.')[0] : total,
+            pagePart$ctl02$docSumCop: total.split('.')[1] ? total.split('.')[1] : false,
 
             // Номер КПК
             pagePart$ctl02$docCvcNumber: kpk_number,

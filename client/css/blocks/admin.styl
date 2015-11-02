@@ -1,0 +1,73 @@
+.admin
+    color black
+    .page--admin
+        min-height 500px
+    .text
+        padding-top 0px
+    &__nav
+        @extend .profile__nav
+        padding-top 0px
+        margin-top 0px !important
+    a&__link
+        @extend a.profile__link
+        background-color #f2f2f2
+        background-image none
+        color black
+        &:hover, &--active
+            background-color black
+            color white
+    .check
+        &__status
+            &--inactive
+                color #474a51
+            &--canceled
+                color red
+            &--active
+                color green
+            &--moderation
+                color #ea7814
+    &-checks
+        .form
+            .dropdown
+                width 220px
+                float left
+                margin-right 40px
+            .radio-group
+                float left
+                position relative
+                top -3px
+            input[type='text']
+                float right
+                max-width 200px
+                line-height 27px
+                height 27px
+                font-size 13px
+                color black
+                background-color #ced5d8
+            margin-bottom 25px
+        &__table
+            margin-bottom 30px
+            .table
+                &__row
+                    padding 17px 0 13px
+                    text-align left
+                    border-bottom 1px solid alpha(black, .2)
+                    a
+                        font-size 11px !important
+                        color red
+                        border-line(alpha(red, .5))
+                        &:hover
+                            color black
+                            border-line(alpha(black, .5))
+                &__title
+                    text-align left
+                &__col
+                    lost-column 1/6 0
+                    &:first-of-type
+                        lost-column .7/6 0
+                    &:nth-child(2)
+                        lost-column 1.1/6 0
+                    &:nth-child(4)
+                        lost-column 1.6/6 0
+                    &:last-of-type
+                        lost-column 1.6/6 0

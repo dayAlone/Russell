@@ -5,7 +5,7 @@ import Game from '../../models/games'
 import moment from 'moment'
 import { Types } from 'mongoose'
 const getUserChecks = function* (user, pre, after) {
-    if (user && user.role === 'user') {
+    if (user) {
         let result
         try {
             if (typeof pre === 'function') yield pre(user)

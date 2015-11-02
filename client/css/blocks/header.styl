@@ -2,6 +2,8 @@
     color white
     overflow hidden
 
+
+
     &--mobile
         padding 0 20px
     &--desktop
@@ -25,6 +27,27 @@
             display none
         &--desktop
             display block
+
+    &--admin
+        @media (min-width: $scr_s)
+            overflow visible
+            max-height 105px
+            line-height 92px
+            margin-bottom 40px
+            background-color black
+            border-bottom 10px solid red
+            h4
+                line-height 100px
+                padding 0
+                margin 0
+        .header
+            &__exit
+                bottom 10px
+            &__profile
+                line-height 90px
+            &__logo
+                max-width 220px
+
     .nav-trigger
         img
             @media (max-width: $scr_xs)

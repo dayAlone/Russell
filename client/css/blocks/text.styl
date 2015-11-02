@@ -7,18 +7,6 @@
         @media (max-width: $scr_s)
             padding-left 0px
             padding-right 0px
-    &--no-padding
-        padding 0
-    &--black
-        *
-            color black
-    full-width()
-    p
-        max-width 97%
-        & + h2
-            margin-top 30px
-            @media (min-width: $scr_sm)
-                margin-top 55px
     a
         color white
         border-line(alpha(white, .5))
@@ -30,6 +18,22 @@
             &:hover
                 background-image none
                 color white
+    &--no-padding
+        padding 0
+    &--black
+        *
+            color black
+        a
+            color black
+            border-line(alpha(black, .5))
+    full-width()
+    p
+        max-width 97%
+        & + h2
+            margin-top 30px
+            @media (min-width: $scr_sm)
+                margin-top 55px
+
     h2
         margin-bottom 20px
         font-size 20px

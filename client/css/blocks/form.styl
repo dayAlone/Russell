@@ -1,6 +1,19 @@
 .form
     lost-utility clearfix
-
+    .radio-group
+        a
+            margin 0 7px
+            font-size 13px
+        label
+            font-weight normal
+            display inline
+            font-size 13px
+            margin-right 10px
+        input
+            display none
+            &:checked + a
+                color red
+                background-image none
     .alert
         font-size 11px
         border 1px solid alpha(white, .5)

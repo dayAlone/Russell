@@ -37,7 +37,6 @@ class Check extends Component {
         let available = count - products.length
         let condition
         switch (status) {
-        case 'incorrect':
         case 'canceled':
             condition = {
                 message: 'Отклонен',

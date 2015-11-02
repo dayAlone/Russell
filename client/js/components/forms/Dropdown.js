@@ -35,8 +35,9 @@ const Dropdown = React.createClass({
                 trigger: this.props.trigger
             })
         }
+        this.initHover()
     },
-    componentDidMount() {
+    initHover() {
         let el = findDOMNode(this.refs.block)
         hoverintent(el,
             () => {
@@ -49,18 +50,25 @@ const Dropdown = React.createClass({
             interval: 50
         })
     },
+    componentDidMount() {
+
+        this.initHover()
+    },
     render() {
         let {items, title, name, trigger} = this.props
         const errorMessage = this.getErrorMessage()
         return <div className='form-group'>
                 {title ? <label htmlFor={name}>{title}</label> : null}
-                <div className={`dropdown ${this.showError() && !this.isPristine() ? 'dropdown--error' : ''}`} ref='block'>
+                <div className={`dropdown ${this.showError() && !this.isPristine() ? 'dropdown--error' : ''} ${this.props.className ? this.props.className : ''}`} ref='block'>
                 <a href='#' className='dropdown__trigger' onClick={e => (e.preventDefault())}>
                     {this.state.trigger ? this.state.trigger : items ? items[0].name : null} <img src='/layout/images/svg/down.svg' alt='' />
                 </a>
                 <span className='dropdown__frame'>
                     {items.map((el, i) => {
-                        return <a key={i} onClick={this.onClick(i).bind(this)} href='#' className='dropdown__item'>{el.name}</a>
+                        if ((el.code && el.code !== this.getValue()) || (!el.code && el.name !== this.getValue())) {
+                            return <a key={i} onClick={this.onClick(i).bind(this)} href='#' className='dropdown__item'>{el.name}</a>
+                        }
+                        return null
                     })}
                 </span>
                 <select name={name} className='dropdown__select' value={this.getValue()} onChange={this.onChange}>

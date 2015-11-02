@@ -8,6 +8,7 @@ let getChecks = function() {
         let jar = yield getAuthData()
         yield addChecksToValidate(jar)
         yield checksValidate(jar)
+        console.log('getChecks complete')
     }).catch(e=>(console.error(e)))
 }
 

@@ -10,15 +10,19 @@ let headers = {
 
 export const getAuth = function*() {
     let jar = request.jar()
-    yield request.post({
-        url: 'https://kpkcheck.ru/User/Login.aspx',
-        headers: headers,
-        formData: {
-            loginEmail: config.kpk.login,
-            loginPassword: config.kpk.password
-        },
-        jar: jar
-    })
+    try {
+        yield request.post({
+            url: 'https://kpkcheck.ru/User/Login.aspx',
+            headers: headers,
+            formData: {
+                loginEmail: config.kpk.login,
+                loginPassword: config.kpk.password
+            },
+            jar: jar
+        })
+    } catch (e) {
+        console.error(e)
+    }
     return jar
 }
 
@@ -34,13 +38,17 @@ let getStatus = (status) => {
 }
 
 export const getCheckStatus = function*(jar, id) {
+    try {
 
-    let status = yield request.get({
-        url: 'https://kpkcheck.ru/System/ViewDocument.aspx?type=0&key=' + id,
-        headers: headers,
-        jar: jar
-    })
-    let $ = cheerio.load(status.body, {decodeEntities: false})
+        let status = yield request.get({
+            url: 'https://kpkcheck.ru/System/ViewDocument.aspx?type=0&key=' + id,
+            headers: headers,
+            jar: jar
+        })
+        let $ = cheerio.load(status.body, {decodeEntities: false})
+    } catch (e) {
+        console.error(e)
+    }
     return getStatus($('#v' + id).attr('class').split(' ')[1])
 }
 export const addCheck = function* (jar, income) {
@@ -79,13 +87,17 @@ export const addCheck = function* (jar, income) {
 
             pagePart$documentSubmit: 'Проверить'
         }
-    let status = yield request.post({
-        url: 'https://kpkcheck.ru/System/Control.aspx?name=VerifyDocument&type=0',
-        headers: headers,
-        formData: data,
-        followAllRedirects: true,
-        jar: jar
-    })
+    try {
+        let status = yield request.post({
+            url: 'https://kpkcheck.ru/System/Control.aspx?name=VerifyDocument&type=0',
+            headers: headers,
+            formData: data,
+            followAllRedirects: true,
+            jar: jar
+        })
+    } catch (e) {
+        console.error(e)
+    }
     let $ = cheerio.load(status.body, {decodeEntities: false})
     let result = false
     $('#dataForm tbody tr').map((i, el) => {

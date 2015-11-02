@@ -11,6 +11,8 @@ let getChecks = function() {
     }).catch(e=>(console.error(e)))
 }
 
+getChecks()
+
 new CronJob({
     cronTime: '0 */2 * * * *',
     onTick: getChecks,

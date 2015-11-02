@@ -62,7 +62,6 @@ class Check extends Component {
                 class: 'inactive'
             }
         }
-        if (status === 'incorrect') status_comment = 'Чек не прошел автоматическую проверку'
         return <div className='table__row check'>
             <div className='table__col left'>
                 <span>ID: {_id}</span><br/>

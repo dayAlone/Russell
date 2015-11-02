@@ -22,7 +22,7 @@ export const addChecksToValidate = function* (jar) {
             } else if (data.id) {
                 yield Check.findOneAndUpdate(
                     { _id: check._id },
-                    { $set: { kpk_id: data.id, status: data.result.code } },
+                    { $set: { kpk_id: data.id, status: data.result.status, status_message: data.result.message } },
                     { safe: true, upsert: true }
                 )
             }
@@ -40,17 +40,18 @@ export const checksValidate = function* (jar) {
         })
         for (let i = 0; i < checks.length; i++) {
             let check = checks[i]
-            let status = yield getCheckStatus(jar, check.kpk_id.substr(1))
-            if (status) {
-                if (status === 'incorrect') status = 'canceled'
+            let data = yield getCheckStatus(jar, check.kpk_id.substr(1))
+            console.log(data)
+            /*
+            if (data) {
                 yield Check.findOneAndUpdate(
                     { _id: check._id },
                     { $set: {
-                        status: status, status_message: ''
+                        status: data.status, status_message: data.message
                     } },
                     { safe: true, upsert: true }
                 )
-            }
+            }*/
         }
     } catch (e) {
         console.error(e)

@@ -22,6 +22,17 @@ export const getAuth = function*() {
     return jar
 }
 
+let getStatus = (status) => {
+    switch (status) {
+    case 'incorrect':
+        return { status: 'canceled', message: 'Чек не прошел автоматическую проверку' }
+    case 'processing':
+        return { status: 'processing', message: 'Чек ожидает проверки' }
+    case 'correct':
+        return { status: 'processing', message: 'Чек прошел автоматическую проверку, ожидается подтверждение модератором' }
+    }
+}
+
 export const getCheckStatus = function*(jar, id) {
 
     let status = yield request.get({
@@ -30,7 +41,7 @@ export const getCheckStatus = function*(jar, id) {
         jar: jar
     })
     let $ = cheerio.load(status.body, {decodeEntities: false})
-    return $('#v' + id).attr('class').split(' ')[1]
+    return getStatus($('#v' + id).attr('class').split(' ')[1])
 }
 export const addCheck = function* (jar, income) {
     let tmp = randomstring.generate()
@@ -83,10 +94,7 @@ export const addCheck = function* (jar, income) {
             added: $(el).find('td:nth-child(2)').html(),
             organisation: $(el).find('td:nth-child(4)').text(),
             eklz: $(el).find('td:nth-child(5)').text(),
-            result: {
-                code: $(el).find('td:nth-child(6) span').attr('class').split(' ')[1],
-                text: $(el).find('td:nth-child(6) span').text().replace(/\s\s/g, '')
-            }
+            result: getStatus($(el).find('td:nth-child(6) span').attr('class').split(' ')[1])
         }
         if (row.organisation === tmp && row.eklz === eklz) result = row
     })

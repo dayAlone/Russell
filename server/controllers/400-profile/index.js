@@ -62,7 +62,7 @@ const addOrUpdateCheck = function* () {
     try {
         if (parseInt(id, 10) > 0) {
             fields['status'] = kpk_id.length > 0 ? 'processign' : 'added'
-            fields['status_comment'] = ''
+            fields['status_comment'] = 'Чек в очереди на автоматическую проверку'
             delete(fields.user)
             let result = yield Check.findOneAndUpdate(
                 { _id: id, user: this.req.user._id },

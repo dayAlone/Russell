@@ -97,6 +97,9 @@ class Check extends Component {
             </div>
             <div className='table__col'>{moment(until).format('DD.MM.YYYY')}</div>
             <div className='table__col'>{vinner ? <Link to='/profile/prizes/' className='check__vinner'>Да</Link> : null}</div>
+            {condition.class === 'canceled' ?
+                <a href='#' onClick={this.props.openModal(this.props.data)} className='check__edit'><img src='/layout/images/svg/pencil.svg' width='20'/></a>
+                : null}
         </div>
     }
 }
@@ -120,15 +123,18 @@ class ProfileChecks extends Component {
             this.props.actions.getChecks()
         }
     }
-    openModal(e) {
-        e.preventDefault()
-        this.refs.modal.getWrappedInstance().show()
+    openModal(data) {
+        return (e) => {
+            e.preventDefault()
+            this.refs.modal.getWrappedInstance().show(data)
+        }
+
     }
     render() {
-        let checks = this.props.checks.map((el, i) => (<Check openPhotoSwipe={this.openPhotoSwipe.bind(this)} key={i} data={el}/>))
+        let checks = this.props.checks.map((el, i) => (<Check openModal={this.openModal.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} key={i} data={el}/>))
         return <div className='checks'>
             <Helmet title='Russell Hobbs | Личный кабинет | Чеки'/>
-            <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Добавить чек</a>
+            <a href='#' onClick={this.openModal()} className='button button--small'>Добавить чек</a>
             <div className='table checks__table'>
                 <div className='table__title'>
                     <div className='table__col'>Данные<br/> чека</div>

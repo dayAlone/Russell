@@ -37,6 +37,54 @@ const getUserFavorites = function* (raw) {
     return favorites
 }
 
+const addOrUpdateCheck = function* () {
+    let ctx = this
+    let {id, photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value, kpk_id} = this.request.body
+
+    let until = yield Game.findCurrentRaffle('dream')
+    let error = false
+    let fields = {
+        user: Types.ObjectId(this.req.user._id),
+        photo: photo,
+        organisation: organisation,
+        inn: inn,
+        eklz: eklz,
+        kpk_number: kpk_number,
+        kpk_value: kpk_value,
+        total: total__rubles + (total__cents ? '.' + total__cents : ''),
+        date: date__day + '.' + date__month + '.' + date__year,
+        time: time__hours + ':' + time__minutes,
+        until: until,
+    }
+    if (fields.photo === 'undefined') {
+        delete(fields.photo)
+    }
+    try {
+        if (parseInt(id, 10) > 0) {
+            fields['status'] = kpk_id.length > 0 ? 'processign' : 'added'
+            fields['status_comment'] = ''
+            delete(fields.user)
+            let result = yield Check.findOneAndUpdate(
+                { _id: id, user: this.req.user._id },
+                { $set: fields },
+                { safe: true, upsert: true }
+            )
+            console.log(result)
+        } else {
+            yield Check.create(fields)
+        }
+
+    } catch (e) {
+        error = true
+        if (e.code == 11000) {
+            ctx.body = {error: { message: 'Этот чек уже зарегистрирован', code: e.code} }
+        }
+        else ctx.body = {error: { message: e.message, code: e.code} }
+    }
+    if (!error) ctx.body = {error: false, status: 'success'}
+
+}
+
 export default function(app) {
     const router = new Router()
     router
@@ -85,39 +133,8 @@ export default function(app) {
             })
             this.body = result
         })
-        .post('/profile/checks/add/', function* () {
-            let ctx = this
-            let {photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value} = this.request.body
-
-            let until = yield Game.findCurrentRaffle('dream')
-            let error = false
-            //let status = yield getCheckStatus(this.request.body)
-            try {
-                yield Check.create({
-                    user: Types.ObjectId(this.req.user._id),
-                    photo: photo,
-                    organisation: organisation,
-                    inn: inn,
-                    eklz: eklz,
-                    //kpk_id: status ? status.id : null,
-                    kpk_number: kpk_number,
-                    kpk_value: kpk_value,
-                    total: total__rubles + (total__cents ? '.' + total__cents : ''),
-                    date: date__day + '.' + date__month + '.' + date__year,
-                    time: time__hours + ':' + time__minutes,
-                    until: until,
-                    //status: status ? status.result.code : null
-                })
-            } catch (e) {
-                error = true
-                if (e.code == 11000) {
-                    ctx.body = {error: { message: 'Этот чек уже зарегистрирован', code: e.code} }
-                }
-                else ctx.body = {error: { message: e.message, code: e.code} }
-            }
-            if (!error) ctx.body = {error: false, status: 'success'}
-
-        })
+        .post('/profile/checks/add/', addOrUpdateCheck)
+        .post('/profile/checks/update/', addOrUpdateCheck)
         .post('/profile/feedback/send/', function* () {
             let mandrill = require('node-mandrill')(config.mandrill)
             let {subject, phone, message, name, email} = this.request.body

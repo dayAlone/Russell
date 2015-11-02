@@ -94,6 +94,12 @@ class AddCheckModal extends Component {
                     disabled: false
                 })
             })
+            .fail(function() {
+                this.setState({
+                    disabled: false,
+                    error: 'Что-то пошло не так, повторите попытку через пару минут'
+                })
+            })
     }
     render() {
         let {_id, organisation, inn, eklz, date, time, total, kpk_id, kpk_number, kpk_value, photo} = this.state.fields

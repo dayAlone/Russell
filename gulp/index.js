@@ -193,6 +193,7 @@ gulp.task('watch', () => {
 gulp.task('nodemon', function() {
     nodemon({
         nodeArgs: ['--debug'],
-        script: 'index.js'
+        script: 'index.js',
+        ignore: ['tmp/**/*']
     })
 })

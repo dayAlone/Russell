@@ -1,7 +1,10 @@
 import Router from 'koa-router'
 import config from 'config'
 import { check as Check } from '../../models/check'
+import Game from '../../models/games'
 import moment from 'moment'
+//import getCheckStatus from '../../libs/getCheckStatus'
+import { Types } from 'mongoose'
 const getUserChecks = function* (user, pre, after) {
     if (user && user.role === 'user') {
         let result
@@ -16,6 +19,7 @@ const getUserChecks = function* (user, pre, after) {
             }).populate('products.product')
             if (typeof after === 'function') result = yield after(result)
         } catch (e) {
+            console.log(e)
             return { error: e }
         }
         return { error: false, result: result }
@@ -87,6 +91,39 @@ export default function(app) {
                 return data
             })
             this.body = result
+        })
+        .post('/profile/checks/add/', function* () {
+            let ctx = this
+            let {photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value} = this.request.body
+
+            let until = yield Game.findCurrentRaffle('dream')
+            let error = false
+            //let status = yield getCheckStatus(this.request.body)
+            try {
+                yield Check.create({
+                    user: Types.ObjectId(this.req.user._id),
+                    photo: photo,
+                    organisation: organisation,
+                    inn: inn,
+                    eklz: eklz,
+                    //kpk_id: status ? status.id : null,
+                    kpk_number: kpk_number,
+                    kpk_value: kpk_value,
+                    total: total__rubles + '.' + total__cents,
+                    date: date__day + '.' + date__month + '.' + date__year,
+                    time: time__hours + ':' + time__minutes,
+                    until: until,
+                    //status: status ? status.result.code : null
+                })
+            } catch (e) {
+                error = true
+                if (e.code == 11000) {
+                    ctx.body = {error: { message: 'Этот чек уже зарегистрирован', code: e.code} }
+                }
+                else ctx.body = {error: { message: e.message, code: e.code} }
+            }
+            if (!error) ctx.body = {error: false, status: 'success'}
+
         })
         .post('/profile/feedback/send/', function* () {
             let mandrill = require('node-mandrill')(config.mandrill)

@@ -1,19 +1,60 @@
 .form
+    lost-utility clearfix
     .alert
         font-size 11px
-        border alpha(white, .5)
+        border 1px solid alpha(white, .5)
         padding 11px 20px 7px
         border-radius 5px
         line-height 13px
+        &--error
+            border-color red
+            color red !important
     label
         font-weight bold
         font-size 16px
         line-height 37px
+
+    &__title
+        font-weight bold
+        color #717b84
+        text-align center
+        margin-bottom 10px
+        margin-top 5px
+        full-width()
+        font-size 16px
+        &:first-of-type
+            margin-top 1px
+    .file
+        max-width 100%
+        overflow hidden
+        min-height 40px
+        float left
+        lost-utility clearfix
+        white-space no-wrap
+        input
+            display none
+        &.error
+            .file__trigger
+                box-shadow inset 0 0 0 1px red, inset 0 0 0 3px white
+        &__info
+            color alpha(black, .7)
+            font-size 14px
+        &__trigger
+            @extend .button, .button--small
+            background-color #6e6c71
+            background-image none
+            margin-right 20px
+
+            &:hover
+                color white
+                background-color red
+                background-image none
     input
         &:focus
             outline 0
         &[type='submit']
-            size 149px 41px
+            min-width 149px
+            height 41px
             background-color #e6141d
             border-radius 5px
             border 0
@@ -42,8 +83,10 @@
                 margin-bottom 15px
                 .modal &
                     background-color white
-                    border 1px solid #383c41
+                    box-shadow inset 0 0 0 1px #383c41
                     color #383c41
+                    &:focus
+                        box-shadow inset 0 0 0 1px #005b9c
                 &:focus, &:active
                     outline 0
     button
@@ -52,7 +95,7 @@
             outline 0
     input, textarea
         &.error
-            box-shadow inset 0 0 0 1px red
+            box-shadow inset 0 0 0 1px red !important
     textarea
         background-color #383c41
         height 220px

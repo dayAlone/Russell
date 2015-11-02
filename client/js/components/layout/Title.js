@@ -19,6 +19,15 @@ class Title extends Component {
             this.props.actions.getGames()
         }
     }
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1))
+            let temp = array[i]
+            array[i] = array[j]
+            array[j] = temp
+        }
+        return array
+    }
     render() {
         if (this.props.game) {
             let content = []
@@ -40,7 +49,7 @@ class Title extends Component {
             }
             return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
                 <img src={`/layout/images/svg/love.svg`} height='23' className='title__love' />
-                <Slick className='title__slider' {...options}>{content}</Slick>
+                <Slick className='title__slider' {...options}>{this.shuffleArray(content)}</Slick>
                 {this.props.type === 'big' || this.props.type === 'counter' ?
                     <div>
                         <div className='title__group'>

@@ -9,7 +9,7 @@ const MyInput = React.createClass({
         this.setValue(event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value'])
     },
     render() {
-        let { type, name, title, placeholder, className } = this.props
+        let { type, name, title, placeholder, className, maxLength } = this.props
         const classNames = (className ? className : '') + ' ' + (this.showError() && !this.isPristine() ? 'error' : '')
         const errorMessage = this.getErrorMessage()
 
@@ -21,6 +21,7 @@ const MyInput = React.createClass({
                 onChange={this.changeValue}
                 value={this.getValue()}
                 className={classNames}
+                maxLength={maxLength}
                 placeholder={placeholder}
                 checked={type === 'checkbox' && this.getValue() ? 'checked' : null}
                 />

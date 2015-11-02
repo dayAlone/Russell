@@ -10,24 +10,24 @@ const checkSchema = new mongoose.Schema({
     },
     organisation: {
         type: String,
-        default: '',
-        required: 'Укажите название организации'
+        default: ''
     },
     inn: String,
     eklz: String,
     date: String,
     time: String,
     total: String,
+    kpk_id: String,
     kpk_number: String,
     kpk_value: String,
     photo: String,
     status: {
         type: String,
-        default: '',
+        default: 'autocheck',
     },
     status_comment: {
         type: String,
-        default: 'autocheck',
+        default: 'Чек в очереди на автоматическую проверку',
     },
     count: {
         type: Number,

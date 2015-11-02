@@ -24,6 +24,10 @@ export default {
         login: '47651',
         password: '3lQV616N'
     },
+    kpk: {
+        login: 'kruchkov@frogs-studio.ru',
+        password: 'manufaktura'    
+    },
     folders: {
         source: defer(function(cfg) {
             return path.join(cfg.root, 'client/public/')

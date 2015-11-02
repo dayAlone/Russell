@@ -50,21 +50,30 @@ request.post(
         jar: jar
     },
     function(err, httpResponse, body) {
-        var $ = cheerio.load(body, {decodeEntities: false})
-        var result = []
-        $('#dataForm tbody tr').map(function (i, el) {
-            result.push({
-                id: $(el).find('td:nth-child(6) span').attr('id'),
-                added: $(el).find('td:nth-child(2)').html(),
-                organisation: $(el).find('td:nth-child(4)').text(),
-                eklz: $(el).find('td:nth-child(5)').text(),
-                result: {
-                    code: $(el).find('td:nth-child(6) span').attr('class').split(' ')[1],
-                    text: $(el).find('td:nth-child(6) span').text().replace(/\s+/g, '')
-                }
-            })
+        request.get({
+            url: 'https://kpkcheck.ru/System/Documents.aspx',
+            headers: {
+                'Content-Type': 'multipart/form-data; boundary=5XrykHW7vJdMJVfUXBrPtudt5QyUO3g3',
+                'User-Agent': 'Paw/2.2.5 (Macintosh; OS X/10.11.0) GCDHTTPRequest'
+            },
+            jar: jar
+        }, function(err, httpResponse, body) {
+                var $ = cheerio.load(body, {decodeEntities: false})
+                var result = []
+                $('#dataForm tbody tr').map(function (i, el) {
+                    result.push({
+                        id: $(el).find('td:nth-child(6) span').attr('id'),
+                        added: $(el).find('td:nth-child(2)').html(),
+                        organisation: $(el).find('td:nth-child(4)').text(),
+                        eklz: $(el).find('td:nth-child(5)').text(),
+                        result: {
+                            code: $(el).find('td:nth-child(6) span').attr('class').split(' ')[1],
+                            text: $(el).find('td:nth-child(6) span').text().replace(/\s+/g, '')
+                        }
+                    })
+                })
+                console.log(body)
         })
-        console.log(result)
         /*
         request.post({
             url: 'https://kpkcheck.ru/System/Control.aspx?name=VerifyDocument&type=0',

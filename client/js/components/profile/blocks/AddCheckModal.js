@@ -12,6 +12,10 @@ Formsy.addValidationRule('minLengthOrEmpty', (values, value, length) => {
     return value && value.length >= length
 })
 
+Formsy.addValidationRule('isNoMoreThan', (values, value, otherField) => {
+    return Number(value) <= Number(otherField)
+});
+
 @connect(state => ({ checks: state.profile.checks }), dispatch => ({profile: bindActionCreators(profileActionCreators, dispatch)}), null, { withRef: true })
 class AddCheckModal extends Component {
     state = { disabled: false }
@@ -78,12 +82,12 @@ class AddCheckModal extends Component {
                 <Input name='eklz' title='Рег. номер ЭКЛЗ*' validations='isNumeric,minLengthOrEmpty:1' value=''/>
                 <div className='form__date'>
                     <label>Дата*</label>
-                    <Input name='date__day' placeholder='ДД' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
-                    <Input name='date__month' placeholder='MM' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
+                    <Input name='date__day' placeholder='ДД' maxLength='2' validations='isNumeric,isNoMoreThan:31,minLengthOrEmpty:2' value=''/>
+                    <Input name='date__month' placeholder='MM' maxLength='2' validations='isNumeric,isNoMoreThan:12,minLengthOrEmpty:2' value=''/>
                     <Input name='date__year' placeholder='ГГ' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
                     <label>Время*</label>
-                    <Input name='time__hours' placeholder='ЧЧ' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
-                    <Input name='time__minutes' placeholder='MM' maxLength='2' validations='isNumeric,minLengthOrEmpty:2' value=''/>
+                    <Input name='time__hours' placeholder='ЧЧ' maxLength='2' validations='isNumeric,isNoMoreThan:23,minLengthOrEmpty:2' value=''/>
+                    <Input name='time__minutes' placeholder='MM' maxLength='2' validations='isNumeric,isNoMoreThan:59,minLengthOrEmpty:2' value=''/>
                 </div>
                 <div className='form__total'>
                     <label>Сумма*</label>

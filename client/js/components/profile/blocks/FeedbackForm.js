@@ -3,7 +3,7 @@ import Formsy from 'formsy-react'
 import {Input, Textarea, Dropdown} from '../../forms/'
 import { connect } from 'react-redux'
 
-Formsy.addValidationRule('minLengthOrEmpty', (values, value) => {
+Formsy.addValidationRule('minLengthOrEmpty', (values, value, length) => {
     return value && value.length >= length
 })
 

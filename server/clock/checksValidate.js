@@ -28,7 +28,7 @@ export const addChecksToValidate = function* (jar) {
             }
         }
     } catch (e) {
-        console.error(e)
+        console.error(e.stack)
     }
 }
 
@@ -40,16 +40,28 @@ export const checksValidate = function* (jar) {
         })
         for (let i = 0; i < checks.length; i++) {
             let check = checks[i]
-            let data = yield getCheckStatus(jar, check.kpk_id.substr(1))
-            if (data) {
+
+            if (check.kpk_id) {
+                let data = yield getCheckStatus(jar, check.kpk_id.substr(1))
+                if (data) {
+                    yield Check.findOneAndUpdate(
+                        { _id: check._id },
+                        { $set: {
+                            status: data.status, status_comment: data.message
+                        } },
+                        { safe: true, upsert: true }
+                    )
+                }
+            } else {
                 yield Check.findOneAndUpdate(
                     { _id: check._id },
                     { $set: {
-                        status: data.status, status_comment: data.message
+                        status: 'added'
                     } },
                     { safe: true, upsert: true }
                 )
             }
+
         }
     } catch (e) {
         console.error(e)

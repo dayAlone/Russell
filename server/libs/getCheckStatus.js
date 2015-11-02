@@ -21,7 +21,7 @@ export const getAuth = function*() {
             jar: jar
         })
     } catch (e) {
-        console.error(e)
+        console.error(e.stack)
     }
     return jar
 }
@@ -38,17 +38,13 @@ let getStatus = (status) => {
 }
 
 export const getCheckStatus = function*(jar, id) {
-    try {
-
-        let status = yield request.get({
-            url: 'https://kpkcheck.ru/System/ViewDocument.aspx?type=0&key=' + id,
-            headers: headers,
-            jar: jar
-        })
-        let $ = cheerio.load(status.body, {decodeEntities: false})
-    } catch (e) {
-        console.error(e)
-    }
+    let status = yield request.get({
+        url: 'https://kpkcheck.ru/System/ViewDocument.aspx?type=0&key=' + id,
+        headers: headers,
+        jar: jar
+    })
+    let $ = cheerio.load(status.body, {decodeEntities: false})
+    console.log($('#v' + id).attr('class').split(' '))
     return getStatus($('#v' + id).attr('class').split(' ')[1])
 }
 export const addCheck = function* (jar, income) {
@@ -87,17 +83,14 @@ export const addCheck = function* (jar, income) {
 
             pagePart$documentSubmit: 'Проверить'
         }
-    try {
-        let status = yield request.post({
-            url: 'https://kpkcheck.ru/System/Control.aspx?name=VerifyDocument&type=0',
-            headers: headers,
-            formData: data,
-            followAllRedirects: true,
-            jar: jar
-        })
-    } catch (e) {
-        console.error(e)
-    }
+    let status = yield request.post({
+        url: 'https://kpkcheck.ru/System/Control.aspx?name=VerifyDocument&type=0',
+        headers: headers,
+        formData: data,
+        followAllRedirects: true,
+        jar: jar
+    })
+
     let $ = cheerio.load(status.body, {decodeEntities: false})
     let result = false
     $('#dataForm tbody tr').map((i, el) => {

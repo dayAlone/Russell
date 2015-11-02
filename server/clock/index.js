@@ -9,9 +9,9 @@ let getChecks = function() {
         yield addChecksToValidate(jar)
         yield checksValidate(jar)
         console.log('getChecks complete')
-    }).catch(e=>(console.error(e)))
+    }).catch(e=>(console.error(err.stack)))
 }
-
+getChecks()
 new CronJob({
     cronTime: '0 */2 * * * *',
     onTick: getChecks,

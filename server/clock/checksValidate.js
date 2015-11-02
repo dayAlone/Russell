@@ -22,7 +22,7 @@ export const addChecksToValidate = function* (jar) {
             } else if (data.id) {
                 yield Check.findOneAndUpdate(
                     { _id: check._id },
-                    { $set: { kpk_id: data.id, status: data.result.status, status_message: data.result.message } },
+                    { $set: { kpk_id: data.id, status: data.result.status, status_comment: data.result.message } },
                     { safe: true, upsert: true }
                 )
             }
@@ -46,7 +46,7 @@ export const checksValidate = function* (jar) {
                 yield Check.findOneAndUpdate(
                     { _id: check._id },
                     { $set: {
-                        status: data.status, status_message: data.message
+                        status: data.status, status_comment: data.message
                     } },
                     { safe: true, upsert: true }
                 )

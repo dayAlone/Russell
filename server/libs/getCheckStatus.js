@@ -24,12 +24,12 @@ export const getAuth = function*() {
 
 let getStatus = (status) => {
     switch (status) {
-    case 'incorrect':
+    case 'canceled':
         return { status: 'canceled', message: 'Чек не прошел автоматическую проверку' }
     case 'processing':
         return { status: 'processing', message: 'Чек ожидает проверки' }
     case 'correct':
-        return { status: 'processing', message: 'Чек прошел автоматическую проверку, ожидается подтверждение модератором' }
+        return { status: 'correct', message: 'Чек прошел автоматическую проверку, ожидается подтверждение модератором' }
     }
 }
 

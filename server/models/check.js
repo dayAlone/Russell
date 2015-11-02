@@ -23,7 +23,7 @@ const checkSchema = new mongoose.Schema({
     photo: String,
     status: {
         type: String,
-        default: 'autocheck',
+        default: 'added',
     },
     status_comment: {
         type: String,

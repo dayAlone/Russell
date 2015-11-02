@@ -40,13 +40,7 @@ const getUserFavorites = function* (raw) {
 export default function(app) {
     const router = new Router()
     router
-        .get('/profile/', function* () {
-            if (this.req.user) {
-                this.body = this.render('index')
-            } else {
-                this.redirect('/')
-            }
-        })
+
         .get('/profile/checks/get/', function* () {
             let result = yield getUserChecks(this.req.user)
             this.body = result
@@ -122,7 +116,7 @@ export default function(app) {
                 else ctx.body = {error: { message: e.message, code: e.code} }
             }
             if (!error) ctx.body = {error: false, status: 'success'}
-            
+
         })
         .post('/profile/feedback/send/', function* () {
             let mandrill = require('node-mandrill')(config.mandrill)
@@ -143,6 +137,13 @@ export default function(app) {
             })
             this.body = result[0]
 
+        })
+        .get('/profile/*', function* () {
+            if (this.req.user) {
+                this.body = this.render('index')
+            } else {
+                this.redirect('/')
+            }
         })
     app.use(router.routes())
 }

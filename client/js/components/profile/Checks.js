@@ -27,7 +27,7 @@ class Check extends Component {
         let img = new Image()
         let photo = this.props.data.photo
         img.onload = () => {
-            if(img.width > 0) $(findDOMNode(this.refs.photo)).addClass('check__preview--active')
+            if (img.width > 0) $(findDOMNode(this.refs.photo)).addClass('check__preview--active')
             this.setState({sizes: {w: img.width, h: img.height}})
         }
         img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
@@ -65,7 +65,7 @@ class Check extends Component {
             <div className='table__col left'>
                 <span>ID: {_id}</span><br/>
                 <div className={`check__info ${!this.state.hidden ? 'check__info--visible' : ''}`}>
-                    <span>Организация: {organisation}</span><br/>
+                    {organisation ? <span>Организация: {organisation}<br/></span> : null}
                     <span>ИНН: {inn}</span><br/>
                     <span>ЭКЛЗ: {eklz}</span><br/>
                     <span>Дата: {date}</span><br/>

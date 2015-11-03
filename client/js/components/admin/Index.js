@@ -8,6 +8,8 @@ import {Input, Textarea, Dropdown, RadioGroup} from '../forms/'
 import CheckModal from './blocks/checkModal'
 
 import moment from 'moment'
+import 'react-photoswipe/lib/photoswipe.css'
+import {PhotoSwipe} from 'react-photoswipe'
 
 const getStatus = (status, until, vinner) => {
     if (vinner) {
@@ -75,6 +77,7 @@ class Check extends Component {
                     })
                     : 'нет'}
             </div>
+
         </div>
     }
 }
@@ -85,7 +88,9 @@ class AdminChecks extends Component {
         offset: 0,
         data: [],
         url: '/admin/checks/get/',
-        timer: false
+        timer: false,
+        photoswipe: false,
+        image: []
     }
     loadChecksFromServer() {
         let {url, perPage, offset} = this.state
@@ -127,14 +132,27 @@ class AdminChecks extends Component {
         return (e) => {
             e.preventDefault()
             this.refs.modal.show(data)
-            //console.log(this.refs.modal)
         }
 
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.photoswipe === true && this.state.photoswipe === true) return false
+        return true
+    }
+    openPhotoSwipe(image, sizes = {w: 0, h: 0}) {
+        return () => {
+            this.setState({photoswipe: true, image: [{src: image, w: sizes.w, h: sizes.h}]})
+            $('body').addClass('photoswipe-open')
+        }
+    }
+    closePhotoSwipe() {
+        $('body').removeClass('photoswipe-open')
+        this.setState({photoswipe: false})
     }
     render() {
         return <div className='admin-checks'>
             <Helmet title='Russell Hobbs | Кабинет модератора | Чеки'/>
-            <CheckModal ref='modal' />
+            <CheckModal openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
             <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                 <Dropdown name='type' className='dropdown--small' trigger='Выберите статус чека' items={[
                     {name: 'Все', code: 'all'},
@@ -182,6 +200,11 @@ class AdminChecks extends Component {
                 containerClassName={'pagination'}
                 subContainerClassName={'pages pagination'}
                 activeClassName={'active'} /> : null}
+            <PhotoSwipe
+                isOpen={this.state.photoswipe}
+                options={{shareEl: false}}
+                items={this.state.image}
+                onClose={this.closePhotoSwipe.bind(this)}/>
         </div>
     }
 }

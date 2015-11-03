@@ -165,12 +165,12 @@
                     max-width 90%
                     margin-bottom 0px
 
-    &.modal--add-check
+    &.modal--add-check, &.modal--edit-check
         max-width 720px
         button
             float right
         .modal__content
-            padding 20px 40px
+            padding 20px 40px 24px
 
             @media (min-width: $scr_s)
                 input[type='text']
@@ -193,6 +193,8 @@
                     float right
                     margin-right 40px
                     line-height 45px
+                    background-image none
+                    font-size 15px
                     &:hover
                         background none !important
                         span
@@ -255,6 +257,35 @@
                         padding 0 10px
                         text-align center
 
+    &.modal--edit-check
+        .form
+            &__cancel
+                float left !important
+            &__col
+                lost-column 3.5/6 0
+                &:first-of-type
+                    lost-column 2.5/6 0
+            &__image
+                width 100%
+                min-height 511px
+                background-size cover
+                float right
+                background-position center center
+                border 1px solid #000000
+                box-shadow inset 0 0 0 5px white
+                t border
+                &:hover
+                    border-color red
+            &__info
+                font-size 12px
+                .form__col
+                    lost-column 1/2 0
+                    > span
+                        margin-bottom 5px
+                        display inline-block
+                        width 100%
+            &__title
+                text-align left
     &-frame
         position fixed
         size 100%

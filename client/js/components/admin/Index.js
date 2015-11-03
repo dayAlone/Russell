@@ -136,12 +136,14 @@ class AdminChecks extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.photoswipe === true && this.state.photoswipe === true) return false
+        console.log(nextState.photoswipe, this.state.photoswipe)
         return true
     }
     openPhotoSwipe(image, sizes = {w: 0, h: 0}) {
-        return () => {
+        return (e) => {
             this.setState({photoswipe: true, image: [{src: image, w: sizes.w, h: sizes.h}]})
             $('body').addClass('photoswipe-open')
+            e.preventDefault()
         }
     }
     closePhotoSwipe() {
@@ -151,6 +153,11 @@ class AdminChecks extends Component {
     render() {
         return <div className='admin-checks'>
             <Helmet title='Russell Hobbs | Кабинет модератора | Чеки'/>
+            <PhotoSwipe
+                isOpen={this.state.photoswipe}
+                options={{shareEl: false}}
+                items={this.state.image}
+                onClose={this.closePhotoSwipe.bind(this)}/>
             <CheckModal loadChecksFromServer={this.loadChecksFromServer.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
             <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                 <Dropdown name='type' className='dropdown--small' trigger='Выберите статус чека' items={[
@@ -199,11 +206,7 @@ class AdminChecks extends Component {
                 containerClassName={'pagination'}
                 subContainerClassName={'pages pagination'}
                 activeClassName={'active'} /> : null}
-            <PhotoSwipe
-                isOpen={this.state.photoswipe}
-                options={{shareEl: false}}
-                items={this.state.image}
-                onClose={this.closePhotoSwipe.bind(this)}/>
+
         </div>
     }
 }

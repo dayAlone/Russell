@@ -5,50 +5,59 @@ import ReactPaginate from 'react-paginate'
 
 import Formsy from 'formsy-react'
 import {Input, Textarea, Dropdown, RadioGroup} from '../forms/'
+import CheckModal from './blocks/checkModal'
 
 import moment from 'moment'
 
+const getStatus = (status, until, vinner) => {
+    if (vinner) {
+        return {
+            message: 'Выиграл',
+            class: 'vinner'
+        }
+    }
+    if (moment(until) < moment()) {
+        return {
+            message: 'Сыгран',
+            class: 'inactive'
+        }
+    }
+
+    switch (status) {
+    case 'correct':
+        return {
+            message: 'Прошел АВ',
+            class: 'moderation'
+        }
+    case 'canceled':
+        return {
+            message: 'Отклонен',
+            class: 'canceled'
+        }
+    case 'active':
+        return {
+            message: 'Активен',
+            class: 'active'
+        }
+    case 'added':
+        return {
+            message: 'Ждет отправки на АВ',
+            class: 'moderation'
+        }
+    default:
+        return {
+            message: 'Отправлен на АВ',
+            class: 'moderation'
+        }
+    }
+
+}
+
 class Check extends Component {
     render() {
-        let {_id, status, created, user, until} = this.props.data
-        let condition
-        switch (status) {
-        case 'correct':
-            condition = {
-                message: 'Прошел АВ',
-                class: 'moderation'
-            }
-            break
-        case 'canceled':
-            condition = {
-                message: 'Отклонен',
-                class: 'canceled'
-            }
-            break
-        case 'active':
-            condition = {
-                message: 'Активен',
-                class: 'active'
-            }
-            break
-        case 'added':
-            condition = {
-                message: 'Ждет отправки на АВ',
-                class: 'moderation'
-            }
-            break
-        default:
-            condition = {
-                message: 'Отправлен на АВ',
-                class: 'moderation'
-            }
-        }
-        if (moment(until) < moment()) {
-            condition = {
-                message: 'Сыгран',
-                class: 'inactive'
-            }
-        }
+        let {_id, status, created, user, until, vinner} = this.props.data
+        let condition = getStatus(status, until, vinner)
+
         return <div className='table__row check'>
             <div className='table__col'>{_id}</div>
             <div className='table__col'>
@@ -56,7 +65,7 @@ class Check extends Component {
             </div>
             <div className='table__col' dangerouslySetInnerHTML={{__html: moment(created).format('DD.MM.YYYY HH:mm')}}/>
             <div className='table__col'>
-                <a href='#'>Посмотреть или изметь</a>
+                <a href='#' onClick={this.props.openModal(this.props.data)}>Посмотреть или изметь</a>
             </div>
             <div className='table__col'>{user.displayName}</div>
         </div>
@@ -107,9 +116,18 @@ class AdminChecks extends Component {
         clearTimeout(this.state.timer)
         this.setState({timer: setTimeout(this.getFormResults.bind(this), 500)})
     }
+    openModal(data) {
+        return (e) => {
+            e.preventDefault()
+            this.refs.modal.show(data)
+            //console.log(this.refs.modal)
+        }
+
+    }
     render() {
         return <div className='admin-checks'>
             <Helmet title='Russell Hobbs | Кабинет модератора | Чеки'/>
+            <CheckModal ref='modal' />
             <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                 <Dropdown name='type' className='dropdown--small' trigger='Выберите статус чека' items={[
                     {name: 'Все', code: 'all'},
@@ -119,6 +137,7 @@ class AdminChecks extends Component {
                     {name: 'Активен', code: 'active'},
                     {name: 'Отклонен', code: 'canceled'},
                     {name: 'Сыгран', code: 'gameover'},
+                    {name: 'Выиграл', code: 'vinner'}
                 ]} value=''/>
                 <RadioGroup name='limit' title='Показывать по:' items={[
                     {name: '10', code: 10},
@@ -137,7 +156,7 @@ class AdminChecks extends Component {
                 </div>
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {
-                        return <Check key={i} data={el}/>
+                        return <Check key={i} openModal={this.openModal.bind(this)} data={el}/>
                     })
                     : <div className='table__row table__row--message center'>
                         Не найдено ни одного чека.

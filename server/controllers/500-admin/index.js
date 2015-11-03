@@ -15,18 +15,23 @@ export default function(app) {
                 let {type, offset, limit, id} = this.query
                 if (type && type !== 'all') {
                     let until = yield Game.findCurrentRaffle('dream')
-                    if (type !== 'gameover') {
+                    switch (type) {
+                    case 'gameover':
+                        fields['until'] = { $lt: until }
+                        fields['vinner'] = false
+                        break
+                    case 'vinner':
+                        fields['vinner'] = true
+                        break
+                    default:
                         fields['status'] = type
                         fields['until'] = { $gte: until }
-                    } else {
-                        fields['until'] = { $lt: until }
                     }
                 }
                 if (parseInt(id, 10) > 0) {
                     fields['_id'] = id
                 }
                 let total = yield Check.count(fields)
-                console.log(total, fields, this.query)
                 let result = yield Check.find(fields, {}, {
                     sort: {
                         created: -1

@@ -141,7 +141,7 @@ userSchema.virtual('password')
     })
 
 userSchema.methods.generateProfileName = function* () {
-    console.log(this)
+
     let profileName = this.displayName.trim()
         .replace(/<\/?[a-z].*?>/gim, '')  // strip tags, leave /<DIGIT/ like: 'IE<123'
         .replace(/[ \t\n!'#$%&'()*+,\-.\/:<=>?@[\\\]^_`{|}~]/g, '-') // пунктуация, пробелы -> дефис
@@ -168,6 +168,30 @@ userSchema.pre('save', function(next) {
     if (this.deleted || this.profileName) return next()
     co(function*() {
         yield* this.generateProfileName()
+        if (this.isNew) {
+            let mandrill = require('node-mandrill')(config.mandrill)
+            yield new Promise((fulfill, reject) => {
+                mandrill('/messages/send-template', {
+                    message: {
+                        to: [{email: 'ak@radia.ru', name: 'Служба поддержки'}],
+                        merge: true,
+                        merge_language: 'handlebars',
+                        'global_merge_vars': [
+                            {
+                                'name': 'user_name',
+                                'content': this.displayName
+                            }
+                        ],
+                    },
+                    template_name: 'russell',
+                    template_content: []
+                }, (error, response) => {
+                    if (error) reject(error)
+                    fulfill(response)
+                })
+            })
+        }
+
     }.bind(this)).then(next, next)
 })
 

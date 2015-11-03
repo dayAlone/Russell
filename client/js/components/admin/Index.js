@@ -69,7 +69,7 @@ class Check extends Component {
             <div className='table__col'>
                 <a href='#' onClick={this.props.openModal(this.props.data, condition.class)}>Редактировать</a>
             </div>
-            <div className='table__col'>{user.displayName}</div>
+            <div className='table__col'>{user ? user.displayName : null}</div>
             <div className='table__col'>
                 {products.length > 0 ?
                     products.map((el, i) => {

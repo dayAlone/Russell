@@ -24,8 +24,10 @@ class ChecksStat extends Component {
                 gameover: 0
             }
             this.props.checks.map(el => {
-                stat.favorites += el.products.length
-                stat.count += el.count - el.products.length
+                if (moment(el.until) > moment()) {
+                    stat.favorites += el.products.length
+                    stat.count += el.count - el.products.length
+                }
                 if (el.status === 'active') stat.active++
                 else if (moment(el.until) < moment()) stat.gameover++
                 else if (el.status !== 'canceled') stat.moderation++

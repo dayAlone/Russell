@@ -150,7 +150,7 @@ class ProfileChecks extends Component {
                     </div>
                 : checks}
             </div>
-            <AddCheckModal ref='modal' />
+            <AddCheckModal openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
             <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false, index: this.state.index}} items={this.state.image} onClose={this.closePhotoSwipe.bind(this)}/>
         </div>
     }

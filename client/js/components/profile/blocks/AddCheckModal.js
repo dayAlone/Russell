@@ -52,7 +52,10 @@ class AddCheckModal extends Component {
         this.refs.form.reset()
         if (e) e.preventDefault()
     }
-
+    handleHelpClick(e) {
+        this.props.openPhotoSwipe('/layout/images/check-sample.png', {w: 970, h: 785})
+        e.preventDefault()
+    }
     submitForm(fields) {
         let _this = this
         this.setState({
@@ -104,7 +107,10 @@ class AddCheckModal extends Component {
     render() {
         let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo} = this.state.fields
         return <Modal ref='modal' className='modal modal--add-check' onValidSubmit={this.submitForm.bind(this)}>
-            <h3 className='modal__title modal__title--border'>{ !_id ? 'Добавление чека' : 'Редактрирование чека' }</h3>
+            <div className='modal__title modal__title--border'>
+                <h3>{ !_id ? 'Добавление чека' : 'Редактрирование чека' }</h3>
+                <a href='#' onClick={this.handleHelpClick.bind(this)}>Как найти нужные данные на чеке?</a>
+            </div>
             <Formsy.Form ref='form' onValidSubmit={this.submitForm.bind(this)} className='form'>
                 {this.state.message ? <div className='alert' role='alert'>{this.state.message}</div> : null}
                 {this.state.error ? <div className='alert alert--error' role='alert'>{this.state.error}</div> : null}

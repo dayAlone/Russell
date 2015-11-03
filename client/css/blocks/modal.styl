@@ -79,7 +79,6 @@
             width 20%
         form
             padding 30px 0 0px
-
     &--recept
         @media (min-width: $scr_s)
             max-width 640px
@@ -164,7 +163,6 @@
                     color white
                     max-width 90%
                     margin-bottom 0px
-
     &.modal--add-check, &.modal--edit-check
         max-width 720px
         button
@@ -344,6 +342,23 @@
         margin-top 0px
         color black
         margin-bottom 30px
+        position relative
+        *
+            color black
+        a
+            color red
+            font-size 12px
+            border-line(alpha(@color, .5))
+            @media (min-width: $scr_s)
+                position absolute
+                right 0
+                top 50%
+                transform translateY(-50%)
+                line-height 1
+                margin-top -5px
+            &:hover
+                color black
+                border-line(alpha(@color, .5))
         &--border
             border-bottom 1px solid red
             padding-bottom 10px

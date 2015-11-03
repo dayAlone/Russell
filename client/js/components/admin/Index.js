@@ -44,12 +44,12 @@ const getStatus = (status, until, vinner) => {
     case 'added':
         return {
             message: 'Ждет отправки на АВ',
-            class: 'moderation'
+            class: 'added'
         }
     default:
         return {
             message: 'Отправлен на АВ',
-            class: 'moderation'
+            class: 'processign'
         }
     }
 
@@ -67,7 +67,7 @@ class Check extends Component {
             </div>
             <div className='table__col' dangerouslySetInnerHTML={{__html: moment(created).format('DD.MM.YYYY HH:mm')}}/>
             <div className='table__col'>
-                <a href='#' onClick={this.props.openModal(this.props.data)}>Редактировать</a>
+                <a href='#' onClick={this.props.openModal(this.props.data, condition.class)}>Редактировать</a>
             </div>
             <div className='table__col'>{user.displayName}</div>
             <div className='table__col'>
@@ -128,12 +128,11 @@ class AdminChecks extends Component {
         clearTimeout(this.state.timer)
         this.setState({timer: setTimeout(this.getFormResults.bind(this), 500)})
     }
-    openModal(data) {
+    openModal(data, condition) {
         return (e) => {
             e.preventDefault()
-            this.refs.modal.show(data)
+            this.refs.modal.show(data, condition)
         }
-
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.photoswipe === true && this.state.photoswipe === true) return false
@@ -152,7 +151,7 @@ class AdminChecks extends Component {
     render() {
         return <div className='admin-checks'>
             <Helmet title='Russell Hobbs | Кабинет модератора | Чеки'/>
-            <CheckModal openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
+            <CheckModal loadChecksFromServer={this.loadChecksFromServer.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
             <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                 <Dropdown name='type' className='dropdown--small' trigger='Выберите статус чека' items={[
                     {name: 'Все', code: 'all'},

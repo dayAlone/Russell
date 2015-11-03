@@ -56,11 +56,13 @@ const addOrUpdateCheck = function* () {
         time: time__hours + ':' + time__minutes,
         until: until,
     }
-    if (fields.photo === 'undefined') {
-        delete(fields.photo)
-    }
     try {
         if (parseInt(id, 10) > 0) {
+            for (let f in fields) {
+                if (!fields[f] || fields[f] === 'undefined') {
+                    delete(fields[f])
+                }
+            }
             fields['status'] = 'added'
             fields['kpk_id'] = ''
             fields['status_comment'] = 'Чек в очереди на автоматическую проверку'

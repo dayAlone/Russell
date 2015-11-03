@@ -259,6 +259,7 @@
 
     &.modal--edit-check
         .form
+            margin-bottom 0px
             &__cancel
                 float left !important
             &__col
@@ -278,12 +279,18 @@
                     border-color red
             &__info
                 font-size 12px
+                margin-bottom 20px
+                full-width()
                 .form__col
                     lost-column 1/2 0
                     > span
                         margin-bottom 5px
                         display inline-block
                         width 100%
+            input[type='text']
+                margin-bottom 27px
+                max-width 50px
+                text-align center
             &__title
                 text-align left
     &-frame

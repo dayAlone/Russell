@@ -51,7 +51,13 @@ const Dropdown = React.createClass({
         })
     },
     componentDidMount() {
-
+        let value = this.getValue()
+        if (value) {
+            let el = this.props.items.filter(el => (el.code === value || el.name === value))[0]
+            this.setState({
+                trigger: el ? el.name : this.props.trigger
+            })
+        }
         this.initHover()
     },
     render() {

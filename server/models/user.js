@@ -173,7 +173,7 @@ userSchema.pre('save', function(next) {
             yield new Promise((fulfill, reject) => {
                 mandrill('/messages/send-template', {
                     message: {
-                        to: [{email: 'ak@radia.ru', name: 'Служба поддержки'}],
+                        to: [{email: this.email, name: this.displayName}],
                         merge: true,
                         merge_language: 'handlebars',
                         'global_merge_vars': [

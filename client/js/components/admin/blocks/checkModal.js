@@ -22,17 +22,15 @@ class CheckModal extends Component {
         if (e) e.preventDefault()
     }
     submitForm() {
-        
+
     }
     render() {
         if (this.state.fields) {
             let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo} = this.state.fields
-            return <Modal ref='modal' className='modal modal--add-check' onValidSubmit={this.submitForm.bind(this)}>
-
-
-            </Modal>
         }
-        return null
+        return <Modal ref='modal' className='modal modal-edit-check' onValidSubmit={this.submitForm.bind(this)}>
+
+        </Modal>
     }
 }
 

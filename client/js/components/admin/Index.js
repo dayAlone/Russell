@@ -55,7 +55,7 @@ const getStatus = (status, until, vinner) => {
 
 class Check extends Component {
     render() {
-        let {_id, status, created, user, until, vinner} = this.props.data
+        let {_id, status, created, user, until, vinner, products} = this.props.data
         let condition = getStatus(status, until, vinner)
 
         return <div className='table__row check'>
@@ -65,9 +65,16 @@ class Check extends Component {
             </div>
             <div className='table__col' dangerouslySetInnerHTML={{__html: moment(created).format('DD.MM.YYYY HH:mm')}}/>
             <div className='table__col'>
-                <a href='#' onClick={this.props.openModal(this.props.data)}>Посмотреть или изметь</a>
+                <a href='#' onClick={this.props.openModal(this.props.data)}>Редактировать</a>
             </div>
             <div className='table__col'>{user.displayName}</div>
+            <div className='table__col'>
+                {products.length > 0 ?
+                    products.map((el, i) => {
+                        return <div key={i}><a href={`/catalog/product/${el.product.code}/`} target='_blank'>{el.product.name}</a><br/><br/></div>
+                    })
+                    : 'нет'}
+            </div>
         </div>
     }
 }
@@ -153,6 +160,7 @@ class AdminChecks extends Component {
                     <div className='table__col'>Дата добавления</div>
                     <div className='table__col'>Данные и фото чека</div>
                     <div className='table__col'>Загружен пользователем</div>
+                    <div className='table__col'>Связанные товары</div>
                 </div>
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {

@@ -97,7 +97,9 @@ class Kitchen extends Component {
     makeElements() {
         let {settings, level} = this.state
         let elements = []
+        let images = []
         for (let i = 1; i <= settings[level].sku; i++) {
+            images.push(`/layout/images/kitchen/sku/${level}/${i}.png`)
             for (let a = 0; a < 5; a++) {
                 elements.push({
                     type: 'sku',
@@ -108,6 +110,8 @@ class Kitchen extends Component {
 
         for (let i = 1; i <= (settings[level].events - settings[level].empty) / 2; i++) {
             let rand = 1 + parseInt(Math.random() * 18, 10)
+            let url = `/layout/images/kitchen/sku/custom/${rand}.png`
+            if (images.indexOf(url) === -1) images.push(url)
             elements.push({
                 type: 'custom',
                 id: rand
@@ -119,7 +123,20 @@ class Kitchen extends Component {
                 type: 'empty'
             })
         }
+        this.preloadImages(images)
         this.setState({elements: this.shuffle(elements)})
+    }
+    preloadImages(images, index) {
+        index = index || 0
+        if (images && images.length > index) {
+            let img = new Image()
+            img.onload = () => {
+                this.preloadImages(images, index + 1)
+            }
+            img.src = `http://${location.hostname}${location.port ? ':' + location.port : ''}` + images[index]
+        } else {
+            console.log('images loaded')
+        }
     }
     componentDidMount() {
         let {settings, level} = this.state

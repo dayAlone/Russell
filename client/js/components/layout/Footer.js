@@ -17,9 +17,9 @@ class Footer extends Component {
                 <img src={`/layout/images/svg/${id}.svg`} alt='' />
             </a>)
         }
-
+        let path = this.props.routes.pathname
         return <div>
-            {this.props.routes.pathname.indexOf('profile') === -1 ? <ShareLove routes={this.props.routes} /> : null}
+            {path.indexOf('profile') === -1 && path.indexOf('games/') === -1 ? <ShareLove routes={this.props.routes} /> : null}
             <div className='footer'>
                 <div className='footer__social center'>
                     {socials}

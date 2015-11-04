@@ -175,6 +175,7 @@ userSchema.pre('save', function(next) {
                     message: {
                         to: [{email: this.email, name: this.displayName}],
                         merge: true,
+                        inline_css: true,
                         merge_language: 'handlebars',
                         'global_merge_vars': [
                             {

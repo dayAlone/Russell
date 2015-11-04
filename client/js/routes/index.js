@@ -32,11 +32,27 @@ export default function configureRoutes(reducerRegistry) {
             <Route path='/' component={App} name='Начальная страница'>
 
             <Route path='history/' component={History} name='История бренда' ignoreScrollBehavior={true}/>
-            <Route path='games/' component={Games} name='Выиграй мечту'/>
+
             <Route path='buy/' name='Где купить' getComponent={(location, callback) => {
                 require.ensure([], require => {
                     reducerRegistry.register({stores: require('../reducers/stores')})
                     callback(false, require('../components/pages/Buy'))
+                })
+            }}/>
+            <Route path='games/' name='Выиграй мечту'
+            getIndexRoute={(location, callback) => {
+                callback(null, {
+                    component: Games,
+                })
+            }}
+            getChildRoutes={(location, callback) => {
+                require.ensure([], require => {
+                    callback(null, [
+                        {
+                            path: 'kitchen',
+                            component: require('../components/games/Kitchen')
+                        }
+                    ])
                 })
             }}/>
             <Route path='profile/' name='Личный кабинет'

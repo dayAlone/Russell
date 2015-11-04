@@ -1,6 +1,6 @@
 .kitchen
     min-height 550px
-    background url(/layout/images/kitchen-bg.jpg) bottom center
+    background url(/layout/images/kitchen/bg.jpg) bottom center
     background-size cover
     full-width()
     position relative
@@ -16,7 +16,7 @@
         left 0
         background-size contain
         &--0
-            background url(/layout/images/kitchen-white-bg.jpg) bottom center no-repeat
+            background url(/layout/images/kitchen/white/bg.jpg) bottom center no-repeat
             .kitchen
                 &__box
                     &--1
@@ -52,7 +52,7 @@
                         margin-left 33.1%
 
         &--1
-            background url(/layout/images/kitchen-black-bg.jpg) bottom center no-repeat
+            background url(/layout/images/kitchen/black/bg.jpg) bottom center no-repeat
             .kitchen
                 &__box
                     &--1
@@ -93,7 +93,7 @@
                     &--14
                         margin-left 36.4%
         &--2
-            background url(/layout/images/kitchen-red-bg.jpg) bottom center no-repeat
+            background url(/layout/images/kitchen/red/bg.jpg) bottom center no-repeat
             .kitchen
                 &__box
                     &--1
@@ -146,6 +146,14 @@
         top 50%
         transform translateY(-50%) translateX(-50%)
         display none
+        &-content
+            position absolute
+            max-width 75%
+            max-height 60%
+            bottom 30px
+            left 50%
+            top 96%
+            transform translateX(-50%) translateY(-100%)
         &--active
             display block
     &__score
@@ -166,8 +174,10 @@
         padding 0 15px
         left 0
     &__sku
-        margin-bottom 30px
+        margin-bottom 15px
         position relative
+        width 92%
+        margin-left 4%
         &-overlay
             position absolute
             overflow hidden
@@ -207,10 +217,10 @@
         padding 20px 10px
         &--left
             left 0
-            background-image url(/layout/images/kitchen-ui-left.jpg)
+            background-image url(/layout/images/kitchen/ui-left.jpg)
         &--right
             right 0
-            background-image url(/layout/images/kitchen-ui-right.jpg)
+            background-image url(/layout/images/kitchen/ui-right.jpg)
     &__placeholder
         text-align center
         position absolute

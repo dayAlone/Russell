@@ -132,15 +132,32 @@ class Kitchen extends Component {
                 scores: setInterval(this.tickTime.bind(this), 1000)
             }
         })
+    }
+    handleClick(el, id) {
+        return (e) => {
 
-
+            let {clicks, time, active} = this.state
+            let changes = {
+                active: _.without(active, id),
+            }
+            if ($(e.currentTarget).hasClass('kitchen__box--active')) {
+                if (el.type === 'sku') {
+                    if (clicks[el.id] > 0 && clicks[el.id] < 3) clicks[el.id]++
+                    else if (!clicks[el.id]) clicks[el.id] = 1
+                    changes['clicks'] = clicks
+                } else {
+                    changes['time'] = time - 1
+                }
+                this.setState(changes)
+            }
+        }
     }
     render() {
         let {isStarted, level, settings, active, active_elements, scores, time, clicks} = this.state
         let {total, current} = scores
         let boxes = []
         for (let i = 1; i <= settings[level].boxes; i++) {
-            boxes.push(<div key={i} className={`kitchen__box kitchen__box--${i} ${active.indexOf(i) !== -1 ? 'kitchen__box--active' : ''}`}>
+            boxes.push(<div onClick={this.handleClick(active_elements[i], i)} key={i} className={`kitchen__box kitchen__box--${i} ${active.indexOf(i) !== -1 ? 'kitchen__box--active' : ''}`}>
                 <img src={`/layout/images/kitchen/${settings[level].code}/box-${i}.png`} alt='' />
                 {active.indexOf(i) !== -1 ?
                     active_elements[i] && active_elements[i].type !== 'empty'

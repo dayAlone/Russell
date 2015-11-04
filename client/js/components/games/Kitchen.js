@@ -40,7 +40,7 @@ class Kitchen extends Component {
                 code: 'red',
                 time: 55,
                 events: 130,
-                empty: 10
+                empty: 30
             }
         ]
     }
@@ -57,7 +57,7 @@ class Kitchen extends Component {
         active_elements[numbers[rand]] = elements[0]
         setTimeout(() => {
             this.setState({active: _.without(this.state.active, numbers[rand])})
-        }, 2000)
+        }, 1000)
         this.setState({
             active: active,
             active_elements: active_elements,

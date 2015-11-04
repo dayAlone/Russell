@@ -73,7 +73,7 @@ class Kitchen extends Component {
             clearInterval(this.state.times.scores)
             this.setState({
                 time: 0,
-                clicks: {},
+                //clicks: {},
                 times: {
                     open: false,
                     scores: false

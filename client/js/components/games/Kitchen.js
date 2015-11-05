@@ -62,7 +62,7 @@ class Kitchen extends Component {
         active_elements[numbers[rand]] = elements[0]
         setTimeout(() => {
             this.setState({active: _.without(this.state.active, numbers[rand])})
-        }, 3000)
+        }, 1000)
         this.setState({
             active: active,
             active_elements: active_elements,

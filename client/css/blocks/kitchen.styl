@@ -4,6 +4,34 @@
     background-size cover
     full-width()
     position relative
+    &__close
+        size 30px
+        border-radius 50%
+        border 1px solid white
+        position absolute
+        text-align center
+        line-height 28px
+        right 20px
+        top 20px
+        opacity 0.6
+        t opacity
+        &:hover
+            opacity 1
+        img
+            max-width 50%
+            vertical-align middle
+    &__rules
+        position absolute
+        top 0
+        size 100%
+        z-index 2
+        background url(/layout/images/kitchen/bg.jpg) bottom center
+        background-size cover
+        padding 40px 10%
+        overflow scroll
+        h2
+            margin-top 0px
+            margin-bottom 0px
     &__divider
         margin 25px 0
         max-width 100%
@@ -50,7 +78,6 @@
                         margin-left 21%
                     &--12
                         margin-left 33.1%
-
         &--1
             background url(/layout/images/kitchen/black/bg.jpg) bottom center no-repeat
             .kitchen
@@ -167,6 +194,12 @@
         font-size 24px
         margin-top 8px
         margin-bottom 20px
+        &--big
+            size 203px 68px
+            line-height 74px
+            font-size 43px
+            margin-left 15px
+            margin-right 40px
     &__skus
         position absolute
         bottom 20px
@@ -200,6 +233,17 @@
         img
             max-width 100%
     &__block
+        &--inline
+            display inline-block
+            position relative
+            top -5px
+            &:first-of-type
+                margin-left 15px
+            .kitchen__score
+                border 0
+            span
+                text-align left
+                margin-right 5px
         span
             text-transform uppercase
             color #9a9da0
@@ -229,7 +273,9 @@
         left 10%
         transform translateY(-50%)
         .button
-            margin-top 90px
+            margin-top 5px
+            &--top
+                margin-top 90px
         a:not(.button)
             color alpha(white, .7)
             margin-top 25px
@@ -246,3 +292,6 @@
             font-size 30px
             margin-top 30px
             margin-bottom 0px
+        h3
+            margin 10px 0 30px
+            font-size 20px

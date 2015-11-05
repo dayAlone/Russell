@@ -2,14 +2,15 @@
 import React, { Component } from 'react'
 class Kitchen extends Component {
     state = {
-        isStarted: true,
-        level: 0,
+        rules: false,
+        isStarted: false,
+        level: -1,
         active: [],
         active_elements: {},
         elements: [],
         scores: {
-            total: 0,
-            current: 0
+            current: 0,
+            total: 0
         },
         time: 0,
         timers: {
@@ -24,7 +25,8 @@ class Kitchen extends Component {
                 code: 'white',
                 time: 45,
                 events: 60,
-                empty: 0
+                empty: 0,
+                multiply: 1,
             },
             {
                 boxes: 14,
@@ -32,7 +34,8 @@ class Kitchen extends Component {
                 code: 'black',
                 time: 50,
                 events: 80,
-                empty: 0
+                empty: 0,
+                multiply: 2,
             },
             {
                 boxes: 16,
@@ -40,7 +43,8 @@ class Kitchen extends Component {
                 code: 'red',
                 time: 55,
                 events: 130,
-                empty: 30
+                empty: 30,
+                multiply: 3,
             }
         ]
     }
@@ -69,16 +73,7 @@ class Kitchen extends Component {
         if (parseInt(this.state.time, 10) > 0) {
             this.setState({time: this.state.time - 1})
         } else {
-            clearInterval(this.state.times.open)
-            clearInterval(this.state.times.scores)
-            this.setState({
-                time: 0,
-                //clicks: {},
-                times: {
-                    open: false,
-                    scores: false
-                }
-            })
+            this.stopGame()
         }
     }
     shuffle(array) {
@@ -134,19 +129,47 @@ class Kitchen extends Component {
                 this.preloadImages(images, index + 1)
             }
             img.src = `http://${location.hostname}${location.port ? ':' + location.port : ''}` + images[index]
-        } else {
-            console.log('images loaded')
         }
     }
-    componentDidMount() {
+    startGame(e) {
         let {settings, level} = this.state
+        level = level >= 2 ? 0 : level + 1
 
-        this.makeElements()
         this.setState({
             time: settings[level].time,
+            isStarted: true,
+
+            level: level,
             times: {
                 open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
                 scores: setInterval(this.tickTime.bind(this), 1000)
+            }
+        }, this.makeElements)
+
+
+        /*
+        window.onbeforeunload = (e) => {
+            e = e || window.event
+            if (e) { e.returnValue = false }
+            return false
+        }
+        */
+        if (e) e.preventDefault()
+    }
+    stopGame() {
+        let {times, scores, time, settings, level} = this.state
+        clearInterval(times.open)
+        clearInterval(times.scores)
+        this.setState({
+            time: 0,
+            clicks: {},
+            isStarted: false,
+            times: {
+                open: false,
+                scores: {
+                    current: settings[level].multiply * time,
+                    total: scores + time
+                }
             }
         })
     }
@@ -169,37 +192,110 @@ class Kitchen extends Component {
             }
         }
     }
-    render() {
-        let {isStarted, level, settings, active, active_elements, scores, time, clicks} = this.state
-        let {total, current} = scores
+    makeBoxes() {
+        let {level, settings, active, active_elements} = this.state
         let boxes = []
-        for (let i = 1; i <= settings[level].boxes; i++) {
-            boxes.push(<div onClick={this.handleClick(active_elements[i], i)} key={i} className={`kitchen__box kitchen__box--${i} ${active.indexOf(i) !== -1 ? 'kitchen__box--active' : ''}`}>
-                <img src={`/layout/images/kitchen/${settings[level].code}/box-${i}.png`} alt='' />
-                {active.indexOf(i) !== -1 ?
-                    active_elements[i] && active_elements[i].type !== 'empty'
-                        ? <img src={`/layout/images/kitchen/sku/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
-                        : null
-                : null }
-            </div>)
+        if (level >= 0) {
+            for (let i = 1; i <= settings[level].boxes; i++) {
+                boxes.push(<div onClick={this.handleClick(active_elements[i], i)} key={i} className={`kitchen__box kitchen__box--${i} ${active.indexOf(i) !== -1 ? 'kitchen__box--active' : ''}`}>
+                    <img src={`/layout/images/kitchen/${settings[level].code}/box-${i}.png`} alt='' />
+                    {active.indexOf(i) !== -1 ?
+                        active_elements[i] && active_elements[i].type !== 'empty'
+                            ? <img src={`/layout/images/kitchen/sku/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
+                            : null
+                    : null }
+                </div>)
+            }
         }
+        return boxes
+    }
+    makeSKU() {
+        let {level, settings, clicks} = this.state
         let sku = []
-        for (let i = 1; i <= settings[level].sku; i++) {
-            sku.push(<div className='kitchen__sku' key={i}>
-                <img src={`/layout/images/kitchen/sku/${level}/inactive/${i}.png`} alt='' />
-                <div className={`kitchen__sku-overlay ${clicks[i] > 0 ? 'kitchen__sku-overlay--' + clicks[i] : ''}`}>
-                    <img src={`/layout/images/kitchen/sku/${level}/${i}.png`} alt=''/>
-                </div>
-            </div>)
+        if (level >= 0) {
+
+            for (let i = 1; i <= settings[level].sku; i++) {
+                sku.push(<div className='kitchen__sku' key={i}>
+                    <img src={`/layout/images/kitchen/sku/${level}/inactive/${i}.png`} alt='' />
+                    <div className={`kitchen__sku-overlay ${clicks[i] > 0 ? 'kitchen__sku-overlay--' + clicks[i] : ''}`}>
+                        <img src={`/layout/images/kitchen/sku/${level}/${i}.png`} alt=''/>
+                    </div>
+                </div>)
+            }
         }
+        return sku
+    }
+    toggleRules(status) {
+        return (e) => {
+            this.setState({rules: status})
+            e.preventDefault()
+        }
+    }
+    render() {
+        let {isStarted, level, scores, time, rules} = this.state
+        let {current, total} = scores
+        let sku = this.makeSKU()
+        let boxes = this.makeBoxes()
         return <div className='kitchen'>
+            { rules ?
+                <div className='kitchen__rules'>
+                    <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
+                    <div className='center'>
+                        <h2>Правила игры</h2>
+                    </div>
+
+                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                    <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
+                    <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
+                    <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
+                    <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
+                    <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
+                    <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
+                    <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
+                    <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
+                    <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
+                    <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
+                    <p>Удачи!</p>
+                    <div className='center'>
+                        <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
+                    </div>
+                </div>
+                : null }
             {!isStarted ?
                 <div className='kitchen__placeholder'>
-                    <h2>Собери коллекцию Russell Hobbs</h2>
-                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                    <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
-                    <a href='#' className='button'>Начать игру</a><br/>
-                    <a href='#'>Правила игры</a>
+                    { level === -1 ?
+                        <div>
+                            <h2>Собери коллекцию Russell Hobbs</h2>
+                            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                            <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
+                            <a href='#' onClick={this.startGame.bind(this)} className='button button--top' onClick={this.startGame.bind(this)}>Начать игру</a><br/>
+                            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+                        </div>
+                        :
+                        <div>
+                            <h2>Поздравляем!</h2>
+                            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                            <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
+                            <span className='kitchen__block kitchen__block--inline'>
+                                <span>Осталось<br/>попыток</span>
+                                <div className='kitchen__score'>
+                                    3
+                                </div>
+                            </span>
+                            <span className='kitchen__score kitchen__score--big'>{current}</span>
+                            <span className='kitchen__block kitchen__block--inline'>
+                                <span>Сумма<br/>баллов</span>
+                                <div className='kitchen__score'>
+                                    {total}
+                                </div>
+                            </span>
+
+                            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                            <a href='#' onClick={this.startGame.bind(this)} className='button' onClick={this.startGame.bind(this)}>
+                                {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
+                            </a>
+                        </div>
+                    }
                 </div>
 
                 :

@@ -62,7 +62,7 @@ class Kitchen extends Component {
         active_elements[numbers[rand]] = elements[0]
         setTimeout(() => {
             this.setState({active: _.without(this.state.active, numbers[rand])})
-        }, 1000)
+        }, 3000)
         this.setState({
             active: active,
             active_elements: active_elements,
@@ -90,7 +90,6 @@ class Kitchen extends Component {
 
         return array
     }
-
     preloadImages(images, index) {
         index = index || 0
         if (images && images.length > index) {
@@ -138,23 +137,25 @@ class Kitchen extends Component {
         let {times, scores, time, settings, level} = this.state
         clearInterval(times.open)
         clearInterval(times.scores)
+
         this.setState({
             time: 0,
             clicks: {},
             isStarted: false,
-            times: {
+            timers: {
                 open: false,
-                scores: {
-                    current: settings[level].multiply * time,
-                    total: scores + time
-                }
+                scores: false
+            },
+            scores: {
+                current: settings[level].multiply * time,
+                total: scores.total + time
             }
         })
     }
     handleClick(el, id) {
         return (e) => {
 
-            let {clicks, time, active} = this.state
+            let {clicks, time, active, settings, level} = this.state
             let changes = {
                 active: _.without(active, id),
             }
@@ -162,7 +163,15 @@ class Kitchen extends Component {
                 if (el.type === 'sku') {
                     if (clicks[el.id] > 0 && clicks[el.id] < 3) clicks[el.id]++
                     else if (!clicks[el.id]) clicks[el.id] = 1
-                    changes['clicks'] = clicks
+
+                    let counter = 0
+                    for (let i in clicks) {
+                        counter += clicks[i]
+                    }
+                    if (counter === settings[level].sku * 3) {
+                        this.stopGame()
+                    }
+                    else changes['clicks'] = clicks
                 } else {
                     changes['time'] = time - 1
                 }

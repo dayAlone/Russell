@@ -102,13 +102,21 @@ class Kitchen extends Component {
         }
     }
     startGame(e) {
-        let {settings, level} = this.state
-        level = level >= 2 ? 0 : level + 1
+        let {settings, level, scores} = this.state
+        if (level >= 2) {
+            level = 0
+            scores = {
+                current: 0,
+                total: 0
+            }
+        } else {
+            level++
+        }
 
         this.setState({
             time: settings[level].time,
             isStarted: true,
-
+            scores: scores,
             level: level,
             times: {
                 open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
@@ -238,96 +246,99 @@ class Kitchen extends Component {
         let {current, total} = scores
         let sku = this.makeSKU()
         let boxes = this.makeBoxes()
-        return <div className='kitchen'>
-            { rules ?
-                <div className='kitchen__rules'>
-                    <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
-                    <div className='center'>
-                        <h2>Правила игры</h2>
+        return <div className='game'>
+            <h1 className='game__title center'>Собери коллекцию</h1>
+            <div className='kitchen'>
+                { rules ?
+                    <div className='kitchen__rules'>
+                        <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
+                        <div className='center'>
+                            <h2>Правила игры</h2>
+                        </div>
+
+                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                        <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
+                        <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
+                        <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
+                        <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
+                        <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
+                        <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
+                        <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
+                        <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
+                        <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
+                        <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
+                        <p>Удачи!</p>
+                        <div className='center'>
+                            <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
+                        </div>
+                    </div>
+                    : null }
+                {!isStarted ?
+                    <div className='kitchen__placeholder'>
+                        { level === -1 ?
+                            <div>
+                                <h2>Собери коллекцию Russell Hobbs</h2>
+                                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                                <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
+                                <a href='#' onClick={this.startGame.bind(this)} className='button button--top' onClick={this.startGame.bind(this)}>Начать игру</a><br/>
+                                <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+                            </div>
+                            :
+                            <div>
+                                <h2>Поздравляем!</h2>
+                                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                                <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
+                                <span className='kitchen__block kitchen__block--inline'>
+                                    <span>Осталось<br/>попыток</span>
+                                    <div className='kitchen__score'>
+                                        3
+                                    </div>
+                                </span>
+                                <span className='kitchen__score kitchen__score--big'>{current}</span>
+                                <span className='kitchen__block kitchen__block--inline'>
+                                    <span>Сумма<br/>баллов</span>
+                                    <div className='kitchen__score'>
+                                        {total}
+                                    </div>
+                                </span>
+
+                                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                                <a href='#' onClick={this.startGame.bind(this)} className='button' onClick={this.startGame.bind(this)}>
+                                    {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
+                                </a>
+                            </div>
+                        }
                     </div>
 
-                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                    <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
-                    <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
-                    <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
-                    <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
-                    <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
-                    <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
-                    <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
-                    <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
-                    <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
-                    <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
-                    <p>Удачи!</p>
-                    <div className='center'>
-                        <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
-                    </div>
-                </div>
-                : null }
-            {!isStarted ?
-                <div className='kitchen__placeholder'>
-                    { level === -1 ?
-                        <div>
-                            <h2>Собери коллекцию Russell Hobbs</h2>
-                            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                            <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
-                            <a href='#' onClick={this.startGame.bind(this)} className='button button--top' onClick={this.startGame.bind(this)}>Начать игру</a><br/>
-                            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
-                        </div>
-                        :
-                        <div>
-                            <h2>Поздравляем!</h2>
-                            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                            <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
-                            <span className='kitchen__block kitchen__block--inline'>
-                                <span>Осталось<br/>попыток</span>
-                                <div className='kitchen__score'>
-                                    3
-                                </div>
-                            </span>
-                            <span className='kitchen__score kitchen__score--big'>{current}</span>
-                            <span className='kitchen__block kitchen__block--inline'>
-                                <span>Сумма<br/>баллов</span>
+                    :
+
+                    <div className={`kitchen__level kitchen__level--${level}`}>
+                        <div className='kitchen__ui kitchen__ui--left'>
+                            <div className='kitchen__block'>
+                                <span>Сумма баллов</span>
                                 <div className='kitchen__score'>
                                     {total}
                                 </div>
-                            </span>
-
-                            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                            <a href='#' onClick={this.startGame.bind(this)} className='button' onClick={this.startGame.bind(this)}>
-                                {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
-                            </a>
-                        </div>
-                    }
-                </div>
-
-                :
-
-                <div className={`kitchen__level kitchen__level--${level}`}>
-                    <div className='kitchen__ui kitchen__ui--left'>
-                        <div className='kitchen__block'>
-                            <span>Сумма баллов</span>
-                            <div className='kitchen__score'>
-                                {total}
+                            </div>
+                            <div className='kitchen__skus'>
+                                {sku.splice(0, sku.length / 2)}
                             </div>
                         </div>
-                        <div className='kitchen__skus'>
-                            {sku.splice(0, sku.length / 2)}
-                        </div>
-                    </div>
-                    {boxes}
-                    <div className='kitchen__ui kitchen__ui--right'>
-                        <div className='kitchen__block'>
-                            <span>Осталось времени</span>
-                            <div className='kitchen__score'>
-                                {time}
+                        {boxes}
+                        <div className='kitchen__ui kitchen__ui--right'>
+                            <div className='kitchen__block'>
+                                <span>Осталось времени</span>
+                                <div className='kitchen__score'>
+                                    {time}
+                                </div>
+                            </div>
+                            <div className='kitchen__skus'>
+                                {sku.splice(sku.length / 2 - 2)}
                             </div>
                         </div>
-                        <div className='kitchen__skus'>
-                            {sku.splice(sku.length / 2 - 2)}
-                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     }
 }

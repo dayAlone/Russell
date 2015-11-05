@@ -245,6 +245,7 @@ class Kitchen extends Component {
 
         for (let i = 1; i <= settings[level].sku; i++) {
             images.push(`${url}/sku/${level}/${i}.png`)
+            images.push(`${url}/sku/${level}/inactive/${i}.png`)
             for (let a = 0; a < 5; a++) {
                 elements.push({
                     type: 'sku',

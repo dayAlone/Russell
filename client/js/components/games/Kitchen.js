@@ -312,7 +312,7 @@ class Kitchen extends Component {
                     : null }
                 { loader.active ?
                     <div className='kitchen__placeholder kitchen__placeholder--loader'>
-                        <h2>Закрузка</h2>
+                        <h2>Загрузка</h2>
                         <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
                         <div className='kitchen__loader'>
                             <span style={{width: loader.percentage + '%'}}></span>

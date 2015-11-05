@@ -107,11 +107,10 @@ class Kitchen extends Component {
         if (images && images.length > index) {
             let img = new Image()
             img.onload = () => {
-                console.log(index / images.length * 100)
                 this.setState({
                     loader: {
                         active: true,
-                        percentage: parseInt(index / images.length * 100, 10) 
+                        percentage: parseInt(index / images.length * 100, 10)
                     }
                 })
                 this.preloadImages(images, index + 1)
@@ -241,6 +240,9 @@ class Kitchen extends Component {
         let {settings, level, url} = this.state
         let elements = []
         let images = []
+        images.push(`${url}/${settings[level].code}/bg.jpg`)
+        for (let i = 1; i <= settings[level].boxes; i++) images.push(`${url}/${settings[level].code}/box-${i}.png`)
+
         for (let i = 1; i <= settings[level].sku; i++) {
             images.push(`${url}/sku/${level}/${i}.png`)
             for (let a = 0; a < 5; a++) {
@@ -309,7 +311,7 @@ class Kitchen extends Component {
                     : null }
                 { loader.active ?
                     <div className='kitchen__placeholder kitchen__placeholder--loader'>
-                        <h2>Закрузка игры</h2>
+                        <h2>Закрузка</h2>
                         <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
                         <div className='kitchen__loader'>
                             <span style={{width: loader.percentage + '%'}}></span>
@@ -318,7 +320,7 @@ class Kitchen extends Component {
                         <small>Если загрузка идет очень долго, попробуйте обновить страницу</small>
                     </div>
                     :
-                    !isStarted  ?
+                    !isStarted ?
                         <div className='kitchen__placeholder'>
                             { level === -1 ?
                                 <div>
@@ -348,7 +350,7 @@ class Kitchen extends Component {
                                     </span>
 
                                     <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <a href='#' onClick={this.startGame.bind(this)} className='button' onClick={this.startGame.bind(this)}>
+                                    <a href='#' onClick={this.startGame.bind(this)} className='button'>
                                         {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
                                     </a>
                                 </div>

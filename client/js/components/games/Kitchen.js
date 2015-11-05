@@ -5,6 +5,10 @@ class Kitchen extends Component {
         url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
         rules: false,
         isStarted: false,
+        loader: {
+            active: active,
+            percentage: 0
+        },
         level: -1,
         active: [],
         active_elements: {},
@@ -251,7 +255,7 @@ class Kitchen extends Component {
         }
     }
     render() {
-        let {isStarted, level, scores, time, rules} = this.state
+        let {isStarted, level, scores, time, rules, loader} = this.state
         let {current, total} = scores
         let sku = this.makeSKU()
         let boxes = this.makeBoxes()
@@ -282,6 +286,9 @@ class Kitchen extends Component {
                         </div>
                     </div>
                     : null }
+                { loader.actvie ?
+                    null
+                    : null }
                 {!isStarted ?
                     <div className='kitchen__placeholder'>
                         { level === -1 ?
@@ -289,7 +296,7 @@ class Kitchen extends Component {
                                 <h2>Собери коллекцию Russell Hobbs</h2>
                                 <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
                                 <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
-                                <a href='#' onClick={this.startGame.bind(this)} className='button button--top' onClick={this.startGame.bind(this)}>Начать игру</a><br/>
+                                <a href='#' onClick={this.startGame.bind(this)} className='button button--top'>Начать игру</a><br/>
                                 <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
                             </div>
                             :

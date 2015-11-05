@@ -22,6 +22,20 @@
         img
             max-width 50%
             vertical-align middle
+    &__loader
+        size 70% 20px
+        display inline-block
+        margin 40px 0
+        border-radius 40px
+        border 1px solid white
+        padding 2px
+        text-align left
+        t width
+        span
+            display inline-block
+            height 14px
+            border-radius 20px
+            background-color red
     &__rules
         position absolute
         top 0
@@ -277,6 +291,11 @@
         width 80%
         left 10%
         transform translateY(-50%)
+        > small
+            font-size 11px
+            color alpha(white, .5)
+        &--loader
+            z-index 20
         .button
             margin-top 5px
             &--top

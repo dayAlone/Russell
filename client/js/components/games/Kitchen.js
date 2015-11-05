@@ -6,7 +6,7 @@ class Kitchen extends Component {
         rules: false,
         isStarted: false,
         loader: {
-            active: active,
+            active: false,
             percentage: 0
         },
         level: -1,
@@ -96,12 +96,35 @@ class Kitchen extends Component {
     }
     preloadImages(images, index) {
         index = index || 0
+        if (index === 0) {
+            this.setState({
+                loader: {
+                    active: true,
+                    percentage: 0
+                }
+            })
+        }
         if (images && images.length > index) {
             let img = new Image()
             img.onload = () => {
+                console.log(index / images.length * 100)
+                this.setState({
+                    loader: {
+                        active: true,
+                        percentage: parseInt(index / images.length * 100, 10) 
+                    }
+                })
                 this.preloadImages(images, index + 1)
             }
             img.src = images[index]
+        } else {
+            this.setState({
+                isStarted: true,
+                loader: {
+                    active: false,
+                    percentage: 0
+                }
+            })
         }
     }
     startGame(e) {
@@ -118,7 +141,6 @@ class Kitchen extends Component {
 
         this.setState({
             time: settings[level].time,
-            isStarted: true,
             scores: scores,
             level: level,
             times: {
@@ -126,7 +148,6 @@ class Kitchen extends Component {
                 scores: setInterval(this.tickTime.bind(this), 1000)
             }
         }, this.makeElements)
-
 
         /*
         window.onbeforeunload = (e) => {
@@ -286,73 +307,82 @@ class Kitchen extends Component {
                         </div>
                     </div>
                     : null }
-                { loader.actvie ?
-                    null
-                    : null }
-                {!isStarted ?
-                    <div className='kitchen__placeholder'>
-                        { level === -1 ?
-                            <div>
-                                <h2>Собери коллекцию Russell Hobbs</h2>
-                                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
-                                <a href='#' onClick={this.startGame.bind(this)} className='button button--top'>Начать игру</a><br/>
-                                <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
-                            </div>
-                            :
-                            <div>
-                                <h2>Поздравляем!</h2>
-                                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
-                                <span className='kitchen__block kitchen__block--inline'>
-                                    <span>Осталось<br/>попыток</span>
-                                    <div className='kitchen__score'>
-                                        3
-                                    </div>
-                                </span>
-                                <span className='kitchen__score kitchen__score--big'>{current}</span>
-                                <span className='kitchen__block kitchen__block--inline'>
-                                    <span>Сумма<br/>баллов</span>
+                { loader.active ?
+                    <div className='kitchen__placeholder kitchen__placeholder--loader'>
+                        <h2>Закрузка игры</h2>
+                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                        <div className='kitchen__loader'>
+                            <span style={{width: loader.percentage + '%'}}></span>
+                        </div>
+                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                        <small>Если загрузка идет очень долго, попробуйте обновить страницу</small>
+                    </div>
+                    :
+                    !isStarted  ?
+                        <div className='kitchen__placeholder'>
+                            { level === -1 ?
+                                <div>
+                                    <h2>Собери коллекцию Russell Hobbs</h2>
+                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                                    <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
+                                    <a href='#' onClick={this.startGame.bind(this)} className='button button--top'>Начать игру</a><br/>
+                                    <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+                                </div>
+                                :
+                                <div>
+                                    <h2>Поздравляем!</h2>
+                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                                    <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
+                                    <span className='kitchen__block kitchen__block--inline'>
+                                        <span>Осталось<br/>попыток</span>
+                                        <div className='kitchen__score'>
+                                            3
+                                        </div>
+                                    </span>
+                                    <span className='kitchen__score kitchen__score--big'>{current}</span>
+                                    <span className='kitchen__block kitchen__block--inline'>
+                                        <span>Сумма<br/>баллов</span>
+                                        <div className='kitchen__score'>
+                                            {total}
+                                        </div>
+                                    </span>
+
+                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                                    <a href='#' onClick={this.startGame.bind(this)} className='button' onClick={this.startGame.bind(this)}>
+                                        {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
+                                    </a>
+                                </div>
+                            }
+                        </div>
+
+                        :
+
+                        <div className={`kitchen__level kitchen__level--${level}`}>
+                            <div className='kitchen__ui kitchen__ui--left'>
+                                <div className='kitchen__block'>
+                                    <span>Сумма баллов</span>
                                     <div className='kitchen__score'>
                                         {total}
                                     </div>
-                                </span>
-
-                                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                <a href='#' onClick={this.startGame.bind(this)} className='button' onClick={this.startGame.bind(this)}>
-                                    {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
-                                </a>
-                            </div>
-                        }
-                    </div>
-
-                    :
-
-                    <div className={`kitchen__level kitchen__level--${level}`}>
-                        <div className='kitchen__ui kitchen__ui--left'>
-                            <div className='kitchen__block'>
-                                <span>Сумма баллов</span>
-                                <div className='kitchen__score'>
-                                    {total}
+                                </div>
+                                <div className='kitchen__skus'>
+                                    {sku.splice(0, sku.length / 2)}
                                 </div>
                             </div>
-                            <div className='kitchen__skus'>
-                                {sku.splice(0, sku.length / 2)}
-                            </div>
-                        </div>
-                        {boxes}
-                        <div className='kitchen__ui kitchen__ui--right'>
-                            <div className='kitchen__block'>
-                                <span>Осталось времени</span>
-                                <div className='kitchen__score'>
-                                    {time}
+                            {boxes}
+                            <div className='kitchen__ui kitchen__ui--right'>
+                                <div className='kitchen__block'>
+                                    <span>Осталось времени</span>
+                                    <div className='kitchen__score'>
+                                        {time}
+                                    </div>
+                                </div>
+                                <div className='kitchen__skus'>
+                                    {sku.splice(sku.length / 2 - 2)}
                                 </div>
                             </div>
-                            <div className='kitchen__skus'>
-                                {sku.splice(sku.length / 2 - 2)}
-                            </div>
                         </div>
-                    </div>
+
                 }
             </div>
         </div>

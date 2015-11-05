@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 class Kitchen extends Component {
     state = {
+        url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
         rules: false,
         isStarted: false,
         level: -1,
@@ -89,38 +90,7 @@ class Kitchen extends Component {
 
         return array
     }
-    makeElements() {
-        let {settings, level} = this.state
-        let elements = []
-        let images = []
-        for (let i = 1; i <= settings[level].sku; i++) {
-            images.push(`/layout/images/kitchen/sku/${level}/${i}.png`)
-            for (let a = 0; a < 5; a++) {
-                elements.push({
-                    type: 'sku',
-                    id: i
-                })
-            }
-        }
 
-        for (let i = 1; i <= (settings[level].events - settings[level].empty) / 2; i++) {
-            let rand = 1 + parseInt(Math.random() * 18, 10)
-            let url = `/layout/images/kitchen/sku/custom/${rand}.png`
-            if (images.indexOf(url) === -1) images.push(url)
-            elements.push({
-                type: 'custom',
-                id: rand
-            })
-        }
-
-        for (let i = 1; i <= settings[level].empty; i++) {
-            elements.push({
-                type: 'empty'
-            })
-        }
-        this.preloadImages(images)
-        this.setState({elements: this.shuffle(elements)})
-    }
     preloadImages(images, index) {
         index = index || 0
         if (images && images.length > index) {
@@ -128,7 +98,7 @@ class Kitchen extends Component {
             img.onload = () => {
                 this.preloadImages(images, index + 1)
             }
-            img.src = `http://${location.hostname}${location.port ? ':' + location.port : ''}` + images[index]
+            img.src = images[index]
         }
     }
     startGame(e) {
@@ -193,15 +163,15 @@ class Kitchen extends Component {
         }
     }
     makeBoxes() {
-        let {level, settings, active, active_elements} = this.state
+        let {level, settings, active, active_elements, url} = this.state
         let boxes = []
         if (level >= 0) {
             for (let i = 1; i <= settings[level].boxes; i++) {
                 boxes.push(<div onClick={this.handleClick(active_elements[i], i)} key={i} className={`kitchen__box kitchen__box--${i} ${active.indexOf(i) !== -1 ? 'kitchen__box--active' : ''}`}>
-                    <img src={`/layout/images/kitchen/${settings[level].code}/box-${i}.png`} alt='' />
+                    <img src={`${url}/${settings[level].code}/box-${i}.png`} alt='' />
                     {active.indexOf(i) !== -1 ?
                         active_elements[i] && active_elements[i].type !== 'empty'
-                            ? <img src={`/layout/images/kitchen/sku/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
+                            ? <img src={`${url}/sku/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
                             : null
                     : null }
                 </div>)
@@ -210,20 +180,52 @@ class Kitchen extends Component {
         return boxes
     }
     makeSKU() {
-        let {level, settings, clicks} = this.state
+        let {level, settings, clicks, url} = this.state
         let sku = []
         if (level >= 0) {
 
             for (let i = 1; i <= settings[level].sku; i++) {
                 sku.push(<div className='kitchen__sku' key={i}>
-                    <img src={`/layout/images/kitchen/sku/${level}/inactive/${i}.png`} alt='' />
+                    <img src={`${url}/sku/${level}/inactive/${i}.png`} alt='' />
                     <div className={`kitchen__sku-overlay ${clicks[i] > 0 ? 'kitchen__sku-overlay--' + clicks[i] : ''}`}>
-                        <img src={`/layout/images/kitchen/sku/${level}/${i}.png`} alt=''/>
+                        <img src={`${url}/sku/${level}/${i}.png`} alt=''/>
                     </div>
                 </div>)
             }
         }
         return sku
+    }
+    makeElements() {
+        let {settings, level, url} = this.state
+        let elements = []
+        let images = []
+        for (let i = 1; i <= settings[level].sku; i++) {
+            images.push(`${url}/sku/${level}/${i}.png`)
+            for (let a = 0; a < 5; a++) {
+                elements.push({
+                    type: 'sku',
+                    id: i
+                })
+            }
+        }
+
+        for (let i = 1; i <= (settings[level].events - settings[level].empty) / 2; i++) {
+            let rand = 1 + parseInt(Math.random() * 18, 10)
+            let link = `${url}/sku/custom/${rand}.png`
+            if (images.indexOf(link) === -1) images.push(link)
+            elements.push({
+                type: 'custom',
+                id: rand
+            })
+        }
+
+        for (let i = 1; i <= settings[level].empty; i++) {
+            elements.push({
+                type: 'empty'
+            })
+        }
+        this.preloadImages(images)
+        this.setState({elements: this.shuffle(elements)})
     }
     toggleRules(status) {
         return (e) => {

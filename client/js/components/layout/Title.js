@@ -31,7 +31,7 @@ class Title extends Component {
     render() {
         if (this.props.game) {
             let content = []
-            let { image, start: dateStart, end: dateStop, description, link, flag } = this.props.game
+            let { start: dateStart, end: dateStop, description } = this.props.game
             let start = moment(dateStart).format('D MMMM')
             let end = moment(dateStop).format('D MMMM')
             description = description.replace('#start#', start).replace('#end#', end)
@@ -67,7 +67,7 @@ class Title extends Component {
                             </div>
                         </div>
                         <div className='title__col'>
-                            <Link to='/games/' className='button'>Выиграть!</Link>
+                            <Link to={this.props.type === 'counter' ? '/games/dream/' : '/games/'} className='button'>Выиграть!</Link>
                         </div>
                     </div>
                     : null}

@@ -32,6 +32,7 @@ class Kitchen extends Component {
                 events: 60,
                 empty: 0,
                 multiply: 1,
+                open: 2000
             },
             {
                 boxes: 14,
@@ -41,6 +42,7 @@ class Kitchen extends Component {
                 events: 80,
                 empty: 0,
                 multiply: 2,
+                open: 1750
             },
             {
                 boxes: 16,
@@ -50,6 +52,7 @@ class Kitchen extends Component {
                 events: 130,
                 empty: 30,
                 multiply: 3,
+                open: 1500
             }
         ]
     }
@@ -66,7 +69,7 @@ class Kitchen extends Component {
         active_elements[numbers[rand]] = elements[0]
         setTimeout(() => {
             this.setState({active: _.without(this.state.active, numbers[rand])})
-        }, 1000)
+        }, settings[level].open)
         this.setState({
             active: active,
             active_elements: active_elements,
@@ -172,7 +175,7 @@ class Kitchen extends Component {
             },
             scores: {
                 current: settings[level].multiply * time,
-                total: scores.total + time
+                total: scores.total + (settings[level].multiply * time)
             }
         })
     }

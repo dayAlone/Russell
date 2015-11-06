@@ -51,6 +51,14 @@ export default function configureRoutes(reducerRegistry) {
                         {
                             path: 'kitchen',
                             component: require('../components/games/Kitchen')
+                        },
+                        {
+                            path: 'test',
+                            component: require('../components/games/Test')
+                        },
+                        {
+                            path: 'dream',
+                            component: require('../components/games/Dream')
                         }
                     ])
                 })

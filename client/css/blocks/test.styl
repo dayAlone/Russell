@@ -1,0 +1,73 @@
+.test
+    min-height 550px
+    background url(/layout/images/kitchen/bg.jpg) bottom center
+    background-size cover
+    full-width()
+    position relative
+    border 1px solid #303130
+    margin 50px 0 120px
+    &__placeholder
+        @extend .kitchen__placeholder
+
+        &--question
+            margin-top 40px
+        h3
+            margin 0
+            font-size 28px
+            padding 0 8%
+    &__answers
+        float left
+        width 100%
+        padding 0 10%
+        margin-top 0px
+    &__answer
+        float left
+        width 50%
+        text-align center
+        background-image none !important
+        img
+            max-width 150px
+    &__divider
+        @extend .kitchen__divider
+    &__rules
+        @extend .kitchen__rules
+    &__close
+        @extend .kitchen__close
+    &__block
+        @extend .kitchen__block
+    &__score
+        @extend .kitchen__score
+    &__ui
+        border-bottom 2px solid red
+        height 80px
+        position absolute
+        top 0
+        left 0
+        width 100%
+        z-index 2
+        line-height 79px
+    &__block
+        &--inline
+            display inline-block
+            vertical-align middle
+            line-height 38px
+            height 38px
+            top 0
+            margin 0 !important
+            span, .test__score
+                display inline-block
+                vertical-align middle
+            span
+                position relative
+                top 1px
+                margin-left 2px
+            .test__score
+                margin 0 15px
+                text-align center
+                border 1px solid white
+    &__col
+        width 50%
+        padding 0 15px
+        float left
+        &:nth-child(2)
+            text-align right

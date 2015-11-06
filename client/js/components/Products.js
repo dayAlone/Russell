@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 
+import IconSVG from 'svg-inline-loader/lib/component.jsx'
+
 import Page404 from './pages/404'
 import Spinner from './ui/Spinner'
 import Breadcrumbs from './ui/Breadcrumbs'
@@ -96,12 +98,10 @@ class Products extends Component {
                             <div className='products__artnumber'>{artnumber}</div>
                         </Link>
                         { isLogin ?
-                            <div className='products__favorite'>
+                            <div className={`products__favorite ${typeof favorites === 'object' && favorites.indexOf(_id) === -1 ? '' : 'products__favorite--active'}`}>
                                 <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}>
-                                    {typeof favorites === 'object' && favorites.indexOf(_id) === -1
-                                    ? <img src='/layout/images/svg/heart-border.svg' alt='' />
-                                    : <img src='/layout/images/svg/heart.svg' alt='' />
-                                    }
+                                    <IconSVG src={require('svg-inline!../../public/images/svg/heart-border.svg')}/>
+
                                 </a>
                             </div>
                             : null}

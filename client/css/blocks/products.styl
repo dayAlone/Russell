@@ -104,5 +104,42 @@
         margin-right -10px
         margin-left -10px
         border-radius 0 0 8px 8px
+        &:not(.products__favorite--active)
+            a:hover:after
+                opacity 1
+        a
+            position relative
+            &:after
+                position absolute
+                content "Добавить в изранное"
+                color white
+                white-space no-wrap
+                font-size 10px
+                pointer-events none
+                left 50%
+                top 50%
+                transform translateX(-50%) translateY(-50%)
+                background-color red
+                line-height 1.2
+                padding 4px 10px 3px
+                border-radius 5px
+                opacity 0
+                t opacity, .15s
+            &:hover
+                svg path
+                    stroke red
+                    opacity 1
+        &--active
+            svg
+                path
+                    fill red
+                    stroke red
+                    opacity 1
+                    fill-opacity 1
+        svg
+            max-width 35px
+            middle()
+            path
+                t all
         img
             middle()

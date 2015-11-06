@@ -13,6 +13,7 @@ class LoginEmail extends Component {
     render() {
         const { error } = this.props.login
         return <form action='/auth/local/login' method='post' name='login' id='login'>
+                {error ? <div className='alert alert-danger' role='alert'>{error}</div> : false}
                 <input type='email' id='email' ref='login' name='email' placeholder='Эл. почта' required='' autoFocus='' className='form-control' autofocus/>
                 <input type='password' id='password' ref='password' name='password' required='' placeholder='Пароль' className='form-control' />
                 <button onClick={this.handleLoginAuth.bind(this)} className='btn btn-md btn-su btn-block'>Войти</button>

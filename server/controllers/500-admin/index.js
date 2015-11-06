@@ -65,12 +65,12 @@ export default function(app) {
                 this.body = { list: result, meta: { limit: limit, total_count: total }}
             }
         })
-        .get('/admin/*', function* () {
+        /*.get('/admin/*', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 this.body = this.render('index')
             } else {
                 this.redirect('/')
             }
-        })
+        })*/
     app.use(router.routes())
 }

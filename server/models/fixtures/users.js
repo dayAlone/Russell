@@ -9,6 +9,8 @@ export default (User) => {
         role: 'admin'
     }]
     users.forEach(el => {
-        User.create(el, err => (console.log(err)))
+        User.findOne({ email: el.email }, (err, data) => {
+            if (!data) User.create(el)
+        })
     })
 }

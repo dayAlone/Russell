@@ -4,7 +4,7 @@ import Title from '../layout/Title'
 import Breadcrumbs from '../ui/Breadcrumbs'
 
 class PageConditions extends Component {
-
+    
     render() {
         return <div className='page page--collections'>
             <Title />

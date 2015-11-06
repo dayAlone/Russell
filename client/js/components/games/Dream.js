@@ -31,7 +31,7 @@ class Dream extends Component {
                 <h3 className='center'>Итак, что нужно, чтобы участвовать в акции?</h3>
                 <section>
                     <div className='text__col'>
-                        <p className='text__number' data-text='1'>Если вы впервые зашли на наш сайт, вам нужно <a href='#'>зарегистрироваться</a>.</p>
+                        <p className='text__number' data-text='1'>Если вы впервые зашли на наш сайт, вам нужно {this.props.isLogin ? <Link to='/profile/checks/'>зарегистрироваться</Link> : <a onClick={this.openModal.bind(this)} href='#'>зарегистрироваться</a>}.</p>
                     </div>
                     <div className='text__col'>
                         <p className='text__number' data-text='2'>Зарегистрировать чеки на нашем сайте, в вашем Личном кабинете. Регистрация чеков начинается 6 ноября.</p>

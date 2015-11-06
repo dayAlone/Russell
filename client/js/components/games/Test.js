@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import IconSVG from 'svg-inline-loader/lib/component.jsx'
 class Test extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
@@ -7,6 +8,18 @@ class Test extends Component {
         level: -1,
         time: 0,
         questions: [
+            {
+                question: 'Какой из этих предметов техники был создан Russell Hobbs?',
+                images: [
+                    {
+                        src: '/layout/images/kitchen/sku/2/6.png',
+                        right: true
+                    },
+                    {
+                        src: '/layout/images/kitchen/sku/custom/18.png'
+                    }
+                ]
+            },
             {
                 question: 'Какой из этих предметов техники был создан Russell Hobbs?',
                 images: [
@@ -50,9 +63,27 @@ class Test extends Component {
             e.preventDefault()
         }
     }
+    handleClick(status) {
+        let { time, current, questions } = this.state
+        return (e) => {
+            this.setState({
+                time: time + ( status ? 1 : -1 )
+            }, ()=> {
+                if (questions.length > current + 1) {
+                    this.setState({
+                        current: current + 1
+                    })
+                } else {
+
+                }
+            })
+
+            e.preventDefault()
+        }
+    }
     render() {
         let {isStarted, level, time, rules, questions, current} = this.state
-        let {question, answers} = questions[current]
+        let {question, answers, images} = questions[current]
         return <div className='game'>
             <h1 className='game__title center'>История в деталях</h1>
             <div className='test'>
@@ -136,15 +167,22 @@ class Test extends Component {
                         <div className='test__placeholder test__placeholder--question'>
                             <h3>{question}</h3>
                             <img src='/layout/images/line.png' alt='' className='test__divider' />
-                            <div className='test__answers'>
-                                {answers.map((el, i) => {
-                                    let {type, src, text} = el
-                                    return <a href='#' className='test__answer' key={i}>
-                                        {type === 'image' ? <img src={src} alt='' /> : text}
+                            {images ? <div className='test__images'>
+                                {images.map((el, i) => {
+                                    let {src, right} = el
+                                    return <a href='#' onClick={this.handleClick(right)} className='test__answer' key={i}>
+                                        <img src={src} alt='' />
                                     </a>
                                 })}
-
-                            </div>
+                            </div> : null}
+                            { answers ? <div className={`test__answers test__answers--${answers.length}`}>
+                                    {answers.map((el, i) => {
+                                        let {text, right} = el
+                                        return <a href='#' onClick={this.handleClick(right)} className='test__answer' key={i}>
+                                            <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/>{text}
+                                        </a>
+                                    })}
+                                </div> : null }
                         </div>
                     </div>
                 }

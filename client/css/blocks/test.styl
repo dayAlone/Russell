@@ -20,16 +20,44 @@
             margin 0
             font-size 28px
             padding 0 8%
-    &__answers
+    &__images
+        & + .test__answers
+            padding 0
+            a.test__answer
+                float left
+                width 25%
+    &__answers, &__images
         float left
         width 100%
         padding 0 10%
         margin-top 0px
-    &__answer
+    a&__answer
         float left
         width 50%
         text-align center
         background-image none !important
+        font-size 26px
+        color white !important
+        margin-bottom 10px
+        &:hover
+            color red !important
+            svg
+                path
+                    opacity 1
+                    stroke red
+                    fill-opacity 1
+                    fill red
+        svg
+            max-width 30px
+            middle()
+            margin-right 10px
+            margin-top -2px
+            t all
+            path
+                t all
+                opacity 1
+                fill-opacity 0
+                stroke white
         img
             max-width 150px
     &__divider

@@ -200,7 +200,7 @@ class Kitchen extends Component {
                     }
                     else changes['clicks'] = clicks
                 } else {
-                    changes['time'] = time - 1
+                    changes['time'] = time > 0 ? time - 1 : 0
                 }
                 this.setState(changes)
             }

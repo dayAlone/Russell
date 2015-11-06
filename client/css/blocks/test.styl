@@ -8,7 +8,9 @@
     margin 50px 0 120px
     &__placeholder
         @extend .kitchen__placeholder
-
+        .kitchen__block--inline .kitchen__score
+            width auto
+            margin 10px 20px 30px
         &--question
             margin-top 40px
         p
@@ -31,6 +33,30 @@
         width 100%
         padding 0 10%
         margin-top 0px
+    &__answers
+        &--4
+            &.test__answers--long
+                padding 0
+                a.test__answer
+                    position relative
+                    text-align left
+                    font-size 22px
+                    line-height 1.3
+                    padding-left 45px
+                    padding-right 20px
+                    svg
+                        position absolute
+                        left 0
+
+        &--3
+            &.test__answers--long
+                a.test__answer
+                    width 50%
+                    &:last-of-type
+                        width 100%
+                        margin-top 35px
+            a.test__answer
+                width (100/3)%
     a&__answer
         float left
         width 50%
@@ -68,8 +94,19 @@
         @extend .kitchen__close
     &__block
         @extend .kitchen__block
+
     &__score
         @extend .kitchen__score
+        &--big
+            margin 20px 20px 35px
+            position relative
+            &:after
+                position absolute
+                content attr(data-text)
+                font-size 18px
+                width 100%
+                left 0
+                bottom -65px
     &__ui
         border-bottom 2px solid red
         height 80px

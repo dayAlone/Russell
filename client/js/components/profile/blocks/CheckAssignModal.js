@@ -52,7 +52,7 @@ class ChecksAssignModal extends Component {
                 })
         }
         return <Modal ref='modal' className='modal modal--checks'>
-            {this.props.checks.length ?
+            {this.props.checks ?
                 checks.length > 0 ?
                     <div className='check-select'>
                         <div className='check-select__name'>

@@ -26,7 +26,7 @@ class Footer extends Component {
                 </div>
                 <div className='footer__copyright'>
                     <div className='footer__rules'>
-                        <Link to='/conditions/'>Условия проведения акции</Link>
+                        <Link to='/conditions/'>Условия использования сайта</Link>
                         <br />
                     </div>
                     <div className='footer__spectrum'>

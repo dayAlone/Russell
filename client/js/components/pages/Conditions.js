@@ -9,7 +9,7 @@ class PageConditions extends Component {
         return <div className='page page--collections'>
             <Title />
             <Breadcrumbs routes={this.props.routes} />
-            <Helmet title={'Russell Hobbs | Условия проведения акции'}/>
+            <Helmet title={'Russell Hobbs | Условия использования сайта'}/>
 
             <div className='text'>
                 <h2>Условия проведения акции</h2>

@@ -4,9 +4,6 @@ import { Link } from 'react-router'
 import Modal from '../ui/Modal'
 import Nav from './MobileNav'
 
-import { connect } from 'react-redux'
-
-@connect()
 class Header extends Component {
     openModal(e) {
         e.preventDefault()

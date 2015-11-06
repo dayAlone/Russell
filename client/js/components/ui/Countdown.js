@@ -4,8 +4,8 @@ import 'moment/locale/ru'
 
 class Coundown extends Component {
     state = {
-        dateStart: moment(this.props.dateStart, 'DD.MM.YYYY'),
-        dateStop: moment(this.props.dateStop, 'DD.MM.YYYY'),
+        dateStart: moment(this.props.dateStart),
+        dateStop: moment(this.props.dateStop),
         current: new Date(),
         timeout: false
     }
@@ -69,8 +69,8 @@ class Coundown extends Component {
         clearInterval(this.state.timeout)
     }
     tick() {
-        let { dateStop, current } = this.state
-        if (dateStop.toDate() > current) {
+        let { dateStart, current } = this.state
+        if (dateStart.toDate() > current) {
             this.setState({current: new Date()})
         } else {
             clearInterval(this.state.timeout)

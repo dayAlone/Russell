@@ -7,7 +7,7 @@ export default new VKontakteStrategy({
         clientSecret: config.get('vk.client.secret'),
         callbackURL: config.get('vk.callback.url'),
         passReqToCallback: true,
-        profileFields: ['id', 'verified', 'name', 'link', 'photo_max', 'email', 'sex'],
+        profileFields: ['id', 'verified', 'name', 'link', 'photo_max', 'email', 'sex', 'contacts'],
     },
     (req, accessToken, refreshToken, params, profile, done) => {
         process.nextTick(() => {

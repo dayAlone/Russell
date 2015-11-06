@@ -7,11 +7,29 @@
         @media (max-width: $scr_s)
             padding-left 0px
             padding-right 0px
+
+    ul
+        li
+            margin-bottom 20px
+    a
+        color white
+        border-line(alpha(white, .5))
+        &:hover
+            color red
+            border-line(alpha(red, .5))
+        &.button
+            background-image none
+            &:hover
+                background-image none
+                color white
     &--no-padding
         padding 0
     &--black
         *
             color black
+        a
+            color black
+            border-line(alpha(black, .5))
     full-width()
     p
         max-width 97%
@@ -19,12 +37,7 @@
             margin-top 30px
             @media (min-width: $scr_sm)
                 margin-top 55px
-    a
-        color white
-        border-line(alpha(white, .5))
-        &:hover
-            color red
-            border-line(alpha(red, .5))
+
     h2
         margin-bottom 20px
         font-size 20px
@@ -44,3 +57,11 @@
     &--small
         p
             font-size 13px
+
+    .alert
+        padding 10px 15px 8px
+        color white
+        font-size 12px
+        border-radius 5px
+        &.alert-danger
+            border 1px solid red

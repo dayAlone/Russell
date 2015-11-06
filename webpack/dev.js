@@ -21,7 +21,7 @@ let webpackConfig = {
         noParse: [/moment.js/],
         loaders: [
             {
-                test: /\.js$/,
+                test: /(\.js|\.jsx)$/,
                 exclude: /node_modules/,
                 loaders: ['react-hot', 'babel?cacheDirectory']
             },
@@ -39,7 +39,8 @@ let webpackConfig = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
-            'React': 'react'
+            'React': 'react',
+            '_': 'lodash'
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),

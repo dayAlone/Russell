@@ -11,6 +11,9 @@ import chalk from 'chalk'
 const gp = require('gulp-load-plugins')()
 import lost from 'lost'
 import mqpacker from 'css-mqpacker'
+import willChange from 'postcss-will-change'
+import cssnano from 'cssnano'
+
 const { postcss, watch, stylus, nodemon, svgmin, replace, imageOptimization } = gp
 let browserSync = require('browser-sync').create();
 let { source, tmp } = config.folders

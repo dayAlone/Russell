@@ -4,7 +4,7 @@ import * as actionCreators from '../actions/login'
 import { bindActionCreators } from 'redux'
 
 
-@connect(state => ({ routerState: state.router, login: state.login }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+@connect(state => ({ login: state.login }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Login extends Component {
     handleLoginAuth(e) {
         e.preventDefault()

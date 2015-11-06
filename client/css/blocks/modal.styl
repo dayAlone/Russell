@@ -10,6 +10,84 @@
         max-width 970px
         .modal__content
             padding 20px 40px 15px
+    &--checks
+        @media (min-width: $scr_s)
+            max-width 450px
+        .check-select
+            .dropdown
+                margin-bottom 20px
+            small
+                text-align center
+                display inline-block
+                line-height 1.3
+                width 100%
+                margin-top 0px
+                font-size 11px
+                color alpha(black, .8)
+            &__label
+                text-align center
+                width 100%
+                font-weight bold
+                font-size 15px
+                margin-bottom 9px
+            &__count
+                font-size 43px
+                padding 0 0 15px
+                font-weight bold
+            &__name
+                text-align center
+                font-weight bold
+                font-size 20px
+                margin-bottom 30px
+        .modal__content
+
+            padding 35px 25px 34px
+
+            .message
+                text-align center
+                font-weight bold
+                font-size 18px
+                padding 100px 0 99px
+                line-height 1.4
+                a
+                    color red
+                    border-line(alpha(red,.5))
+    &--auth
+        small
+            font-size 10px
+            line-height 1.1
+            margin-top 20px
+            display inline-block
+            color alpha(black, .8)
+            a
+                color red
+                border-line(alpha(red,.5))
+        .button
+            min-width 140px
+            img
+                middle()
+                max-width 30px
+                max-height 23px
+        .trigger
+
+            margin-top 20px
+            font-size 12px
+            margin-top 30px
+            display inline-block
+            color black
+            border-line(alpha(@color, .6))
+            &:hover
+                color red
+                border-line(alpha(@color, .6))
+        #email, #password
+            width calc(40% - 10px)
+            float left
+            margin-right 10px
+            placeholder(line-height 17px,)
+        button
+            width 20%
+        form
+            padding 30px 0 0px
     &--recept
         @media (min-width: $scr_s)
             max-width 640px
@@ -94,7 +172,134 @@
                     color white
                     max-width 90%
                     margin-bottom 0px
+    &.modal--add-check, &.modal--edit-check
+        max-width 720px
+        button
+            float right
+        .modal__content
+            padding 20px 40px 24px
 
+            @media (min-width: $scr_s)
+                input[type='text']
+                    lost-column 5/7 3 20px
+                label
+                    lost-column 2/7 3 20px
+                    text-align right
+                    font-size 15px
+            .form
+                &__file-description, &__submit-description
+                    float left
+                    lost-column 2/7 3 20px
+                    font-size 11px
+                    color alpha(black, .8)
+                    position relative
+                    top -2px
+                &__cancel
+
+                    font-weight bold
+                    float right
+                    margin-right 40px
+                    line-height 45px
+                    background-image none
+                    font-size 15px
+                    &:hover
+                        background none !important
+                        span
+                            color red
+                            border-line(alpha(red, .6))
+                    span
+                        color black
+                        border-line(alpha(black, .6))
+                &__submit-description
+                    margin-top 8px
+                    font-size 12px
+                &__total
+                    full-width()
+                    @media (min-width: $scr_s)
+                        label
+                            width auto
+                            &:first-of-type
+                                lost-column 2/7 3 20px
+
+                    .form-group
+                        float left
+                        &:first-of-type
+                            margin-right 10px
+                            input
+                                width 153px
+                                margin-right 0px
+                        &:last-of-type
+                            margin 0 10px 0 20px
+                            input
+                                width 56px
+                &__kpk
+                    full-width()
+                    @media (min-width: $scr_s)
+                        input[type='text']
+                            width 153px
+                    .form-group
+                        float left
+                        width 100%
+                        @media (min-width: $scr_s)
+                            width auto
+                            &:last-of-type
+                                float right
+                                input[type='text']
+                                    width 143px
+
+                    label
+                        &:last-of-type
+                            width 140px
+                            margin-right 7px
+                &__date
+                    full-width()
+                    label
+                        &:last-of-type
+                            width 70px
+                    .form-group
+                        float left
+                        margin-right 8px
+                    input[type='text']
+                        width 46px
+                        padding 0 10px
+                        text-align center
+
+    &.modal--edit-check
+        .form
+            margin-bottom 0px
+            &__cancel
+                float left !important
+            &__col
+                lost-column 3.5/6 0
+                &:first-of-type
+                    lost-column 2.5/6 0
+            &__image
+                width 100%
+                min-height 511px
+                background-size cover
+                float right
+                background-position center center
+                border 1px solid #000000
+                box-shadow inset 0 0 0 5px white
+                t border
+                &:hover
+                    border-color red
+            &__info
+                font-size 12px
+                margin-bottom 20px
+                full-width()
+                .form__col
+                    lost-column 1/2 0
+                    > span
+                        margin-bottom 5px
+                        display inline-block
+                        width 100%
+            input[type='text']
+                margin-bottom 27px
+                max-width 50px
+                text-align center
+            &__title
+                text-align left
     &-frame
         position fixed
         size 100%
@@ -142,13 +347,40 @@
             &__line
                 display none
 
-
-
-
     &__title
         margin-top 0px
         color black
         margin-bottom 30px
+        position relative
+        *
+            color black
+        h3
+            margin-top 0px
+            padding-top 0px
+        a
+            color red
+            font-size 12px
+            border-line(alpha(@color, .5))
+            @media (min-width: $scr_s)
+                position absolute
+                right 0
+                top 50%
+                transform translateY(-50%)
+                line-height 1
+                margin-top -5px
+            &:hover
+                color black
+                border-line(alpha(@color, .5))
+        &--border
+            border-bottom 1px solid red
+            padding-bottom 10px
+    &__footer
+        margin-top 20px
+        padding-top 20px
+        border-top 1px solid red
+        full-width()
+        button
+            margin-bottom 0px
     &__content
         padding 40px
         lost-utility clearfix
@@ -156,20 +388,13 @@
         width 100%
         background-color white
         color black
+        @media (min-width: $scr_md)
+            min-width 450px
     p
         color black
         &:last-item
             margin-bottom 0px
 
-    label, legend
-        color black
-        line-height 35px
-        margin-top 5px
-        font-weight normal
-        font-weight bold
-        text-transform uppercase
-        font-size 11px
-        letter-spacing 1px
     fieldset
         padding 0
         margin 0
@@ -232,32 +457,11 @@
                 border-color #005b9c
         &:focus
             outline 0
-    input
-        &[type='text']
-            width 100%
-            border 1px solid alpha(#ccc, 1)
-            height 35px
-            line-height 1
-            border-radius 4px
-            padding 0 10px
-            transition .3s border, .3s background-color
-            font-size 14px
-            &:focus
-                border-color #0089d3
-                outline 0
-    textarea
-        @extend .modal input[type='text']
-        min-height 200px
-        max-width 100%
-        font-size 12px
-
-
-
-    .col-sm-8
-        column(8/12)
-    .col-sm-4
-        column(4/12)
-    .col-md-4
-        column(4/12, cycle: 2)
-    .col-md-6
-        column(6/12, cycle: 2)
+    .alert
+        font-size 11px
+        border 1px solid alpha(white, .5)
+        padding 10px 20px 7px
+        border-radius 5px
+        line-height 13px
+        border-color red
+        color red !important

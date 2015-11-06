@@ -2,6 +2,8 @@
     color white
     overflow hidden
 
+
+
     &--mobile
         padding 0 20px
     &--desktop
@@ -25,6 +27,29 @@
             display none
         &--desktop
             display block
+
+    &--admin
+        @media (min-width: $scr_s)
+            overflow visible
+            max-height 105px
+            line-height 92px
+            margin-bottom 40px
+            background-color black
+            border-bottom 10px solid red
+            h4
+                line-height 100px
+                padding 0
+                margin 0
+        .header
+            &__exit
+                bottom 10px
+            &__profile
+                line-height 90px
+            &__links
+                line-height 100px
+            &__logo
+                max-width 220px
+
     .nav-trigger
         img
             @media (max-width: $scr_xs)
@@ -59,16 +84,46 @@
     &__profile
         line-height 140px
         text-align right
+
+        &-frame
+            position relative
+            display inline-block
         middle()
         img
             border-radius(5px)
-
+    &__exit
+        color red
+        position absolute
+        bottom 30px
+        left 10px
+        font-size 11px
+        border-line(alpha(red, .4))
+        display inline-block
+        line-height 1
+    &__image
+        position absolute
+        right 100%
+        size 40px
+        margin-right 12px
+        top -6px
+        background-position top center
+        background-size cover
+        border-radius 5px
     &__name
         middle()
         text-align left
         font-size 13px
         line-height 1.2
         margin-left 10px
+        color white
+        position relative
+        span
+            border-line(alpha(white, .2))
+        &:hover
+            span
+                color red
+                border-line(alpha(red, .2))
+
     img&__title
         position relative
         max-width 100%

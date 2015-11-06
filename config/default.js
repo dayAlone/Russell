@@ -4,11 +4,12 @@ import { deferConfig as defer } from 'config/defer'
 export default {
 
     cdn: `http://164623.selcdn.com/russell`,
-    version: process.env.VERSION || 'v1.2.19',
-    domain: 'localhost',
+    version: process.env.VERSION || 'v1.3',
+    domain: 'localhost:8000',
     __dirname: defer(function(cfg) {
         return cfg.root
     }),
+    mandrill: '1EAsaRQ9dKfahICQfaybRw',
     ftp: {
         host: 'ftp.selcdn.ru',
         folder: `/russell`,
@@ -22,6 +23,10 @@ export default {
     selectel: {
         login: '47651',
         password: '3lQV616N'
+    },
+    kpk: {
+        login: 'kruchkov@frogs-studio.ru',
+        password: 'manufaktura'
     },
     folders: {
         source: defer(function(cfg) {

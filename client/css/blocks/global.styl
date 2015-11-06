@@ -40,6 +40,8 @@ body
     overflow-x hidden
     padding-top 70px
     -webkit-text-size-adjust: 100%
+    &.admin
+        background-color #f2f2f2
     @media (min-width: $scr_s)
         padding-top 0px
 a
@@ -78,6 +80,12 @@ a
             opacity 1
         transform translateX(-50%)
         min-height 100px
+
+.game
+    padding-top 30px
+    full-width()
+    &__title
+        font-size 47px
 
 .pswp
     z-index 20000 !important

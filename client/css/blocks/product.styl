@@ -19,7 +19,24 @@
             font-size 27px
         @media (min-width: $scr_sm)
             font-size 33px
-
+    &__favorite
+        line-height 23px
+        margin-bottom 20px
+        margin-top -5px
+        padding 0 30px
+        @media (min-width: $scr_s)
+            padding 0
+        a
+            color red
+            &:hover
+                img
+                    transform scale(1.1)
+        img
+            middle()
+            position relative
+            top -1px
+            t transform
+            margin-right 5px
     &__tabs
 
         position relative

@@ -1,0 +1,181 @@
+.profile
+    &__col
+        lost-column 1/2 0 30px
+    &__nav
+        width 100%
+        background-color transparent
+        border-bottom 1px solid #393c41
+        margin-top 50px !important
+        margin-bottom 40px
+    a&__link
+        padding 12px 20px 7px
+        background transparent
+        margin-right 2px
+        font-size 16px
+        display inline-block
+        border-radius 5px 5px 0 0
+        &:hover
+            background transparent
+        &--active
+            &, &:hover
+                background-color #393c41
+                color white
+    .feedback
+        &__text
+            color #383c41
+            border-top 1px solid #383c41
+            margin-top 30px
+            padding-top 30px
+            full-width()
+    .checks-stat
+        font-size 13px
+        line-height 1.6
+    .info
+        &__photo
+            float left
+            size 70px
+            border-radius 5px
+            margin-right 20px
+            background-size cover
+        &__name
+            font-size 15px
+            line-height 1.2
+            display inline-block
+            margin-top 7px
+        &__links
+            float left
+            clear left
+            margin-top 30px
+            line-height 2.1
+        &__date
+            color #9a9ca0
+            font-size 12px
+        &__link
+            background transparent
+            position relative
+            margin-left 30px
+            img
+                position absolute
+                left -17px
+                top 50%
+                transform translateY(-50%) translateX(-50%)
+        a
+            span
+                border-line(alpha(white, .3))
+            &:hover
+                span
+                    border-line(alpha(red, .3))
+    .favorites
+        &__table
+            .table__col
+                lost-column 1.1/6 0 0
+                &:first-of-type
+                    lost-column 1.6/6 0 0
+            .table__row
+                padding 32px 0 27px
+        .favorite
+            &__name
+                position relative
+                padding-left 90px
+                display inline-block
+                background transparent
+            &__delete
+                color red
+                font-size 11px
+                border-line(alpha(red, .2))
+            &__image
+                float left
+                margin-right 15px
+                position absolute
+                top 50%
+                left 70px
+                max-width 70px
+                max-height 70px
+                transform translateX(-100%) translateY(-50%)
+
+    .checks
+        &__table
+            margin-top 35px
+            .table__col
+                lost-column 1.1/8 0 0
+
+                &:first-of-type
+                    lost-column 1.4/8 0 0
+        .check
+            position relative
+            &__edit
+                position absolute
+                right 0
+                top 20px
+                background-image none
+                opacity .5
+                t opacity
+                &:hover
+                    opacity 1
+                    background-image none
+            &__show, &__vinner
+                font-size 10px
+                color red
+                border-line(alpha(red, .3))
+            &__connect, &__vinner
+                font-size 11px
+            &__preview
+                size 51px
+                background-size cover
+
+                border 1px solid #333741
+                box-shadow inset 0 0 0 3px black
+                t border
+                margin-bottom 5px
+                display none
+                &--active
+                    display inline-block
+                &:hover
+                    border-color red
+            &__comment
+                size 20px
+                background-color #6d6f73
+                display inline-block
+                border-radius 50%
+                text-align center
+                line-height 22px
+                margin-top 5px
+                position relative
+                cursor pointer
+                &:after
+                    content attr(data-text)
+                    position absolute
+                    font-size 11px
+                    background-color #6d6f73
+                    width 120px
+                    line-height 1
+                    padding 10px 10px 7px
+                    border-radius 5px
+                    left 100%
+                    top 50%
+                    margin-left 10px
+                    transform translateY(-50%) translateX(-10px)
+                    opacity 0
+                    pointer-events none
+                    t all
+                &:hover:after
+                    transform translateY(-50%)
+                    opacity 1
+            &__status
+                &--inactive
+                    color #474a51
+                &--canceled
+                    color red
+                &--active
+                    color #00d95a
+                &--moderation
+                    color orange
+            &__info
+                display none
+                padding-top 8px
+                font-size 12px
+                &--visible
+                    display block
+                > span
+                    display inline-block
+                    margin-bottom 8px

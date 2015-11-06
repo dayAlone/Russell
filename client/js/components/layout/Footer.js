@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-//import { Link } from 'react-router'
+import { Link } from 'react-router'
 import ShareLove from '../ShareLove.js'
 
 import { connect } from 'react-redux'
@@ -26,7 +26,7 @@ class Footer extends Component {
                 </div>
                 <div className='footer__copyright'>
                     <div className='footer__rules'>
-                        {/*<Link to='/conditions/'>Условия проведения акции</Link>*/}
+                        <Link to='/conditions/'>Условия проведения акции</Link>
                         <br />
                     </div>
                     <div className='footer__spectrum'>

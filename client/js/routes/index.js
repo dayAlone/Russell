@@ -11,6 +11,7 @@ import Collections from '../components/pages/Collections'
 import Page404 from '../components/pages/404'
 import Category from '../components/pages/Category'
 import Product from '../components/pages/Product'
+import Conditions from '../components/pages/Conditions'
 
 export default function configureRoutes(reducerRegistry) {
     return <div>
@@ -31,7 +32,8 @@ export default function configureRoutes(reducerRegistry) {
                 />
             <Route path='/' component={App} name='Начальная страница'>
 
-            <Route path='history/' component={History} name='История бренда' ignoreScrollBehavior={true}/>
+            <Route path='history/' component={History} name='История бренда'/>
+            <Route path='conditions/' component={Conditions} name='Условия проведения акции'/>
 
             <Route path='buy/' name='Где купить' getComponent={(location, callback) => {
                 require.ensure([], require => {

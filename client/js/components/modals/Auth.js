@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Modal from '../ui/Modal'
 import LoginSocial from '../LoginSocial'
 import LoginEmail from '../LoginEmail'
+import { Link } from 'react-router'
 
 import * as actionCreators from '../../actions/login'
 import { bindActionCreators } from 'redux'
@@ -28,11 +29,14 @@ class AuthModal extends Component {
                 <div className='modal__content'>
                     <h2 className='modal__title'>Вход на сайт</h2>
                     <LoginSocial />
-
-                    { this.state.showEmail ? <LoginEmail /> : <a href='#' onClick={this.showEmail.bind(this)} className='trigger'>Вход по логину и паролю</a>}
+                    <small>Регистрируясь на данном сайте, я подтверждаю, что ознакомлен и согласен с <Link to='/conditions/'>Условиями использования</Link> сайта. Даю свое согласие на сбор, обработку (в том числе с применением автоматизированных средств), хранение, использование, распространение в целях проведения Акции собственных персональных данных.</small>
                 </div>
             </Modal>
     }
 }
 
 export default AuthModal
+
+/*
+    { this.state.showEmail ? <LoginEmail /> : <a href='#' onClick={this.showEmail.bind(this)} className='trigger'>Вход по логину и паролю</a>}<br/>
+*/

@@ -9,22 +9,39 @@ class Test extends Component {
         questions: [
             {
                 question: 'Какой из этих предметов техники был создан Russell Hobbs?',
-                answers: [
+                images: [
                     {
-                        type: 'image',
                         src: '/layout/images/kitchen/sku/2/6.png',
                         right: true
                     },
                     {
-                        type: 'image',
                         src: '/layout/images/kitchen/sku/custom/18.png'
                     }
+                ],
+                answers: [
+                    {
+                        text: 'Левый',
+                        right: true
+                    },
+                    {
+                        text: 'Правый'
+                    },
+                    {
+                        text: 'Оба'
+                    },
+                    {
+                        text: 'Ни один'
+                    },
                 ]
             }
         ],
         current: 0
     }
     startGame(e) {
+        this.setState({
+            level: 0,
+            isStarted: true
+        })
         if (e) e.preventDefault()
     }
     toggleRules(status) {

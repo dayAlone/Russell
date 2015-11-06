@@ -1,9 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Title from '../layout/Title'
-@connect(state => ({isLogin: state.login.isLogin}))
-class Dream extends Component {
 
+import { Link } from 'react-router'
+import * as actionCreators from '../../actions/login'
+import { bindActionCreators } from 'redux'
+
+@connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+class Dream extends Component {
+    state = {more: false}
+    toggleMore(status) {
+        return (e) => {
+            this.setState({more: status})
+            e.preventDefault()
+        }
+    }
+    openModal(e) {
+        const { openModal } = this.props.actions
+        openModal()
+        e.preventDefault()
+    }
     render() {
         return <div className='dream'>
             <Title type='short'/>
@@ -15,26 +31,26 @@ class Dream extends Component {
                 <h3 className='center'>Итак, что нужно, чтобы участвовать в акции?</h3>
                 <section>
                     <div className='text__col'>
-                        <p>Если вы впервые зашли на наш сайт, вам нужно <a href='#'>зарегистрироваться</a>.</p>
+                        <p className='text__number' data-text='1'>Если вы впервые зашли на наш сайт, вам нужно <a href='#'>зарегистрироваться</a>.</p>
                     </div>
                     <div className='text__col'>
-                        <p>Зарегистрировать чеки на нашем сайте, в вашем Личном кабинете. Регистрация чеков начинается 6 ноября.</p>
+                        <p className='text__number' data-text='2'>Зарегистрировать чеки на нашем сайте, в вашем Личном кабинете. Регистрация чеков начинается 6 ноября.</p>
                     </div>
                     <div className='text__col'>
-                        <p>Приобрести любую технику Russell Hobbs, в любом количестве, и сохранить чеки от покупок.</p>
+                        <p className='text__number' data-text='3'>Приобрести любую технику Russell Hobbs, в любом количестве, и сохранить чеки от покупок.</p>
                     </div>
                     <div className='text__col'>
-                        <p>Выбрать предмет, который вы хотите получить в качестве приза, в каталоге призов.</p>
+                        <p className='text__number' data-text='4'>Выбрать предмет, который вы хотите получить в качестве приза, в каталоге призов.</p>
                     </div>
                 </section>
-                <p>Сохранять чек, упаковочную коробку и приобретенный предмет техники вплоть до получения приза.</p>
+                <p className='text__number' data-text='5'>Сохранять чек, упаковочную коробку и приобретенный предмет техники вплоть до получения приза.</p>
                 <h3 className='center'>Время проведения акции – с 6 ноября по 28 декабря.</h3>
                 <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                 <div className='center'>
-                    <a href='#' className='button'>Принять участие</a><br/>
-                    <a href='#'>Подробная информация</a>
+                    {this.props.isLogin ? <Link to='/profile/checks/' className='button'>Принять участие</Link> : <a onClick={this.openModal.bind(this)} href='#' className='button'>Принять участие</a>}<br/>
+                    { this.state.more ? null : <a href='#' onClick={this.toggleMore(true)}>Подробная информация</a> }
                 </div>
-                <div className='dream__more'>
+                { this.state.more ? <div className='dream__more'>
                     <p>В акции могут участвовать чеки от покупок, сделанных в период с 12 октября по 27 декабря.</p>
                     <p>Для регистрации чеков необходимо прислать фотографию чека с легко прочитываемыми данными и фотографию приобретенного предмета техники Russell Hobbs. Для этого вам нужно воспользоваться вкладкой «Мои чеки» в вашем Личном кабинете.</p>
                     <p>Розыгрыш проводится среди уникальных номеров, присвоенных чекам. Каждый чек – это ваш шанс выиграть в розыгрыше, т.е. 1 чек – 1 шанс.</p>
@@ -64,9 +80,9 @@ class Dream extends Component {
 
                     <p>Сохранять чек, упаковочную коробку и приобретенный предмет техники вам нужно вплоть до получения приза.</p>
                     <div className='center'>
-                        <p><a href='#'><a href='#'>Подробная информация</a></a></p>
+                        <p><a href='#' onClick={this.toggleMore(false)}><a href='#'>Скрыть информацию</a></a></p>
                     </div>
-                </div>
+                </div> : null}
             </div>
         </div>
     }

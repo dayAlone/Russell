@@ -1,8 +1,21 @@
 .dream
     &__more
         margin-top 40px
-        display none
     .text
+        &__number
+            position relative
+            padding-left 45px
+            &:before
+                position absolute
+                size 30px
+                border 1px solid red
+                content attr(data-text)
+                text-align center
+                font-weight bold
+                left 0px
+                border-radius 50%
+                line-height 32px
+                top -6px
         h3
             font-size 20px
             margin 40px 0 35px
@@ -18,6 +31,9 @@
                 margin-top 20px
         .button
             margin-bottom 30px
+        br + a
+            margin-bottom 20px
+            display inline-block
         a:not(.button)
             color red
             border-line(alpha(red, .5))

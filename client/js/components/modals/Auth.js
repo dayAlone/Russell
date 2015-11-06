@@ -19,8 +19,9 @@ class AuthModal extends Component {
         const { hideModal } = this.props.actions
         hideModal()
     }
-    showEmail() {
+    showEmail(e) {
         this.setState({showEmail: true})
+        e.preventDefault()
     }
     render() {
         return <Modal ref='modal' className='modal modal--auth center' onHide={this.hideModal.bind(this)}>

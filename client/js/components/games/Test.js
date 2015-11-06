@@ -90,7 +90,7 @@ class Test extends Component {
                 }
             }
         }
-        this.setState({questions: result})
+        this.setState({questions: this.shuffle(result)})
     }
     getQuestion() {
         let {questions, current} = this.state

@@ -3,8 +3,8 @@ class Test extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
         rules: false,
-        isStarted: true,
-        level: 0,
+        isStarted: false,
+        level: -1,
         time: 0,
         questions: [
             {
@@ -67,10 +67,12 @@ class Test extends Component {
                     <div className='test__placeholder'>
                         { level === -1 ?
                             <div>
-                                <h2>Как ты много знаешь о Russell Hobbs?</h2>
+                                <p>Вопрос, с которого все начинается – когда? Наша история началась больше 60 лет назад, когда мы придумали прибор, ставший для того времени событием. С тех пор мы стараемся все наши приборы, к ак и каждую из составляющих их деталей, создавать такими, чтобы они были достойны стать частью истории. </p>
+                                <p>История складывается из событий, техника состоит из деталей, а ваша победа сложится из правильных ответов на наши вопросы. Участвуйте в игре «История в деталях» и выигрывайте! Или просто получайте удовольствие. И это уже без вопросов.</p>
+                                <p><strong>Примите участие в игре с 9 ноября по 30 декабря.</strong></p>
                                 <img src='/layout/images/line.png' alt='' className='test__divider' />
-                                <p>Отвечай на вопросы, набирай максимальное количество очков за отведенное время и получай классные призы.</p>
-                                <a href='#' onClick={this.startGame.bind(this)} className='button button--top'>Начать игру</a><br/>
+
+                                <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
                                 <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
                             </div>
                             :

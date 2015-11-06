@@ -20,7 +20,7 @@
         margin 0px 0 40px
 
     &__image
-        width 100%
+        width 95%
         height 200px
         line-height 200px
         img
@@ -34,7 +34,7 @@
         height 305px
         background-size cover
         border-radius 8px
-        padding 10px
+
         margin-bottom 30px
         transition .3s transform, .3s opacity, .3s box-shadow, 0s width
         box-shadow 0 0 0 0 alpha(black, 0)
@@ -70,7 +70,7 @@
             pointer-events none
             t opacity
         .products__items--favorites &
-            height 375px
+            height 365px
         .products--ready &
             transform translateX(-50%) scale(1)
             @media (min-width: $scr_xs)
@@ -82,8 +82,7 @@
         min-height 295px
         display inline-block
         background url(/layout/images/products.bg.png) top center
-        margin-right -10px
-        margin-left -10px
+        background-size cover
         border-radius 8px
         min-width 100%
         .products__items--favorites &
@@ -96,14 +95,13 @@
         width 100%
         margin-bottom 8px
 
-        padding 0 10px
+        padding 0 15px
     &__favorite
         height 70px
         line-height 70px
         background url(/layout/images/favorites.bg.png) top center
         background-size cover
-        margin-right -10px
-        margin-left -10px
+
         border-radius 0 0 8px 8px
         &:not(.products__favorite--active)
             a:hover:after

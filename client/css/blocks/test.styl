@@ -73,6 +73,27 @@
                     stroke red
                     fill-opacity 1
                     fill red
+        &--wrong
+            &, &:hover
+                svg
+                    path
+                        opacity 1
+                        stroke red
+                        fill-opacity 1
+                        fill red
+                span
+                    color red
+                    text-decoration line-through
+        &--true
+            &, &:hover
+                svg
+                    path
+                        opacity 1
+                        stroke green
+                        fill-opacity 1
+                        fill green
+                span
+                    color green
         svg
             max-width 30px
             middle()

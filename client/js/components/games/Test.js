@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import IconSVG from 'svg-inline-loader/lib/component.jsx'
 import db from './questions'
+
+import { connect } from 'react-redux'
+import * as actionLogin from '../../actions/login'
+import * as actionProfile from '../../actions/profile'
+import { bindActionCreators } from 'redux'
+
+@connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Test extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
@@ -41,13 +48,19 @@ class Test extends Component {
         clearInterval(timer)
     }
     startGame(e) {
-        this.setState({
-            level: 0,
-            current: 0,
-            time: 120,
-            isStarted: true,
-            timer: setInterval(this.tick.bind(this), 1000)
-        })
+        let {isLogin, actions } = this.props
+        if (isLogin) {
+            actions.profile.startGame('test')
+            this.setState({
+                level: 0,
+                current: 0,
+                time: 120,
+                isStarted: true,
+                timer: setInterval(this.tick.bind(this), 1000)
+            })
+        } else {
+            actions.login.openModal()
+        }
         if (e) e.preventDefault()
     }
     toggleRules(status) {
@@ -59,17 +72,21 @@ class Test extends Component {
     handleClick(status) {
         let { time, current, questions } = this.state
         return (e) => {
-            this.setState({
-                time: time + ( status ? 1 : -1 )
-            }, ()=> {
-                if (questions.length > current + 1) {
-                    this.setState({
-                        current: current + 1
-                    })
-                } else {
-                    this.stopGame()
-                }
-            })
+            $(e.currentTarget).addClass(status ? 'test__answer--true' : 'test__answer--wrong')
+            setTimeout(()=>{
+                $('a.test__answer').removeClass('test__answer--wrong test__answer--true')
+                this.setState({
+                    time: time + ( status ? 1 : -1 )
+                }, ()=> {
+                    if (questions.length > current + 1) {
+                        this.setState({
+                            current: current + 1
+                        })
+                    } else {
+                        this.stopGame()
+                    }
+                })
+            }, 300)
 
             e.preventDefault()
         }
@@ -116,7 +133,7 @@ class Test extends Component {
                         {answers.map((el, i) => {
                             let {text, right} = el
                             return <a href='#' onClick={this.handleClick(right)} className='test__answer' key={i}>
-                                <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/>{text}
+                                <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/> <span>{text}</span>
                             </a>
                         })}
                     </div> : null }

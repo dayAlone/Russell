@@ -1,10 +1,18 @@
-import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK } from '../constants/Profile'
+import {
+    GET_CHECKS,
+    GET_FAVORITES,
+    REMOVE_PRODUCT_FROM_CHECK,
+    ASSIGN_PRODUCT_TO_CHECK,
+    START_GAME,
+    UPDATE_GAME
+} from '../constants/Profile'
 
 const initialState = {
     checks: [],
     favorites: false,
     scores: [],
     prizes: [],
+    currentGame: false
 }
 
 export default function(state = initialState, action) {
@@ -22,6 +30,10 @@ export default function(state = initialState, action) {
     case GET_FAVORITES:
         return Object.assign({}, state, {
             favorites: action.data
+        })
+    case START_GAME:
+        return Object.assign({}, state, {
+            currentGame: action.data
         })
     default:
         return state

@@ -18,5 +18,18 @@ export default function(app) {
             this.set('Cache-Control', 'max-age=36000, must-revalidate')
             this.body = { error: false, result: result }
         })
+        .post('/games/start/', function* () {
+            let user = this.req.user
+            if (user) {
+                let result
+                try {
+                    let {type} = this.request.body
+                    let result = 123
+                } catch (e) {
+                    this.body = { error: e }
+                }
+                this.body = { error: false, result: result }
+            }
+        })
     app.use(router.routes())
 }

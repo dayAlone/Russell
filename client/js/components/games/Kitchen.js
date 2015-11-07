@@ -1,5 +1,12 @@
 /*global _*/
 import React, { Component } from 'react'
+
+import { connect } from 'react-redux'
+import * as actionLogin from '../../actions/login'
+import * as actionProfile from '../../actions/profile'
+import { bindActionCreators } from 'redux'
+
+@connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Kitchen extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
@@ -97,8 +104,8 @@ class Kitchen extends Component {
 
         return array
     }
-    preloadImages(images, index) {
-        index = index || 0
+    preloadImages(images, i) {
+        let index = i || 0
         if (index === 0) {
             this.setState({
                 loader: {
@@ -130,35 +137,40 @@ class Kitchen extends Component {
         }
     }
     startGame(e) {
-        let {settings, level, scores} = this.state
-        if (level >= 2) {
-            level = 0
-            scores = {
-                current: 0,
-                total: 0
+        let {isLogin, actions } = this.props
+        if (isLogin) {
+            let {settings, level, scores} = this.state
+            if (level >= 2) {
+                level = 0
+                scores = {
+                    current: 0,
+                    total: 0
+                }
+            } else {
+                level++
             }
+
+            this.setState({
+                time: settings[level].time,
+                scores: scores,
+                level: level,
+                times: {
+                    open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
+                    scores: setInterval(this.tickTime.bind(this), 1000)
+                }
+            }, this.makeElements)
+
+            /*
+            window.onbeforeunload = (e) => {
+                e = e || window.event
+                if (e) { e.returnValue = false }
+                return false
+            }
+            */
         } else {
-            level++
+            actions.login.openModal()
         }
-
-        this.setState({
-            time: settings[level].time,
-            scores: scores,
-            level: level,
-            times: {
-                open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
-                scores: setInterval(this.tickTime.bind(this), 1000)
-            }
-        }, this.makeElements)
-
-        /*
-        window.onbeforeunload = (e) => {
-            e = e || window.event
-            if (e) { e.returnValue = false }
-            return false
-        }
-        */
-        if (e) e.preventDefault()
+        e.preventDefault()
     }
     stopGame() {
         let {times, scores, time, settings, level} = this.state

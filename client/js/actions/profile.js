@@ -1,4 +1,4 @@
-import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK } from '../constants/Profile'
+import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK, START_GAME, UPDATE_GAME } from '../constants/Profile'
 
 export function getChecks() {
     return dispatch => {
@@ -12,7 +12,6 @@ export function getChecks() {
         })
     }
 }
-
 
 export function getFavorites() {
     return dispatch => {
@@ -47,6 +46,20 @@ export function removeProduct(check, product) {
             if (!data.error) {
                 dispatch({
                     type: REMOVE_PRODUCT_FROM_CHECK,
+                    data: data.result
+                })
+
+            }
+        })
+    }
+}
+
+export function startGame(type) {
+    return dispatch => {
+        $.post('/games/start/', {type: type}, data => {
+            if (!data.error) {
+                dispatch({
+                    type: START_GAME,
                     data: data.result
                 })
 

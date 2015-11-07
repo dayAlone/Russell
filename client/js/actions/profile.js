@@ -58,6 +58,7 @@ export function startGame(type) {
     return dispatch => {
         $.post('/games/start/', {type: type}, data => {
             if (!data.error) {
+                console.log(data)
                 dispatch({
                     type: START_GAME,
                     data: data.result

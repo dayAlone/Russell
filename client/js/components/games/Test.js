@@ -1,3 +1,4 @@
+/*global _*/
 import React, { Component } from 'react'
 import IconSVG from 'svg-inline-loader/lib/component.jsx'
 import db from './questions'
@@ -104,6 +105,7 @@ class Test extends Component {
                 default:
                     rand = parseInt(Math.random() * db[i].length, 10)
                     result.push(db[i][rand])
+                    db[i] = _.without(db[i], db[i][rand])
                 }
             }
         }

@@ -24,7 +24,7 @@ export default function(app) {
                 let result
                 try {
                     let {type} = this.request.body
-                    let result = 123
+                    result = 123
                 } catch (e) {
                     this.body = { error: e }
                 }

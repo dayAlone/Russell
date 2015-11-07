@@ -127,7 +127,7 @@ class Kitchen extends Component {
             }
             img.src = images[index]
         } else {
-            let { settings, level } = this.props
+            let { settings, level } = this.state
             this.setState({
                 isStarted: true,
                 times: {

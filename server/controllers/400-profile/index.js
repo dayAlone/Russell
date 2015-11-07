@@ -18,7 +18,6 @@ const getUserChecks = function* (user, pre, after) {
             }).populate('products.product')
             if (typeof after === 'function') result = yield after(result)
         } catch (e) {
-            console.log(e)
             return { error: e }
         }
         return { error: false, result: result }

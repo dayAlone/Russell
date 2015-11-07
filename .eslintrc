@@ -16,6 +16,8 @@
 		"cdn": true
 	},
 	"rules": {
+		"new-cap": 0,
+		"no-param-reassign": 0,
 		"semi" : 0,
 		"id-length": 0,
 		"indent": [2, 4],

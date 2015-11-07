@@ -127,8 +127,13 @@ class Kitchen extends Component {
             }
             img.src = images[index]
         } else {
+            let { settings, level } = this.props
             this.setState({
                 isStarted: true,
+                times: {
+                    open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
+                    scores: setInterval(this.tickTime.bind(this), 1000)
+                },
                 loader: {
                     active: false,
                     percentage: 0
@@ -154,10 +159,6 @@ class Kitchen extends Component {
                 time: settings[level].time,
                 scores: scores,
                 level: level,
-                times: {
-                    open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
-                    scores: setInterval(this.tickTime.bind(this), 1000)
-                }
             }, this.makeElements)
 
             /*

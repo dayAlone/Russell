@@ -26,6 +26,24 @@ gameSchema.statics.findCurrentRaffle = function* (code) {
     return current
 }
 
+gameSchema.statics.findCurrentRaffle = function* (codes) {
+    let games = yield Game.find({ code: {$in: codes} })
+    let result = {}
+    games.map(game => {
+        let start, end
+        game.raffles.push(game.start)
+        game.raffles.sort((a, b) => (a - b)).map(el => {
+            if (moment(el) < moment()) start = el
+        })
+        end = game.raffles.filter(el => (moment(el) > moment()))[0]
+        result[game.code] = {
+            start: start,
+            end: end
+        }
+    })
+    return result
+}
+
 const Game = mongoose.model('Games', gameSchema)
 
 Game.count({}, (err, count) => {

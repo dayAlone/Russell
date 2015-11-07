@@ -8,7 +8,7 @@ import * as actionLogin from '../../actions/login'
 import * as actionProfile from '../../actions/profile'
 import { bindActionCreators } from 'redux'
 
-@connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
+@connect(state => ({isLogin: state.login.isLogin, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Test extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
@@ -41,7 +41,8 @@ class Test extends Component {
         }
     }
     stopGame() {
-        let {timer} = this.state
+        let {timer, time} = this.state
+        this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
         this.setState({
             isStarted: false,
             timer: false
@@ -51,7 +52,7 @@ class Test extends Component {
     startGame(e) {
         let {isLogin, actions } = this.props
         if (isLogin) {
-            actions.profile.startGame('test')
+            actions.profile.startGame('test', true)
             this.setState({
                 level: 0,
                 current: 0,
@@ -74,8 +75,10 @@ class Test extends Component {
         let { time, current, questions } = this.state
         return (e) => {
             $(e.currentTarget).addClass(status ? 'test__answer--true' : 'test__answer--wrong')
+            $('.test__answers').addClass('.test__answers--block')
             setTimeout(()=>{
                 $('a.test__answer').removeClass('test__answer--wrong test__answer--true')
+                $('.test__answers').removeClass('.test__answers--block')
                 this.setState({
                     time: time + ( status ? 1 : -1 )
                 }, ()=> {
@@ -109,7 +112,12 @@ class Test extends Component {
                 }
             }
         }
+
+        if (this.props.isLogin) this.props.actions.profile.getScores()
         this.setState({questions: this.shuffle(result)})
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.isLogin && !prevProps.isLogin) this.props.actions.profile.getScores()
     }
     getQuestion() {
         let {questions, current} = this.state
@@ -145,7 +153,13 @@ class Test extends Component {
     }
     render() {
         let {isStarted, level, time, rules} = this.state
-
+        let today, total, position, totalGames
+        if (this.props.scores && this.props.scores.test) {
+            today = this.props.scores.test.today
+            total = this.props.scores.test.total
+            position = this.props.scores.test.position
+            totalGames = 3 - today.length
+        }
         return <div className='game'>
             <h1 className='game__title center'>История в деталях</h1>
             <div className='test'>
@@ -190,17 +204,17 @@ class Test extends Component {
                                 <h2>Ваш результат:</h2>
                                 <br/>
                                 <span className='test__score test__score--big' data-text='Баллов'>{time}</span>
-                                <span className='test__score test__score--big' data-text='Место в рейтинге'>325678</span>
+                                <span className='test__score test__score--big' data-text='Место в рейтинге'>{position}</span>
                                 <img src='/layout/images/line.png' alt='' className='test__divider' />
                                 <span className='kitchen__block kitchen__block--inline'>
                                     <span>Осталось попыток<br/>сыграть сегодня</span>
                                     <div className='kitchen__score'>
-                                        3
+                                        {totalGames}
                                     </div>
                                 </span>
                                 <span className='kitchen__block kitchen__block--inline'>
                                     <div className='kitchen__score'>
-                                        1 554
+                                        {total}
                                     </div>
                                     <span>набрано баллов<br/>до розыгрыша</span>
 

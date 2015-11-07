@@ -1,5 +1,6 @@
 import co from 'co'
 import mongoose from 'mongoose'
+import moment from 'moment'
 
 const scoreSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -17,6 +18,10 @@ const scoreSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    share: {
+        type: Boolean,
+        default: false,
+    },
     created: {
         type: Date,
         default: Date.now
@@ -25,7 +30,24 @@ const scoreSchema = new mongoose.Schema({
 
 scoreSchema.pre('save', function(next) {
     co(function*() {
-        yield* this.generateCode()
+        if (this.isNew) {
+            let count = yield Score.count({
+                user: this.user,
+                share: this.share,
+                $and: [
+                    {
+                        created: {
+                            $gte: moment().startOf('day')
+                        }
+                    },
+                    {
+                        created: {
+                            $lte: moment().endOf('day')
+                        }
+                    }
+                ]})
+            console.log(count)
+        }
     }.bind(this)).then(next, next)
 })
 

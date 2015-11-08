@@ -4,8 +4,7 @@ import 'moment/locale/ru'
 
 class Coundown extends Component {
     state = {
-        dateStart: moment(this.props.dateStart),
-        dateStop: moment(this.props.dateStop),
+        till: moment(this.props.till),
         current: new Date(),
         timeout: false
     }
@@ -20,7 +19,7 @@ class Coundown extends Component {
         }
         let types = ['month', 'days', 'hours', 'minutes', 'seconds']
         let secondsCounts = [2592000, 86400, 3600, 60, 1]
-        let remains = this.state.dateStart.unix() - moment().unix()
+        let remains = this.state.till.unix() - moment().unix()
         for (let i = 0, l = secondsCounts.length; i < l; i++) {
             let currentSecondsCount = secondsCounts[i]
             let currentValue = Math.floor(remains / currentSecondsCount)
@@ -61,16 +60,14 @@ class Coundown extends Component {
         })
     }
     componentDidMount() {
-        this.setState({ timeout: setInterval(() => {
-            this.tick()
-        }, 1000)})
+        this.setState({ timeout: setInterval(this.tick.bind(this), 1000)})
     }
     componentWillUnmount() {
         clearInterval(this.state.timeout)
     }
     tick() {
-        let { dateStart, current } = this.state
-        if (dateStart.toDate() > current) {
+        let { till, current } = this.state
+        if (till.toDate() > current) {
             this.setState({current: new Date()})
         } else {
             clearInterval(this.state.timeout)
@@ -78,17 +75,8 @@ class Coundown extends Component {
 
     }
     render() {
-        let { dateStart, dateStop, current } = this.state
         const counter = this.getCounter()
-        return <div className='countdown'>
-            <div className='countdown__info'>C {dateStart.format('D MMMM')}<br/> по {dateStop.format('D MMMM')}</div>
-            {!this.props.hideButton ? <div className='countdown__divider' /> : false}
-            {
-                dateStart.toDate() < current ?
-                ( !this.props.hideButton ? <a href={this.props.link} className='countdown__button'>Участвовать</a> : false)
-                : <div className='countdown__frame'><div className='countdown__till'>До начала <br/>акции</div>{counter}</div>
-            }
-        </div>
+        return <div className='countdown__items'>{counter}</div>
     }
 }
 

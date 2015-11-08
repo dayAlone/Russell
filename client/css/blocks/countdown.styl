@@ -3,7 +3,9 @@
 
     line-height 1.3
     @media (min-width: $scr_s)
-        padding 21px 0 7px
+        padding 0px 0 7px
+    &__items
+        float left
     &__item, &__frame, &__till
         float left
         @media (max-width: $scr_s)
@@ -21,7 +23,7 @@
             full-width()
             margin-right 0px
             padding-left 7px
-            margin-bottom 2px
+            margin-bottom 3px
             br
                 display none
     &__frame
@@ -30,33 +32,39 @@
             text-align center
             margin-top 15px
         @media (min-width: $scr_s) and (max-width: $scr_sm)
-            max-width 250px
+            max-width 280px
             margin-top -10px
     &__info
         color #ff1628
         font-size 15px
         float left
         min-width 110px
+        @media (min-width: $scr_s)
+            margin-right 30px
         @media (max-width: $scr_s)
             width 100%
             text-align center
+
             br
                 display none
     &__button
         display inline-block
-        height 34px
+        height 37px
         border-radius 5px
-        border 1px solid white
-        line-height 34px
+        line-height 39px
         font-size 14px
         font-weight bold
-        padding 0 18px
-        margin-left 3px
+        padding 0 25px
         t all
         color white
+        background-color red
+        @media (min-width: $scr_sm)
+            margin-top 10px
+        @media (min-width: $scr_md)
+            margin-left 25px
+            margin-top 0px
         &:hover
-            border-color red
-            color red
+            color white
     &__item
         text-align center
         width 45px

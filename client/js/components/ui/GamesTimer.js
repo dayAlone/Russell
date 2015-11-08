@@ -27,7 +27,7 @@ class GamesTimer extends Component {
                 </div>
                 <Countdown till={till}/>
             </div>
-            <Link to={this.props.link} className='countdown__button'>Участвовать</Link>
+            { dateStart !== till ? <Link to={this.props.link} className='countdown__button'>Участвовать</Link> : null }
 
         </div>
     }

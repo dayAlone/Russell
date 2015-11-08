@@ -50,7 +50,8 @@ class Test extends Component {
     stopGame() {
         this.createQuestions()
         let {timer, time} = this.state
-        this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
+        console.log(this.props.scores.test)
+        //this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
         this.setState({
             isStarted: false,
             timer: false
@@ -133,7 +134,6 @@ class Test extends Component {
     createQuestions() {
         let _db = db
         let result = []
-
         for (let i = 0; i < 3; i++) {
             let items = _db[0]
             for (let a = 0; a < 5; a++) {
@@ -184,7 +184,6 @@ class Test extends Component {
         }
         for (let i = 0; i < 8; i++) {
             for (let a = 0; a < 2; a++) {
-
                 switch (i) {
                 case 0:
                     let q = parseInt(Math.random() * _db[0].list.length, 10)

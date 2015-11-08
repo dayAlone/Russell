@@ -5,8 +5,9 @@ import { connect } from 'react-redux'
 import * as actionLogin from '../../actions/login'
 import * as actionProfile from '../../actions/profile'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
 
-@connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
+@connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Kitchen extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
@@ -61,7 +62,39 @@ class Kitchen extends Component {
                 multiply: 3,
                 open: 1500
             }
-        ]
+        ],
+        locked: false,
+        stat: {
+            games: 3,
+            scores: 0,
+            position: 0
+        }
+    }
+    componentDidMount() {
+        if (this.props.isLogin) this.props.actions.profile.getScores()
+        if (this.props.scores) this.checkLocked()
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.isLogin && !this.props.scores) this.props.actions.profile.getScores()
+        if ((this.props.scores && !prevProps.scores)
+            || (prevProps.scores && prevProps.scores.kitchen &&
+                (prevProps.scores.kitchen.total !== this.props.scores.kitchen.total
+                    || prevProps.scores.kitchen.count !== this.props.scores.kitchen.count))
+                ) {
+            this.checkLocked()
+        }
+    }
+    checkLocked() {
+        if (this.props.scores.kitchen) {
+            this.setState({
+                locked: this.props.scores.kitchen.today.length >= 3,
+                stat: {
+                    games: 3 - this.props.scores.kitchen.today.length,
+                    scores: this.props.scores.kitchen.total,
+                    position: this.props.scores.kitchen.position
+                }
+            })
+        }
     }
     tickBox() {
         let numbers = []
@@ -145,6 +178,8 @@ class Kitchen extends Component {
         let {isLogin, actions } = this.props
         if (isLogin) {
             let {settings, level, scores} = this.state
+            let {updateGame, startGame} = actions.profile
+
             if (level >= 2) {
                 level = 0
                 scores = {
@@ -153,6 +188,11 @@ class Kitchen extends Component {
                 }
             } else {
                 level++
+            }
+            if (level === 0) startGame('kitchen', false)
+            else {
+                let {today} = this.props.scores.kitchen
+                updateGame(today[0]._id, scores.total, false, level)
             }
 
             this.setState({
@@ -177,6 +217,9 @@ class Kitchen extends Component {
         let {times, scores, time, settings, level} = this.state
         clearInterval(times.open)
         clearInterval(times.scores)
+        let {updateGame} = this.props.actions.profile
+
+        updateGame(this.props.scores.kitchen.today[0]._id, scores.total + (settings[level].multiply * time), level === 2, level)
 
         this.setState({
             time: 0,
@@ -294,114 +337,135 @@ class Kitchen extends Component {
             e.preventDefault()
         }
     }
-    render() {
-        let {isStarted, level, scores, time, rules, loader} = this.state
-        let {current, total} = scores
+    getRulesScreen() {
+        return <div className='kitchen__rules'>
+            <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
+            <div className='center'>
+                <h2>Правила игры</h2>
+            </div>
+
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
+            <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
+            <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
+            <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
+            <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
+            <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
+            <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
+            <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
+            <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
+            <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
+            <p>Удачи!</p>
+            <div className='center'>
+                <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
+            </div>
+        </div>
+    }
+    getLoadingScreen() {
+        let {loader} = this.state
+        return <div className='kitchen__placeholder kitchen__placeholder--loader'>
+            <h2>Загрузка</h2>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <div className='kitchen__loader'>
+                <span style={{width: loader.percentage + '%'}}></span>
+            </div>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <small>Если загрузка идет очень долго, попробуйте обновить страницу</small>
+        </div>
+    }
+    getStartScreen() {
+        return <div>
+            <p>В кухне все должно быть прекрасно. Для этого в ней, во-первых, должен быть порядок, во-вторых, она должна быть наполнена красивыми вещами. Такими, как техника Russell Hobbs.</p>
+            <p>Так что – пришла пора наводить порядок на кухне и подбирать для нее красивые вещи. Вы готовы? Тогда мы приглашаем вас в игру. Мы спрятали на нашей виртуальной кухне разные приборы Russell Hobbs. Вам нужно найти их и собрать. И если в игре вам будет сопутствовать успех, вы выиграете настоящую, а не виртуальную технику, и украсите ею свою кухню!</p>
+            <p><strong>Время действия акции - с 9 ноября по 30 декабря.</strong></p>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
+            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+        </div>
+    }
+    getResultsScreen() {
+        let {level, scores, stat, current} = this.state
+        let {total} = scores
+        return <div>
+            <h2>Поздравляем!</h2>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
+            <span className='kitchen__block kitchen__block--inline'>
+                <span>Осталось<br/>попыток</span>
+                <div className='kitchen__score'>
+                    3
+                </div>
+            </span>
+            <span className='kitchen__score kitchen__score--big'>{current}</span>
+            <span className='kitchen__block kitchen__block--inline'>
+                <span>Сумма<br/>баллов</span>
+                <div className='kitchen__score'>
+                    {total}
+                </div>
+            </span>
+
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <a href='#' onClick={this.startGame.bind(this)} className='button'>
+                {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
+            </a>
+        </div>
+    }
+    getGameScreen() {
         let sku = this.makeSKU()
         let boxes = this.makeBoxes()
+        let {level, scores, time} = this.state
+        let {total} = scores
+
+        return <div className={`kitchen__level kitchen__level--${level}`}>
+            <div className='kitchen__ui kitchen__ui--left'>
+                <div className='kitchen__block'>
+                    <span>Сумма баллов</span>
+                    <div className='kitchen__score'>
+                        {total}
+                    </div>
+                </div>
+                <div className='kitchen__skus'>
+                    {sku.splice(0, sku.length / 2)}
+                </div>
+            </div>
+            {boxes}
+            <div className='kitchen__ui kitchen__ui--right'>
+                <div className='kitchen__block'>
+                    <span>Осталось времени</span>
+                    <div className='kitchen__score'>
+                        {time}
+                    </div>
+                </div>
+                <div className='kitchen__skus'>
+                    {sku.splice(sku.length / 2 - 2)}
+                </div>
+            </div>
+        </div>
+    }
+    getLockedScreen() {
+        return <div className='test__placeholder center'>
+            <h4>{this.props.user.displayName},<br /> к сожалению, ваш лимит игр на сегодня достигнут.<br /> Возвращайтесь завтра и продолжайте борьбу за призы!</h4>
+            <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
+        </div>
+    }
+    render() {
+        let {isStarted, level, rules, loader, locked} = this.state
+
         return <div className='game'>
             <h1 className='game__title center'>Собери коллекцию</h1>
             <div className='kitchen'>
-                { rules ?
-                    <div className='kitchen__rules'>
-                        <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
-                        <div className='center'>
-                            <h2>Правила игры</h2>
-                        </div>
-
-                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                        <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
-                        <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
-                        <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
-                        <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
-                        <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
-                        <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
-                        <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
-                        <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
-                        <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
-                        <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
-                        <p>Удачи!</p>
-                        <div className='center'>
-                            <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
-                        </div>
-                    </div>
-                    : null }
-                { loader.active ?
-                    <div className='kitchen__placeholder kitchen__placeholder--loader'>
-                        <h2>Загрузка</h2>
-                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                        <div className='kitchen__loader'>
-                            <span style={{width: loader.percentage + '%'}}></span>
-                        </div>
-                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                        <small>Если загрузка идет очень долго, попробуйте обновить страницу</small>
-                    </div>
+                { rules ? this.getRulesScreen() : null }
+                { locked && level === -1
+                    ? this.getLockedScreen()
                     :
-                    !isStarted ?
-                        <div className='kitchen__placeholder'>
-                            { level === -1 ?
-                                <div>
-                                    <h2>Собери коллекцию Russell Hobbs</h2>
-                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
-                                    <a href='#' onClick={this.startGame.bind(this)} className='button button--top'>Начать игру</a><br/>
-                                    <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
-                                </div>
-                                :
-                                <div>
-                                    <h2>Поздравляем!</h2>
-                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
-                                    <span className='kitchen__block kitchen__block--inline'>
-                                        <span>Осталось<br/>попыток</span>
-                                        <div className='kitchen__score'>
-                                            3
-                                        </div>
-                                    </span>
-                                    <span className='kitchen__score kitchen__score--big'>{current}</span>
-                                    <span className='kitchen__block kitchen__block--inline'>
-                                        <span>Сумма<br/>баллов</span>
-                                        <div className='kitchen__score'>
-                                            {total}
-                                        </div>
-                                    </span>
-
-                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <a href='#' onClick={this.startGame.bind(this)} className='button'>
-                                        {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
-                                    </a>
-                                </div>
-                            }
-                        </div>
-
-                        :
-
-                        <div className={`kitchen__level kitchen__level--${level}`}>
-                            <div className='kitchen__ui kitchen__ui--left'>
-                                <div className='kitchen__block'>
-                                    <span>Сумма баллов</span>
-                                    <div className='kitchen__score'>
-                                        {total}
-                                    </div>
-                                </div>
-                                <div className='kitchen__skus'>
-                                    {sku.splice(0, sku.length / 2)}
-                                </div>
+                    ( loader.active ? this.getLoadingScreen() :
+                        !isStarted ?
+                            <div className='kitchen__placeholder'>
+                                { level === -1 ? this.getStartScreen() : this.getResultsScreen() }
                             </div>
-                            {boxes}
-                            <div className='kitchen__ui kitchen__ui--right'>
-                                <div className='kitchen__block'>
-                                    <span>Осталось времени</span>
-                                    <div className='kitchen__score'>
-                                        {time}
-                                    </div>
-                                </div>
-                                <div className='kitchen__skus'>
-                                    {sku.splice(sku.length / 2 - 2)}
-                                </div>
-                            </div>
-                        </div>
-
+                            :
+                            this.getGameScreen()
+                    )
                 }
             </div>
         </div>

@@ -82,9 +82,9 @@ export function startGame(type, finished) {
     }
 }
 
-export function updateGame(id, scores, finished) {
+export function updateGame(id, scores, finished, level) {
     return dispatch => {
-        $.post('/games/update/', {id: id, scores: scores, finished: finished}, data => {
+        $.post('/games/update/', {id: id, scores: scores, finished: finished, level: level}, data => {
             if (!data.error) {
                 dispatch({
                     type: UPDATE_GAME,

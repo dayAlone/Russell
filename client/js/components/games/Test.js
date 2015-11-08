@@ -120,7 +120,6 @@ class Test extends Component {
     }
     checkLocked() {
         if (this.props.scores.test) {
-            console.log(this.props.scores.test.total)
             this.setState({
                 locked: this.props.scores.test.today.length >= 3,
                 stat: {

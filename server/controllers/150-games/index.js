@@ -195,12 +195,14 @@ export default function(app) {
         .post('/games/update/', function* () {
             if (this.req.user) {
                 let result
-                let {id, scores, finished} = this.request.body
+                let {id, scores, finished, level} = this.request.body
                 try {
+                    let fields = { scores: scores, finished: finished}
+                    if (parseInt(level, 10) > 0) fields['level'] = level
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.findOneAndUpdate(
                             { _id: id, user: user._id },
-                            { $set: { scores: scores, finished: finished} },
+                            { $set: fields },
                             { safe: true, upsert: true }
                         )
                     })

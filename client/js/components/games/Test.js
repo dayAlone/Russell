@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import * as actionLogin from '../../actions/login'
 import * as actionProfile from '../../actions/profile'
 import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
 
 @connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Test extends Component {
@@ -341,6 +342,7 @@ class Test extends Component {
     getLockedScreen() {
         return <div className='test__placeholder center'>
             <h4>{this.props.user.displayName},<br /> к сожалению, ваш лимит игр на сегодня достигнут.<br /> Возвращайтесь завтра и продолжайте борьбу за призы!</h4>
+            <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
         </div>
     }
     render() {

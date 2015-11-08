@@ -50,8 +50,7 @@ class Test extends Component {
     stopGame() {
         this.createQuestions()
         let {timer, time} = this.state
-        console.log(this.props.scores.test)
-        //this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
+        this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
         this.setState({
             isStarted: false,
             timer: false

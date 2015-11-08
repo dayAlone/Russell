@@ -424,34 +424,7 @@ class Kitchen extends Component {
             <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
         </div>
     }
-    getResultsScreen() {
-        let {level, scores, stat, current} = this.state
-        let {total} = scores
-        return <div>
-            <h2>Поздравляем!</h2>
-            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-            <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
-            <span className='kitchen__block kitchen__block--inline'>
-                <span>Осталось<br/>попыток</span>
-                <div className='kitchen__score'>
-                    3
-                </div>
-            </span>
-            <span className='kitchen__score kitchen__score--big'>{current}</span>
-            <span className='kitchen__block kitchen__block--inline'>
-                <span>Сумма<br/>баллов</span>
-                <div className='kitchen__score'>
-                    {total}
-                </div>
-            </span>
-
-            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-            <a href='#' onClick={this.startGame.bind(this)} className='button'>
-                {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
-            </a>
-        </div>
-    }
-    getResultsScreen() {
+getResultsScreen() {
         let { time, stat, level } = this.state
         let { games, scores, position } = stat
 
@@ -479,7 +452,7 @@ class Kitchen extends Component {
 
             </span><br/>
             {games > 0 ? <a href='#' onClick={this.startGame.bind(this)} className='button'>
-                    Сыграть еще раз
+                    {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
                 </a> : null }
         </div>
     }

@@ -79,7 +79,7 @@ const getUserTotalScores = function* (user) {
                 {$group: {
                     _id: '$type',
                     total: { $sum: '$scores' },
-                    count: { $sum: { $cond: { if: { $not: '$share' }, then: 1, else: 0 } } }
+                    count: { $sum: 1 }
                 }}
             ])
             .exec()
@@ -105,7 +105,6 @@ const getUserScores = function* (user, pre, after) {
             games.map(el => {
                 query.push({
                     type: el,
-                    share: false,
                     $and: [
                         {
                             created: {

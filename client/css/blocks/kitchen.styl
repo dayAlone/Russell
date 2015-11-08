@@ -6,6 +6,35 @@
     position relative
     border 1px solid #303130
     margin 50px 0 120px
+    &__share
+        &-title
+            display inline-block
+            text-align left
+            margin-right 13px
+            font-size 14px
+            middle()
+        &-scores
+            margin-left 10px
+            margin-top 5px
+            middle()
+            span:first-of-type
+                font-size 30px
+        button
+            middle()
+            margin 0 10px
+            size 35px
+            background-color #005c9a
+            border 0
+            padding 0
+            text-align center
+            line-height 10px
+            border-radius 3px
+            &.vk
+                background-color #1b84b5
+            img
+                max-width 22px
+                max-height 20px
+                middle()
     &__no-mobile
         display none
         @media (max-width: $scr_md)

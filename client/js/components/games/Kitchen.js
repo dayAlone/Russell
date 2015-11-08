@@ -6,6 +6,7 @@ import * as actionLogin from '../../actions/login'
 import * as actionProfile from '../../actions/profile'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
+import { FacebookButton, VKontakteButton } from 'react-social'
 
 @connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Kitchen extends Component {
@@ -427,7 +428,9 @@ class Kitchen extends Component {
     getResultsScreen() {
         let { time, stat, level } = this.state
         let { games, scores, position } = stat
-
+        let _id = ''
+        if (this.props.scores && this.props.scores.test) _id = this.props.scores.test.today[0]._id
+        let url = `http://${document.domain}/games/kitchen/?id=${_id}`
         return <div>
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
             <br/>
@@ -437,6 +440,15 @@ class Kitchen extends Component {
             {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
                 {position}
             </span> : null }
+            <img src='/layout/images/line.png' alt='' className='test__divider' />
+            <div className='test__share'>
+                <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
+                <FacebookButton url={url} className='fb'> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
+                <VKontakteButton url={url} className='vk'> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
+                <div className='test__share-scores'>
+                    <span>+5</span> баллов
+                </div>
+            </div>
             <img src='/layout/images/line.png' alt='' className='test__divider' />
             <span className='kitchen__block kitchen__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>

@@ -9,7 +9,6 @@ import * as actionProfile from '../../actions/profile'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
 import { FacebookButton, VKontakteButton } from 'react-social'
-import pluralize from '../../libs/pluralize'
 
 @connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Test extends Component {
@@ -297,14 +296,14 @@ class Test extends Component {
                 {position}
             </span>
             <img src='/layout/images/line.png' alt='' className='test__divider' />
-                <div className='test__share'>
-                    <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
-                    <FacebookButton url={url} className='fb'> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
-                    <VKontakteButton url={url} className='vk'> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
-                    <div className='test__share-scores'>
-                        <span>+5</span> баллов
-                    </div>
+            <div className='test__share'>
+                <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
+                <FacebookButton url={url} className='fb'> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
+                <VKontakteButton url={url} className='vk'> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
+                <div className='test__share-scores'>
+                    <span>+5</span> баллов
                 </div>
+            </div>
             <img src='/layout/images/line.png' alt='' className='test__divider' />
             <span className='kitchen__block kitchen__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>

@@ -12,6 +12,8 @@ class Kitchen extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
         rules: false,
+        cont: false,
+        timeout: false,
         isStarted: false,
         loader: {
             active: false,
@@ -86,14 +88,33 @@ class Kitchen extends Component {
     }
     checkLocked() {
         if (this.props.scores.kitchen) {
-            this.setState({
-                locked: this.props.scores.kitchen.today.length >= 3,
+            let {today, total, position} = this.props.scores.kitchen
+            let {_id, finished, scores, level} = today[0]
+            let {updateGame} = this.props.actions.profile
+
+            let fields = {
+                locked: today.length >= 3 && finished,
                 stat: {
-                    games: 3 - this.props.scores.kitchen.today.length,
-                    scores: this.props.scores.kitchen.total,
-                    position: this.props.scores.kitchen.position
+                    games: 3 - today.length,
+                    scores: total,
+                    position: position
                 }
-            })
+            }
+            if (this.state.level === -1) {
+                if (!finished && level !== 2) {
+                    fields = Object.assign({}, fields, {
+                        cont: true,
+                        level: level,
+                        scores: {
+                            current: 0,
+                            total: scores
+                        }
+                    })
+                } else {
+                    updateGame(_id, scores, true)
+                }
+            }
+            this.setState(fields)
         }
     }
     tickBox() {
@@ -122,6 +143,22 @@ class Kitchen extends Component {
             this.setState({time: this.state.time - 1})
         } else {
             this.stopGame()
+        }
+    }
+    tickTimeout() {
+        let { settings, level, timeout, timers } = this.state
+        if (timeout === 0) {
+            clearTimeout(timers.timeout)
+            this.setState({
+                timeout: false,
+                timers: {
+                    timeout: false,
+                    open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
+                    scores: setInterval(this.tickTime.bind(this), 1000)
+                }
+            })
+        } else {
+            this.setState({timeout: timeout - 1})
         }
     }
     shuffle(array) {
@@ -160,12 +197,14 @@ class Kitchen extends Component {
             }
             img.src = images[index]
         } else {
-            let { settings, level } = this.state
+
             this.setState({
                 isStarted: true,
-                times: {
-                    open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
-                    scores: setInterval(this.tickTime.bind(this), 1000)
+                timeout: 5,
+                timers: {
+                    timeout: setInterval(this.tickTimeout.bind(this), 1000),
+                    open: false,
+                    scores: false
                 },
                 loader: {
                     active: false,
@@ -174,10 +213,11 @@ class Kitchen extends Component {
             })
         }
     }
+
     startGame(e) {
         let {isLogin, actions } = this.props
         if (isLogin) {
-            let {settings, level, scores} = this.state
+            let {settings, level, scores, cont} = this.state
             let {updateGame, startGame} = actions.profile
 
             if (level >= 2) {
@@ -189,13 +229,14 @@ class Kitchen extends Component {
             } else {
                 level++
             }
-            if (level === 0) startGame('kitchen', false)
+            if (level === 0 && !cont) startGame('kitchen', false)
             else {
                 let {today} = this.props.scores.kitchen
                 updateGame(today[0]._id, scores.total, false, level)
             }
 
             this.setState({
+                cont: false,
                 time: settings[level].time,
                 scores: scores,
                 level: level,
@@ -214,9 +255,9 @@ class Kitchen extends Component {
         e.preventDefault()
     }
     stopGame() {
-        let {times, scores, time, settings, level} = this.state
-        clearInterval(times.open)
-        clearInterval(times.scores)
+        let {timers, scores, time, settings, level} = this.state
+        clearInterval(timers.open)
+        clearInterval(timers.scores)
         let {updateGame} = this.props.actions.profile
 
         updateGame(this.props.scores.kitchen.today[0]._id, scores.total + (settings[level].multiply * time), level === 2, level)
@@ -271,7 +312,7 @@ class Kitchen extends Component {
                     <img src={`${url}/${settings[level].code}/box-${i}.png`} alt='' />
                     {active.indexOf(i) !== -1 ?
                         active_elements[i] && active_elements[i].type !== 'empty'
-                            ? <img src={`${url}/sku/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
+                            ? <img src={`${url}/sku2/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
                             : null
                     : null }
                 </div>)
@@ -286,9 +327,9 @@ class Kitchen extends Component {
 
             for (let i = 1; i <= settings[level].sku; i++) {
                 sku.push(<div className='kitchen__sku' key={i}>
-                    <img src={`${url}/sku/${level}/inactive/${i}.png`} alt='' />
+                    <img src={`${url}/sku2/${level}/inactive/${i}.png`} alt='' />
                     <div className={`kitchen__sku-overlay ${clicks[i] > 0 ? 'kitchen__sku-overlay--' + clicks[i] : ''}`}>
-                        <img src={`${url}/sku/${level}/${i}.png`} alt=''/>
+                        <img src={`${url}/sku2/${level}/${i}.png`} alt=''/>
                     </div>
                 </div>)
             }
@@ -303,8 +344,8 @@ class Kitchen extends Component {
         for (let i = 1; i <= settings[level].boxes; i++) images.push(`${url}/${settings[level].code}/box-${i}.png`)
 
         for (let i = 1; i <= settings[level].sku; i++) {
-            images.push(`${url}/sku/${level}/${i}.png`)
-            images.push(`${url}/sku/${level}/inactive/${i}.png`)
+            images.push(`${url}/sku2/${level}/${i}.png`)
+            images.push(`${url}/sku2/${level}/inactive/${i}.png`)
             for (let a = 0; a < 5; a++) {
                 elements.push({
                     type: 'sku',
@@ -315,7 +356,7 @@ class Kitchen extends Component {
 
         for (let i = 1; i <= (settings[level].events - settings[level].empty) / 2; i++) {
             let rand = 1 + parseInt(Math.random() * 12, 10)
-            let link = `${url}/sku/custom/${rand}.png`
+            let link = `${url}/sku2/custom/${rand}.png`
             if (images.indexOf(link) === -1) images.push(link)
             elements.push({
                 type: 'custom',
@@ -410,10 +451,42 @@ class Kitchen extends Component {
             </a>
         </div>
     }
+    getResultsScreen() {
+        let { time, stat, level } = this.state
+        let { games, scores, position } = stat
+
+        return <div>
+            <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
+            <br/>
+            <span className='test__score test__score--big' data-text='Баллов'>
+                {time}
+            </span>
+            {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
+                {position}
+            </span> : null }
+            <img src='/layout/images/line.png' alt='' className='test__divider' />
+            <span className='kitchen__block kitchen__block--inline'>
+                <span>Осталось попыток<br/>сыграть сегодня</span>
+                <div className='kitchen__score'>
+                    {games}
+                </div>
+            </span>
+            <span className='kitchen__block kitchen__block--inline'>
+                <div className='kitchen__score'>
+                    {scores}
+                </div>
+                <span>набрано баллов<br/>до розыгрыша</span>
+
+            </span><br/>
+            {games > 0 ? <a href='#' onClick={this.startGame.bind(this)} className='button'>
+                    Сыграть еще раз
+                </a> : null }
+        </div>
+    }
     getGameScreen() {
         let sku = this.makeSKU()
         let boxes = this.makeBoxes()
-        let {level, scores, time} = this.state
+        let {level, scores, time, timeout} = this.state
         let {total} = scores
 
         return <div className={`kitchen__level kitchen__level--${level}`}>
@@ -429,6 +502,7 @@ class Kitchen extends Component {
                 </div>
             </div>
             {boxes}
+            {timeout ? <div className='kitchen__timeout'><span>{timeout}</span></div> : null}
             <div className='kitchen__ui kitchen__ui--right'>
                 <div className='kitchen__block'>
                     <span>Осталось времени</span>
@@ -448,9 +522,15 @@ class Kitchen extends Component {
             <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
         </div>
     }
+    getContinueScreen() {
+        return <div className='test__placeholder center'>
+            <h4>{this.props.user.displayName},<br /> вы не закончили игру в прошлый раз.<br/>
+            Вам необходимо завершить прохождение всех уровней, чтобы начать игру с начала.</h4>
+        <a href='#' className='button button--top' onClick={this.startGame.bind(this)}>Продолжить игру</a>
+        </div>
+    }
     render() {
-        let {isStarted, level, rules, loader, locked} = this.state
-
+        let {isStarted, level, rules, loader, locked, cont} = this.state
         return <div className='game'>
             <h1 className='game__title center'>Собери коллекцию</h1>
             <div className='kitchen'>
@@ -461,7 +541,7 @@ class Kitchen extends Component {
                     ( loader.active ? this.getLoadingScreen() :
                         !isStarted ?
                             <div className='kitchen__placeholder'>
-                                { level === -1 ? this.getStartScreen() : this.getResultsScreen() }
+                                { cont ? this.getContinueScreen() : level === -1 ? this.getStartScreen() : this.getResultsScreen() }
                             </div>
                             :
                             this.getGameScreen()

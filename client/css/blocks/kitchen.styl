@@ -6,6 +6,25 @@
     position relative
     border 1px solid #303130
     margin 50px 0 120px
+    &__timeout
+        position absolute
+        top 0
+        left 0
+        size 100%
+        background-color alpha(black, .9)
+        span
+            position absolute
+            left 50%
+            top 50%
+            transform translateY(-50%) translateX(-50%)
+            font-size 55px
+            height 100px
+            width 100px
+            line-height 105px
+            border 1px solid white
+            text-align center
+            font-weight bold
+            border-radius 50%
     &__close
         size 30px
         border-radius 50%
@@ -251,6 +270,7 @@
             margin-bottom 0px
         img
             max-width 100%
+            max-height 75px
     &__block
         &--inline
             display inline-block

@@ -8,7 +8,7 @@ import * as actionLogin from '../../actions/login'
 import * as actionProfile from '../../actions/profile'
 import { bindActionCreators } from 'redux'
 
-@connect(state => ({isLogin: state.login.isLogin, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
+@connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Test extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
@@ -18,7 +18,13 @@ class Test extends Component {
         timer: false,
         time: 120,
         questions: [],
-        current: 0
+        current: 0,
+        locked: false,
+        stat: {
+            games: 3,
+            scores: 0,
+            position: 0
+        }
     }
     shuffle(array) {
         let counter = array.length, temp, index
@@ -41,6 +47,7 @@ class Test extends Component {
         }
     }
     stopGame() {
+        this.createQuestions()
         let {timer, time} = this.state
         this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
         this.setState({
@@ -96,28 +103,115 @@ class Test extends Component {
         }
     }
     componentDidMount() {
+        if (this.props.isLogin) this.props.actions.profile.getScores()
+        if (this.props.scores) this.checkLocked()
+        this.createQuestions()
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.isLogin && !this.props.scores) this.props.actions.profile.getScores()
+        if ((this.props.scores && !prevProps.scores)
+            || (prevProps.scores && prevProps.scores.test &&
+                (prevProps.scores.test.total !== this.props.scores.test.total
+                    || prevProps.scores.test.count !== this.props.scores.test.count))
+                ) {
+            this.checkLocked()
+        }
+    }
+    checkLocked() {
+        if (this.props.scores.test) {
+            console.log(this.props.scores.test.total)
+            this.setState({
+                locked: this.props.scores.test.today.length >= 3,
+                stat: {
+                    games: 3 - this.props.scores.test.today.length,
+                    scores: this.props.scores.test.total,
+                    position: this.props.scores.test.position
+                }
+            })
+        }
+    }
+    createQuestions() {
+        let _db = db
         let result = []
-        for (let i = 0; i < 8; i++) {
-            for (let a = 0; a < 2; a++) {
-                let rand
+
+        for (let i = 0; i < 3; i++) {
+            let items = _db[0]
+            for (let a = 0; a < 5; a++) {
+                let q = parseInt(Math.random() * items.list.length - 1, 10)
+                let t = parseInt(Math.random() * items.files.length - 1, 10)
+                let t2 = parseInt(Math.random() * items.files.length - 1, 10)
+                while (t2 === t) t2 = parseInt(Math.random() * items.files.length - 1, 10)
+                let b = parseInt(1 + Math.random() * items.files[t], 10)
+                let b2 = parseInt(1 + Math.random() * items.files[t2], 10)
+                let images, answers
                 switch (i) {
-                case 1:
                 case 0:
-                    rand = parseInt(Math.random() * db[0].length, 10)
+                    images = this.shuffle([{src: `${this.state.url}/${t}/0.png`, right: true}, {src: `${this.state.url}/${t}/${b}.png`}])
+                    answers = [
+                        {
+                            text: 'Левый',
+                            right: images[0].right ? true : false
+                        },
+                        {
+                            text: 'Правый',
+                            right: images[1].right ? true : false
+                        },
+                        {text: 'Оба'}, {text: 'Ни один'}]
+                    break
+                case 1:
+                    images = this.shuffle([{src: `${this.state.url}/${t}/0.png`}, {src: `${this.state.url}/${t2}/0.png`}])
+                    answers = [
+                        {text: 'Левый'},
+                        {text: 'Правый'},
+                        {text: 'Оба', right: true},
+                        {text: 'Ни один'}]
                     break
                 default:
-                    rand = parseInt(Math.random() * db[i].length, 10)
-                    result.push(db[i][rand])
-                    db[i] = _.without(db[i], db[i][rand])
+                    images = this.shuffle([{src: `${this.state.url}/${t}/${b}.png`}, {src: `${this.state.url}/${t2}/${b2}.png`}])
+                    answers = [
+                        {text: 'Левый'},
+                        {text: 'Правый'},
+                        {text: 'Оба'},
+                        {text: 'Ни один', right: true}]
+                    break
+                }
+                _db[1].push({
+                    question: _db[0].list[q],
+                    answers: answers,
+                    images: images
+                })
+            }
+        }
+        for (let i = 0; i < 8; i++) {
+            for (let a = 0; a < 2; a++) {
+
+                switch (i) {
+                case 0:
+                    let q = parseInt(Math.random() * _db[0].list.length, 10)
+                    let t = parseInt(Math.random() * _db[0].files.length, 10)
+                    let b = parseInt(1 + Math.random() * _db[0].files[t], 10)
+
+                    result.push({
+                        question: _db[0].list[q],
+                        answers: [],
+                        images: this.shuffle([{
+                            src: `${this.state.url}/${t}/0.png`,
+                            right: true
+                        },
+                        {
+                            src: `${this.state.url}/${t}/${b}.png`
+                        }])
+                    })
+                    break
+                default:
+                    let rand = parseInt(Math.random() * _db[i].length - 1, 10)
+                    result.push(_db[i][rand])
+                    _db[i] = _.without(_db[i], _db[i][rand])
+
                 }
             }
         }
-
-        if (this.props.isLogin) this.props.actions.profile.getScores()
         this.setState({questions: this.shuffle(result)})
-    }
-    componentDidUpdate(prevProps) {
-        if (this.props.isLogin && !prevProps.isLogin) this.props.actions.profile.getScores()
     }
     getQuestion() {
         let {questions, current} = this.state
@@ -134,8 +228,9 @@ class Test extends Component {
                 {images ? <div className='test__images'>
                     {images.map((el, i) => {
                         let {src, right} = el
-                        return <a href='#' onClick={this.handleClick(right)} className='test__answer' key={i}>
+                        return <a href='#' onClick={this.handleClick(right)} className='test__answer test__answer--image' key={i}>
                             <img src={src} alt='' />
+                            <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/>
                         </a>
                     })}
                 </div> : null}
@@ -151,102 +246,118 @@ class Test extends Component {
         }
         return null
     }
+    getRulesScreen() {
+        return <div className='test__rules'>
+            <a href='#' onClick={this.toggleRules(false)} className='test__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
+            <div className='center'>
+                <h2>Правила игры</h2>
+            </div>
+
+            <img src='/layout/images/line.png' alt='' className='test__divider' />
+            <p>Каждый тест состоит из 16 вопросов  на знание истории и техники Russell Hobbs. </p>
+            <p>На прохождение одного теста вам дается 120 секунд.</p>
+            <p>Время, за которое вы пройдете тест, определяется как базовое.</p>
+            <p>За каждый правильный ответ из базового времени вычитается 1 секунда. За каждый неправильный ответ к базовому времени прибавляется 1 секунда. </p>
+            <p>Количество набранных баллов определяются так – из 120 секунд вычитается ваше базовое время, подсчитанное с учетом секунд за правильные и неправильные ответы. Оставшиеся секунды – это и есть ваши баллы (1 секунда = 1 балл). </p>
+            <p>В день вы можете пройти тест не более 3 раз. </p>
+            <p>По итогам дня формируется ваш рейтинг. Это сумма всех итоговых результатов всех сыгранных раундов. </p>
+            <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
+            <p>Итоги подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за 2 недели. </p>
+            <p>По итогам 2 недель все результаты обнуляются, и начинается следующий двухнедельный игровой тур.</p>
+            <p>Удачи!</p>
+            <div className='center'>
+                <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
+            </div>
+        </div>
+    }
+    getStartScreen() {
+        return <div>
+            <p>Вопрос, с которого все начинается – когда? Наша история началась больше 60 лет назад, когда мы придумали прибор, ставший для того времени событием. С тех пор мы стараемся все наши приборы, к ак и каждую из составляющих их деталей, создавать такими, чтобы они были достойны стать частью истории. </p>
+            <p>История складывается из событий, техника состоит из деталей, а ваша победа сложится из правильных ответов на наши вопросы. Участвуйте в игре «История в деталях» и выигрывайте! Или просто получайте удовольствие. И это уже без вопросов.</p>
+            <p><strong>Примите участие в игре с 9 ноября по 30 декабря.</strong></p>
+            <img src='/layout/images/line.png' alt='' className='test__divider' />
+
+            <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
+            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+        </div>
+    }
+    getResultsScreen() {
+        let { time, stat } = this.state
+        let { games, scores, position } = stat
+
+        return <div>
+            <h2>Ваш результат:</h2>
+            <br/>
+            <span className='test__score test__score--big' data-text='Баллов'>
+                {time}
+            </span>
+            <span className='test__score test__score--big' data-text='Место в рейтинге'>
+                {position}
+            </span>
+            <img src='/layout/images/line.png' alt='' className='test__divider' />
+            <span className='kitchen__block kitchen__block--inline'>
+                <span>Осталось попыток<br/>сыграть сегодня</span>
+                <div className='kitchen__score'>
+                    {games}
+                </div>
+            </span>
+            <span className='kitchen__block kitchen__block--inline'>
+                <div className='kitchen__score'>
+                    {scores}
+                </div>
+                <span>набрано баллов<br/>до розыгрыша</span>
+
+            </span><br/>
+            {games > 0 ? <a href='#' onClick={this.startGame.bind(this)} className='button'>
+                    Сыграть еще раз
+                </a> : null }
+        </div>
+    }
+    getGameScreen() {
+        let { time, stat } = this.state
+        let { games } = stat
+        return <div>
+            <div className='test__ui'>
+                <div className='test__col'>
+                    <span className='test__block test__block--inline'>
+                        <div className='test__score'>
+                            {time}
+                        </div>
+                        <span>Осталось<br/>времени</span>
+                    </span>
+                </div>
+                <div className='test__col'>
+                    <span className='test__block test__block--inline'>
+                        <span>Осталось<br/>попыток</span>
+                        <div className='test__score'>
+                            {games}
+                        </div>
+                    </span>
+                </div>
+            </div>
+            {this.getQuestion()}
+        </div>
+    }
+    getLockedScreen() {
+        return <div className='test__placeholder center'>
+            <h4>{this.props.user.displayName},<br /> к сожалению, ваш лимит игр на сегодня достигнут.<br /> Возвращайтесь завтра и продолжайте борьбу за призы!</h4>
+        </div>
+    }
     render() {
-        let {isStarted, level, time, rules} = this.state
-        let today, total, position, totalGames
-        if (this.props.scores && this.props.scores.test) {
-            today = this.props.scores.test.today
-            total = this.props.scores.test.total
-            position = this.props.scores.test.position
-            totalGames = 3 - today.length
-        }
+        let {isStarted, locked, level, rules} = this.state
         return <div className='game'>
             <h1 className='game__title center'>История в деталях</h1>
             <div className='test'>
-                { rules ?
-                    <div className='test__rules'>
-                        <a href='#' onClick={this.toggleRules(false)} className='test__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
-                        <div className='center'>
-                            <h2>Правила игры</h2>
+                { rules ? this.getRules() : null }
+                { locked && level === -1
+                    ? this.getLockedScreen()
+                    :
+                    ( !isStarted ?
+                        <div className='test__placeholder'>
+                            { level === -1 ? this.getStartScreen() : this.getResultsScreen() }
                         </div>
-
-                        <img src='/layout/images/line.png' alt='' className='test__divider' />
-                        <p>Каждый тест состоит из 16 вопросов  на знание истории и техники Russell Hobbs. </p>
-                        <p>На прохождение одного теста вам дается 120 секунд.</p>
-                        <p>Время, за которое вы пройдете тест, определяется как базовое.</p>
-                        <p>За каждый правильный ответ из базового времени вычитается 1 секунда. За каждый неправильный ответ к базовому времени прибавляется 1 секунда. </p>
-                        <p>Количество набранных баллов определяются так – из 120 секунд вычитается ваше базовое время, подсчитанное с учетом секунд за правильные и неправильные ответы. Оставшиеся секунды – это и есть ваши баллы (1 секунда = 1 балл). </p>
-                        <p>В день вы можете пройти тест не более 3 раз. </p>
-                        <p>По итогам дня формируется ваш рейтинг. Это сумма всех итоговых результатов всех сыгранных раундов. </p>
-                        <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
-                        <p>Итоги подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за 2 недели. </p>
-                        <p>По итогам 2 недель все результаты обнуляются, и начинается следующий двухнедельный игровой тур.</p>
-                        <p>Удачи!</p>
-                        <div className='center'>
-                            <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
-                        </div>
-                    </div>
-                    : null }
-                {!isStarted ?
-                    <div className='test__placeholder'>
-                        { level === -1 ?
-                            <div>
-                                <p>Вопрос, с которого все начинается – когда? Наша история началась больше 60 лет назад, когда мы придумали прибор, ставший для того времени событием. С тех пор мы стараемся все наши приборы, к ак и каждую из составляющих их деталей, создавать такими, чтобы они были достойны стать частью истории. </p>
-                                <p>История складывается из событий, техника состоит из деталей, а ваша победа сложится из правильных ответов на наши вопросы. Участвуйте в игре «История в деталях» и выигрывайте! Или просто получайте удовольствие. И это уже без вопросов.</p>
-                                <p><strong>Примите участие в игре с 9 ноября по 30 декабря.</strong></p>
-                                <img src='/layout/images/line.png' alt='' className='test__divider' />
-
-                                <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
-                                <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
-                            </div>
-                            :
-                            <div>
-                                <h2>Ваш результат:</h2>
-                                <br/>
-                                <span className='test__score test__score--big' data-text='Баллов'>{time}</span>
-                                <span className='test__score test__score--big' data-text='Место в рейтинге'>{position}</span>
-                                <img src='/layout/images/line.png' alt='' className='test__divider' />
-                                <span className='kitchen__block kitchen__block--inline'>
-                                    <span>Осталось попыток<br/>сыграть сегодня</span>
-                                    <div className='kitchen__score'>
-                                        {totalGames}
-                                    </div>
-                                </span>
-                                <span className='kitchen__block kitchen__block--inline'>
-                                    <div className='kitchen__score'>
-                                        {total}
-                                    </div>
-                                    <span>набрано баллов<br/>до розыгрыша</span>
-
-                                </span><br/>
-                                <a href='#' onClick={this.startGame.bind(this)} className='button'>
-                                    Сыграть еще раз
-                                </a>
-                            </div>
-                        }
-                    </div>
-
-                    : <div>
-                        <div className='test__ui'>
-                            <div className='test__col'>
-                                <span className='test__block test__block--inline'>
-                                    <div className='test__score'>
-                                        {time}
-                                    </div>
-                                    <span>Осталось<br/>времени</span>
-                                </span>
-                            </div>
-                            <div className='test__col'>
-                                <span className='test__block test__block--inline'>
-                                    <span>Осталось<br/>попыток</span>
-                                    <div className='test__score'>
-                                        3
-                                    </div>
-                                </span>
-                            </div>
-                        </div>
-                        {this.getQuestion()}
-                    </div>
+                        : this.getGameScreen()
+                    )
                 }
             </div>
         </div>

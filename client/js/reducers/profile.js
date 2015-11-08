@@ -11,7 +11,7 @@ import {
 const initialState = {
     checks: [],
     favorites: false,
-    scores: [],
+    scores: false,
     prizes: []
 }
 
@@ -31,6 +31,7 @@ export default function(state = initialState, action) {
         return Object.assign({}, state, {
             favorites: action.data
         })
+    case UPDATE_GAME:
     case GET_SCORES:
     case START_GAME:
         return Object.assign({}, state, {

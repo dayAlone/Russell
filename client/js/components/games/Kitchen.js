@@ -271,7 +271,7 @@ class Kitchen extends Component {
         }
 
         for (let i = 1; i <= (settings[level].events - settings[level].empty) / 2; i++) {
-            let rand = 1 + parseInt(Math.random() * 18, 10)
+            let rand = 1 + parseInt(Math.random() * 12, 10)
             let link = `${url}/sku/custom/${rand}.png`
             if (images.indexOf(link) === -1) images.push(link)
             elements.push({

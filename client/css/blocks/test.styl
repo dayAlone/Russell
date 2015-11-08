@@ -22,6 +22,8 @@
             margin 0
             font-size 28px
             padding 0 8%
+        h4
+            line-height 1.6
     &__images
         & + .test__answers
             padding 0
@@ -67,8 +69,12 @@
         font-size 26px
         color white !important
         margin-bottom 10px
+        position relative
+
         &:hover
             color red !important
+            img
+                opacity .7
             svg
                 path
                     opacity 1
@@ -79,6 +85,7 @@
         &--wrong
             &, &:hover
                 svg
+                    opacity 1
                     path
                         opacity 1
                         stroke red
@@ -90,6 +97,7 @@
         &--true
             &, &:hover
                 svg
+                    opacity 1
                     path
                         opacity 1
                         stroke green
@@ -108,8 +116,19 @@
                 opacity 1
                 fill-opacity 0
                 stroke white
+        &--image
+            svg
+                position absolute
+                top 50%
+                left 50%
+                opacity 0
+                margin 0px
+                z-index 2
+                transform translateX(-50%) translateY(-50%)
         img
             max-width 150px
+            max-height 150px
+            t opacity
     &__divider
         @extend .kitchen__divider
     &__rules

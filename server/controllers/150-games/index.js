@@ -142,6 +142,9 @@ const getUserScores = function* (user, pre, after) {
 export default function(app) {
     const router = new Router()
     router
+        .get('/games/kitchen/', function* () {
+            this.body = this.render('index', {cancelAdaptive: true})
+        })
         .get('/games/get/', function* () {
             let result
             try {

@@ -6,6 +6,25 @@
     position relative
     border 1px solid #303130
     margin 50px 0 120px
+    &__no-mobile
+        display none
+        @media (max-width: $scr_md)
+            display block
+            position absolute
+            top 0
+            left 0
+            size 100%
+            background-color black
+            z-index 1000
+            > span
+                position absolute
+                width 80%
+                left 50%
+                top 50%
+                transform translateY(-50%) translateX(-50%)
+                font-size 30px
+                line-height 1.4
+                text-align center
     &__timeout
         position absolute
         top 0

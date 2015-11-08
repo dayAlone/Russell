@@ -520,6 +520,7 @@ class Kitchen extends Component {
                             this.getGameScreen()
                     )
                 }
+                <div className='kitchen__no-mobile'><span>Ваш экран слишком мал:(<br/>Скоро будет доступно и на мобильных устройствах </span></div>
             </div>
         </div>
     }

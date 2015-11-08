@@ -3,6 +3,8 @@ import Games from '../../models/games'
 import Scores from '../../models/scores'
 import { Types } from 'mongoose'
 import moment from 'moment'
+import config from 'config'
+import pluralize from '../../../client/js/libs/pluralize'
 
 const getUserRating = function* (user, type, scores, raffles) {
     try {
@@ -142,8 +144,37 @@ const getUserScores = function* (user, pre, after) {
 export default function(app) {
     const router = new Router()
     router
-        .get('/games/kitchen/', function* () {
-            this.body = this.render('index', {cancelAdaptive: true})
+        .get('/games/:id/', function* () {
+            let meta
+            if (this.query.id) {
+                try {
+                    let item = yield Scores.findOne({
+                        _id: this.query.id
+                    })
+                    if (item) {
+                        let scoresText = pluralize(item.scores, ['балл', 'балла', 'баллов', 'балла'])
+                        let titles = {
+                            kitchen: {
+                                title: `Мною уже собрано ${item.scores} ${scoresText} в игре «Собери коллекцию!».`,
+                                description: 'И я все ближе к выигрышу приза! Хотите со мной посоревноваться? Заходите на russellhobbs-promo.ru!',
+                            },
+                            test: {
+                                title: `На моем счету уже ${item.scores} ${scoresText} в тесте «История в деталях!». `,
+                                description: 'И мои шансы на выигрыш приза стали еще больше! Заходите на russellhobbs-promo.ru и давайте соревноваться!',
+                            }
+                        }
+                        meta = {
+                            image: `${config.cdn}/layout/images/share-${this.params.id}.jpg`,
+                            title: titles[this.params.id] ? titles[this.params.id].title : '',
+                            description: titles[this.params.id] ? titles[this.params.id].description : ''
+                        }
+                    }
+                } catch (e) {
+                    console.error(e)
+                }
+            }
+
+            this.body = this.render('index', {cancelAdaptive: true, meta: meta})
         })
         .get('/games/get/', function* () {
             let result

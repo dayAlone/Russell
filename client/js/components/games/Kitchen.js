@@ -147,7 +147,7 @@ class Kitchen extends Component {
     }
     tickTimeout() {
         let { settings, level, timeout, timers } = this.state
-        if (timeout === 0) {
+        if (timeout === 1) {
             clearTimeout(timers.timeout)
             this.setState({
                 timeout: false,
@@ -424,7 +424,7 @@ class Kitchen extends Component {
             <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
         </div>
     }
-getResultsScreen() {
+    getResultsScreen() {
         let { time, stat, level } = this.state
         let { games, scores, position } = stat
 

@@ -498,14 +498,14 @@ class Kitchen extends Component {
         let { games, scores, position } = stat
         let _id = ''
         if (this.props.scores && this.props.scores.kitchen) _id = this.props.scores.kitchen.today[0]._id
-        let url = `http://${document.domain}/games/kitchen/?id=${_id}`
+        let url = `http://${document.domain}/games/kitchen/${_id}`
         return <div>
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
             <br/>
-            <span className='kitchen__score kitchen__score--big' data-text='Баллов'>
+            <span className='test__score test__score--big' data-text='Баллов'>
                 {this.state.scores.current}
             </span>
-            {level === 2 ? <span className='kitchen__score kitchen__score--big' data-text='Место в рейтинге'>
+            {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
                 {position}
             </span> : null }
             {(shares.fb !== true || shares.vk !== true) && level === 2 ? <div>

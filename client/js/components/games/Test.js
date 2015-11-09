@@ -352,7 +352,7 @@ class Test extends Component {
         let { games, scores, position } = stat
         let _id = ''
         if (this.props.scores && this.props.scores.test) _id = this.props.scores.test.today[0]._id
-        let url = `http://${document.domain}/games/test/?id=${_id}`
+        let url = `http://${document.domain}/games/test/${_id}`
         return <div>
             <h2>Ваш результат:</h2>
             <br/>

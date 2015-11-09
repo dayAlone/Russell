@@ -51,11 +51,11 @@ export default function configureRoutes(reducerRegistry) {
                     reducerRegistry.register({profile: require('../reducers/profile')})
                     callback(null, [
                         {
-                            path: 'kitchen',
+                            path: 'kitchen/*',
                             component: require('../components/games/Kitchen')
                         },
                         {
-                            path: 'test',
+                            path: 'test/*',
                             component: require('../components/games/Test')
                         },
                         {

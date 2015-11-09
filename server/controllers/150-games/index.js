@@ -144,13 +144,14 @@ const getUserScores = function* (user, pre, after) {
 export default function(app) {
     const router = new Router()
     router
-        .get('/games/:id/', function* () {
+        .get('/games/:id/:el', function* () {
             let meta
-            if (this.query.id) {
+
+            if (this.params.el) {
                 try {
                     let scores = 0
                     let item = yield Scores.findOne({
-                        _id: this.query.id
+                        _id: this.params.el
                     })
                     if (item) {
                         let total = yield getUserTotalScores(item.user)

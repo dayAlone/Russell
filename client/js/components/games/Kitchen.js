@@ -28,6 +28,10 @@ class Kitchen extends Component {
             current: 0,
             total: 0
         },
+        shares: {
+            fb: false,
+            vk: false
+        },
         time: 0,
         timers: {
             open: false,
@@ -73,6 +77,9 @@ class Kitchen extends Component {
             position: 0
         }
     }
+    componentWillUnmount() {
+        for (let type in this.state.shares) clearInterval(this.state.shares[type])
+    }
     componentDidMount() {
         if (this.props.isLogin) this.props.actions.profile.getScores()
         if (this.props.scores) this.checkLocked()
@@ -87,10 +94,64 @@ class Kitchen extends Component {
             this.checkLocked()
         }
     }
+    handleShare(type, url) {
+        let request
+        let _id = this.props.scores && this.props.scores.kitchen ? this.props.scores.kitchen.today[0]._id : null
+        return () => {
+            let {shares} = this.state
+            if (!shares[type]) {
+                switch (type) {
+                case 'vk':
+                    if (!window.VK) window.VK = {}
+                    window.VK.Share = {
+                        count: (idx, number) => {
+                            if (number > 0) this.updateShare('vk', _id)
+                        }
+                    }
+                    shares['vk'] = setInterval(()=>{
+                        request = `http://vk.com/share.php?act=count&url=${url}`
+                        $.getScript(request)
+                    }, 3000)
+                    break
+                case 'fb':
+                default:
+                    url = encodeURIComponent(url)
+                    shares['fb'] = setInterval(()=>{
+                        request = `https://graph.facebook.com/?id=${url}`
+                        $.getJSON(request, (result) => {
+                            let number = result.shares ? result.shares : 0
+                            console.log('fb share ' + number, result)
+                            console.log(url)
+                            if (number > 0) this.updateShare('fb', _id)
+                        })
+                    }, 3000)
+                    break
+                }
+                this.setState({
+                    shares: shares
+                })
+            }
+        }
+    }
+    updateShare(type, id) {
+        let {shares, time} = this.state
+
+        clearInterval(shares[type])
+        shares[type] = true
+
+        time += 5
+
+        this.props.actions.profile.updateGame(id, { scores: time, share: shares })
+
+        this.setState({
+            shares: shares,
+            time: time
+        })
+    }
     checkLocked() {
         if (this.props.scores.kitchen) {
             let {today, total, position} = this.props.scores.kitchen
-            let {_id, finished, scores, level} = today[0]
+            let {_id, finished, scores, level, share} = today[0]
             let {updateGame} = this.props.actions.profile
 
             let fields = {
@@ -99,7 +160,8 @@ class Kitchen extends Component {
                     games: 3 - today.length,
                     scores: total,
                     position: position
-                }
+                },
+                shares: share
             }
             if (this.state.level === -1) {
                 if (!finished && level !== 2) {
@@ -214,7 +276,6 @@ class Kitchen extends Component {
             })
         }
     }
-
     startGame(e) {
         let {isLogin, actions } = this.props
         if (isLogin) {
@@ -222,6 +283,7 @@ class Kitchen extends Component {
             let {updateGame, startGame} = actions.profile
 
             if (level >= 2) {
+                for (let type in this.state.shares) clearInterval(this.state.shares[type])
                 level = 0
                 scores = {
                     current: 0,
@@ -233,7 +295,7 @@ class Kitchen extends Component {
             if (level === 0 && !cont) startGame('kitchen', false)
             else {
                 let {today} = this.props.scores.kitchen
-                updateGame(today[0]._id, {scores: scores, finished: false, level: level})
+                updateGame(today[0]._id, {scores: scores.total, finished: false, level: level})
             }
 
             this.setState({
@@ -426,9 +488,10 @@ class Kitchen extends Component {
         </div>
     }
     getResultsScreen() {
-        let { time, stat, level } = this.state
+        let { time, stat, level, shares } = this.state
         let { games, scores, position } = stat
         let _id = ''
+        console.log(shares, time)
         if (this.props.scores && this.props.scores.test) _id = this.props.scores.test.today[0]._id
         let url = `http://${document.domain}/games/kitchen/?id=${_id}`
         return <div>
@@ -440,15 +503,17 @@ class Kitchen extends Component {
             {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
                 {position}
             </span> : null }
-            <img src='/layout/images/line.png' alt='' className='test__divider' />
-            <div className='test__share'>
-                <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
-                <FacebookButton url={url} className='fb'> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
-                <VKontakteButton url={url} className='vk'> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
-                <div className='test__share-scores'>
-                    <span>+5</span> баллов
+            {shares && shares.fb !== true || shares && shares.vk !== true ? <div>
+                <img src='/layout/images/line.png' alt='' className='test__divider' />
+                <div className='test__share'>
+                    <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
+                    {shares.fb !== true ? <FacebookButton url={url} className='fb' onClick={this.handleShare('fb', url)}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton> : null }
+                    {shares.vk !== true ? <VKontakteButton url={url} className='vk' onClick={this.handleShare('vk', url)}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton> : null }
+                    <div className='test__share-scores'>
+                        <span>+5</span> баллов
+                    </div>
                 </div>
-            </div>
+            </div> : null }
             <img src='/layout/images/line.png' alt='' className='test__divider' />
             <span className='kitchen__block kitchen__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>

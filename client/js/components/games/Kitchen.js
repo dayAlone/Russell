@@ -120,8 +120,8 @@ class Kitchen extends Component {
                         request = `https://graph.facebook.com/?id=${url}`
                         $.getJSON(request, (result) => {
                             let number = result.shares ? result.shares : 0
-                            console.log('fb share ' + number, result)
-                            console.log(url)
+                            //console.log('fb share ' + number, result)
+                            //console.log(url)
                             if (number > 0) this.updateShare('fb', _id)
                         })
                     }, 3000)
@@ -142,7 +142,7 @@ class Kitchen extends Component {
         scores.current += 5
         scores.total += 5
 
-        this.props.actions.profile.updateGame(id, { scores: time, share: shares })
+        this.props.actions.profile.updateGame(id, { scores: scores.total, share: shares })
 
         this.setState({
             shares: shares,
@@ -497,30 +497,29 @@ class Kitchen extends Component {
         let { time, stat, level, shares } = this.state
         let { games, scores, position } = stat
         let _id = ''
-        console.log(shares, time)
-        if (this.props.scores && this.props.scores.test) _id = this.props.scores.test.today[0]._id
+        if (this.props.scores && this.props.scores.kitchen) _id = this.props.scores.kitchen.today[0]._id
         let url = `http://${document.domain}/games/kitchen/?id=${_id}`
         return <div>
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
             <br/>
-            <span className='test__score test__score--big' data-text='Баллов'>
+            <span className='kitchen__score kitchen__score--big' data-text='Баллов'>
                 {this.state.scores.current}
             </span>
-            {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
+            {level === 2 ? <span className='kitchen__score kitchen__score--big' data-text='Место в рейтинге'>
                 {position}
             </span> : null }
             {shares && shares.fb !== true || shares && shares.vk !== true ? <div>
-                <img src='/layout/images/line.png' alt='' className='test__divider' />
-                <div className='test__share'>
-                    <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
+                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                <div className='kitchen__share'>
+                    <div className='kitchen__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
                     {shares.fb !== true ? <FacebookButton url={url} className='fb' onClick={this.handleShare('fb', url)}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton> : null }
                     {shares.vk !== true ? <VKontakteButton url={url} className='vk' onClick={this.handleShare('vk', url)}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton> : null }
-                    <div className='test__share-scores'>
+                    <div className='kitchen__share-scores'>
                         <span>+5</span> баллов
                     </div>
                 </div>
             </div> : null }
-            <img src='/layout/images/line.png' alt='' className='test__divider' />
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
             <span className='kitchen__block kitchen__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>
                 <div className='kitchen__score'>
@@ -573,13 +572,13 @@ class Kitchen extends Component {
         </div>
     }
     getLockedScreen() {
-        return <div className='test__placeholder center'>
+        return <div className='kitchen__placeholder center'>
             <h4>{this.props.user.displayName},<br /> к сожалению, ваш лимит игр на сегодня достигнут.<br /> Возвращайтесь завтра и продолжайте борьбу за призы!</h4>
             <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
         </div>
     }
     getContinueScreen() {
-        return <div className='test__placeholder center'>
+        return <div className='kitchen__placeholder center'>
             <h4>{this.props.user.displayName},<br /> вы не закончили игру в прошлый раз.<br/>
             Вам необходимо завершить прохождение всех уровней, чтобы начать игру с начала.</h4>
         <a href='#' className='button button--top' onClick={this.startGame.bind(this)}>Продолжить игру</a>

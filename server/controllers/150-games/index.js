@@ -152,11 +152,12 @@ export default function(app) {
                     let item = yield Scores.findOne({
                         _id: this.query.id
                     })
-                    let total = yield getUserTotalScores(item.user)
-                    total.map(el => {
-                        if (el._id === item.type) scores = el.total
-                    })
                     if (item) {
+                        let total = yield getUserTotalScores(item.user)
+                        total.map(el => {
+                            if (el._id === item.type) scores = el.total
+                        })
+
                         let scoresText = pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])
                         let titles = {
                             kitchen: {

@@ -140,8 +140,8 @@ class Test extends Component {
                         request = `https://graph.facebook.com/?id=${url}`
                         $.getJSON(request, (result) => {
                             let number = result.shares ? result.shares : 0
-                            console.log('fb share ' + number, result)
-                            console.log(url)
+                            //console.log('fb share ' + number, result)
+                            //console.log(url)
                             if (number > 0) this.updateShare('fb', _id)
                         })
                     }, 3000)

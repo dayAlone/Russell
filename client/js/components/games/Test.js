@@ -135,7 +135,7 @@ class Test extends Component {
             case 'fb':
             default:
                 shares['fb'] = setInterval(()=>{
-                    request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${encodeURIComponent(url)}%22&callback=?`
+                    request = encodeURIComponent(`http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`)
                     $.getJSON(request, (result) => {
                         let number = result.data[0] ? result.data[0].total_count : 0
                         console.log(url, 'fb share ' + number, result.data)

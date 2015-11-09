@@ -374,14 +374,14 @@ class Test extends Component {
                 </div>
             </div> : null }
             <img src='/layout/images/line.png' alt='' className='test__divider' />
-            <span className='kitchen__block kitchen__block--inline'>
+            <span className='test__block test__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>
-                <div className='kitchen__score'>
+                <div className='test__score'>
                     {games}
                 </div>
             </span>
-            <span className='kitchen__block kitchen__block--inline'>
-                <div className='kitchen__score'>
+            <span className='test__block test__block--inline'>
+                <div className='test__score'>
                     {scores}
                 </div>
                 <span>набрано баллов<br/>до розыгрыша</span>
@@ -439,7 +439,7 @@ class Test extends Component {
                         : this.getGameScreen()
                     )
                 }
-                <div className='kitchen__no-mobile'><span>Ваш экран слишком мал:(<br/>Скоро будет доступно и на мобильных устройствах </span></div>
+                <div className='test__no-mobile'><span>Ваш экран слишком мал:(<br/>Скоро будет доступно и на мобильных устройствах </span></div>
             </div>
         </div>
     }

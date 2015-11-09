@@ -155,7 +155,9 @@ export default function(app) {
                     if (item) {
                         let total = yield getUserTotalScores(item.user)
                         total.map(el => {
-                            if (el._id === item.type) scores = el.total
+                            if (el._id.toString() === item.type.toString()) {
+                                scores = el.total
+                            }
                         })
 
                         let scoresText = pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])

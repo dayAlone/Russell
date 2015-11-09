@@ -137,9 +137,10 @@ class Test extends Component {
                 default:
                     url = encodeURIComponent(url)
                     shares['fb'] = setInterval(()=>{
-                        request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`
+
+                        request = `https://api.facebook.com/method/links.getStats?urls=${url}&format=json`
                         $.getJSON(request, (result) => {
-                            let number = result.data[0] ? result.data[0].total_count : 0
+                            let number = result[0] ? result[0].total_count : 0
                             console.log('fb share ' + number, result.data)
                             console.log(url)
                             if (number > 0) this.updateShare('fb', _id)

@@ -1,9 +1,20 @@
 /*global _*/
 import React, { Component } from 'react'
+
+import { connect } from 'react-redux'
+import * as actionLogin from '../../actions/login'
+import * as actionProfile from '../../actions/profile'
+import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
+import { FacebookButton, VKontakteButton } from 'react-social'
+
+@connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Kitchen extends Component {
     state = {
         url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
         rules: false,
+        cont: false,
+        timeout: false,
         isStarted: false,
         loader: {
             active: false,
@@ -16,6 +27,10 @@ class Kitchen extends Component {
         scores: {
             current: 0,
             total: 0
+        },
+        shares: {
+            fb: false,
+            vk: false
         },
         time: 0,
         timers: {
@@ -54,7 +69,117 @@ class Kitchen extends Component {
                 multiply: 3,
                 open: 1500
             }
-        ]
+        ],
+        locked: false,
+        stat: {
+            games: 3,
+            scores: 0,
+            position: 0
+        }
+    }
+    componentWillUnmount() {
+        for (let type in this.state.shares) clearInterval(this.state.shares[type])
+    }
+    componentDidMount() {
+        if (this.props.isLogin) this.props.actions.profile.getScores()
+        if (this.props.scores) this.checkLocked()
+    }
+    componentDidUpdate(prevProps) {
+        if (this.props.isLogin && !this.props.scores) this.props.actions.profile.getScores()
+        if ((this.props.scores && !prevProps.scores)
+            || (prevProps.scores && prevProps.scores.kitchen &&
+                (prevProps.scores.kitchen.total !== this.props.scores.kitchen.total
+                    || prevProps.scores.kitchen.count !== this.props.scores.kitchen.count))
+                ) {
+            this.checkLocked()
+        }
+    }
+    handleShare(type, url) {
+        let request
+        let _id = this.props.scores && this.props.scores.kitchen ? this.props.scores.kitchen.today[0]._id : null
+        return () => {
+            let {shares} = this.state
+            if (!shares[type]) {
+                switch (type) {
+                case 'vk':
+                    if (!window.VK) window.VK = {}
+                    window.VK.Share = {
+                        count: (idx, number) => {
+                            if (number > 0) this.updateShare('vk', _id)
+                        }
+                    }
+                    shares['vk'] = setInterval(()=>{
+                        request = `http://vk.com/share.php?act=count&url=${url}`
+                        $.getScript(request)
+                    }, 3000)
+                    break
+                case 'fb':
+                default:
+                    url = encodeURIComponent(url)
+                    shares['fb'] = setInterval(()=>{
+                        request = `https://graph.facebook.com/?id=${url}`
+                        $.getJSON(request, (result) => {
+                            let number = result.shares ? result.shares : 0
+                            //console.log('fb share ' + number, result)
+                            //console.log(url)
+                            if (number > 0) this.updateShare('fb', _id)
+                        })
+                    }, 3000)
+                    break
+                }
+                this.setState({
+                    shares: shares
+                })
+            }
+        }
+    }
+    updateShare(type, id) {
+        let {shares, scores} = this.state
+
+        clearInterval(shares[type])
+        shares[type] = true
+
+        scores.current += 5
+        scores.total += 5
+
+        this.props.actions.profile.updateGame(id, { scores: scores.total, share: shares })
+
+        this.setState({
+            shares: shares,
+            scores: scores
+        })
+    }
+    checkLocked() {
+        if (this.props.scores.kitchen) {
+            let {today, total, position} = this.props.scores.kitchen
+            let {_id, finished, scores, level, share} = today[0]
+            let {updateGame} = this.props.actions.profile
+
+            let fields = {
+                locked: today.length >= 3 && finished,
+                stat: {
+                    games: 3 - today.length,
+                    scores: total,
+                    position: position
+                },
+                shares: share
+            }
+            if (this.state.level === -1) {
+                if (!finished && level !== 2) {
+                    fields = Object.assign({}, fields, {
+                        cont: true,
+                        level: level,
+                        scores: {
+                            current: 0,
+                            total: scores
+                        }
+                    })
+                } else {
+                    updateGame(_id, {scores: scores, finished: true})
+                }
+            }
+            this.setState(fields)
+        }
     }
     tickBox() {
         let numbers = []
@@ -65,11 +190,15 @@ class Kitchen extends Component {
             }
         }
         let rand = parseInt(Math.random() * numbers.length, 10)
+        while (active.indexOf(numbers[rand]) !== -1) {
+            rand = parseInt(Math.random() * numbers.length, 10)
+        }
         active.push(numbers[rand])
         active_elements[numbers[rand]] = elements[0]
         setTimeout(() => {
             this.setState({active: _.without(this.state.active, numbers[rand])})
         }, settings[level].open)
+
         this.setState({
             active: active,
             active_elements: active_elements,
@@ -82,6 +211,22 @@ class Kitchen extends Component {
             this.setState({time: this.state.time - 1})
         } else {
             this.stopGame()
+        }
+    }
+    tickTimeout() {
+        let { settings, level, timeout, timers } = this.state
+        if (timeout === 1) {
+            clearTimeout(timers.timeout)
+            this.setState({
+                timeout: false,
+                timers: {
+                    timeout: false,
+                    open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
+                    scores: setInterval(this.tickTime.bind(this), 1000)
+                }
+            })
+        } else {
+            this.setState({timeout: timeout - 1})
         }
     }
     shuffle(array) {
@@ -97,8 +242,8 @@ class Kitchen extends Component {
 
         return array
     }
-    preloadImages(images, index) {
-        index = index || 0
+    preloadImages(images, i) {
+        let index = i || 0
         if (index === 0) {
             this.setState({
                 loader: {
@@ -120,8 +265,15 @@ class Kitchen extends Component {
             }
             img.src = images[index]
         } else {
+
             this.setState({
                 isStarted: true,
+                timeout: 5,
+                timers: {
+                    timeout: setInterval(this.tickTimeout.bind(this), 1000),
+                    open: false,
+                    scores: false
+                },
                 loader: {
                     active: false,
                     percentage: 0
@@ -130,40 +282,58 @@ class Kitchen extends Component {
         }
     }
     startGame(e) {
-        let {settings, level, scores} = this.state
-        if (level >= 2) {
-            level = 0
-            scores = {
-                current: 0,
-                total: 0
+        let {isLogin, actions } = this.props
+        if (isLogin) {
+            let {settings, level, scores, cont, shares} = this.state
+            let {updateGame, startGame} = actions.profile
+
+            if (level >= 2) {
+                for (let type in this.state.shares) clearInterval(this.state.shares[type])
+                level = 0
+                scores = {
+                    current: 0,
+                    total: 0
+                }
+                shares = {
+                    fb: false,
+                    vk: false
+                }
+            } else {
+                level++
             }
+            if (level === 0 && !cont) startGame('kitchen', false)
+            else {
+                let {today} = this.props.scores.kitchen
+                updateGame(today[0]._id, {scores: scores.total, finished: false, level: level})
+            }
+
+            this.setState({
+                cont: false,
+                time: settings[level].time,
+                scores: scores,
+                level: level,
+                shares: shares,
+            }, this.makeElements)
+
+            /*
+            window.onbeforeunload = (e) => {
+                e = e || window.event
+                if (e) { e.returnValue = false }
+                return false
+            }
+            */
         } else {
-            level++
+            actions.login.openModal()
         }
-
-        this.setState({
-            time: settings[level].time,
-            scores: scores,
-            level: level,
-            times: {
-                open: setInterval(this.tickBox.bind(this), settings[level].time / settings[level].events * 1000),
-                scores: setInterval(this.tickTime.bind(this), 1000)
-            }
-        }, this.makeElements)
-
-        /*
-        window.onbeforeunload = (e) => {
-            e = e || window.event
-            if (e) { e.returnValue = false }
-            return false
-        }
-        */
-        if (e) e.preventDefault()
+        e.preventDefault()
     }
     stopGame() {
-        let {times, scores, time, settings, level} = this.state
-        clearInterval(times.open)
-        clearInterval(times.scores)
+        let {timers, scores, time, settings, level} = this.state
+        clearInterval(timers.open)
+        clearInterval(timers.scores)
+        let {updateGame} = this.props.actions.profile
+
+        updateGame(this.props.scores.kitchen.today[0]._id, { scores: scores.total + (settings[level].multiply * time), finished: level === 2, level: level})
 
         this.setState({
             time: 0,
@@ -200,7 +370,7 @@ class Kitchen extends Component {
                     }
                     else changes['clicks'] = clicks
                 } else {
-                    changes['time'] = time - 1
+                    changes['time'] = time > 0 ? time - 1 : 0
                 }
                 this.setState(changes)
             }
@@ -215,7 +385,7 @@ class Kitchen extends Component {
                     <img src={`${url}/${settings[level].code}/box-${i}.png`} alt='' />
                     {active.indexOf(i) !== -1 ?
                         active_elements[i] && active_elements[i].type !== 'empty'
-                            ? <img src={`${url}/sku/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
+                            ? <img src={`${url}/sku2/${active_elements[i].type === 'custom' ? 'custom' : level }/${active_elements[i].id}.png`} alt='' className='kitchen__box-content' />
                             : null
                     : null }
                 </div>)
@@ -230,9 +400,9 @@ class Kitchen extends Component {
 
             for (let i = 1; i <= settings[level].sku; i++) {
                 sku.push(<div className='kitchen__sku' key={i}>
-                    <img src={`${url}/sku/${level}/inactive/${i}.png`} alt='' />
+                    <img src={`${url}/sku2/${level}/inactive/${i}.png`} alt='' />
                     <div className={`kitchen__sku-overlay ${clicks[i] > 0 ? 'kitchen__sku-overlay--' + clicks[i] : ''}`}>
-                        <img src={`${url}/sku/${level}/${i}.png`} alt=''/>
+                        <img src={`${url}/sku2/${level}/${i}.png`} alt=''/>
                     </div>
                 </div>)
             }
@@ -247,8 +417,8 @@ class Kitchen extends Component {
         for (let i = 1; i <= settings[level].boxes; i++) images.push(`${url}/${settings[level].code}/box-${i}.png`)
 
         for (let i = 1; i <= settings[level].sku; i++) {
-            images.push(`${url}/sku/${level}/${i}.png`)
-            images.push(`${url}/sku/${level}/inactive/${i}.png`)
+            images.push(`${url}/sku2/${level}/${i}.png`)
+            images.push(`${url}/sku2/${level}/inactive/${i}.png`)
             for (let a = 0; a < 5; a++) {
                 elements.push({
                     type: 'sku',
@@ -258,8 +428,8 @@ class Kitchen extends Component {
         }
 
         for (let i = 1; i <= (settings[level].events - settings[level].empty) / 2; i++) {
-            let rand = 1 + parseInt(Math.random() * 18, 10)
-            let link = `${url}/sku/custom/${rand}.png`
+            let rand = 1 + parseInt(Math.random() * 12, 10)
+            let link = `${url}/sku2/custom/${rand}.png`
             if (images.indexOf(link) === -1) images.push(link)
             elements.push({
                 type: 'custom',
@@ -281,115 +451,162 @@ class Kitchen extends Component {
             e.preventDefault()
         }
     }
-    render() {
-        let {isStarted, level, scores, time, rules, loader} = this.state
-        let {current, total} = scores
+    getRulesScreen() {
+        return <div className='kitchen__rules'>
+            <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
+            <div className='center'>
+                <h2>Правила игры</h2>
+            </div>
+
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
+            <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
+            <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
+            <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
+            <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
+            <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
+            <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
+            <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
+            <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
+            <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
+            <p>Удачи!</p>
+            <div className='center'>
+                <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
+            </div>
+        </div>
+    }
+    getLoadingScreen() {
+        let {loader} = this.state
+        return <div className='kitchen__placeholder kitchen__placeholder--loader'>
+            <h2>Загрузка</h2>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <div className='kitchen__loader'>
+                <span style={{width: loader.percentage + '%'}}></span>
+            </div>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <small>Если загрузка идет очень долго, попробуйте обновить страницу</small>
+        </div>
+    }
+    getStartScreen() {
+        return <div>
+            <p>В кухне все должно быть прекрасно. Для этого в ней, во-первых, должен быть порядок, во-вторых, она должна быть наполнена красивыми вещами. Такими, как техника Russell Hobbs.</p>
+            <p>Так что – пришла пора наводить порядок на кухне и подбирать для нее красивые вещи. Вы готовы? Тогда мы приглашаем вас в игру. Мы спрятали на нашей виртуальной кухне разные приборы Russell Hobbs. Вам нужно найти их и собрать. И если в игре вам будет сопутствовать успех, вы выиграете настоящую, а не виртуальную технику, и украсите ею свою кухню!</p>
+            <p><strong>Время действия акции - с 9 ноября по 30 декабря.</strong></p>
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
+            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+        </div>
+    }
+    getResultsScreen() {
+        let { time, stat, level, shares } = this.state
+        let { games, scores, position } = stat
+        let _id = ''
+        if (this.props.scores && this.props.scores.kitchen) _id = this.props.scores.kitchen.today[0]._id
+        let url = `http://${document.domain}/games/kitchen/${_id}`
+        return <div>
+            <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
+            <br/>
+            <span className='test__score test__score--big' data-text='Баллов'>
+                {level === 2 ? this.state.scores.total : this.state.scores.current}
+            </span>
+            {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
+                {position}
+            </span> : null }
+            {(shares.fb !== true || shares.vk !== true) && level === 2 ? <div>
+                <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+                <div className='kitchen__share'>
+                    <div className='kitchen__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
+                    {shares.fb !== true ? <FacebookButton url={url} className='fb' onClick={this.handleShare('fb', url)}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton> : null }
+                    {shares.vk !== true ? <VKontakteButton url={url} className='vk' onClick={this.handleShare('vk', url)}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton> : null }
+                    <div className='kitchen__share-scores'>
+                        <span>+5</span> баллов
+                    </div>
+                </div>
+            </div> : null }
+            <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
+            <span className='kitchen__block kitchen__block--inline'>
+                <span>Осталось попыток<br/>сыграть сегодня</span>
+                <div className='kitchen__score'>
+                    {games}
+                </div>
+            </span>
+            <span className='kitchen__block kitchen__block--inline'>
+                <div className='kitchen__score'>
+                    {scores}
+                </div>
+                <span>набрано баллов<br/>до розыгрыша</span>
+
+            </span><br/>
+            {games === 0 && level === 2 ? null : <a href='#' onClick={this.startGame.bind(this)} className='button'>
+                    {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
+                </a>}
+        </div>
+    }
+    getGameScreen() {
         let sku = this.makeSKU()
         let boxes = this.makeBoxes()
+        let {level, scores, time, timeout} = this.state
+        let {total} = scores
+
+        return <div className={`kitchen__level kitchen__level--${level}`}>
+            <div className='kitchen__ui kitchen__ui--left'>
+                <div className='kitchen__block'>
+                    <span>Сумма баллов</span>
+                    <div className='kitchen__score'>
+                        {total}
+                    </div>
+                </div>
+                <div className='kitchen__skus'>
+                    {sku.splice(0, sku.length / 2)}
+                </div>
+            </div>
+            {boxes}
+            {timeout ? <div className='kitchen__timeout'><span>{timeout}</span></div> : null}
+            <div className='kitchen__ui kitchen__ui--right'>
+                <div className='kitchen__block'>
+                    <span>Осталось времени</span>
+                    <div className='kitchen__score'>
+                        {time}
+                    </div>
+                </div>
+                <div className='kitchen__skus'>
+                    {sku.splice(sku.length / 2 - 2)}
+                </div>
+            </div>
+        </div>
+    }
+    getLockedScreen() {
+        return <div className='kitchen__placeholder center'>
+            <h4>{this.props.user.displayName},<br /> к сожалению, ваш лимит игр на сегодня достигнут.<br /> Возвращайтесь завтра и продолжайте борьбу за призы!</h4>
+            <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
+        </div>
+    }
+    getContinueScreen() {
+        return <div className='kitchen__placeholder center'>
+            <h4>{this.props.user.displayName},<br /> вы не закончили игру в прошлый раз.<br/>
+            Вам необходимо завершить прохождение всех уровней, чтобы начать игру с начала.</h4>
+        <a href='#' className='button button--top' onClick={this.startGame.bind(this)}>Продолжить игру</a>
+        </div>
+    }
+    render() {
+        let {isStarted, level, rules, loader, locked, cont} = this.state
         return <div className='game'>
             <h1 className='game__title center'>Собери коллекцию</h1>
             <div className='kitchen'>
-                { rules ?
-                    <div className='kitchen__rules'>
-                        <a href='#' onClick={this.toggleRules(false)} className='kitchen__close'><img src='/layout/images/svg/close.svg' alt='' /></a>
-                        <div className='center'>
-                            <h2>Правила игры</h2>
-                        </div>
-
-                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                        <p>Добро пожаловать на нашу виртуальную кухню! В нашей кухне, как и положено, есть множество шкафчиков. За их дверцами спрятаны различные предметы – утварь, банки, коробки, и т. д., в том числе и наша техника.</p>
-                        <p>Дверцы периодически сами открываются и закрываются. Ваша задача - кликать на технику Russell Hobbs, избегая попадания по другим предметам.</p>
-                        <p>Если вы кликнули на один прибор Russell Hobbs 3 раза за раунд, то этот прибор считается «собранным» в коллекцию, и его изображение появляется на панели достижений. </p>
-                        <p>Если вы кликнули на «неправильный» предмет, то получаете штрафной балл. </p>
-                        <p>Время раунда ограничено. После того, как вы соберете всю коллекцию техники, оставшиеся секунды трансформируются в призовые баллы. При этом штрафные баллы вычитаются из призовых, после чего формируется итоговый результат раунда. </p>
-                        <p>У нашей игры 3 уровня сложности. За один день вы можете пройти каждый уровень не более 3 раз, то есть не более 9 раз за сутки.</p>
-                        <p>По итогам дня формируется ваш рейтинг игрока, основанный на сумме всех итоговых результатов всех сыгранных раундов. </p>
-                        <p>Если вы поделитесь результатом вашей игры за день на своей странице в Facebook или ВКонтакте, вам начисляются дополнительные 5 баллов.</p>
-                        <p>Итоги игры подводятся один раз в две недели. Выигрывают три участника с наибольшим дневным рейтингом за прошедшие 2 недели. </p>
-                        <p>По итогам 2 недель все результаты сгорают и начинается следующий 2-х недельный игровой тур.</p>
-                        <p>Удачи!</p>
-                        <div className='center'>
-                            <a href='#' className='button' onClick={this.toggleRules(false)}>Ознакомился</a>
-                        </div>
-                    </div>
-                    : null }
-                { loader.active ?
-                    <div className='kitchen__placeholder kitchen__placeholder--loader'>
-                        <h2>Загрузка</h2>
-                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                        <div className='kitchen__loader'>
-                            <span style={{width: loader.percentage + '%'}}></span>
-                        </div>
-                        <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                        <small>Если загрузка идет очень долго, попробуйте обновить страницу</small>
-                    </div>
+                { rules ? this.getRulesScreen() : null }
+                { locked && level === -1
+                    ? this.getLockedScreen()
                     :
-                    !isStarted ?
-                        <div className='kitchen__placeholder'>
-                            { level === -1 ?
-                                <div>
-                                    <h2>Собери коллекцию Russell Hobbs</h2>
-                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <p>Собери максимальное количество предметов за отведенное время, проверь свою реакцию и полчи ценные призы.</p>
-                                    <a href='#' onClick={this.startGame.bind(this)} className='button button--top'>Начать игру</a><br/>
-                                    <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
-                                </div>
-                                :
-                                <div>
-                                    <h2>Поздравляем!</h2>
-                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <h3>{level !== 2 ? 'Вы завершили уровень со счетом:' : 'Вы прошли все уровни и набрали:'}</h3>
-                                    <span className='kitchen__block kitchen__block--inline'>
-                                        <span>Осталось<br/>попыток</span>
-                                        <div className='kitchen__score'>
-                                            3
-                                        </div>
-                                    </span>
-                                    <span className='kitchen__score kitchen__score--big'>{current}</span>
-                                    <span className='kitchen__block kitchen__block--inline'>
-                                        <span>Сумма<br/>баллов</span>
-                                        <div className='kitchen__score'>
-                                            {total}
-                                        </div>
-                                    </span>
-
-                                    <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
-                                    <a href='#' onClick={this.startGame.bind(this)} className='button'>
-                                        {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
-                                    </a>
-                                </div>
-                            }
-                        </div>
-
-                        :
-
-                        <div className={`kitchen__level kitchen__level--${level}`}>
-                            <div className='kitchen__ui kitchen__ui--left'>
-                                <div className='kitchen__block'>
-                                    <span>Сумма баллов</span>
-                                    <div className='kitchen__score'>
-                                        {total}
-                                    </div>
-                                </div>
-                                <div className='kitchen__skus'>
-                                    {sku.splice(0, sku.length / 2)}
-                                </div>
+                    ( loader.active ? this.getLoadingScreen() :
+                        !isStarted ?
+                            <div className='kitchen__placeholder'>
+                                { cont ? this.getContinueScreen() : level === -1 ? this.getStartScreen() : this.getResultsScreen() }
                             </div>
-                            {boxes}
-                            <div className='kitchen__ui kitchen__ui--right'>
-                                <div className='kitchen__block'>
-                                    <span>Осталось времени</span>
-                                    <div className='kitchen__score'>
-                                        {time}
-                                    </div>
-                                </div>
-                                <div className='kitchen__skus'>
-                                    {sku.splice(sku.length / 2 - 2)}
-                                </div>
-                            </div>
-                        </div>
-
+                            :
+                            this.getGameScreen()
+                    )
                 }
+                <div className='kitchen__no-mobile'><span>Ваш экран слишком мал:(<br/>Скоро будет доступно и на мобильных устройствах </span></div>
             </div>
         </div>
     }

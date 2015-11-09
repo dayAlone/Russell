@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Typograf from 'typograf'
-import { FacebookButton, TwitterButton, VKontakteButton } from 'react-social'
+import { FacebookButton, VKontakteButton } from 'react-social'
 
 import Carousel from './ui/Carousel'
 import Spinner from './ui/Spinner'

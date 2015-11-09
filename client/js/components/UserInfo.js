@@ -29,8 +29,8 @@ class UserInfo extends Component {
                     <div className='header__profile-frame'>
                         <Link to='/profile/' className='header__name'>
                             <div className='header__image' style={{
-                                    backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`
-                                }}></div>
+                                backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`
+                            }}></div>
                             <span>{name[0]}<br/>{name[1]}</span>
                         </Link>
                         <a href='#' className='header__exit' onClick={this.handleExit.bind(this)}>Выход</a>

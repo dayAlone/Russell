@@ -18,7 +18,6 @@ export default function configureRoutes(reducerRegistry) {
             <Route path='/admin/' name='Личный кабинет модератора'
                 getComponent={(location, callback) => {
                     require.ensure([], require => {
-                        //reducerRegistry.register({profile: require('../reducers/profile')})
                         callback(false, require('../containers/Admin'))
                     })
                 }}
@@ -49,13 +48,14 @@ export default function configureRoutes(reducerRegistry) {
             }}
             getChildRoutes={(location, callback) => {
                 require.ensure([], require => {
+                    reducerRegistry.register({profile: require('../reducers/profile')})
                     callback(null, [
                         {
-                            path: 'kitchen',
+                            path: 'kitchen/*',
                             component: require('../components/games/Kitchen')
                         },
                         {
-                            path: 'test',
+                            path: 'test/*',
                             component: require('../components/games/Test')
                         },
                         {

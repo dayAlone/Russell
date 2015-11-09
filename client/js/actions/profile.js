@@ -1,4 +1,4 @@
-import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK } from '../constants/Profile'
+import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK, START_GAME, UPDATE_GAME, GET_SCORES } from '../constants/Profile'
 
 export function getChecks() {
     return dispatch => {
@@ -12,7 +12,6 @@ export function getChecks() {
         })
     }
 }
-
 
 export function getFavorites() {
     return dispatch => {
@@ -50,6 +49,47 @@ export function removeProduct(check, product) {
                     data: data.result
                 })
 
+            }
+        })
+    }
+}
+
+export function getScores() {
+    return dispatch => {
+        $.get('/games/get-scores/', data => {
+            if (!data.error) {
+                dispatch({
+                    type: GET_SCORES,
+                    data: data.result
+                })
+
+            }
+        })
+    }
+}
+
+export function startGame(type, finished) {
+    return dispatch => {
+        $.post('/games/start/', {type: type, finished: finished}, data => {
+            if (!data.error) {
+                dispatch({
+                    type: START_GAME,
+                    data: data.result
+                })
+
+            }
+        })
+    }
+}
+
+export function updateGame(id, fields) {
+    return dispatch => {
+        $.post('/games/update/', {id: id, fields: fields}, data => {
+            if (!data.error) {
+                dispatch({
+                    type: UPDATE_GAME,
+                    data: data.result
+                })
             }
         })
     }

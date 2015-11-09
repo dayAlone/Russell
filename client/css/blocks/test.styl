@@ -3,23 +3,27 @@
     background url(/layout/images/kitchen/bg.jpg) bottom center
     background-size cover
     full-width()
+    overflow hidden
     position relative
     border 1px solid #303130
     margin 50px 0 120px
+    &__no-mobile
+        @extend .kitchen__no-mobile
+    &__share
+        @extend .kitchen__share
     &__placeholder
         @extend .kitchen__placeholder
-
+        .kitchen__block--inline .kitchen__score
+            width auto
+            margin 10px 20px 30px
         &--question
             margin-top 40px
-        p
-            font-size 15px
-            padding 0 9%
-            strong
-                font-weight bold
         h3
             margin 0
             font-size 28px
             padding 0 8%
+        h4
+            line-height 1.6
     &__images
         & + .test__answers
             padding 0
@@ -31,6 +35,32 @@
         width 100%
         padding 0 10%
         margin-top 0px
+    &__answers
+        &--block
+            poiner-events none
+        &--4
+            &.test__answers--long
+                padding 0
+                a.test__answer
+                    position relative
+                    text-align left
+                    font-size 22px
+                    line-height 1.3
+                    padding-left 45px
+                    padding-right 20px
+                    svg
+                        position absolute
+                        left 0
+
+        &--3
+            &.test__answers--long
+                a.test__answer
+                    width 50%
+                    &:last-of-type
+                        width 100%
+                        margin-top 35px
+            a.test__answer
+                width (100/3)%
     a&__answer
         float left
         width 50%
@@ -39,14 +69,42 @@
         font-size 26px
         color white !important
         margin-bottom 10px
+        position relative
+
         &:hover
             color red !important
+            img
+                opacity .7
             svg
                 path
                     opacity 1
                     stroke red
                     fill-opacity 1
                     fill red
+
+        &--wrong
+            &, &:hover
+                svg
+                    opacity 1
+                    path
+                        opacity 1
+                        stroke red
+                        fill-opacity 1
+                        fill red
+                span
+                    color red
+                    text-decoration line-through
+        &--true
+            &, &:hover
+                svg
+                    opacity 1
+                    path
+                        opacity 1
+                        stroke green
+                        fill-opacity 1
+                        fill green
+                span
+                    color green
         svg
             max-width 30px
             middle()
@@ -58,8 +116,21 @@
                 opacity 1
                 fill-opacity 0
                 stroke white
+        &--image
+            line-height 150px !important
+            svg
+                position absolute
+                top 50%
+                left 50%
+                opacity 0
+                margin 0px
+                z-index 2
+                transform translateX(-50%) translateY(-50%)
         img
             max-width 150px
+            max-height 150px
+            t opacity
+            middle()
     &__divider
         @extend .kitchen__divider
     &__rules
@@ -68,8 +139,19 @@
         @extend .kitchen__close
     &__block
         @extend .kitchen__block
+
     &__score
         @extend .kitchen__score
+        &--big
+            margin 20px 20px 35px
+            position relative
+            &:after
+                position absolute
+                content attr(data-text)
+                font-size 18px
+                width 100%
+                left 0
+                bottom -65px
     &__ui
         border-bottom 2px solid red
         height 80px

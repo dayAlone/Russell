@@ -2,10 +2,78 @@
     min-height 550px
     background url(/layout/images/kitchen/bg.jpg) bottom center
     background-size cover
+    overflow hidden
     full-width()
     position relative
     border 1px solid #303130
     margin 50px 0 120px
+    &__share
+        &-title
+            display inline-block
+            text-align left
+            margin-right 13px
+            font-size 14px
+            middle()
+        &-scores
+            margin-left 10px
+            margin-top 5px
+            middle()
+            span:first-of-type
+                font-size 30px
+        button
+            middle()
+            margin 0 10px
+            size 35px
+            background-color #005c9a
+            border 0
+            padding 0
+            text-align center
+            line-height 10px
+            border-radius 3px
+            &.vk
+                background-color #1b84b5
+            img
+                max-width 22px
+                max-height 20px
+                middle()
+    &__no-mobile
+        display none
+        @media (max-width: $scr_md)
+            display block
+            position absolute
+            top 0
+            left 0
+            size 100%
+            background-color black
+            z-index 1000
+            > span
+                position absolute
+                width 80%
+                left 50%
+                top 50%
+                transform translateY(-50%) translateX(-50%)
+                font-size 30px
+                line-height 1.4
+                text-align center
+    &__timeout
+        position absolute
+        top 0
+        left 0
+        size 100%
+        background-color alpha(black, .9)
+        span
+            position absolute
+            left 50%
+            top 50%
+            transform translateY(-50%) translateX(-50%)
+            font-size 55px
+            height 100px
+            width 100px
+            line-height 105px
+            border 1px solid white
+            text-align center
+            font-weight bold
+            border-radius 50%
     &__close
         size 30px
         border-radius 50%
@@ -251,6 +319,7 @@
             margin-bottom 0px
         img
             max-width 100%
+            max-height 75px
     &__block
         &--inline
             display inline-block
@@ -310,12 +379,17 @@
                 color red
                 border-line(alpha(red, .3))
         p
-            font-size 18px
+            font-size 15px
+            padding 0 9%
             line-height 1.4
+            width 100%
+            strong
+                font-weight bold
         h2
             font-size 30px
             margin-top 30px
             margin-bottom 0px
         h3
-            margin 10px 0 30px
-            font-size 20px
+            margin 0
+            font-size 28px
+            padding 0 8%

@@ -8,9 +8,9 @@ export default (Game) => {
             start: '12.10.2015',
             stop: '30.12.2015',
             image: '/layout/images/products.png',
-            code: 'dream',
+            code: 'checks',
             flag: 'А также призы от RH каждую неделю!',
-            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00'],
+            raffles: ['14.12.2015 18:00', '21.12.2015 18:00', '28.12.2015 18:00'],
             sort: 100
         },
         {
@@ -19,9 +19,9 @@ export default (Game) => {
             start: '9.11.2015',
             stop: '30.12.2015',
             image: '/layout/images/banner-2.jpg',
-            code: 'collection',
+            code: 'kitchen',
             flag: 'Конкурс!',
-            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00'],
+            raffles: ['22.11.2015 12:00', '6.12.2015 18:00', '20.12.2015 18:00', '30.12.2015 18:00'],
             sort: 200
         },
         {
@@ -30,9 +30,9 @@ export default (Game) => {
             start: '9.11.2015',
             stop: '30.12.2015',
             image: '/layout/images/banner-3.jpg',
-            code: 'details',
+            code: 'test',
             flag: 'Конкурс!',
-            raffles: ['16.11.2015 18:00', '30.11.2015 18:00', '14.12.2015 18:00'],
+            raffles: ['22.11.2015 12:00', '6.12.2015 18:00', '20.12.2015 18:00', '30.12.2015 18:00'],
             sort: 300
         },
         {

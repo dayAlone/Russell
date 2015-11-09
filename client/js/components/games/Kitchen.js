@@ -279,7 +279,7 @@ class Kitchen extends Component {
     startGame(e) {
         let {isLogin, actions } = this.props
         if (isLogin) {
-            let {settings, level, scores, cont} = this.state
+            let {settings, level, scores, cont, shares} = this.state
             let {updateGame, startGame} = actions.profile
 
             if (level >= 2) {
@@ -288,6 +288,10 @@ class Kitchen extends Component {
                 scores = {
                     current: 0,
                     total: 0
+                }
+                shares = {
+                    fb: false,
+                    vk: false
                 }
             } else {
                 level++
@@ -303,6 +307,7 @@ class Kitchen extends Component {
                 time: settings[level].time,
                 scores: scores,
                 level: level,
+                shares: shares,
             }, this.makeElements)
 
             /*

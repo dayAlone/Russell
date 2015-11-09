@@ -16,7 +16,7 @@ class Test extends Component {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
         rules: false,
         isStarted: false,
-        level: -1,
+        level: 0,
         timer: false,
         time: 120,
         questions: [],
@@ -102,6 +102,11 @@ class Test extends Component {
             }, 300)
 
             e.preventDefault()
+        }
+    }
+    handleShare(type) {
+        return () => {
+            console.log(type)
         }
     }
     componentDidMount() {
@@ -298,8 +303,8 @@ class Test extends Component {
             <img src='/layout/images/line.png' alt='' className='test__divider' />
             <div className='test__share'>
                 <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
-                <FacebookButton url={url} className='fb'> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
-                <VKontakteButton url={url} className='vk'> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
+                <FacebookButton url={url} className='fb' onClick={this.handleShare('fb')}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
+                <VKontakteButton url={url} className='vk' onClick={this.handleShare('vk')}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
                 <div className='test__share-scores'>
                     <span>+5</span> баллов
                 </div>

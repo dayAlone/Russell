@@ -19,8 +19,14 @@ const scoreSchema = new mongoose.Schema({
         default: false,
     },
     share: {
-        type: Boolean,
-        default: false,
+        vk: {
+            type: Boolean,
+            default: false,
+        },
+        fb: {
+            type: Boolean,
+            default: false,
+        }
     },
     created: {
         type: Date,
@@ -31,7 +37,7 @@ const scoreSchema = new mongoose.Schema({
 scoreSchema.pre('save', function(next) {
     co(function*() {
         if (this.isNew) {
-            let count = yield Score.count({
+            /*let count = yield Score.count({
                 user: this.user,
                 share: this.share,
                 $and: [
@@ -46,7 +52,7 @@ scoreSchema.pre('save', function(next) {
                         }
                     }
                 ]})
-            console.log(count)
+            console.log(count)*/
         }
     }.bind(this)).then(next, next)
 })

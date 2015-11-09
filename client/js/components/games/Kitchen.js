@@ -533,7 +533,7 @@ class Kitchen extends Component {
                 <span>набрано баллов<br/>до розыгрыша</span>
 
             </span><br/>
-            {games > 0 ? <a href='#' onClick={this.startGame.bind(this)} className='button'>
+            {games > 0 && level !== 2 ? <a href='#' onClick={this.startGame.bind(this)} className='button'>
                     {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
                 </a> : null }
         </div>

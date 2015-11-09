@@ -17,7 +17,6 @@ class GamesTimer extends Component {
             })
 
         }
-        console.log(this.props.link)
         return <div className='countdown'>
             <div className='countdown__info'>C {dateStart.format('D MMMM')}<br/> по {dateStop.format('D MMMM')}</div>
             <div className='countdown__frame'>

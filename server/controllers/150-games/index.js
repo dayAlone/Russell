@@ -167,7 +167,7 @@ export default function(app) {
                                 description: 'И я все ближе к выигрышу приза! Хотите со мной посоревноваться? Заходите на russellhobbs-promo.ru!',
                             },
                             test: {
-                                title: `На моем счету уже ${item.scores} ${scoresText} в тесте «История в деталях!». `,
+                                title: `На моем счету уже ${scores} ${scoresText} в тесте «История в деталях!». `,
                                 description: 'И мои шансы на выигрыш приза стали еще больше! Заходите на russellhobbs-promo.ru и давайте соревноваться!',
                             }
                         }

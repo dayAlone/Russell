@@ -374,14 +374,14 @@ class Test extends Component {
                 </div>
             </div> : null }
             <img src='/layout/images/line.png' alt='' className='test__divider' />
-            <span className='test__block test__block--inline'>
+            <span className='kitchen__block kitchen__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>
-                <div className='test__score'>
+                <div className='kitchen__score'>
                     {games}
                 </div>
             </span>
-            <span className='test__block test__block--inline'>
-                <div className='test__score'>
+            <span className='kitchen__block kitchen__block--inline'>
+                <div className='kitchen__score'>
                     {scores}
                 </div>
                 <span>набрано баллов<br/>до розыгрыша</span>

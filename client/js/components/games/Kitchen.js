@@ -195,6 +195,7 @@ class Kitchen extends Component {
         setTimeout(() => {
             this.setState({active: _.without(this.state.active, numbers[rand])})
         }, settings[level].open)
+
         this.setState({
             active: active,
             active_elements: active_elements,
@@ -533,9 +534,9 @@ class Kitchen extends Component {
                 <span>набрано баллов<br/>до розыгрыша</span>
 
             </span><br/>
-            {games > 0 && level !== 2 ? <a href='#' onClick={this.startGame.bind(this)} className='button'>
+            {games === 0 && level === 2 ? null : <a href='#' onClick={this.startGame.bind(this)} className='button'>
                     {level !== 2 ? 'Продолжить' : 'Сыграть еще раз'}
-                </a> : null }
+                </a>}
         </div>
     }
     getGameScreen() {

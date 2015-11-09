@@ -138,12 +138,13 @@ class Test extends Component {
                     request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`
                     $.getJSON(request, (result) => {
                         let number = result.data[0] ? result.data[0].total_count : 0
-                        console.log('fb share' + number)
+                        console.log('fb share ' + number, result.data)
                         if (number > 0) this.updateShare('fb', _id)
                     })
                 }, 3000)
                 break
             }
+            console.log(shares)
             this.setState({
                 shares: shares
             })
@@ -152,8 +153,6 @@ class Test extends Component {
     updateShare(type, id) {
         let {shares, time} = this.state
 
-        console.log(shares)
-
         clearInterval(shares[type])
         shares[type] = true
 
@@ -161,6 +160,7 @@ class Test extends Component {
 
         this.props.actions.profile.updateGame(id, { scores: time, share: shares })
 
+        console.log(shares)
         this.setState({
             shares: shares,
             time: time

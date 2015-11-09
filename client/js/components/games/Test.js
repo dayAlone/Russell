@@ -16,7 +16,7 @@ class Test extends Component {
         url: 'http://164623.selcdn.com/russell/layout/images/test',
         rules: false,
         isStarted: false,
-        level: 0,
+        level: -1,
         timer: false,
         time: 120,
         questions: [],

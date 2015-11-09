@@ -171,6 +171,9 @@ class Test extends Component {
         if (this.props.scores) this.checkLocked()
         this.createQuestions()
     }
+    componentWillUnmount() {
+        for (let type in this.state.shares) clearInterval(this.state.shares[type])
+    }
     componentDidUpdate(prevProps) {
         if (this.props.isLogin && !this.props.scores) this.props.actions.profile.getScores()
         if ((this.props.scores && !prevProps.scores)

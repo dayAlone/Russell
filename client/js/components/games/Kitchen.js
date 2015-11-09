@@ -112,7 +112,7 @@ class Kitchen extends Component {
                         }
                     })
                 } else {
-                    updateGame(_id, scores, true)
+                    updateGame(_id, {scores: scores, finished: true})
                 }
             }
             this.setState(fields)
@@ -233,7 +233,7 @@ class Kitchen extends Component {
             if (level === 0 && !cont) startGame('kitchen', false)
             else {
                 let {today} = this.props.scores.kitchen
-                updateGame(today[0]._id, scores.total, false, level)
+                updateGame(today[0]._id, {scores: scores, finished: false, level: level})
             }
 
             this.setState({
@@ -261,7 +261,7 @@ class Kitchen extends Component {
         clearInterval(timers.scores)
         let {updateGame} = this.props.actions.profile
 
-        updateGame(this.props.scores.kitchen.today[0]._id, scores.total + (settings[level].multiply * time), level === 2, level)
+        updateGame(this.props.scores.kitchen.today[0]._id, { scores: scores.total + (settings[level].multiply * time), finished: level === 2, level: level})
 
         this.setState({
             time: 0,

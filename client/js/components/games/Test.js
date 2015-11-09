@@ -22,6 +22,10 @@ class Test extends Component {
         questions: [],
         current: 0,
         locked: false,
+        shares: {
+            fb: false,
+            vk: false
+        },
         stat: {
             games: 3,
             scores: 0,
@@ -51,7 +55,7 @@ class Test extends Component {
     stopGame() {
         this.createQuestions()
         let {timer, time} = this.state
-        this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, time, true)
+        this.props.actions.profile.updateGame(this.props.scores.test.today[0]._id, { scores: time, finished: true})
         this.setState({
             isStarted: false,
             timer: false
@@ -59,7 +63,9 @@ class Test extends Component {
         clearInterval(timer)
     }
     startGame(e) {
-        let {isLogin, actions } = this.props
+        let {isLogin, actions} = this.props
+        for (let type in this.state.shares) clearInterval(this.state.shares[type])
+
         if (isLogin) {
             actions.profile.startGame('test', true)
             this.setState({
@@ -67,7 +73,11 @@ class Test extends Component {
                 current: 0,
                 time: 120,
                 isStarted: true,
-                timer: setInterval(this.tick.bind(this), 1000)
+                timer: setInterval(this.tick.bind(this), 1000),
+                shares: {
+                    fb: false,
+                    vk: false
+                }
             })
         } else {
             actions.login.openModal()
@@ -85,7 +95,7 @@ class Test extends Component {
         return (e) => {
             $(e.currentTarget).addClass(status ? 'test__answer--true' : 'test__answer--wrong')
             $('.test__answers').addClass('.test__answers--block')
-            setTimeout(()=>{
+            setTimeout(() => {
                 $('a.test__answer').removeClass('test__answer--wrong test__answer--true')
                 $('.test__answers').removeClass('.test__answers--block')
                 this.setState({
@@ -104,10 +114,54 @@ class Test extends Component {
             e.preventDefault()
         }
     }
-    handleShare(type) {
+    handleShare(type, url) {
+        let request
+        let _id = this.props.scores && this.props.scores.test ? this.props.scores.test.today[0]._id : null
         return () => {
-            console.log(type)
+            let {shares} = this.state
+            switch (type) {
+            case 'vk':
+                if (!window.VK) window.VK = {}
+                window.VK.Share = {
+                    count: (idx, number) => {
+                        if (number > 0) this.updateShare('vk', _id)
+                    }
+                }
+                shares['vk'] = setInterval(()=>{
+                    request = `http://vk.com/share.php?act=count&url=${url}`
+                    $.getScript(request)
+                }, 3000)
+                break
+            case 'fb':
+            default:
+                shares['vk'] = setInterval(()=>{
+                    request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`
+                    $.getJSON(request, (result) => {
+                        let number = result.data[0] ? result.data[0].total_count : 0
+                        if (number > 0) this.updateShare('fb', _id)
+                    })
+                }, 3000)
+                break
+            }
+            this.setState({
+                shares: shares
+            })
         }
+    }
+    updateShare(type, id) {
+        let {shares, time} = this.state
+
+        clearInterval(shares[type])
+        shares[type] = true
+
+        time += 5
+
+        this.props.actions.profile.updateGame(id, { scores: time, share: shares })
+
+        this.setState({
+            shares: shares,
+            time: time
+        })
     }
     componentDidMount() {
         if (this.props.isLogin) this.props.actions.profile.getScores()
@@ -286,7 +340,7 @@ class Test extends Component {
         </div>
     }
     getResultsScreen() {
-        let { time, stat } = this.state
+        let { time, stat, shares } = this.state
         let { games, scores, position } = stat
         let _id = ''
         if (this.props.scores && this.props.scores.test) _id = this.props.scores.test.today[0]._id
@@ -300,15 +354,17 @@ class Test extends Component {
             <span className='test__score test__score--big' data-text='Место в рейтинге'>
                 {position}
             </span>
-            <img src='/layout/images/line.png' alt='' className='test__divider' />
-            <div className='test__share'>
-                <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
-                <FacebookButton url={url} className='fb' onClick={this.handleShare('fb')}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton>
-                <VKontakteButton url={url} className='vk' onClick={this.handleShare('vk')}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton>
-                <div className='test__share-scores'>
-                    <span>+5</span> баллов
+            {shares.fb !== true || shares.vk !== true ? <div>
+                <img src='/layout/images/line.png' alt='' className='test__divider' />
+                <div className='test__share'>
+                    <div className='test__share-title'>Поделись результатом с друзьями<br/> и получи дополнительные баллы</div>
+                    {shares.fb !== true ? <FacebookButton url={url} className='fb' onClick={this.handleShare('fb', url)}> <img src='/layout/images/svg/fb.svg' alt='' /></FacebookButton> : null }
+                    {shares.vk !== true ? <VKontakteButton url={url} className='vk' onClick={this.handleShare('vk', url)}> <img src='/layout/images/svg/vk.svg' alt='' /></VKontakteButton> : null }
+                    <div className='test__share-scores'>
+                        <span>+5</span> баллов
+                    </div>
                 </div>
-            </div>
+            </div> : null }
             <img src='/layout/images/line.png' alt='' className='test__divider' />
             <span className='kitchen__block kitchen__block--inline'>
                 <span>Осталось попыток<br/>сыграть сегодня</span>

@@ -190,6 +190,9 @@ class Kitchen extends Component {
             }
         }
         let rand = parseInt(Math.random() * numbers.length, 10)
+        while (active.indexOf(numbers[rand]) !== -1) {
+            rand = parseInt(Math.random() * numbers.length, 10)
+        }
         active.push(numbers[rand])
         active_elements[numbers[rand]] = elements[0]
         setTimeout(() => {

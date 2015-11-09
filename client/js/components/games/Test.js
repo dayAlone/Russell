@@ -13,7 +13,7 @@ import { FacebookButton, VKontakteButton } from 'react-social'
 @connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Test extends Component {
     state = {
-        url: 'http://164623.selcdn.com/russell/layout/images/test',
+        url: 'http://164623.selcdn.com/russell/layout/images/test2',
         rules: false,
         isStarted: false,
         level: -1,

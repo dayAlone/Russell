@@ -30,7 +30,7 @@ class PageBuy extends Component {
             <div className='stores'>
                 {items}
             </div>
-            <p>*Внимание: не все продукты Russell Hobbs могут быть доступны на складе</p>
+            <p>*Внимание: не вся продукция Russell Hobbs может быть в наличии</p>
         </div>
     }
 }

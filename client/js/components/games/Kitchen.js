@@ -134,18 +134,19 @@ class Kitchen extends Component {
         }
     }
     updateShare(type, id) {
-        let {shares, time} = this.state
+        let {shares, scores} = this.state
 
         clearInterval(shares[type])
         shares[type] = true
 
-        time += 5
+        scores.current += 5
+        scores.total += 5
 
         this.props.actions.profile.updateGame(id, { scores: time, share: shares })
 
         this.setState({
             shares: shares,
-            time: time
+            scores: scores
         })
     }
     checkLocked() {
@@ -503,7 +504,7 @@ class Kitchen extends Component {
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
             <br/>
             <span className='test__score test__score--big' data-text='Баллов'>
-                {time}
+                {this.state.scores.current}
             </span>
             {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
                 {position}

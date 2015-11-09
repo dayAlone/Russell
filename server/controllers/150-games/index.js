@@ -42,7 +42,7 @@ const getUserRating = function* (user, type, scores, raffles) {
             {$sort: { total: 1 }}
         ]).exec()
         for (let i = 0; i < all.length; i++) {
-            if (all[i]._id.toString() === user._id.toString()) {
+            if (all[i]._id.toString() === user.toString()) {
                 position = all.length - i
                 break
             }
@@ -77,7 +77,7 @@ const getUserTotalScores = function* (user) {
                 })
             })
             let scores = yield Scores.aggregate([
-                {$match: { user: user._id, $or: query}},
+                {$match: { user: user, $or: query}},
                 {$group: {
                     _id: '$type',
                     total: { $sum: '$scores' },
@@ -102,7 +102,7 @@ const getUserScores = function* (user, pre, after) {
         try {
             if (typeof pre === 'function') yield pre(user)
             let games = ['kitchen', 'test']
-            let totals = yield getUserTotalScores(user)
+            let totals = yield getUserTotalScores(user._id)
             totals.map(el => {
                 result[el._id] = el
             })
@@ -148,14 +148,19 @@ export default function(app) {
             let meta
             if (this.query.id) {
                 try {
+                    let scores = 0
                     let item = yield Scores.findOne({
                         _id: this.query.id
                     })
+                    let total = yield getUserTotalScores(item.user)
+                    total.map(el => {
+                        if (el._id === item.type) scores = el.total
+                    })
                     if (item) {
-                        let scoresText = pluralize(item.scores, ['балл', 'балла', 'баллов', 'балла'])
+                        let scoresText = pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])
                         let titles = {
                             kitchen: {
-                                title: `Мною уже собрано ${item.scores} ${scoresText} в игре «Собери коллекцию!».`,
+                                title: `Мною уже собрано ${scores} ${scoresText} в игре «Собери коллекцию!».`,
                                 description: 'И я все ближе к выигрышу приза! Хотите со мной посоревноваться? Заходите на russellhobbs-promo.ru!',
                             },
                             test: {
@@ -164,7 +169,7 @@ export default function(app) {
                             }
                         }
                         meta = {
-                            image: `${config.cdn}/layout/images/share-${this.params.id}.jpg`,
+                            image: `${config.cdn}/layout/images/share-${this.params.id}2.jpg`,
                             title: titles[this.params.id] ? titles[this.params.id].title : '',
                             description: titles[this.params.id] ? titles[this.params.id].description : ''
                         }

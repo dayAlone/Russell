@@ -134,7 +134,8 @@ class Test extends Component {
                 break
             case 'fb':
             default:
-                shares['vk'] = setInterval(()=>{
+                shares['fb'] = setInterval(()=>{
+                    url = encodeURIComponent(url)
                     request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`
                     $.getJSON(request, (result) => {
                         let number = result.data[0] ? result.data[0].total_count : 0
@@ -144,7 +145,6 @@ class Test extends Component {
                 }, 3000)
                 break
             }
-            console.log(shares)
             this.setState({
                 shares: shares
             })
@@ -160,7 +160,6 @@ class Test extends Component {
 
         this.props.actions.profile.updateGame(id, { scores: time, share: shares })
 
-        console.log(shares)
         this.setState({
             shares: shares,
             time: time

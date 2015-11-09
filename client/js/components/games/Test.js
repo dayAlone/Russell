@@ -119,36 +119,38 @@ class Test extends Component {
         let _id = this.props.scores && this.props.scores.test ? this.props.scores.test.today[0]._id : null
         return () => {
             let {shares} = this.state
-            switch (type) {
-            case 'vk':
-                if (!window.VK) window.VK = {}
-                window.VK.Share = {
-                    count: (idx, number) => {
-                        if (number > 0) this.updateShare('vk', _id)
+            if (!shares[type]) {
+                switch (type) {
+                case 'vk':
+                    if (!window.VK) window.VK = {}
+                    window.VK.Share = {
+                        count: (idx, number) => {
+                            if (number > 0) this.updateShare('vk', _id)
+                        }
                     }
+                    shares['vk'] = setInterval(()=>{
+                        request = `http://vk.com/share.php?act=count&url=${url}`
+                        $.getScript(request)
+                    }, 3000)
+                    break
+                case 'fb':
+                default:
+                    url = encodeURIComponent(url)
+                    shares['fb'] = setInterval(()=>{
+                        request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`
+                        $.getJSON(request, (result) => {
+                            let number = result.data[0] ? result.data[0].total_count : 0
+                            console.log('fb share ' + number, result.data)
+                            console.log(url)
+                            if (number > 0) this.updateShare('fb', _id)
+                        })
+                    }, 3000)
+                    break
                 }
-                shares['vk'] = setInterval(()=>{
-                    request = `http://vk.com/share.php?act=count&url=${url}`
-                    $.getScript(request)
-                }, 3000)
-                break
-            case 'fb':
-            default:
-                url = encodeURIComponent(url)
-                shares['fb'] = setInterval(()=>{
-                    request = `http://graph.facebook.com/fql?q=SELECT+total_count+FROM+link_stat+WHERE+url%3D%22${url}%22&callback=?`
-                    $.getJSON(request, (result) => {
-                        let number = result.data[0] ? result.data[0].total_count : 0
-                        console.log('fb share ' + number, result.data)
-                        console.log(url)
-                        if (number > 0) this.updateShare('fb', _id)
-                    })
-                }, 3000)
-                break
+                this.setState({
+                    shares: shares
+                })
             }
-            this.setState({
-                shares: shares
-            })
         }
     }
     updateShare(type, id) {

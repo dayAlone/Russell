@@ -503,7 +503,7 @@ class Kitchen extends Component {
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>
             <br/>
             <span className='test__score test__score--big' data-text='Баллов'>
-                {this.state.scores.current}
+                {level === 2 ? this.state.scores.total : this.state.scores.current}
             </span>
             {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
                 {position}

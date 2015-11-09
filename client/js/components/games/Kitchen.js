@@ -11,7 +11,7 @@ import { FacebookButton, VKontakteButton } from 'react-social'
 @connect(state => ({isLogin: state.login.isLogin, user: state.login.data, scores: state.profile.scores}), dispatch => ({actions: { login: bindActionCreators(actionLogin, dispatch), profile: bindActionCreators(actionProfile, dispatch)}}))
 class Kitchen extends Component {
     state = {
-        url: 'http://164623.selcdn.com/russell/layout/images/kitchen',
+        url: '/layout/images/kitchen',
         rules: false,
         cont: false,
         timeout: false,

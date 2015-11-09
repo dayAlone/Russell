@@ -233,7 +233,7 @@ export default function(app) {
                     if (parseInt(fields.level, 10) > 0) fields['level'] = fields.level
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.findOneAndUpdate(
-                            { _id: id, user: this.req.user._id },
+                            { _id: id, user: user._id },
                             { $set: fields },
                             { safe: true, upsert: true }
                         )

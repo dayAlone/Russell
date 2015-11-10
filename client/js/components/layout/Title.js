@@ -63,7 +63,7 @@ class Title extends Component {
                             </div>
                             <div className='title__col'>
                                 <span className='title__number'>3</span>
-                                <p>Выигрывайте свои призы или главный приз</p>
+                                <p>Выигрывайте коллекцию Illumina или выбранные вами призы</p>
                             </div>
                         </div>
                         <div className='title__col'>

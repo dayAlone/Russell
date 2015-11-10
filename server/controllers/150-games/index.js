@@ -104,6 +104,7 @@ const getUserScores = function* (user, pre, after) {
             let games = ['kitchen', 'test']
             let totals = yield getUserTotalScores(user._id)
             totals.map(el => {
+                el.today = []
                 result[el._id] = el
             })
             let query = []
@@ -127,7 +128,6 @@ const getUserScores = function* (user, pre, after) {
             let scores = yield Scores.find({ user: user._id, $or: query }).sort({ created: -1 })
 
             scores.map(el => {
-                if (!result[el.type]['today']) result[el.type]['today'] = []
                 result[el.type]['today'].push(el)
             })
 

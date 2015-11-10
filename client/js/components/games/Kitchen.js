@@ -179,7 +179,7 @@ class Kitchen extends Component {
                         updateGame(_id, {scores: scores, finished: true})
                     }
                 }
-                this.setState(fields)    
+                this.setState(fields)
             }
         }
     }

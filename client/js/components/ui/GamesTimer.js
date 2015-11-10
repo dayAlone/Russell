@@ -15,7 +15,6 @@ class GamesTimer extends Component {
                 if (moment(el) > moment()) till = moment(el)
                 return moment(el)
             })
-
         }
         return <div className='countdown'>
             <div className='countdown__info'>C {dateStart.format('D MMMM')}<br/> по {dateStop.format('D MMMM')}</div>

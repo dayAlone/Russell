@@ -6,3 +6,4 @@ npm-debug.log
 /layout/
 !client/js/componetns/layout/*
 tmp
+db

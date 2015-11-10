@@ -28,7 +28,7 @@ class ChecksStat extends Component {
                     stat.favorites += el.products.length
                     stat.count += el.count - el.products.length
                 }
-                if (el.status === 'active') stat.active++
+                if (el.status === 'active' && moment(el.until) > moment()) stat.active++
                 else if (moment(el.until) < moment()) stat.gameover++
                 else if (el.status !== 'canceled') stat.moderation++
             })

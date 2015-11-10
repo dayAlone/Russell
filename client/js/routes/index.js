@@ -12,7 +12,7 @@ import Page404 from '../components/pages/404'
 import Category from '../components/pages/Category'
 import Product from '../components/pages/Product'
 import Conditions from '../components/pages/Conditions'
-
+import Rating from '../components/pages/Rating'
 export default function configureRoutes(reducerRegistry) {
     return <div>
             <Route path='/admin/' name='Личный кабинет модератора'
@@ -31,7 +31,7 @@ export default function configureRoutes(reducerRegistry) {
                 />
             <Route path='/' component={App} name='Начальная страница'>
 
-            <Route path='history/' component={History} name='История бренда'/>
+            <Route path='history/' component={History} name='История бренда'/>>
             <Route path='conditions/' component={Conditions} name='Условия проведения акции'/>
 
             <Route path='buy/' name='Где купить' getComponent={(location, callback) => {
@@ -53,6 +53,10 @@ export default function configureRoutes(reducerRegistry) {
                         {
                             path: 'kitchen/*',
                             component: require('../components/games/Kitchen')
+                        },
+                        {
+                            path: 'rating/',
+                            component: require('../components/pages/Rating')
                         },
                         {
                             path: 'test/*',

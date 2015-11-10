@@ -1,0 +1,31 @@
+.stat
+    full-width()
+    margin-top 20px
+    &--short
+        .table
+            &__row
+                .table__col
+                    font-size 26px
+                    span.none
+                        font-size 16px
+                        color #333741
+                    > strong
+                        font-size 15px
+                        line-height 1
+                        display inline-block
+            &__col
+                .countdown
+                    &__items
+                        width 100%
+                    &__item, &__items
+                        max-height 30px
+                    &__item
+                        display inline-block
+                        float none
+                        span
+                            top -16px
+                lost-column 1/7
+                &:nth-child(5)
+                    lost-column 1.1/7
+                &:nth-child(2)
+                    lost-column 1.9/7

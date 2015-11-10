@@ -505,7 +505,7 @@ class Kitchen extends Component {
         let { time, stat, level, shares } = this.state
         let { games, scores, position } = stat
         let _id = ''
-        if (this.props.scores && this.props.scores.kitchen && this.props.scores.kitchen.today.length > 0) _id = this.props.scores.kitchen.today[0]._id
+        if (this.props.scores && this.props.scores.kitchen && this.props.scores.kitchen.today) _id = this.props.scores.kitchen.today[0]._id
         let url = `http://${document.domain}/games/kitchen/${_id}`
         return <div>
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>

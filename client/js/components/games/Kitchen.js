@@ -152,33 +152,35 @@ class Kitchen extends Component {
     checkLocked() {
         if (this.props.scores.kitchen) {
             let {today, total, position} = this.props.scores.kitchen
-            let {_id, finished, scores, level, share} = today[0]
-            let {updateGame} = this.props.actions.profile
+            if (today) {
+                let {_id, finished, scores, level, share} = today[0]
+                let {updateGame} = this.props.actions.profile
 
-            let fields = {
-                locked: today.length >= 3 && finished,
-                stat: {
-                    games: 3 - today.length,
-                    scores: total,
-                    position: position
-                },
-                shares: share
-            }
-            if (this.state.level === -1) {
-                if (!finished && level !== 2) {
-                    fields = Object.assign({}, fields, {
-                        cont: true,
-                        level: level,
-                        scores: {
-                            current: 0,
-                            total: scores
-                        }
-                    })
-                } else {
-                    updateGame(_id, {scores: scores, finished: true})
+                let fields = {
+                    locked: today.length >= 3 && finished,
+                    stat: {
+                        games: 3 - today.length,
+                        scores: total,
+                        position: position
+                    },
+                    shares: share
                 }
+                if (this.state.level === -1) {
+                    if (!finished && level !== 2) {
+                        fields = Object.assign({}, fields, {
+                            cont: true,
+                            level: level,
+                            scores: {
+                                current: 0,
+                                total: scores
+                            }
+                        })
+                    } else {
+                        updateGame(_id, {scores: scores, finished: true})
+                    }
+                }
+                this.setState(fields)    
             }
-            this.setState(fields)
         }
     }
     tickBox() {

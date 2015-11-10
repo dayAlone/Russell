@@ -1,11 +1,12 @@
 import Router from 'koa-router'
 import Games from '../../models/games'
 import Scores from '../../models/scores'
+import Users from '../../models/user'
 import { Types } from 'mongoose'
 import moment from 'moment'
 import config from 'config'
 import pluralize from '../../../client/js/libs/pluralize'
-
+import time from 'time'
 const getUserRating = function* (user, type, scores, raffles) {
     try {
         let position = false
@@ -144,6 +145,50 @@ const getUserScores = function* (user, pre, after) {
 export default function(app) {
     const router = new Router()
     router
+        .get('/games/rating/get/', function*() {
+            let {limit, offset, game, ruffle} = this.query
+            ruffle = JSON.parse(ruffle)
+            let query = {
+                $match: {
+                    type: game,
+                    $and: [
+                        {
+                            created: {
+                                $gte: new Date(ruffle[0])
+                            }
+                        },
+                        {
+                            created: {
+                                $lte: new Date(ruffle[1])
+                            }
+                        }
+                    ]
+                }
+            }
+            let group = {
+                $group: {
+                    _id: '$user',
+                    total: { $sum: '$scores' }
+                }
+            }
+            try {
+                let total = yield Scores.aggregate([
+                    query,
+                    group]).exec()
+                let data = yield Scores.aggregate([
+                    query,
+                    group,
+                    { $limit: parseInt(limit, 10) },
+                    { $skip: parseInt(offset, 10) },
+                    { $sort: { total: -1 } }
+                ]).exec()
+                let result = yield Users.populate(data, {path: '_id', select: 'displayName photo'})
+                this.body = { list: result, meta: { limit: limit, total_count: total.length }}
+            } catch (e) {
+                console.error(e)
+                this.body = { error: e }
+            }
+        })
         .get('/games/:id/:el', function* () {
             let meta
 
@@ -185,6 +230,7 @@ export default function(app) {
 
             this.body = this.render('index', {cancelAdaptive: true, meta: meta})
         })
+
         .get('/games/get/', function* () {
             let result
             try {
@@ -220,10 +266,14 @@ export default function(app) {
             if (this.req.user) {
                 let result
                 let {type, finished} = this.request.body
+                let now = new time.Date()
+                now.setTimezone('Europe/Moscow')
                 try {
+
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.create({
                             type: type,
+                            created: now,
                             user: Types.ObjectId(user._id),
                             finished: finished
                         })

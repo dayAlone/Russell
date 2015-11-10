@@ -20,23 +20,26 @@ class Row extends Component {
 @connect(state => ({ games: state.games.list }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Raring extends Component {
     state = {
-        perPage: 50,
+        limit: 50,
         offset: 0,
         data: [],
-        url: '/admin/checks/get/',
+        url: '/games/rating/get/',
         timer: false,
         game: 'kitchen',
         ignore: ['checks', 'present'],
-        games: []
+        games: [],
+        ruffle: false,
+        currentPage: 1
     }
-    loadChecksFromServer() {
-        let {url, perPage, offset} = this.state
-        let {type, id} = this.refs.form.getCurrentValues()
+    loadRatingFromServer() {
+        let {url, limit, offset} = this.state
+        let {game, ruffle} = this.refs.form_top.getCurrentValues()
         $.ajax({
             url: url,
-            data: {limit: perPage, offset: offset, type: type, id: id},
+            data: {limit: limit, offset: offset, game: game, ruffle: ruffle},
             type: 'GET',
             success: data => {
+                console.log(data)
                 if (data) this.setState({data: data.list, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)})
             },
             error: (xhr, status, err) => {
@@ -45,27 +48,45 @@ class Raring extends Component {
         })
     }
     componentDidMount() {
-        //this.loadChecksFromServer()
+        //this.loadRatingFromServer()
         this.getGamesList()
         if (this.props.games.length === 0) this.props.actions.getGames()
     }
     handlePageClick(data) {
         let selected = data.selected
-        let offset = Math.ceil(selected * this.state.perPage)
+        let offset = Math.ceil(selected * this.state.limit)
 
-        this.setState({offset: offset}, () => {
-            this.loadChecksFromServer()
+        this.setState({offset: offset, currentPage: selected}, () => {
+            this.loadRatingFromServer()
         })
     }
-    getFormResults() {
-        let {limit} = this.refs.form.getCurrentValues()
-        this.setState({perPage: limit}, () => {
-            this.loadChecksFromServer()
+    handleTopFormChange() {
+        let values = this.refs.form_top.getCurrentValues()
+        let changes = false;
+        ['limit', 'game', 'ruffle'].map(el => {
+            if (values[el] !== this.state[el]) {
+                changes = true
+            }
         })
+
+        if (changes) {
+            let { limit, game, ruffle } = values
+            this.setState({
+                limit: limit,
+                game: game,
+                ruffle: ruffle
+            }, () => {
+                this.loadRatingFromServer()
+            })
+        }
     }
-    handleFormChange() {
-        clearTimeout(this.state.timer)
-        this.setState({timer: setTimeout(this.getFormResults.bind(this), 500)})
+    handleBottomFormChange() {
+        let { limit } = this.refs.form_down.getCurrentValues()
+        this.setState({
+            limit: limit
+        }, () => {
+            this.loadRatingFromServer()
+        })
     }
     getGamesList() {
         if (this.state.games.length === 0 && this.props.games.length > 0) {
@@ -94,7 +115,7 @@ class Raring extends Component {
         this.getGamesList()
     }
     render() {
-        let {game, games, perPage} = this.state
+        let {game, games, limit, ruffle, pageNum, currentPage} = this.state
         let dates = []
         games.filter(el => (el.code === game)).map(el => {
             el.raffles.map(d => {
@@ -103,7 +124,7 @@ class Raring extends Component {
         })
         return <div className='rating'>
             <Helmet title='Russell Hobbs | Рейтинг победителей'/>
-            <Formsy.Form ref='form' className='form rating__title' onChange={this.handleFormChange.bind(this)}>
+            <Formsy.Form ref='form_top' className='form rating__title' onChange={this.handleTopFormChange.bind(this)}>
                 <h3>Рейтинг участников</h3>
                 <div className='rating__select'>
                     <Dropdown name='game' className='dropdown--small' items={games.map(el => {
@@ -112,16 +133,16 @@ class Raring extends Component {
                 </div>
                 <div className='rating__select'>
                     <h3>от</h3>
-                    <Dropdown name='ruffle' className='dropdown--small dropdown--dates' items={dates} value='kitchen'/>
+                    <Dropdown name='ruffle' className='dropdown--small dropdown--dates' items={dates} value={ruffle ? ruffle : dates[0] ? dates[0].code : null}/>
                     <span>Дата розыгрыша</span>
                 </div>
                 <div className='rating__tools'>
                     <div className='rating__pages'>
-                        {this.state.pageNum > 1 ? <ReactPaginate
+                        {pageNum > 1 ? <ReactPaginate
                             previousLabel={'пред.'}
                             nextLabel={'след.'}
                             breakLabel={<li className='break'><a href=''>...</a></li>}
-                            pageNum={this.state.pageNum}
+                            pageNum={pageNum}
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={5}
                             clickCallback={this.handlePageClick.bind(this)}
@@ -134,7 +155,7 @@ class Raring extends Component {
                             {name: '50', code: 50},
                             {name: '100', code: 100},
                             {name: '200', code: 200},
-                        ]} value={perPage}/>
+                        ]} value={limit}/>
                     </div>
                 </div>
             </Formsy.Form>
@@ -143,24 +164,30 @@ class Raring extends Component {
                     <div className='table__col'>Место</div>
                     <div className='table__col left'>Участник</div>
                     <div className='table__col'>Набрано баллов</div>
-                    <div className='table__col'>id участника</div>
                 </div>
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {
-                        return null
+                        return <div className='table__row' key={i}>
+                            <div className='table__col'><div className='rating__position'>{limit * (currentPage - 1) + i + 1}</div></div>
+                            <div className='table__col left'>
+                                <div className='rating__image' style={{backgroundImage: `url(${el._id.photo ? el._id.photo : '/layout/images/svg/avatar.svg'})`}} />
+                                <div className='rating__name'>{el._id.displayName.split(' ')[0]}<br/>{el._id.displayName.split(' ')[1]}</div>
+                            </div>
+                            <div className='table__col'><div className='rating__total'>{el.total}</div></div>
+                        </div>
                     })
                     : <div className='table__row table__row--message center'>
-                        Не найдено ни одного чека.
+                        Рейтинг пуст.
                     </div>}
             </div>
-            <Formsy.Form className='form rating__title' onChange={this.handleFormChange.bind(this)}>
+            <Formsy.Form className='form rating__title' ref='form_down' onChange={this.handleBottomFormChange.bind(this)}>
                 <div className='rating__tools'>
                     <div className='rating__pages'>
-                        {this.state.pageNum > 1 ? <ReactPaginate
+                        {pageNum > 1 ? <ReactPaginate
                             previousLabel={'пред.'}
                             nextLabel={'след.'}
                             breakLabel={<li className='break'><a href=''>...</a></li>}
-                            pageNum={this.state.pageNum}
+                            pageNum={pageNum}
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={5}
                             clickCallback={this.handlePageClick.bind(this)}
@@ -172,8 +199,8 @@ class Raring extends Component {
                         <RadioGroup name='limit' title='Показывать по:' items={[
                             {name: '50', code: 50},
                             {name: '100', code: 100},
-                            {name: '200', code: 200},
-                        ]} value={perPage}/>
+                            {name: '200', code: 200}
+                        ]} value={limit}/>
                     </div>
                 </div>
             </Formsy.Form>

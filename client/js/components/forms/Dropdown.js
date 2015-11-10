@@ -2,6 +2,8 @@ import React from 'react'
 import { Mixin } from 'formsy-react'
 import { findDOMNode } from 'react-dom'
 import hoverintent from 'hoverintent'
+
+import IconSVG from 'svg-inline-loader/lib/component.jsx'
 const Dropdown = React.createClass({
 
     mixins: [Mixin],
@@ -67,7 +69,7 @@ const Dropdown = React.createClass({
                 {title ? <label htmlFor={name}>{title}</label> : null}
                 <div className={`dropdown ${this.showError() && !this.isPristine() ? 'dropdown--error' : ''} ${this.props.className ? this.props.className : ''}`} ref='block'>
                 <a href='#' className='dropdown__trigger' onClick={e => (e.preventDefault())}>
-                    {this.state.trigger ? this.state.trigger : items ? items[0].name : null} <img src='/layout/images/svg/down.svg' alt='' />
+                    {this.state.trigger ? this.state.trigger : items && items.length > 0 ? items[0].name : null} <IconSVG src={require('svg-inline!../../../public/images/svg/down.svg')}/>
                 </a>
                 <span className='dropdown__frame'>
                     {items.map((el, i) => {

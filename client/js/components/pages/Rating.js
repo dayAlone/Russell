@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import ReactPaginate from 'react-paginate'
 
 import Formsy from 'formsy-react'
-import {Input, Textarea, Dropdown, RadioGroup} from '../forms/'
+import {Dropdown, RadioGroup} from '../forms/'
 import { connect } from 'react-redux'
 import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
@@ -20,11 +20,12 @@ class Row extends Component {
 @connect(state => ({ games: state.games.list }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Raring extends Component {
     state = {
-        perPage: 10,
+        perPage: 50,
         offset: 0,
         data: [],
         url: '/admin/checks/get/',
         timer: false,
+        game: 'kitchen',
         ignore: ['checks', 'present'],
         games: []
     }
@@ -45,6 +46,7 @@ class Raring extends Component {
     }
     componentDidMount() {
         //this.loadChecksFromServer()
+        this.getGamesList()
         if (this.props.games.length === 0) this.props.actions.getGames()
     }
     handlePageClick(data) {
@@ -65,8 +67,8 @@ class Raring extends Component {
         clearTimeout(this.state.timer)
         this.setState({timer: setTimeout(this.getFormResults.bind(this), 500)})
     }
-    componentDidUpdate(prevProps) {
-        if (prevProps.games.length === 0 && this.props.games.length > 0) {
+    getGamesList() {
+        if (this.state.games.length === 0 && this.props.games.length > 0) {
             let games = []
             this.props.games.map(el => {
                 if (this.state.ignore.indexOf(el.code) === -1) {
@@ -87,55 +89,94 @@ class Raring extends Component {
                 games: games
             })
         }
-
+    }
+    componentDidUpdate() {
+        this.getGamesList()
     }
     render() {
+        let {game, games, perPage} = this.state
+        let dates = []
+        games.filter(el => (el.code === game)).map(el => {
+            el.raffles.map(d => {
+                dates.push({name: moment(d[0]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
+            })
+        })
         return <div className='rating'>
             <Helmet title='Russell Hobbs | Рейтинг победителей'/>
-            <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
-                <div className='rating__title'>
-                    <h3>Рейтинг участников</h3>
+            <Formsy.Form ref='form' className='form rating__title' onChange={this.handleFormChange.bind(this)}>
+                <h3>Рейтинг участников</h3>
+                <div className='rating__select'>
+                    <Dropdown name='game' className='dropdown--small' items={games.map(el => {
+                        return {name: el.name, code: el.code}
+                    })} value={game} />
                 </div>
-                <Dropdown name='type' className='dropdown--small' items={[
-                    {name: 'Собери коллекцию', code: 'kitchen'},
-                    {name: 'История в деталях', code: 'test'},
-                ]} value='kitchen'/>
-                <RadioGroup name='limit' title='Показывать по:' items={[
-                    {name: '50', code: 50},
-                    {name: '100', code: 100},
-                    {name: '200', code: 200},
-                ]} value='50'/>
+                <div className='rating__select'>
+                    <h3>от</h3>
+                    <Dropdown name='ruffle' className='dropdown--small dropdown--dates' items={dates} value='kitchen'/>
+                    <span>Дата розыгрыша</span>
+                </div>
+                <div className='rating__tools'>
+                    <div className='rating__pages'>
+                        {this.state.pageNum > 1 ? <ReactPaginate
+                            previousLabel={'пред.'}
+                            nextLabel={'след.'}
+                            breakLabel={<li className='break'><a href=''>...</a></li>}
+                            pageNum={this.state.pageNum}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            clickCallback={this.handlePageClick.bind(this)}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages pagination'}
+                            activeClassName={'active'} /> : null}
+                    </div>
+                    <div className='rating__shows'>
+                        <RadioGroup name='limit' title='Показывать по:' items={[
+                            {name: '50', code: 50},
+                            {name: '100', code: 100},
+                            {name: '200', code: 200},
+                        ]} value={perPage}/>
+                    </div>
+                </div>
             </Formsy.Form>
-            <div className='table admin-checks__table'>
+            <div className='table'>
                 <div className='table__title'>
-                    <div className='table__col'>ID</div>
-                    <div className='table__col'>Статус чека</div>
-                    <div className='table__col'>Дата добавления</div>
-                    <div className='table__col'>Данные и фото чека</div>
-                    <div className='table__col'>Загружен пользователем</div>
-                    <div className='table__col'>Связанные товары</div>
+                    <div className='table__col'>Место</div>
+                    <div className='table__col left'>Участник</div>
+                    <div className='table__col'>Набрано баллов</div>
+                    <div className='table__col'>id участника</div>
                 </div>
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {
-                        return <Check key={i} openModal={this.openModal.bind(this)} data={el}/>
+                        return null
                     })
                     : <div className='table__row table__row--message center'>
                         Не найдено ни одного чека.
                     </div>}
             </div>
-
-            {this.state.pageNum > 1 ? <ReactPaginate
-                previousLabel={'пред.'}
-                nextLabel={'след.'}
-                breakLabel={<li className='break'><a href=''>...</a></li>}
-                pageNum={this.state.pageNum}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                clickCallback={this.handlePageClick.bind(this)}
-                containerClassName={'pagination'}
-                subContainerClassName={'pages pagination'}
-                activeClassName={'active'} /> : null}
-
+            <Formsy.Form className='form rating__title' onChange={this.handleFormChange.bind(this)}>
+                <div className='rating__tools'>
+                    <div className='rating__pages'>
+                        {this.state.pageNum > 1 ? <ReactPaginate
+                            previousLabel={'пред.'}
+                            nextLabel={'след.'}
+                            breakLabel={<li className='break'><a href=''>...</a></li>}
+                            pageNum={this.state.pageNum}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            clickCallback={this.handlePageClick.bind(this)}
+                            containerClassName={'pagination'}
+                            subContainerClassName={'pages pagination'}
+                            activeClassName={'active'} /> : null}
+                    </div>
+                    <div className='rating__shows'>
+                        <RadioGroup name='limit' title='Показывать по:' items={[
+                            {name: '50', code: 50},
+                            {name: '100', code: 100},
+                            {name: '200', code: 200},
+                        ]} value={perPage}/>
+                    </div>
+                </div>
+            </Formsy.Form>
         </div>
     }
 }

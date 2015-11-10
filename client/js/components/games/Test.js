@@ -428,7 +428,7 @@ class Test extends Component {
         return <div className='game'>
             <h1 className='game__title center'>История в деталях</h1>
             <div className='test'>
-                { rules ? this.getRules() : null }
+                { rules ? this.getRulesScreen() : null }
                 { locked && level === -1
                     ? this.getLockedScreen()
                     :

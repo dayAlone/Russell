@@ -152,7 +152,7 @@ class Kitchen extends Component {
     checkLocked() {
         if (this.props.scores.kitchen) {
             let {today, total, position} = this.props.scores.kitchen
-            if (today) {
+            if (today.length > 0) {
                 let {_id, finished, scores, level, share} = today[0]
                 let {updateGame} = this.props.actions.profile
 
@@ -303,10 +303,12 @@ class Kitchen extends Component {
             } else {
                 level++
             }
-            if (level === 0 && !cont) startGame('kitchen', false)
+            if (level === 0 && !cont) {
+                startGame('kitchen', false)
+            }
             else {
                 let {today} = this.props.scores.kitchen
-                updateGame(today[0]._id, {scores: scores.total, finished: false, level: level})
+                if (today && today.length > 0) updateGame(today[0]._id, {scores: scores.total, finished: false, level: level})
             }
 
             this.setState({
@@ -503,7 +505,7 @@ class Kitchen extends Component {
         let { time, stat, level, shares } = this.state
         let { games, scores, position } = stat
         let _id = ''
-        if (this.props.scores && this.props.scores.kitchen) _id = this.props.scores.kitchen.today[0]._id
+        if (this.props.scores && this.props.scores.kitchen && this.props.scores.kitchen.today.length > 0) _id = this.props.scores.kitchen.today[0]._id
         let url = `http://${document.domain}/games/kitchen/${_id}`
         return <div>
             <h3>{level !== 2 ? 'Ваш результат прохождения уровня:' : 'Ваш результат игры:'}</h3>

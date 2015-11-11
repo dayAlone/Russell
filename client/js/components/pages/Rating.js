@@ -47,7 +47,6 @@ class Raring extends Component {
         })
     }
     componentDidMount() {
-
         this.getGamesList()
         if (this.props.games.length === 0) this.props.actions.getGames()
 
@@ -108,7 +107,7 @@ class Raring extends Component {
             })
             this.setState({
                 games: games
-            })
+            }, this.loadRatingFromServer)
         }
     }
     componentDidUpdate() {

@@ -9,6 +9,8 @@ import AuthModal from '../components/modals/Auth'
 import * as design from '../actions/design'
 import { bindActionCreators } from 'redux'
 
+import 'css_browser_selector'
+
 @connect(state => ({ line: state.design.line }), dispatch => ({design: bindActionCreators(design, dispatch)}))
 class App extends Component {
     componentDidUpdate() {

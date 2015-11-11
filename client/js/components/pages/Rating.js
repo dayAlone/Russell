@@ -133,7 +133,7 @@ class Raring extends Component {
                     })} value={game} />
                 </div>
                 <div className='rating__select'>
-                    <h3>от</h3>
+                    <h3>к</h3>
                     <Dropdown name='ruffle' className='dropdown--small dropdown--dates' items={dates} value={ruffle ? ruffle : dates[0] ? dates[0].code : null}/>
                     <span>Дата розыгрыша</span>
                 </div>

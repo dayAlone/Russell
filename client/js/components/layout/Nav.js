@@ -27,7 +27,7 @@ class Nav extends Component {
         }
         hoverintent(item,
             () => {
-                if ($(window).width() > 1024) {
+                if (!$('html').hasClass('mobile')) {
                     clearTimeout(timeOut)
                     $(nav).show()
                     timeOut = setTimeout(() => $(frame).addClass('nav__col--hover'), 10)

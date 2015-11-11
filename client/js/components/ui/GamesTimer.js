@@ -25,7 +25,7 @@ class GamesTimer extends Component {
                 </div>
                 <Countdown till={till}/>
             </div>
-            { dateStart !== till ? <Link to={link} className='countdown__button'>Участвовать</Link> : null }
+            { dateStart !== till ? <Link to={link} className='countdown__button'>Участвовать</Link> : null }<br/>
             { dateStart !== till ? <Link to={rating} className='countdown__rating'>Рейтинг игроков ближайшего розыгрыша</Link> : null }
         </div>
     }

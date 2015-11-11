@@ -119,7 +119,7 @@ class Raring extends Component {
         let dates = []
         games.filter(el => (el.code === game)).map(el => {
             el.raffles.map(d => {
-                dates.push({name: moment(d[0]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
+                dates.push({name: moment(d[1]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
             })
         })
         return <div className='rating'>
@@ -171,7 +171,7 @@ class Raring extends Component {
                             <div className='table__col'><div className='rating__position'>{limit * (currentPage - 1) + i + 1}</div></div>
                             <div className='table__col left'>
                                 <div className='rating__image' style={{backgroundImage: `url(${el._id.photo ? el._id.photo : '/layout/images/svg/avatar.svg'})`}} />
-                                <div className='rating__name'>{el._id.displayName.split(' ')[0]}<br/>{el._id.displayName.split(' ')[1]}</div>
+                                <div className='rating__name'>{el._id.displayName.split(' ')[0]} <br/>{el._id.displayName.split(' ')[1]}</div>
                             </div>
                             <div className='table__col'><div className='rating__total'>{el.total}</div></div>
                         </div>

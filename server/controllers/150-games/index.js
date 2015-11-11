@@ -147,46 +147,48 @@ export default function(app) {
     router
         .get('/games/rating/get/', function*() {
             let {limit, offset, game, ruffle} = this.query
-            ruffle = JSON.parse(ruffle)
-            let query = {
-                $match: {
-                    type: game,
-                    $and: [
-                        {
-                            created: {
-                                $gte: new Date(ruffle[0])
+            if (limit && offset && game && ruffle) {
+                ruffle = JSON.parse(ruffle)
+                let query = {
+                    $match: {
+                        type: game,
+                        $and: [
+                            {
+                                created: {
+                                    $gte: new Date(ruffle[0])
+                                }
+                            },
+                            {
+                                created: {
+                                    $lte: new Date(ruffle[1])
+                                }
                             }
-                        },
-                        {
-                            created: {
-                                $lte: new Date(ruffle[1])
-                            }
-                        }
-                    ]
+                        ]
+                    }
                 }
-            }
-            let group = {
-                $group: {
-                    _id: '$user',
-                    total: { $sum: '$scores' }
+                let group = {
+                    $group: {
+                        _id: '$user',
+                        total: { $sum: '$scores' }
+                    }
                 }
-            }
-            try {
-                let total = yield Scores.aggregate([
-                    query,
-                    group]).exec()
-                let data = yield Scores.aggregate([
-                    query,
-                    group,
-                    { $limit: parseInt(limit, 10) },
-                    { $skip: parseInt(offset, 10) },
-                    { $sort: { total: -1 } }
-                ]).exec()
-                let result = yield Users.populate(data, {path: '_id', select: 'displayName photo'})
-                this.body = { list: result, meta: { limit: limit, total_count: total.length }}
-            } catch (e) {
-                console.error(e)
-                this.body = { error: e }
+                try {
+                    let total = yield Scores.aggregate([
+                        query,
+                        group]).exec()
+                    let data = yield Scores.aggregate([
+                        query,
+                        group,
+                        { $limit: parseInt(limit, 10) },
+                        { $skip: parseInt(offset, 10) },
+                        { $sort: { total: -1 } }
+                    ]).exec()
+                    let result = yield Users.populate(data, {path: '_id', select: 'displayName photo'})
+                    this.body = { list: result, meta: { limit: limit, total_count: total.length }}
+                } catch (e) {
+                    console.error(e)
+                    this.body = { error: e }
+                }
             }
         })
         .get('/games/:id/:el', function* () {

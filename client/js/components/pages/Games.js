@@ -28,6 +28,7 @@ class PageGames extends Component {
                         <h2 className='game__title'>{name}</h2>
                         <div className='game__description' dangerouslySetInnerHTML={{__html: description}} />
                         <Countdown
+                            rating={`/games/rating/?game=${code}`}
                             link={`/games/${code}/`}
                             raffles={raffles}
                             dateStart={dateStart.toString()}

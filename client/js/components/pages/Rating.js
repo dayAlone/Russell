@@ -25,7 +25,7 @@ class Raring extends Component {
         data: [],
         url: '/games/rating/get/',
         timer: false,
-        game: 'kitchen',
+        game: this.props.location.query.game ? this.props.location.query.game : 'kitchen',
         ignore: ['checks', 'present'],
         games: [],
         ruffle: false,
@@ -39,7 +39,6 @@ class Raring extends Component {
             data: {limit: limit, offset: offset, game: game, ruffle: ruffle},
             type: 'GET',
             success: data => {
-                console.log(data)
                 if (data) this.setState({data: data.list, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)})
             },
             error: (xhr, status, err) => {
@@ -48,9 +47,10 @@ class Raring extends Component {
         })
     }
     componentDidMount() {
-        //this.loadRatingFromServer()
+
         this.getGamesList()
         if (this.props.games.length === 0) this.props.actions.getGames()
+
     }
     handlePageClick(data) {
         let selected = data.selected

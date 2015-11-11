@@ -12,7 +12,7 @@
         min-height 228px
         background url(/layout/images/footer.jpg) top center no-repeat
         font-size 12px
-        background-size 100% 100%
+        background-size 100% 240px
         br
             display none
     @media (max-width: $scr_sm)
@@ -24,6 +24,12 @@
         middle()
         line-height 1
         text-align left
+        @media (min-width: $scr_s)
+            max-width 50%
+            margin-top 15px
+        @media (min-width: $scr_md)
+            max-width none
+            margin-top 0px
     &__copyright
         full-width()
         margin-bottom 20px
@@ -41,7 +47,10 @@
                 color alpha(white, 1)
                 border-line(alpha(@color, .5))
     &__spectrum
-        //text-align center
+        @media (min-width: $scr_s)
+            lost-column 2.5/4 0 0
+        @media (min-width: $scr_md)
+            lost-column 3/4 0 0
         img
             margin-right 16px
             margin-left 5px
@@ -51,7 +60,13 @@
                 top 3px
     &__rules
         margin-bottom 20px
-        @media (min-width: $scr_sm)
+
+        a
+            display inline-block
+            line-height 1.2
+        @media (min-width: $scr_s)
+            lost-column 1.5/4 0 0
+        @media (min-width: $scr_md)
             lost-column 1/4 0 0
     &__social
         padding 54px 0 20px

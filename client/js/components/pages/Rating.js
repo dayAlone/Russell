@@ -92,7 +92,9 @@ class Raring extends Component {
             let games = []
             this.props.games.map(el => {
                 if (this.state.ignore.indexOf(el.code) === -1) {
+                    el.raffles = el.raffles.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = [[el.start, el.raffles[0]]]
+
                     el.raffles.map((r, i) => {
                         if (moment(r) < moment() && el.raffles[i + 1]) {
                             raffles.push([r, el.raffles[i + 1]])

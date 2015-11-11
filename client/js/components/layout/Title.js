@@ -55,7 +55,7 @@ class Title extends Component {
                         <div className='title__group'>
                             <div className='title__col'>
                                 <span className='title__number'>1</span>
-                                <p>Приобретайте технику Russell Hobbs с 12 октября по 30 декабря</p>
+                                <p>Приобретайте технику Russell Hobbs с 12 октября по 28 декабря</p>
                             </div>
                             <div className='title__col'>
                                 <span className='title__number'>2</span>

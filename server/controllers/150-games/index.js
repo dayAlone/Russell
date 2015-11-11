@@ -269,7 +269,7 @@ export default function(app) {
                 let result
                 let {type, finished} = this.request.body
                 let now = new time.Date()
-                now.setTimezone('Europe/Moscow')
+                now.setTimezone('Etc/GMT+10')
                 try {
 
                     result = yield getUserScores(this.req.user, function*(user) {

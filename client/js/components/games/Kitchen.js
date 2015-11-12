@@ -63,7 +63,7 @@ class Kitchen extends Component {
                 boxes: 16,
                 sku: 10,
                 code: 'red',
-                time: 55,
+                time: 550,
                 events: 130,
                 empty: 30,
                 multiply: 3,
@@ -72,7 +72,7 @@ class Kitchen extends Component {
         ],
         locked: false,
         stat: {
-            games: 3,
+            games: 20,
             scores: 0,
             position: 0
         }
@@ -151,15 +151,14 @@ class Kitchen extends Component {
     }
     checkLocked() {
         if (this.props.scores.kitchen) {
-            let {today, total, position} = this.props.scores.kitchen
+            let {today, total, position, count} = this.props.scores.kitchen
             if (today.length > 0) {
                 let {_id, finished, scores, level, share} = today[0]
                 let {updateGame} = this.props.actions.profile
-
                 let fields = {
-                    locked: today.length >= 3 && finished,
+                    locked: count >= 20 && (finished || level === 2),
                     stat: {
-                        games: 3 - today.length,
+                        games: 20 - count,
                         scores: total,
                         position: position
                     },
@@ -180,6 +179,15 @@ class Kitchen extends Component {
                     }
                 }
                 this.setState(fields)
+            } else {
+                this.setState({
+                    locked: count >= 20,
+                    stat: {
+                        games: 20 - count,
+                        scores: total,
+                        position: position
+                    },
+                })
             }
         }
     }
@@ -610,7 +618,7 @@ class Kitchen extends Component {
                             this.getGameScreen()
                     )
                 }
-                <div className='kitchen__no-mobile'><span>Ваш экран слишком мал:(<br/>Скоро будет доступно и на мобильных устройствах </span></div>
+                <div className='kitchen__no-mobile'><span>Поверните устройство</span></div>
             </div>
         </div>
     }

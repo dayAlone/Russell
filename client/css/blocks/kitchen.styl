@@ -7,6 +7,13 @@
     position relative
     border 1px solid #303130
     margin 50px 0 120px
+    min-height 57vw
+    @media (min-width: $scr_s)
+        min-height 365px
+    @media (min-width: $scr_sm)
+        min-height 409px
+    @media (min-width: $scr_md)
+        min-height 550px
     &__share
         margin -14px 0 -10px
         @media (min-width: $scr_md)
@@ -69,9 +76,8 @@
             font-size 25px
             line-height 1.4
             text-align center
-        @media (min-width: $scr_md)
+        @media (min-width: $game)
             display none
-
     &__timeout
         position absolute
         top 0
@@ -147,138 +153,259 @@
     &__level
         width 100%
         left 0
-        background-size contain
+        background-size contain !important
         &--0
             background url(/layout/images/kitchen/white/bg.jpg) bottom center no-repeat
             .kitchen
                 &__box
+                    @media (max-width: $scr_s)
+                        transform translateY(calc(-50% + 1px)) translateX(-50%)
+                    @media (min-width: $scr_s) and (max-width: $scr_sm)
+                        transform translateY(calc(-50% + 1px)) translateX(-50%) scale(.664)
+                    @media (min-width: $scr_sm) and (max-width: $scr_md)
+                        transform translateY(-50%) translateX(-50%) scale(.756)
                     &--1
                         margin-left -31.1%
                         margin-top -14%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 12.3vw
                     &--2
                         margin-left -16.55%
                         margin-top -15.6%
                     &--3
                         margin-left -16.55%
                         margin-top -8.1%
+                    &--2, &--3
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 16.7vw
                     &--4
                         margin-top -11.8%
                         margin-left 16.5%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 16.6vw
                     &--5
                         margin-left 31.1%
                         margin-top -13.8%
+                        @media (max-width: $scr_s)
+
+                            > img
+                                max-width 12.9vw
                     &--6, &--7, &--8, &--9, &--10, &--11, &--12
                         margin-top 16.6%
                     &--6
                         margin-left -33%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 13.1vw
                     &--7
                         margin-left -20.8%
                     &--8
                         margin-left -10.8%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 8.7vw
                     &--9
                         margin-left .1%
+                        @media (max-width: $scr_s)
+                            opacity 1
+                            > img
+                                max-width 12.8vw
                     &--10
                         margin-left 11%
+                    &--8, &--10
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 8.7vw
                     &--11
                         margin-left 21%
+                    &--7, &--11
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 10.85vw
                     &--12
                         margin-left 33.1%
+                    &--6, &--12
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 13.1vw
         &--1
             background url(/layout/images/kitchen/black/bg.jpg) bottom center no-repeat
             .kitchen
                 &__box
+                    @media (max-width: $scr_s)
+                        transform translateY(-50%) translateX(-50%)
+                    @media (min-width: $scr_s) and (max-width: $scr_sm)
+                        transform translateY(calc(-50% + 1px)) translateX(-50%) scale(.665)
+                    @media (min-width: $scr_sm) and (max-width: $scr_md)
+                        transform translateY(-50%) translateX(-50%) scale(.745)
                     &--1
                         margin-left -31.1%
                         margin-top -13.9%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 12.3vw
                     &--2
                         margin-left -16.5%
                         margin-top -15.6%
+                    &--2, &--3
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 16.7vw
                     &--3
                         margin-left -16.5%
                         margin-top -8.1%
                     &--4
                         margin-top -11.7%
                         margin-left 16.6%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 16.6vw
                     &--5
                         margin-left 28%
                         margin-top -13.85%
+
                     &--6
                         margin-top -13.85%
                         margin-left 34.3%
-
+                    &--5, &--6
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 6.2vw
                     &--7, &--8, &--9, &--10, &--11, &--12, &--13, &--14
                         margin-top 16.7%
+                        @media (max-width: $scr_s)
+                            transform translateY(calc(-50% + 1px)) translateX(-50%)
                     &--7
                         margin-left -33%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 13vw
                     &--8
                         margin-left -20.9%
                     &--9
                         margin-left -11%
                     &--10
                         margin-left 0%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 13vw
                     &--11
                         margin-left 11.05%
+                    &--9, &--11
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 8.5vw
                     &--12
                         margin-left 21%
+                    &--8, &--12
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 10.8vw
                     &--13
                         margin-left 29.8%
                     &--14
                         margin-left 36.4%
+                    &--13, &--14
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 6.5vw
         &--2
             background url(/layout/images/kitchen/red/bg.jpg) bottom center no-repeat
             .kitchen
                 &__box
+                    @media (max-width: $scr_s)
+                        transform translateY(-50%) translateX(-50%)
+                    @media (min-width: $scr_s) and (max-width: $scr_sm)
+                        transform translateY(-50%) translateX(-50%) scale(.665)
+                    @media (min-width: $scr_sm) and (max-width: $scr_md)
+                        transform translateY(calc(-50% + 1.5px)) translateX(-50%) scale(.75)
                     &--1
                         margin-left -31.1%
                         margin-top -13.9%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 12.6vw
                     &--2
                         margin-left -16.5%
                         margin-top -15.5%
                     &--3
                         margin-left -16.5%
                         margin-top -8.1%
+
                     &--4
                         margin-left 16.6%
                         margin-top -15.5%
                     &--5
                         margin-left 16.6%
                         margin-top -8.1%
+                    &--2, &--3, &--4, &--5
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 16.9vw
                     &--6
                         margin-left 28%
                         margin-top -13.85%
                     &--7
                         margin-top -13.85%
                         margin-left 34.3%
-
+                    &--6, &--7
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 6.3vw
                     &--8, &--9, &--10, &--13, &--14, &--15, &--16
                         margin-top 16.8%
-                    &--11
-                        margin-top 12.9%
-                    &--12
-                        margin-top 20.8%
+                        @media (max-width: $scr_s)
+                            transform translateY(calc(-50% + 1px)) translateX(-50%)
                     &--8
                         margin-left -33%
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 13.1vw
                     &--9
                         margin-left -20.9%
                     &--10
                         margin-left -11%
                     &--11
                         margin-left 0%
+                        margin-top 12.9%
+                    &--12
+                        margin-top 20.8%
+                    &--11, &--12
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 13.2vw
                     &--13
                         margin-left 11%
+                    &--10, &--13
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 8.7vw
                     &--14
                         margin-left 20.9%
+                    &--9, &--14
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 10.9vw
                     &--15
                         margin-left 29.8%
                     &--16
                         margin-left 36.4%
+                    &--15, &--16
+                        @media (max-width: $scr_s)
+                            > img
+                                max-width 6.5vw
     &__box
         position absolute
         left 50%
         top 50%
-        transform translateY(-50%) translateX(-50%)
         opacity 0
         t opacity, .2s
+
+        @media (min-width: $scr_md)
+            transform translateY(-50%) translateX(-50%)
         &-content
             position absolute
             max-width 75%
@@ -297,6 +424,7 @@
         size 63px 28px
         line-height 27px
         margin-top 5px
+        max-width 100%
         @media (min-width: $scr_s)
             font-size 20px
             size 73px 28px
@@ -350,10 +478,12 @@
         padding 0 15px
         left 0
     &__sku
-        margin-bottom 15px
         position relative
         width 92%
         margin-left 4%
+        margin-bottom 1vw
+        @media (min-width: $scr_s)
+            margin-bottom 15px
         &-overlay
             position absolute
             overflow hidden
@@ -375,7 +505,13 @@
             margin-bottom 0px
         img
             max-width 100%
-            max-height 75px
+            max-height 5vw
+            @media (min-width: $scr_s)
+                max-height 36px
+            @media (min-width: $scr_sm)
+                max-height 50px
+            @media (min-width: $scr_md)
+                max-height 75px
     &__block
         &--inline
             display inline-block
@@ -404,7 +540,13 @@
 
         text-align center
         z-index 2
-        padding 20px 10px
+        padding 20px 5px
+        width 68px
+        @media (min-width: $scr_sm)
+            width 70px
+            padding 20px 10px
+        @media (min-width: $scr_md)
+            width 95px
         &--left
             left 0
             background-image url(/layout/images/kitchen/ui-left.jpg)
@@ -435,7 +577,7 @@
             margin-top 5px
             background-image none
             color white
-            @media (max-width: $scr_s)
+            @media (max-width: $scr_sm)
                 height 40px
                 line-height 42px
             @media (min-width: $scr_s)
@@ -444,7 +586,7 @@
                 color white
             &--top
                 margin-top 40px
-                @media (min-width: $scr_s)
+                @media (min-width: $scr_sm)
                     margin-top 90px
         a
             color alpha(white, .7)
@@ -465,10 +607,12 @@
             margin-bottom 10px
             &:last-of-type
                 margin-bottom 0px
-            @media (min-width: $scr_s)
-                font-size 14px
+            @media (min-width: $scr_sm)
+                font-size 13px
                 line-height 1.2
                 margin-bottom 20px
+            @media (min-width: $scr_sm)
+                font-size 14px
             @media (min-width: $scr_md)
                 font-size 15px
                 padding 0 9%
@@ -493,4 +637,6 @@
             line-height 1.6
             font-size 16px
             @media (min-width: $scr_s)
+                font-size 20px
+            @media (min-width: $scr_md)
                 font-size 23px

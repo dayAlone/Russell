@@ -44,7 +44,7 @@ class Raring extends Component {
                         till: till,
                         checks: checks,
                         scores: this.props.scores[el.code],
-                        today: 3 - (this.props.scores[el.code] && this.props.scores[el.code].today ? this.props.scores[el.code].today.length : 0)
+                        today: 20 - (this.props.scores[el.code] ? this.props.scores[el.code].count : 0)
                     })
                 }
             })
@@ -82,7 +82,7 @@ class Raring extends Component {
                             {scores && parseInt(scores.position, 10) === scores.position ? scores.position : <span className='none'>—</span>}
                         </div>
                         <div className='table__col'>
-                            {el.code !== 'checks' ? <div>{today} / 3</div> : <span className='none'>—</span>}
+                            {el.code !== 'checks' ? <div>{today} / 20</div> : <span className='none'>—</span>}
                         </div>
                         <div className='table__col'>
                             {el.code === 'checks' ? <div>{checks}</div> : <span className='none'>—</span>}

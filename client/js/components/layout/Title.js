@@ -67,7 +67,7 @@ class Title extends Component {
                             </div>
                         </div>
                         <div className='title__col'>
-                            {this.props.type === 'counter' ? <Link to='/games/dream/' className='button'>Принять участие</Link> : <Link to='/games/' className='button'>Выиграть!</Link>}
+                            {this.props.type === 'counter' ? <Link to='/games/dream/' className='button'>Участвовать</Link> : <Link to='/games/' className='button'>Выиграть!</Link>}
                         </div>
                     </div>
                     : null}

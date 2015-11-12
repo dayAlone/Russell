@@ -439,7 +439,7 @@ class Test extends Component {
                         : this.getGameScreen()
                     )
                 }
-                <div className='test__no-mobile'><span>Ваш экран слишком мал:(<br/>Скоро будет доступно и на мобильных устройствах </span></div>
+                <div className='test__no-mobile'><span>Поверните устройство</span></div>
             </div>
         </div>
     }

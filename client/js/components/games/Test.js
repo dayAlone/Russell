@@ -71,7 +71,7 @@ class Test extends Component {
             this.setState({
                 level: 0,
                 current: 0,
-                time: 1200,
+                time: 120,
                 isStarted: true,
                 timer: setInterval(this.tick.bind(this), 1000),
                 shares: {

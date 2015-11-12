@@ -60,7 +60,7 @@ class Raring extends Component {
                 <div className='table__title'>
                     <div className='table__col left'>Наименование<br/>активности</div>
                     <div className='table__col'>До следующего<br/>розыгрыша</div>
-                    <div className='table__col'>Текущие<br/>очки</div>
+                    <div className='table__col'>Набранные<br/>баллы</div>
                     <div className='table__col'>Позиция<br/>в рейтинге</div>
                     <div className='table__col'>Попытки<br/>(осталось / всего)</div>
                     <div className='table__col'>Моих Чеков<br/>в розыгрыше</div>

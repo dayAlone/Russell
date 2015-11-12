@@ -71,7 +71,7 @@ class Test extends Component {
             this.setState({
                 level: 0,
                 current: 0,
-                time: 120,
+                time: 1200,
                 isStarted: true,
                 timer: setInterval(this.tick.bind(this), 1000),
                 shares: {
@@ -353,7 +353,7 @@ class Test extends Component {
         let _id = ''
         if (this.props.scores && this.props.scores.test) _id = this.props.scores.test.today[0]._id
         let url = `http://${document.domain}/games/test/${_id}`
-        return <div>
+        return <div className='test__result'>
             <h2>Ваш результат:</h2>
             <br/>
             <span className='test__score test__score--big' data-text='Баллов'>

@@ -8,53 +8,70 @@
     border 1px solid #303130
     margin 50px 0 120px
     &__share
+        margin -14px 0 -10px
+        @media (min-width: $scr_md)
+            margin 0
         &-title
             display inline-block
             text-align left
             margin-right 13px
-            font-size 14px
             middle()
+            font-size 12px
+            margin-top 3px
+            @media (min-width: $scr_md)
+                font-size 14px
+                margin-top 0px
+
         &-scores
             margin-left 10px
             margin-top 5px
             middle()
             span:first-of-type
-                font-size 30px
+                font-size 25px
+                @media (min-width: $scr_s)
+                    font-size 30px
         button
             middle()
             margin 0 10px
-            size 35px
+            size 25px
             background-color #005c9a
             border 0
             padding 0
             text-align center
-            line-height 10px
+            line-height 8px
             border-radius 3px
+            @media (min-width: $scr_s)
+                size 35px
+                line-height 10px
             &.vk
                 background-color #1b84b5
             img
-                max-width 22px
-                max-height 20px
+                max-width 16px
+                max-height 14px
+                @media (min-width: $scr_s)
+                    max-width 22px
+                    max-height 20px
                 middle()
     &__no-mobile
-        display none
-        @media (max-width: $scr_md)
-            display block
+        display block
+        position absolute
+        top 0
+        left 0
+        size 100%
+        background-color black
+        z-index 1000
+        > span
             position absolute
-            top 0
-            left 0
-            size 100%
-            background-color black
-            z-index 1000
-            > span
-                position absolute
-                width 80%
-                left 50%
-                top 50%
-                transform translateY(-50%) translateX(-50%)
-                font-size 30px
-                line-height 1.4
-                text-align center
+            width 80%
+            left 50%
+            top 50%
+            transform translateY(-50%) translateX(-50%)
+            font-size 25px
+            line-height 1.4
+            text-align center
+        @media (min-width: $scr_md)
+            display none
+
     &__timeout
         position absolute
         top 0
@@ -119,7 +136,9 @@
         p
             line-height 1.4
     &__divider
-        margin 25px 0
+        margin 15px 0
+        @media (min-width: $scr_s)
+            margin 25px 0
         max-width 100%
     &__level, &__ui
         position absolute
@@ -272,21 +291,58 @@
             opacity 1
     &__score
         display inline-block
-        width 100%
-        size 73px 38px
-        border 1px solid white
         border-radius 5px
-        line-height 40px
         font-weight bold
-        font-size 24px
-        margin-top 8px
-        margin-bottom 20px
+        font-size 18px
+        size 63px 28px
+        line-height 27px
+        margin-top 5px
+        @media (min-width: $scr_s)
+            font-size 20px
+            size 73px 28px
+            line-height 28px
+            margin-bottom 20px
+            border 1px solid white
+            margin-top 8px
+        @media (min-width: $scr_md)
+            font-size 24px
+            size 73px 38px
+            line-height 40px
         &--big
-            size 203px 68px
-            line-height 74px
-            font-size 43px
             margin-left 15px
             margin-right 40px
+            position relative
+            border 1px solid white
+            size 123px 38px
+            font-size 26px
+            line-height 40px
+            margin 0px 20px 15px
+            @media (min-width: $scr_s)
+                size 163px 48px
+                font-size 33px
+                line-height 53px
+                margin 10px 20px 25px
+            @media (min-width: $scr_md)
+                size 203px 68px
+                line-height 74px
+                font-size 43px
+
+                margin 20px 20px 35px
+            &:after
+                position absolute
+                content attr(data-text)
+
+                width 100%
+                left 0
+                white-space no-wrap
+                font-size 13px
+                bottom -32px
+                @media (min-width: $scr_s)
+                    bottom -50px
+                    font-size 16px
+                @media (min-width: $scr_md)
+                    bottom -65px
+                    font-size 18px
     &__skus
         position absolute
         bottom 20px
@@ -335,10 +391,12 @@
         span
             text-transform uppercase
             color #9a9da0
-            font-size 11px
+            font-size 9px
             font-weight bold
             line-height 1
             display inline-block
+            @media (min-width: $scr_md)
+                font-size 11px
     &__ui
         position absolute
         background-size cover
@@ -357,8 +415,16 @@
         text-align center
         position absolute
         top 50%
-        width 80%
-        left 10%
+        width 100%
+        left 0
+        padding 0 20px
+        @media (min-width: $scr_s)
+            padding 0 40px
+        @media (min-width: $scr_sm)
+            width 80%
+            left 10%
+            padding 0
+
         transform translateY(-50%)
         > small
             font-size 11px
@@ -367,29 +433,63 @@
             z-index 20
         .button
             margin-top 5px
+            background-image none
+            color white
+            @media (max-width: $scr_s)
+                height 40px
+                line-height 42px
+            @media (min-width: $scr_s)
+                line-height 55px
+            &:hover
+                color white
             &--top
-                margin-top 90px
-        a:not(.button)
+                margin-top 40px
+                @media (min-width: $scr_s)
+                    margin-top 90px
+        a
             color alpha(white, .7)
-            margin-top 25px
             display inline-block
             line-height 1
             border-line(alpha(white, .3))
+            margin-top 10px
+            @media (min-width: $scr_s)
+                margin-top 25px
             &:hover
                 color red
                 border-line(alpha(red, .3))
         p
-            font-size 15px
-            padding 0 9%
-            line-height 1.4
+
             width 100%
+            font-size 12px
+            line-height 1.1
+            margin-bottom 10px
+            &:last-of-type
+                margin-bottom 0px
+            @media (min-width: $scr_s)
+                font-size 14px
+                line-height 1.2
+            @media (min-width: $scr_md)
+                font-size 15px
+                padding 0 9%
+                line-height 1.4
             strong
                 font-weight bold
         h2
-            font-size 30px
+            font-size 25px
             margin-top 30px
             margin-bottom 0px
+            @media (min-width: $scr_s)
+                font-size 30px
         h3
             margin 0
-            font-size 28px
-            padding 0 8%
+            font-size 16px
+            @media (min-width: $scr_s)
+                font-size 20px
+            @media (min-width: $scr_md)
+                font-size 28px
+                padding 0 8%
+        h4
+            line-height 1.6
+            font-size 16px
+            @media (min-width: $scr_s)
+                font-size 23px

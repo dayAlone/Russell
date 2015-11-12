@@ -538,7 +538,7 @@ class Kitchen extends Component {
             </div> : null }
             <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
             <span className='kitchen__block kitchen__block--inline'>
-                <span>Осталось попыток<br/>сыграть сегодня</span>
+                <span>Осталось попыток<br/>до розыгрыша</span>
                 <div className='kitchen__score'>
                     {games}
                 </div>

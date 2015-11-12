@@ -27,7 +27,7 @@ class Test extends Component {
             vk: false
         },
         stat: {
-            games: 3,
+            games: 20,
             scores: 0,
             position: 0
         }
@@ -188,12 +188,13 @@ class Test extends Component {
     }
     checkLocked() {
         if (this.props.scores.test) {
+            let {count, total, position} = this.props.scores.test
             this.setState({
-                locked: this.props.scores.test.today.length >= 3,
+                locked: count >= 20,
                 stat: {
-                    games: 3 - this.props.scores.test.today.length,
-                    scores: this.props.scores.test.total,
-                    position: this.props.scores.test.position
+                    games: 20 - count,
+                    scores: total,
+                    position: position
                 }
             })
         }
@@ -419,7 +420,9 @@ class Test extends Component {
     }
     getLockedScreen() {
         return <div className='test__placeholder center'>
-            <h4>{this.props.user.displayName},<br /> к сожалению, ваш лимит игр на сегодня достигнут.<br /> Возвращайтесь завтра и продолжайте борьбу за призы!</h4>
+            <h4>{this.props.user.displayName},<br /> вы использовали все 20 игровых попыток. <br/>
+            Теперь ожидайте результатов розыгрыша. <br/>
+            Начать новую борьбу за призы вы сможете<br/> с началом нового игрового тура.</h4>
             <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
         </div>
     }

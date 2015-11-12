@@ -592,7 +592,7 @@ class Kitchen extends Component {
         return <div className='kitchen__placeholder center'>
             <h4>{this.props.user.displayName},<br /> вы использовали все 20 игровых попыток. <br/>
             Теперь ожидайте результатов розыгрыша. <br/>
-            Начать новую борьбу за призы вы сможете с началом нового игрового тура.</h4>
+            Начать новую борьбу за призы вы сможете<br/> с началом нового игрового тура.</h4>
             <Link to='/games/' className='button button--top'>Вернуться в раздел</Link>
         </div>
     }

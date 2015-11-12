@@ -39,7 +39,7 @@ export default function(app) {
                 let fields = {}
                 let {type, offset, limit, id} = this.query
                 if (type && type !== 'all') {
-                    let until = yield Game.findCurrentRaffle('dream')
+                    let until = yield Game.findCurrentRaffle('checks')
                     switch (type) {
                     case 'gameover':
                         fields['until'] = { $lt: until }

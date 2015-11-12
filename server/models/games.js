@@ -26,7 +26,7 @@ gameSchema.statics.findCurrentRaffle = function* (code) {
     return current
 }
 
-gameSchema.statics.findCurrentRaffle = function* (codes) {
+gameSchema.statics.findRaffles = function* (codes) {
     let games = yield Game.find({ code: {$in: codes} })
     let result = {}
     games.map(game => {

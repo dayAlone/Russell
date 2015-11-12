@@ -10,7 +10,7 @@ import time from 'time'
 const getUserRating = function* (user, type, scores, raffles) {
     try {
         let position = false
-        if (!raffles) raffles = yield Games.findCurrentRaffle([type])
+        if (!raffles) raffles = yield Games.findRaffles([type])
         let query = {
             $match: {
                 type: type,
@@ -58,7 +58,7 @@ const getUserTotalScores = function* (user) {
     if (user) {
         try {
             let games = ['kitchen', 'test']
-            let raffles = yield Games.findCurrentRaffle(games)
+            let raffles = yield Games.findRaffles(games)
             let query = []
             games.map(el => {
                 query.push({

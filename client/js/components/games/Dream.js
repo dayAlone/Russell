@@ -46,7 +46,7 @@ class Dream extends Component {
                         <p className='text__number' data-text='5'>Сохранять чек, упаковочную коробку и приобретенный предмет техники вплоть до получения приза.</p>
                     </div>
                     <div className='text__col'>
-                        <p className='text__number' data-text='6'>Также для участия в акции Вам нужно подписаться на наши группы в социальных сетях <a href='https://www.facebook.com/russellhobbsrussia' target='_blank'>Facebook</a>, <a href='https://vk.com/russelhobbsrussia' target='_blank'>Вконтакте</a>, <a href='https://instagram.com/russellhobbsrussia/' target='blank'>Instagram</a>.</p>
+                        <p className='text__number' data-text='6'>Также для участия в акции Вам нужно подписаться на наши группы в социальных сетях <a href='https://www.facebook.com/russellhobbsrussia' target='_blank'>Facebook</a>, <a href='https://vk.com/russellhobbsrus' target='_blank'>Вконтакте</a>, <a href='https://instagram.com/russellhobbsrussia/' target='blank'>Instagram</a>.</p>
                     </div>
                 </section>
                 <h3 className='center'>Время проведения акции – с 12 октября по 28 декабря.</h3>

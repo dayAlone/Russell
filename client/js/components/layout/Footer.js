@@ -8,7 +8,7 @@ class Footer extends Component {
     render() {
         let list = {
             fb: 'https://www.facebook.com/russellhobbsrussia',
-            vk: 'https://vk.com/russelhobbsrussia',
+            vk: 'https://vk.com/russellhobbsrus',
             in: 'https://instagram.com/russellhobbsrussia/'
         }
         let socials = []

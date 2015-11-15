@@ -130,6 +130,7 @@
     "run-sequence": "^1.1.4",
     "sass-loader": "^3.0.0",
     "selectel-manager": "0.0.5",
+    "simple-recaptcha-new": "^1.0.0",
     "sleep": "^3.0.0",
     "slick": "^1.12.2",
     "slick-carousel": "^1.5.8",

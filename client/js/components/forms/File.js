@@ -38,6 +38,7 @@ let File = React.createClass({
                     name={name}
                     value={this.getValue()}
                     disabled={this.isFormDisabled() || this.props.disabled}
+                    accept = {this.props.accept}
                 />
         </div>
     }

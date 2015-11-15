@@ -185,7 +185,7 @@ class AuthModal extends Component {
                 <Input name='phone' title='Телефон' placeholder='+7 903 123-45-67' validations='minLength:1'/>
                 <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'/>
                 <Input type='password' name='password_confirm' title='Повтор пароля' validations='minLengthOrEmpty:6,equalsField:password'/>
-                <File name='photo' ref='file' title='Загрузить фото' value=''/>
+                <File name='photo' ref='file' title='Загрузить фото' value='' accept='image/jpeg,image/png,image/gif'/>
                 <Recaptcha className='captcha'
                     ref='captha'
                     sitekey='6Le-9BATAAAAAHSGueTMzAjoTDxlWMIxsKeVjuGO'

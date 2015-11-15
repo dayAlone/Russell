@@ -148,7 +148,7 @@ class AddCheckModal extends Component {
                 <div className='form__file-description right'>
                     На чеке должны быть отчетливо видны реквизиты и позиции товаров
                 </div>
-                <File name='photo' ref='file' title='Загрузить фото' validations={photo.length === 0 ? 'minLengthOrEmpty:1' : false } value=''/>
+                <File name='photo' ref='file' title='Загрузить фото' validations={photo.length === 0 ? 'minLengthOrEmpty:1' : false } value='' accept='image/jpeg,image/png,image/gif'/>
                 <div className='modal__footer'>
                     <div className='form__submit-description right'>
                         * - поля, обязательныедля заполнения

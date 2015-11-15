@@ -24,14 +24,17 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        let {confirm} = this.props.location.query
+        let {confirm, change_password} = this.props.location.query
+        let {openModal} = this.props.login
         if (confirm) {
-            console.log(confirm)
             $.post('/auth/local/confirm-email/', { confirm: confirm, isNew: true }).done(response => {
                 if (!response.error) {
-                    this.props.login.openModal('confirm')
+                    openModal('confirm')
                 }
             })
+        }
+        if (change_password) {
+            openModal('forget-form')
         }
     }
     render() {
@@ -40,7 +43,7 @@ class App extends Component {
             <Nav routes={this.props.location} />
             {this.props.children}
             <Footer routes={this.props.location} />
-            <AuthModal />
+            <AuthModal routes={this.props.location} />
         </div>
     }
 }

@@ -4,7 +4,7 @@ import LoginSocial from '../LoginSocial'
 import LoginEmail from '../LoginEmail'
 
 import Formsy from 'formsy-react'
-import {Input} from './../forms/'
+import {Input, File} from './../forms/'
 
 import * as actionCreators from '../../actions/login'
 import { bindActionCreators } from 'redux'
@@ -19,6 +19,7 @@ Formsy.addValidationRule('minLengthOrEmpty', (values, value, length) => {
 @connect(state => ({ modal: state.login.modal, login: state.login, isLogin: state.login.isLogin }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class AuthModal extends Component {
     state = { captcha: false, disabled: false }
+
     componentDidUpdate(prevProps) {
         if (this.props.isLogin === true
             || (this.props.modal === false && prevProps.modal !== false)) this.refs.modal.hide()
@@ -28,7 +29,6 @@ class AuthModal extends Component {
         const { hideModal } = this.props.actions
         hideModal()
     }
-
     getForms() {
         const { error } = this.props.login
         return <div className='modal__content'>
@@ -39,8 +39,8 @@ class AuthModal extends Component {
             <h4>По электронной почте</h4>
             <LoginEmail noErrors={true}/>
             <div className='modal__links'>
-                <a href='#'>Забыли пароль?</a><br/>
-                <a href='#' onClick={this.showRegister.bind(this)}>Регистрация эл. почте</a>
+                <a href='#' onClick={this.showBlock('forget-link')}>Забыли пароль?</a><br/>
+                <a href='#' onClick={this.showBlock('registration')}>Регистрация по электронной почте</a>
             </div>
             {this.getMessage()}
         </div>
@@ -59,17 +59,32 @@ class AuthModal extends Component {
                 error: false,
                 disabled: true
             })
-            fields = Object.assign({}, fields, {
-                captcha: captcha
-            })
-            $.post('/auth/local/signup', fields)
+            let formData = new FormData()
+            let file = this.refs.file.getFiles()
+            if (file) formData.append('photo', file)
+            formData.append('captcha', captcha)
+            for (let el in fields) {
+                if (el !== 'photo' && fields[el]) {
+                    formData.append(el, fields[el])
+                }
+            }
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '/auth/local/signup',
+                    processData: false,
+                    cache: false,
+                    contentType: false,
+                    data: formData
+                }
+            )
             .done(response => {
                 let fields = {
                     error: false,
                     disabled: false
                 }
                 if (response.error) {
-                    if (response.error.code === 11111) this.refs.captha.reset()
+                    this.refs.captha.reset()
                     fields.error = response.error.message
                 } else {
                     const { openModal } = this.props.actions
@@ -87,6 +102,73 @@ class AuthModal extends Component {
         }
         return true
     }
+    sendNewPasswordForm(fields) {
+        this.setState({
+            error: false,
+            disabled: true
+        })
+        fields = Object.assign({}, fields, {
+            passwordResetToken: this.props.routes.query.change_password
+        })
+        $.post('/auth/local/new-password/', fields)
+        .done(response => {
+            let fields = {
+                error: false,
+                disabled: false
+            }
+            if (response.error) {
+                fields.error = response.error.message
+            } else {
+                const { openModal } = this.props.actions
+                openModal('forget-form-success')
+            }
+            this.setState(fields)
+        })
+        .fail(() => {
+            this.setState({
+                disabled: false,
+                error: 'Что-то пошло не так, повторите попытку через пару минут'
+            })
+        })
+    }
+    sendNewPasswordLink(fields) {
+        let {captcha} = this.state
+        if (!captcha) {
+            this.setState({
+                error: 'Укажите, что вы не робот;)'
+            })
+        } else {
+            this.setState({
+                error: false,
+                disabled: true
+            })
+            fields = Object.assign({}, fields, {
+                captcha: captcha
+            })
+            $.post('/auth/local/new-password-email/', fields)
+            .done(response => {
+                let fields = {
+                    error: false,
+                    disabled: false
+                }
+                if (response.error) {
+                    this.refs.captha.reset()
+                    fields.error = response.error.message
+                } else {
+                    const { openModal } = this.props.actions
+                    openModal('forget-link-success')
+                }
+                this.setState(fields)
+            })
+            .fail(() => {
+                this.setState({
+                    disabled: false,
+                    error: 'Что-то пошло не так, повторите попытку через пару минут'
+                })
+            })
+
+        }
+    }
     onCaptchaChange(value) {
         this.setState({
             error: false,
@@ -103,6 +185,7 @@ class AuthModal extends Component {
                 <Input name='phone' title='Телефон' placeholder='+7 903 123-45-67' validations='minLength:1'/>
                 <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'/>
                 <Input type='password' name='password_confirm' title='Повтор пароля' validations='minLengthOrEmpty:6,equalsField:password'/>
+                <File name='photo' ref='file' title='Загрузить фото' value=''/>
                 <Recaptcha className='captcha'
                     ref='captha'
                     sitekey='6Le-9BATAAAAAHSGueTMzAjoTDxlWMIxsKeVjuGO'
@@ -130,7 +213,58 @@ class AuthModal extends Component {
             <div className='modal__message'>
                 Ваш электронный адрес подтвержден. <br/>Теперь вы можете авторизоваться на сайте.
             </div>
-            {!this.props.isLogin ? <a href='#' onClick={this.showLogin.bind(this)} className='button button--small'>Войти на сайт</a> : null}
+            {!this.props.isLogin ? <a href='#' onClick={this.showBlock()} className='button button--small'>Войти на сайт</a> : null}
+        </div>
+    }
+    getForgetPasswordFormSuccess() {
+        return <div>
+            <h2 className='modal__title modal__title--padding'>Восстановление пароля</h2>
+            <div className='modal__message'>
+                Ваш пароль изменен. Теперь вы можете авторизоваться на сайте.
+            </div>
+            {!this.props.isLogin ? <a href='#' onClick={this.showBlock()} className='button button--small'>Войти на сайт</a> : null}
+        </div>
+    }
+    getNewPasswordLinkSuccess() {
+        return <div>
+            <h2 className='modal__title modal__title--padding'>Восстановление пароля</h2>
+            <div className='modal__message'>
+                На указанный электронный адрес отправлено письмо с инструкцией по восстановлению пароля.
+            </div>
+        </div>
+    }
+    getForgetPasswordLink() {
+        return <div className='modal__content'>
+            <h2 className='modal__title'>Восстановление пароля</h2>
+            <Formsy.Form ref='form' onValidSubmit={this.sendNewPasswordLink.bind(this)} className='form form--forget-link'>
+                {this.state.error ? <div className='alert alert-danger' role='alert'>{this.state.error}</div> : false}
+                <Input name='email' title='Введите e-mail, указанный при регистрации *' placeholder='ivan@sydorov.ru' validations='minLengthOrEmpty:1,isEmail'/>
+
+                <Recaptcha className='captcha'
+                    ref='captha'
+                    sitekey='6Le-9BATAAAAAHSGueTMzAjoTDxlWMIxsKeVjuGO'
+                    onChange={this.onCaptchaChange.bind(this)}/>
+                <button className='button' type='submit' disabled={this.state.disabled}>
+                    {this.state.disabled ? <img src='/layout/images/loading.gif' /> : null}
+                    Восстановить пароль
+                </button>
+
+            </Formsy.Form>
+        </div>
+    }
+    getForgetPasswordForm() {
+        return <div className='modal__content'>
+            <h2 className='modal__title'>Восстановление пароля</h2>
+            <Formsy.Form ref='form' onValidSubmit={this.sendNewPasswordForm.bind(this)} className='form form--forget'>
+                {this.state.error ? <div className='alert alert-danger' role='alert'>{this.state.error}</div> : false}
+                <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'/>
+                <Input type='password' name='password_confirm' title='Повтор пароля' validations='minLengthOrEmpty:6,equalsField:password'/>
+                <button className='button' type='submit' disabled={this.state.disabled}>
+                    {this.state.disabled ? <img src='/layout/images/loading.gif' /> : null}
+                    Сохранить пароль
+                </button>
+
+            </Formsy.Form>
         </div>
     }
     getContent() {
@@ -141,19 +275,24 @@ class AuthModal extends Component {
             return this.getRegistration()
         case 'confirm':
             return this.getRegistrationConfirm()
+        case 'forget-link':
+            return this.getForgetPasswordLink()
+        case 'forget-link-success':
+            return this.getNewPasswordLinkSuccess()
+        case 'forget-form':
+            return this.getForgetPasswordForm()
+        case 'forget-form-success':
+            return this.getForgetPasswordFormSuccess()
         default:
             return this.getForms()
         }
     }
-    showRegister(e) {
-        const { openModal } = this.props.actions
-        openModal('registration')
-        e.preventDefault()
-    }
-    showLogin(e) {
-        const { openModal } = this.props.actions
-        openModal()
-        e.preventDefault()
+    showBlock(name) {
+        return (e) => {
+            const { openModal } = this.props.actions
+            openModal(name)
+            e.preventDefault()
+        }
     }
     render() {
 

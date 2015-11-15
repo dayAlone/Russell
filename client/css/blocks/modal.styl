@@ -93,16 +93,32 @@
             &:hover
                 color red
                 border-line(alpha(@color, .6))
-        .form__login
-            padding-bottom 0px
-            input[type='password'], input[type='email']
-                width calc(50% - 5px)
-                float left
-                margin-right 5px
-                &:focus
-                    outline 0
+
         .form
             padding-bottom 0px
+            .file
+                full-width()
+                text-align left
+                margin-top 5px
+                margin-bottom 25px
+            &--forget-link
+                margin-bottom 1px
+                .alert
+                    margin-bottom 21px
+            &--forget
+                .form-group
+                    width calc(50% - 10px)
+                    float left
+                    &:nth-child(2)
+                        float right
+            &__login
+                padding-bottom 0px
+                input[type='password'], input[type='email']
+                    width calc(50% - 5px)
+                    float left
+                    margin-right 5px
+                    &:focus
+                        outline 0
             .captcha
                 float right
                 width 100%

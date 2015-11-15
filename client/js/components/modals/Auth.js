@@ -130,7 +130,7 @@ class AuthModal extends Component {
             <div className='modal__message'>
                 Ваш электронный адрес подтвержден. <br/>Теперь вы можете авторизоваться на сайте.
             </div>
-            <a href='#' onClick={this.showLogin.bind(this)} className='button button--small'>Войти на сайт</a>
+            {!this.props.isLogin ? <a href='#' onClick={this.showLogin.bind(this)} className='button button--small'>Войти на сайт</a> : null}
         </div>
     }
     getContent() {

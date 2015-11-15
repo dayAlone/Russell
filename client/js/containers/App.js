@@ -27,8 +27,7 @@ class App extends Component {
         let {confirm} = this.props.location.query
         if (confirm) {
             console.log(confirm)
-            $.post('/auth/local/confirm-email/', { confirm: confirm }).done(response => {
-                console.log(response)
+            $.post('/auth/local/confirm-email/', { confirm: confirm, isNew: true }).done(response => {
                 if (!response.error) {
                     this.props.login.openModal('confirm')
                 }

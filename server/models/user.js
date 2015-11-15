@@ -192,6 +192,7 @@ userSchema.post('save', function(next) {
         }
         if (this.wasNew) {
             if (this.verifyEmail !== true) {
+                mailFields.message.subject = 'Подтверждение эл. почты'
                 mailFields.template_content = [{
                     name: 'content',
                     content: `<h3>Для завершения регистрации, пожалуйста, подтвердите ваш электронный адрес.</h3><br/>
@@ -229,3 +230,4 @@ User.count({}, (err, count) => {
 })
 
 export default User
+export const sendUserEmail = sendEmail

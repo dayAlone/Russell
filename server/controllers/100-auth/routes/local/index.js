@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 import passport from 'koa-passport'
-import User from '../../../../models/user'
+import User, {sendUserEmail} from '../../../../models/user'
 const router = new Router()
 import recaptcha from 'simple-recaptcha-new'
 import config from 'config'
@@ -37,13 +37,31 @@ router
         }).call(this, next)
     })
     .post('/confirm-email/', function* () {
-        let {confirm} = this.request.body
+        let {confirm, isNew} = this.request.body
         try {
             let result = yield User.findOneAndUpdate(
                 { verifiedEmail: false, verifyEmailToken: confirm },
-                { $set: { verifiedEmail: true }},
-                { safe: true, upsert: true }
+                { $set: { verifiedEmail: true }}
             )
+            if (result && isNew) {
+                let mailFields = {
+                    message: {
+                        to: [{email: result.email, name: result.displayName}],
+                        merge: true,
+                        inline_css: true,
+                        merge_language: 'handlebars',
+                        'global_merge_vars': [
+                            {
+                                'name': 'user_name',
+                                'content': result.displayName
+                            }
+                        ],
+                    },
+                    template_name: 'russell',
+                    template_content: []
+                }
+                yield sendUserEmail(mailFields)
+            }
             this.body = { error: false, result: result }
         } catch (e) {
             console.error(e, e.stack)

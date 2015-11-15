@@ -64,7 +64,7 @@
                         color red
                         border-line(alpha(red, .5))
             &__content
-                padding 20px 40px 25px
+                padding 20px 40px
         small
             font-size 10px
             line-height 1.1
@@ -398,6 +398,13 @@
                     background-color transparent
             &__line
                 display none
+    &__message
+        padding 30px 0 50px
+        color #717b84
+        font-weight bold
+        & + .button
+            padding 0 25px
+            margin-bottom 35px
     &__title
         margin-top 0px
         color black
@@ -425,6 +432,8 @@
         &--border
             border-bottom 1px solid red
             padding-bottom 10px
+        &--padding
+            padding-top 30px
     &__footer
         margin-top 20px
         padding-top 20px

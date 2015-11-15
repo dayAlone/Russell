@@ -105,13 +105,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         index: true
     },
-    verifyEmailRedirect: String, // where to redirect after verify
     passwordResetToken: {  // refresh with each recovery request
         type: String,
         index: true
     },
-    passwordResetTokenExpires: Date, // valid until this date
-    passwordResetRedirect: String, // where to redirect after password recovery
     created: {
         type: Date,
         default: Date.now
@@ -165,34 +162,55 @@ userSchema.methods.generateProfileName = function* () {
     this.profileName = profileName
 }
 
+let sendEmail = function* (fields) {
+    let mandrill = require('node-mandrill')(config.mandrill)
+    return yield new Promise((fulfill, reject) => {
+        mandrill('/messages/send-template', fields, (error, response) => {
+            if (error) reject(error)
+            fulfill(response)
+        })
+    })
+}
+
+userSchema.post('save', function(next) {
+    co(function*() {
+        let mailFields = {
+            message: {
+                to: [{email: this.email, name: this.displayName}],
+                merge: true,
+                inline_css: true,
+                merge_language: 'handlebars',
+                'global_merge_vars': [
+                    {
+                        'name': 'user_name',
+                        'content': this.displayName
+                    }
+                ],
+            },
+            template_name: 'russell',
+            template_content: []
+        }
+        if (this.wasNew) {
+            if (this.verifyEmail !== true) {
+                mailFields.template_content = [{
+                    name: 'content',
+                    content: `<h3>Для завершения регистрации, пожалуйста, подтвердите ваш электронный адрес.</h3><br/>
+                        <a href='http://${config.domain}/?confirm=${this.verifyEmailToken}' class='button'>Подтвердить</a>`
+                }, {
+                    name: 'additional',
+                    content: '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td class="center padding"><img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/></td></tr></table>'
+                }]
+            }
+            yield sendEmail(mailFields)
+        }
+    }.bind(this)).then(next, next)
+})
+
 userSchema.pre('save', function(next) {
     if (this.deleted || this.profileName) return next()
     co(function*() {
         yield* this.generateProfileName()
-        if (this.isNew) {
-            let mandrill = require('node-mandrill')(config.mandrill)
-            yield new Promise((fulfill, reject) => {
-                mandrill('/messages/send-template', {
-                    message: {
-                        to: [{email: this.email, name: this.displayName}],
-                        merge: true,
-                        inline_css: true,
-                        merge_language: 'handlebars',
-                        'global_merge_vars': [
-                            {
-                                'name': 'user_name',
-                                'content': this.displayName
-                            }
-                        ],
-                    },
-                    template_name: 'russell',
-                    template_content: []
-                }, (error, response) => {
-                    if (error) reject(error)
-                    fulfill(response)
-                })
-            })
-        }
+        this.wasNew = this.isNew
 
     }.bind(this)).then(next, next)
 })

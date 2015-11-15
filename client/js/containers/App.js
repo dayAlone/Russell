@@ -7,11 +7,12 @@ import Footer from '../components/layout/Footer'
 import AuthModal from '../components/modals/Auth'
 
 import * as design from '../actions/design'
+import * as login from '../actions/login'
 import { bindActionCreators } from 'redux'
 
 import 'css_browser_selector'
 
-@connect(state => ({ line: state.design.line }), dispatch => ({design: bindActionCreators(design, dispatch)}))
+@connect(state => ({ line: state.design.line }), dispatch => ({design: bindActionCreators(design, dispatch), login: bindActionCreators(login, dispatch)}))
 class App extends Component {
     componentDidUpdate() {
         let path = this.props.location.pathname
@@ -20,6 +21,18 @@ class App extends Component {
             && !path.match(/\/catalog\/collections\/(.*)\//)
             && this.props.line) {
             this.props.design.setLine(null)
+        }
+    }
+    componentDidMount() {
+        let {confirm} = this.props.location.query
+        if (confirm) {
+            console.log(confirm)
+            $.post('/auth/local/confirm-email/', { confirm: confirm }).done(response => {
+                console.log(response)
+                if (!response.error) {
+                    this.props.login.openModal('confirm')
+                }
+            })
         }
     }
     render() {

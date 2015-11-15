@@ -36,11 +36,24 @@ router
 
         }).call(this, next)
     })
+    .post('/confirm-email/', function* () {
+        let {confirm} = this.request.body
+        try {
+            let result = yield User.findOneAndUpdate(
+                { verifiedEmail: false, verifyEmailToken: confirm },
+                { $set: { verifiedEmail: true }},
+                { safe: true, upsert: true }
+            )
+            this.body = { error: false, result: result }
+        } catch (e) {
+            console.error(e, e.stack)
+            this.body = { error: e }
+        }
+    })
     .post('/signup', function* () {
         let {displayName, email, phone, password} = this.request.body
-        let result
         try {
-            let captcha = yield new Promise((done, cancel) => {
+            let captcha = yield new Promise((done) => {
                 recaptcha(config.recaptcha, this.request.ip, this.request.body.captcha, (err) => {
                     if (err) {
                         done(false)
@@ -53,7 +66,9 @@ router
                     displayName: displayName,
                     email: email,
                     phone: phone,
-                    password: password
+                    password: password,
+                    verifiedEmail: false,
+                    verifyEmailToken: Math.random().toString(36).slice(2, 10)
                 })
                 this.body = { error: false, result: result }
             } else {

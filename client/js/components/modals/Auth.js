@@ -40,7 +40,7 @@ class AuthModal extends Component {
             <LoginEmail noErrors={true}/>
             <div className='modal__links'>
                 <a href='#'>Забыли пароль?</a><br/>
-                <a href='#' onClick={this.showRegister.bind(this)}>Регистрация по e-mail</a>
+                <a href='#' onClick={this.showRegister.bind(this)}>Регистрация эл. почте</a>
             </div>
             {this.getMessage()}
         </div>
@@ -64,7 +64,6 @@ class AuthModal extends Component {
             })
             $.post('/auth/local/signup', fields)
             .done(response => {
-                console.log(response)
                 let fields = {
                     error: false,
                     disabled: false
@@ -73,7 +72,8 @@ class AuthModal extends Component {
                     if (response.error.code === 11111) this.refs.captha.reset()
                     fields.error = response.error.message
                 } else {
-
+                    const { openModal } = this.props.actions
+                    openModal('registration-success')
                 }
                 this.setState(fields)
             })
@@ -95,17 +95,14 @@ class AuthModal extends Component {
     }
     getRegistration() {
         return <div className='modal__content'>
-            <h2 className='modal__title'>Регистрация по e-mail</h2>
+            <h2 className='modal__title'>Регистрация эл. почте</h2>
             <Formsy.Form ref='form' onValidSubmit={this.sendRegister.bind(this)} className='form'>
                 {this.state.error ? <div className='alert alert-danger' role='alert'>{this.state.error}</div> : false}
-                <Input name='displayName' title='Имя и фамилия *' placeholder='Иван Сидоров' validations='minLengthOrEmpty:1'
-                    value='Тестовый тест'/>
-                <Input name='email' title='Эл. почта *' placeholder='ivan@sydorov.ru' validations='minLengthOrEmpty:1,isEmail'
-                    value='asd@asdasd.ru'/>
+                <Input name='displayName' title='Имя и фамилия *' placeholder='Иван Сидоров' validations='minLengthOrEmpty:1'/>
+                <Input name='email' title='Эл. почта *' placeholder='ivan@sydorov.ru' validations='minLengthOrEmpty:1,isEmail'/>
                 <Input name='phone' title='Телефон' placeholder='+7 903 123-45-67' validations='minLength:1'/>
-                <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'
-                    value='123456'/>
-                <Input type='password' name='password_confirm' title='Повтор пароля' validations='minLengthOrEmpty:6,equalsField:password' value='123456'/>
+                <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'/>
+                <Input type='password' name='password_confirm' title='Повтор пароля' validations='minLengthOrEmpty:6,equalsField:password'/>
                 <Recaptcha className='captcha'
                     ref='captha'
                     sitekey='6Le-9BATAAAAAHSGueTMzAjoTDxlWMIxsKeVjuGO'
@@ -119,10 +116,31 @@ class AuthModal extends Component {
             </Formsy.Form>
         </div>
     }
+    getRegistrationSuccess() {
+        return <div>
+            <h2 className='modal__title modal__title--padding'>Регистрация эл. почте</h2>
+            <div className='modal__message'>
+                Почти готово! Осталось только подтвердить ваш электронный адрес. Пожалуйста, проверьте вашу почту.
+            </div>
+        </div>
+    }
+    getRegistrationConfirm() {
+        return <div>
+            <h2 className='modal__title modal__title--padding'>Подтверждение адреса</h2>
+            <div className='modal__message'>
+                Ваш электронный адрес подтвержден. <br/>Теперь вы можете авторизоваться на сайте.
+            </div>
+            <a href='#' onClick={this.showLogin.bind(this)} className='button button--small'>Войти на сайт</a>
+        </div>
+    }
     getContent() {
         switch (this.props.modal) {
+        case 'registration-success':
+            return this.getRegistrationSuccess()
         case 'registration':
             return this.getRegistration()
+        case 'confirm':
+            return this.getRegistrationConfirm()
         default:
             return this.getForms()
         }
@@ -130,6 +148,11 @@ class AuthModal extends Component {
     showRegister(e) {
         const { openModal } = this.props.actions
         openModal('registration')
+        e.preventDefault()
+    }
+    showLogin(e) {
+        const { openModal } = this.props.actions
+        openModal()
         e.preventDefault()
     }
     render() {

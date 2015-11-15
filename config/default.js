@@ -9,6 +9,7 @@ export default {
     __dirname: defer(function(cfg) {
         return cfg.root
     }),
+    recaptcha: '6Le-9BATAAAAAICkYtNqzsFwKLCUcb-7z2M-GU7V',
     mandrill: '1EAsaRQ9dKfahICQfaybRw',
     ftp: {
         host: 'ftp.selcdn.ru',

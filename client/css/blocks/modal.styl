@@ -53,6 +53,18 @@
                     color red
                     border-line(alpha(red,.5))
     &--auth
+        .modal
+            &__links
+                line-height 2
+                a
+                    font-size 13px
+                    color black
+                    border-line(alpha(black, .5))
+                    &:hover
+                        color red
+                        border-line(alpha(red, .5))
+            &__content
+                padding 20px 40px 25px
         small
             font-size 10px
             line-height 1.1
@@ -63,13 +75,15 @@
                 color red
                 border-line(alpha(red,.5))
         .button
-            min-width 140px
+            min-width 60px
+            text-align center
+            padding 0
             img
                 middle()
                 max-width 30px
                 max-height 23px
+                margin-right 0px
         .trigger
-
             margin-top 20px
             font-size 12px
             margin-top 30px
@@ -79,15 +93,54 @@
             &:hover
                 color red
                 border-line(alpha(@color, .6))
-        #email, #password
-            width calc(40% - 10px)
-            float left
-            margin-right 10px
-            placeholder(line-height 17px,)
+        .form__login
+            padding-bottom 0px
+            input[type='password'], input[type='email']
+                width calc(50% - 5px)
+                float left
+                margin-right 5px
+                &:focus
+                    outline 0
+        .form
+            padding-bottom 0px
+            .captcha
+                float right
+                width 100%
+                text-align center
+                > div
+                    display inline-block
+            label
+                text-align left
+                color #717b84
+                margin-bottom -10px
+                margin-top -10px
+                font-size 14px
+            .form-group:nth-child(4), .form-group:nth-child(5)
+                width calc(50% - 10px)
+                float left
+            .form-group:nth-child(5)
+                float right
+            .button
+                width auto
+                padding 0 25px
+                margin-top 20px
+                line-height 40px
+        #password
+            margin-right 0px
+            margin-left 5px
         button
             width 20%
+            float none
         form
-            padding 30px 0 0px
+            padding 0 0 20px
+            text-align center
+        h4
+            font-size 16px
+            color black
+            margin-top 0px
+            margin-bottom 10px
+        .auth-social
+            margin-bottom 30px
     &--recept
         @media (min-width: $scr_s)
             max-width 640px
@@ -263,7 +316,6 @@
                         width 46px
                         padding 0 10px
                         text-align center
-
     &.modal--edit-check
         .form
             margin-bottom 0px
@@ -346,7 +398,6 @@
                     background-color transparent
             &__line
                 display none
-
     &__title
         margin-top 0px
         color black
@@ -394,13 +445,11 @@
         color black
         &:last-item
             margin-bottom 0px
-
     fieldset
         padding 0
         margin 0
         max-width 100%
         full-width()
-
     .row
         full-width()
     .text

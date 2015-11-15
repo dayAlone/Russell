@@ -50,11 +50,11 @@ export function authSuccess(user) {
     }
 }
 
-export function openModal() {
+export function openModal(status) {
     return dispatch => {
         dispatch({
             type: LOGIN_SHOW_MODAL,
-            status: true
+            status: status ? status : true
         })
     }
 }

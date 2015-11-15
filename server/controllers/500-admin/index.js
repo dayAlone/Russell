@@ -3,13 +3,12 @@ import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import Users from '../../models/user'
 import stringify from 'csv-stringify'
-import {Iconv} from 'iconv'
+
 export default function(app) {
     const router = new Router()
     router
         .get('/admin/users/get-csv/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
-                let iconv = new Iconv('UTF-8', 'CP1251')
                 this.res.writeHead(200, {
                     'Content-Type': 'text/csv; charset=utf-16le; header=present;',
                     'Content-Disposition': 'attachment;filename=users.csv'
@@ -51,7 +50,6 @@ export default function(app) {
 
                 } catch (e) {
                     console.error(e.stack)
-                    //this.body = {error: { message: e.message, code: e.code} }
                 }
                 this.res.end()
             }
@@ -114,6 +112,54 @@ export default function(app) {
                     }
                 }).skip(offset).limit(limit).populate('products.product').populate('user')
                 this.body = { list: result, meta: { limit: limit, total_count: total }}
+            }
+        })
+        .get('/admin/checks/get-csv/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                this.res.writeHead(200, {
+                    'Content-Type': 'text/csv; charset=utf-16le; header=present;',
+                    'Content-Disposition': 'attachment;filename=users.csv'
+                })
+                this.res.write(new Buffer([0xff, 0xfe]))
+
+                try {
+                    let users = [[
+                        'Имя',
+                        'Эл. почта',
+                        'Телефон',
+                        'Дата загрузки',
+                        'КПК',
+                        'Сумма',
+                        'Статус'
+                    ]]
+                    let data = yield Users.find({
+                        role: { $ne: 'admin' }
+                    })
+                    data.map(el => {
+                        let {displayName, email, phone, gender, providers} = el
+                        users.push([
+                            displayName,
+                            email,
+                            phone,
+                            gender,
+                            providers[0] ? providers[0].name : null,
+                            providers[0] ? providers[0].profile.profileUrl : null
+                        ])
+                    })
+                    let text = yield new Promise((fulfill, reject) => {
+                        stringify(users, {delimiter: '\t'}, (err, text) => {
+                            if (err) reject(err)
+                            fulfill(text)
+                        })
+                    })
+                    let iconv = new Iconv('utf8', 'utf16le')
+                    let buffer = iconv.convert(text)
+                    this.res.write(buffer)
+
+                } catch (e) {
+                    console.error(e.stack)
+                }
+                this.res.end()
             }
         })
         /*.get('/admin/*', function* () {

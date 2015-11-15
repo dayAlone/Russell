@@ -17,7 +17,11 @@ export default new LocalStrategy(
 
                 let name = user.displayName.split(' ')[0]
 
-                if (!user.checkPassword(password)) throw new UserAuthError(`${name ? name +', п' : 'П' }ароль не подходит, попробуй еще раз.`)
+                if (!user.checkPassword(password)) throw new UserAuthError(`${name ? name + ', п' : 'П' }ароль не подходит, попробуй еще раз.`)
+
+                if (!user.verifiedEmail) {
+                    throw new UserAuthError('Ваш email не подтверждён, проверьте почту.')
+                }
 
                 return user
             })

@@ -65,6 +65,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: 'E-mail пользователя не должен быть пустым.',
+        errorMessage: 'Пользователь с такой эл. почтой уже зарегистрирован.',
         validate: [
             {
                 validator: function checkNonEmpty(value) {

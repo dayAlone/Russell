@@ -37,11 +37,10 @@ class Login extends Component {
                 onClick={this.handleSocialAuth.bind(this)}
                 className={`button button--${el}`}>
                 <img src={`/layout/images/svg/${el}.svg`} alt='' />
-                {name}
             </a>)
         }
-        return <div>
-            {error ? <div className='alert alert-danger' role='alert'>{error}</div> : false}
+        return <div className='auth-social'>
+            {error && !this.props.noErrors ? <div className='alert alert-danger' role='alert'>{error}</div> : false}
             {socials}
         </div>
     }

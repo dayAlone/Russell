@@ -185,6 +185,10 @@ export default function(animation) {
         },
 
         componentWillUnmount: function() {
+            $('body')
+                .removeClass('modal-open')
+                .css('padding-right', 0)
+                .removeClass('modal-overflow')
             window.removeEventListener('keydown', this.listenKeyboard, true)
         },
 

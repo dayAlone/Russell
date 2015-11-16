@@ -2,30 +2,76 @@
     full-width()
     margin-top 20px
     &--short
-        .table
-            &__row
-                .table__col
-                    font-size 26px
-                    span.none
-                        font-size 16px
-                        color #333741
-                    > strong
-                        font-size 15px
-                        line-height 1
-                        display inline-block
-            &__col
-                .countdown
-                    &__items
-                        width 100%
-                    &__item, &__items
-                        max-height 30px
-                    &__item
-                        display inline-block
-                        float none
-                        span
-                            top -16px
-                lost-column 1/7
-                &:nth-child(5)
-                    lost-column 1.1/7
-                &:nth-child(2)
-                    lost-column 1.9/7
+        .countdown
+            &__items
+                width 100%
+            &__item, &__items
+                max-height 30px
+            &__item
+                display inline-block
+                float none
+
+                @media (max-width: $scr_md)
+                    margin-top -2px
+                    width 37px
+                    &:after
+                        font-size 21px
+                        top 0
+                    strong
+                        font-size 22px
+                    span
+                        font-size 8px
+                        top -15px
+                @media (min-width: $scr_md)
+                    span
+                        top -16px
+        @media (max-width: $scr_md)
+            .table
+                &__row, &__title
+                    lost-column 1.12/4 0 0
+                    border 0
+                    padding 0
+                    border-bottom 1px solid #383b43
+                &__title
+                    lost-column .6/4 0 0
+                    font-size 9px
+                &__title
+                    text-align left
+                &__row
+                    .table__col
+                        text-align center !important
+                        font-size 18px
+                        &:first-of-type
+                            padding-right 20px
+                            padding-left 20px
+                        span.none
+                            font-size 16px
+                            color #333741
+                        > strong
+                            font-size 15px
+                            line-height 1
+                            display inline-block
+                &__col
+                    width 100%
+                    height 60px
+                    border-bottom 1px solid #383b43
+                    padding 17px 0 19px
+
+        @media (min-width: $scr_md)
+            .table
+                &__row
+                    .table__col
+                        font-size 26px
+                        span.none
+                            font-size 16px
+                            color #333741
+                        > strong
+                            font-size 15px
+                            line-height 1
+                            display inline-block
+                &__col
+                    lost-column 1/7
+                    &:nth-child(5)
+                        lost-column 1.1/7
+                    &:nth-child(2)
+                        lost-column 1.9/7

@@ -110,19 +110,58 @@
             line-height 1.6
 
             .profile__col
+
+                margin-bottom 25px
                 @media (min-width: $scr_xs)
                     lost-column 1/2
-                    margin-bottom 40px
                 @media (min-width: $scr_s)
                     lost-column 1/2
                     margin-bottom 0px
         &__table
             margin-top 35px
-            .table__col
-                lost-column 1.1/8 0 0
+            .dropdown
+                margin -5px 0 2px
+            .table
 
-                &:first-of-type
-                    lost-column 1.4/8 0 0
+                @media (max-width: $scr_s)
+                    &__title
+                        lost-column 1.6/4 0 0
+                        border 0
+                        padding 0
+                        .table__col
+                            text-align left
+
+                    &__row
+                        display none
+                        lost-column 2.4/4 0 0
+                        border 0
+                        padding 0
+                        &:last-of-type
+                            display block
+                        .table__col
+                            min-height 57px
+                            &.left
+                                text-align center
+                            &:nth-child(2)
+                                br
+                                    display none
+
+                            &:first-of-type
+                                br
+                                    display none
+                                a
+                    &__col
+                        width 100%
+                        padding 15px 0 13px
+                        border-bottom 1px solid #383b43
+
+                @media (min-width: $scr_s)
+                    &__col
+                        lost-column 1.1/8 0 0
+                        &:first-of-type
+                            lost-column 1.4/8 0 0
+                        &:last-of-type
+                            display none
         .check
             position relative
             &__edit
@@ -135,10 +174,15 @@
                 &:hover
                     opacity 1
                     background-image none
+            &__show, &__edit
+                @media (max-width: $scr_s)
+                    display none
             &__show, &__vinner
                 font-size 10px
-                color red
-                border-line(alpha(red, .3))
+                background-image none
+                span
+                    color red
+                    border-line(alpha(red, .3))
             &__connect, &__vinner
                 font-size 11px
             &__preview
@@ -184,6 +228,10 @@
                     transform translateY(-50%)
                     opacity 1
             &__status
+                @media (max-width: $scr_s)
+                    display inline-block
+                    margin-right 10px
+
                 &--inactive
                     color #474a51
                 &--canceled
@@ -196,6 +244,10 @@
                 display none
                 padding-top 8px
                 font-size 12px
+                @media (max-width: $scr_s)
+                    padding-top 25px
+                br
+                    display block !important
                 &--visible
                     display block
                 > span

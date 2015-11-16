@@ -25,7 +25,6 @@ const Dropdown = React.createClass({
     onChange(e) {
         let value = e.target.value
         let el = this.props.items.filter(el => (el.code.toString() === value || el.name === value))[0]
-        console.log(this.props.items, value)
         this.setState({
             trigger: el ? el.name : this.props.trigger
         })

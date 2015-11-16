@@ -12,6 +12,9 @@ import { findDOMNode } from 'react-dom'
 import 'react-photoswipe/lib/photoswipe.css'
 import {PhotoSwipe} from 'react-photoswipe'
 
+import { Dropdown } from '../forms/'
+import Formsy from 'formsy-react'
+
 class Check extends Component {
     state = {hidden: true, sizes: false}
     handleClick(e) {
@@ -23,7 +26,8 @@ class Check extends Component {
         this.props.openPhotoSwipe(this.props.data.photo, this.state.sizes)
         e.preventDefault()
     }
-    componentDidMount() {
+    getImage() {
+
         let img = new Image()
         let photo = this.props.data.photo
         img.onload = () => {
@@ -32,7 +36,14 @@ class Check extends Component {
         }
         img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
     }
+    componentDidMount() {
+        this.getImage()
+    }
+    componentDidUpdate() {
+        this.getImage()
+    }
     render() {
+        let {list, handleDropdown, current} = this.props
         let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo, status, status_comment, count, vinner, products, until, created} = this.props.data
         let available = count - products.length
         let condition
@@ -63,7 +74,13 @@ class Check extends Component {
         }
         return <div className='table__row check'>
             <div className='table__col left'>
-                <span>ID: {_id}</span><br/>
+                <span>{list ? <Formsy.Form ref='check-select'>
+                    <Dropdown
+                        name='current'
+                        onChange={handleDropdown}
+                        value={current}
+                        items={list} />
+                </Formsy.Form> : `ID: ${_id}`}</span><br/>
                 <div className={`check__info ${!this.state.hidden ? 'check__info--visible' : ''}`}>
                     {organisation ? <span>Организация: {organisation}<br/></span> : null}
                     <span>ИНН: {inn}</span><br/>
@@ -77,7 +94,7 @@ class Check extends Component {
                 </div>
                 <a href='#' className='check__show' onClick={this.handleClick.bind(this)}>{!this.state.hidden ? 'Скрыть' : 'Показать'} детали</a>
             </div>
-            <div className='table__col' dangerouslySetInnerHTML={{__html: moment(created).format('DD.MM.YYYY<br/>HH:mm')}} />
+            <div className='table__col' dangerouslySetInnerHTML={{__html: moment(created).format('DD.MM.YYYY<br/> HH:mm')}} />
             <div className='table__col left'>
                 <div className={`check__status check__status--${condition.class}`}>{condition.message}</div>
                 {status_comment ? <div className='check__comment' data-text={status_comment}>?</div> : null}
@@ -105,32 +122,65 @@ class Check extends Component {
 
 @connect(state => ({checks: state.profile.checks}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileChecks extends Component {
-    state = {photoswipe: false, image: []}
+    state = {photoswipe: false, image: [], current: 0}
     openPhotoSwipe(image, sizes) {
-
         this.setState({photoswipe: true, image: [{src: image, w: sizes.w, h: sizes.h}]})
         $('body').addClass('photoswipe-open')
-
     }
     closePhotoSwipe() {
         $('body').removeClass('photoswipe-open')
         this.setState({photoswipe: false})
-
+    }
+    componentDidUpdate() {
+        this.checkHeight()
     }
     componentDidMount() {
         if (this.props.checks.length === 0) {
             this.props.actions.getChecks()
         }
+
+        $(window).on('resize', this.checkHeight.bind(this))
+        this.checkHeight()
+    }
+
+    componentWillUnmount() {
+        $(window).off('resize')
+    }
+    handleDropdown(el) {
+        this.setState({current: el.code})
     }
     openModal(data) {
         return (e) => {
             e.preventDefault()
             this.refs.modal.getWrappedInstance().show(data)
         }
-
+    }
+    checkHeight() {
+        if ($(window).width() < 768) {
+            $('.table__title .table__col').each((i, el) => {
+                $(el).css({
+                    minHeight: $('.table__row:last-of-type .table__col:nth-child(' + (i + 1) + ')').outerHeight()
+                })
+            })
+        }
     }
     render() {
         let checks = this.props.checks.map((el, i) => (<Check openModal={this.openModal.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} key={i} data={el}/>))
+        let last
+        if (this.props.checks.length > 0) {
+            last = <Check
+                        openModal={this.openModal.bind(this)}
+                        openPhotoSwipe={this.openPhotoSwipe.bind(this)}
+                        data={this.props.checks[this.state.current]}
+                        current={this.state.current}
+                        handleDropdown={this.handleDropdown.bind(this)}
+                        list={this.props.checks.map((el, i) => {
+                            return {
+                                name: `ID: ${el._id}`,
+                                code: i
+                            }
+                        })}/>
+        }
         return <div className='checks'>
             <Helmet title='Russell Hobbs | Личный кабинет | Чеки'/>
             <a href='#' onClick={this.openModal()} className='button button--small'>Добавить чек</a>
@@ -149,6 +199,7 @@ class ProfileChecks extends Component {
                         У вас нет ни одно чека.
                     </div>
                 : checks}
+                {last}
             </div>
             <AddCheckModal openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
             <PhotoSwipe isOpen={this.state.photoswipe} options={{shareEl: false, index: this.state.index}} items={this.state.image} onClose={this.closePhotoSwipe.bind(this)}/>

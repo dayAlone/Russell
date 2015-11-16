@@ -25,9 +25,13 @@ class Raring extends Component {
     componentDidMount() {
         if (this.props.games.length === 0) this.props.actions.games.getGames()
         if (!this.props.scores) this.props.actions.profile.getScores()
+        this.setStat()
     }
     componentDidUpdate() {
-
+        this.setStat()
+    }
+    
+    setStat() {
         if (this.props.scores && this.props.games.length > 0 && this.state.stat.length === 0) {
             let stat = []
 
@@ -57,7 +61,6 @@ class Raring extends Component {
                 stat: stat
             })
         }
-
     }
     handleDropdown(el) {
         this.setState({current: el.code})

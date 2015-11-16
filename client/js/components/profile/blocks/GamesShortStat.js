@@ -7,15 +7,20 @@ import { bindActionCreators } from 'redux'
 import moment from 'moment'
 import Coundown from '../../ui/Countdown'
 
+import { Dropdown } from '../../forms/'
+import Formsy from 'formsy-react'
+
 @connect(state => ({
     games: state.games.list,
     scores: state.profile.scores,
     checks: state.profile.checks
-}), dispatch => ({actions: { games: bindActionCreators(gamesActions, dispatch), profile: bindActionCreators(profileActions, dispatch)}}))
+}), dispatch => ({
+    actions: { games: bindActionCreators(gamesActions, dispatch), profile: bindActionCreators(profileActions, dispatch)}}))
 class Raring extends Component {
     state = {
         ignore: ['present'],
-        stat: []
+        stat: [],
+        current: 0
     }
     componentDidMount() {
         if (this.props.games.length === 0) this.props.actions.games.getGames()
@@ -54,7 +59,46 @@ class Raring extends Component {
         }
 
     }
+    handleDropdown(el) {
+        this.setState({current: el.code})
+    }
     render() {
+        let current = this.state.stat[this.state.current]
+        let last
+        if (current) {
+            let {name, till, scores, today, checks, code} = current
+            last = <div className='table__row'>
+                <div className='table__col left'>
+                    <Formsy.Form ref='stat-form'>
+                        <Dropdown
+                            name='current'
+                            onChange={this.handleDropdown.bind(this)}
+                            value={this.state.current}
+                            items={this.state.stat.map((el, i) => {
+                                return {
+                                    name: el.name,
+                                    code: i
+                                }
+                            })} />
+                    </Formsy.Form>
+                </div>
+                <div className='table__col'>
+                    <Coundown till={till}/>
+                </div>
+                <div className='table__col'>
+                    {scores && parseInt(scores.total, 10) === scores.total ? scores.total : <span className='none'>—</span>}
+                </div>
+                <div className='table__col'>
+                    {scores && parseInt(scores.position, 10) === scores.position ? scores.position : <span className='none'>—</span>}
+                </div>
+                <div className='table__col'>
+                    {code !== 'checks' ? <div>{today} / 20</div> : <span className='none'>—</span>}
+                </div>
+                <div className='table__col'>
+                    {code === 'checks' ? <div>{checks}</div> : <span className='none'>—</span>}
+                </div>
+            </div>
+        }
         return <div className='stat stat--short'>
             <div className='table'>
                 <div className='table__title'>
@@ -62,12 +106,11 @@ class Raring extends Component {
                     <div className='table__col'>До следующего<br/>розыгрыша</div>
                     <div className='table__col'>Набранные<br/>баллы</div>
                     <div className='table__col'>Позиция<br/>в рейтинге</div>
-                    <div className='table__col'>Попытки<br/>(осталось / всего)</div>
+                    <div className='table__col'>Попытки<br/><nobr>(осталось / всего)</nobr></div>
                     <div className='table__col'>Моих Чеков<br/>в розыгрыше</div>
                 </div>
                 {this.state.stat.map((el, i) => {
-                    let {name, till, scores, today, checks} = el
-                    console.log(till)
+                    let {name, till, scores, today, checks, code} = el
                     return <div className='table__row' key={i}>
                         <div className='table__col left'>
                             <strong>“{name}”</strong>
@@ -82,13 +125,15 @@ class Raring extends Component {
                             {scores && parseInt(scores.position, 10) === scores.position ? scores.position : <span className='none'>—</span>}
                         </div>
                         <div className='table__col'>
-                            {el.code !== 'checks' ? <div>{today} / 20</div> : <span className='none'>—</span>}
+                            {code !== 'checks' ? <div>{today} / 20</div> : <span className='none'>—</span>}
                         </div>
                         <div className='table__col'>
-                            {el.code === 'checks' ? <div>{checks}</div> : <span className='none'>—</span>}
+                            {code === 'checks' ? <div>{checks}</div> : <span className='none'>—</span>}
                         </div>
                     </div>
                 })}
+
+                {last}
 
             </div>
         </div>

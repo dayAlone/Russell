@@ -2,30 +2,68 @@
     full-width()
     margin-top 20px
     &--short
+        .dropdown
+            margin -3px 0
+            &__trigger
+
+                font-size 12px
         .countdown
             &__items
                 width 100%
             &__item, &__items
                 max-height 30px
+                @media (max-width: $scr_s)
+                    max-height 25px
             &__item
                 display inline-block
                 float none
 
                 @media (max-width: $scr_md)
                     margin-top -2px
-                    width 37px
+                    width 35px
                     &:after
                         font-size 21px
                         top 0
                     strong
-                        font-size 22px
+                        font-size 20px
                     span
                         font-size 8px
                         top -15px
                 @media (min-width: $scr_md)
                     span
                         top -16px
-        @media (max-width: $scr_md)
+        @media (max-width: $scr_s)
+            .table
+                &__col
+                    width 100%
+                    min-height 60px
+                    border-bottom 1px solid #383b43
+                    padding 17px 0 14px
+                    text-align left
+
+                &__title
+                    lost-column 1.6/4 0 0
+                    border-top 1px solid #383b43
+                    border-bottom 0
+                    padding 0
+                    .table__col
+                        font-size 9px
+                &__row
+                    display none
+                    padding 0
+                    border-top 1px solid #383b43
+                    border-bottom 0
+                    .table__col
+                        text-align center
+                        font-size 18px
+                        span.none
+                            font-size 16px
+                            color #333741
+                    &:last-of-type
+                        lost-column 2.4/4 0 0
+                        display block
+
+        @media (min-width: $scr_s) and (max-width: $scr_md)
             .table
                 &__row, &__title
                     lost-column 1.12/4 0 0
@@ -35,9 +73,12 @@
                 &__title
                     lost-column .6/4 0 0
                     font-size 9px
-                &__title
                     text-align left
+                    border 0
                 &__row
+                    border 0
+                    &:last-of-type
+                        display none
                     .table__col
                         text-align center !important
                         font-size 18px
@@ -60,6 +101,8 @@
         @media (min-width: $scr_md)
             .table
                 &__row
+                    &:last-of-type
+                        display none
                     .table__col
                         font-size 26px
                         span.none

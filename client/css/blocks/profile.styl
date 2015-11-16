@@ -1,12 +1,25 @@
 .profile
     &__col
-        lost-column 1/2
+        lost-column 1/1
+        margin-bottom 40px
+        &:last-of-type
+            margin-bottom 10px
+        @media (min-width: $scr_s)
+            lost-column 1/2
+            margin-bottom 0px
     &__nav
         width 100%
         background-color transparent
         border-bottom 1px solid #393c41
         margin-top 50px !important
         margin-bottom 40px
+        display none
+        @media (min-width: $scr_s)
+            display block
+    &__dropdown
+        margin-bottom 30px
+        @media (min-width: $scr_s)
+            display none
     a&__link
         padding 12px 20px 7px
         background transparent
@@ -27,9 +40,7 @@
             margin-top 30px
             padding-top 30px
             full-width()
-    .checks-stat
-        font-size 13px
-        line-height 1.6
+
     .info
         &__photo
             float left
@@ -94,6 +105,17 @@
                 transform translateX(-100%) translateY(-50%)
 
     .checks
+        &-stat
+            font-size 13px
+            line-height 1.6
+
+            .profile__col
+                @media (min-width: $scr_xs)
+                    lost-column 1/2
+                    margin-bottom 40px
+                @media (min-width: $scr_s)
+                    lost-column 1/2
+                    margin-bottom 0px
         &__table
             margin-top 35px
             .table__col

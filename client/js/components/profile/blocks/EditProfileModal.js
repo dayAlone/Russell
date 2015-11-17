@@ -60,16 +60,11 @@ class EditProfileModal extends Component {
                 }
                 if (data.status === 'success') {
                     if (!data.emailChanged) {
-                        setTimeout(authCheck, 2000)
                         this.hide()
                     } else {
                         fields.message = true
-                        setTimeout(() => {
-                            $.get('/auth/logout/', () => {
-                                location.href = '/'
-                            })
-                        }, 2000)
                     }
+                    setTimeout(authCheck, 2000)
                 }
                 if (data.error) {
                     fields.error = data.error.message
@@ -83,9 +78,14 @@ class EditProfileModal extends Component {
                 })
             })
     }
+    onShow() {
+        this.setState({
+            message: false
+        })
+    }
     render() {
         let {displayName, email, phone, photo} = this.props.user
-        return <Modal ref='modal' className='modal modal--profile-edit' onValidSubmit={this.submitForm.bind(this)}>
+        return <Modal ref='modal' onShow={this.onShow.bind(this)} className='modal modal--profile-edit' onValidSubmit={this.submitForm.bind(this)}>
             {this.state.message ? <div className='center'>
                 <div className='modal__title'>
                     <h3>Подтверждение эл. почты</h3>

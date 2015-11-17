@@ -23,8 +23,11 @@ class AuthModal extends Component {
     componentDidUpdate(prevProps) {
         let {isLogin, modal} = this.props
         if (
-            (isLogin === true && modal !== 'forget-form-success' && modal !== 'forget-form')
-            || (modal === false && prevProps.modal !== false)) this.refs.modal.hide()
+            (isLogin === true && modal !== 'forget-form-success' && modal !== 'forget-form' && modal !== 'confirm')
+            || (modal === false && prevProps.modal !== false && modal !== 'confirm')) {
+                this.refs.modal.hide()
+                console.log(modal, 'close')
+            }
         if (modal !== false && this.refs.modal.hasHidden()) this.refs.modal.show()
     }
     hideModal() {
@@ -213,7 +216,7 @@ class AuthModal extends Component {
         return <div>
             <h2 className='modal__title modal__title--padding'>Подтверждение адреса</h2>
             <div className='modal__message'>
-                Ваш электронный адрес подтвержден. <br/>Теперь вы можете авторизоваться на сайте.
+                Ваш электронный адрес подтвержден. <br/>{!this.props.isLogin ? 'Теперь вы можете авторизоваться на сайте.' : '' }
             </div>
             {!this.props.isLogin ? <a href='#' onClick={this.showBlock()} className='button button--small'>Войти на сайт</a> : null}
         </div>

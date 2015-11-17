@@ -12,7 +12,7 @@ import { bindActionCreators } from 'redux'
 
 import 'css_browser_selector'
 
-@connect(state => ({ line: state.design.line }), dispatch => ({design: bindActionCreators(design, dispatch), login: bindActionCreators(login, dispatch)}))
+@connect(state => ({ isLogin: state.login.isLogin, line: state.design.line }), dispatch => ({design: bindActionCreators(design, dispatch), login: bindActionCreators(login, dispatch)}))
 class App extends Component {
     componentDidUpdate() {
         let path = this.props.location.pathname
@@ -24,12 +24,21 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        let {confirm, confirm_new, change_password} = this.props.location.query
-        let {openModal} = this.props.login
-        if (confirm || confirm_new) {
-            $.post('/auth/local/confirm-email/', { confirm: confirm, isNew: confirm_new ? true : false }).done(response => {
+        let {confirm, change_password, save_email} = this.props.location.query
+        let {openModal, authCheck} = this.props.login
+        if (confirm) {
+            $.post('/auth/local/confirm-email/', { confirm: confirm, isNew: true }).done(response => {
                 if (!response.error) {
                     openModal('confirm')
+                }
+            })
+        }
+        if (save_email) {
+            $.post('/profile/save-email/', { save_email: save_email }).done(response => {
+                if (!response.error) {
+                    openModal('confirm')
+
+                    if (this.props.isLogin) authCheck(false)
                 }
             })
         }

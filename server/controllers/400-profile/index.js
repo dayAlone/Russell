@@ -2,7 +2,7 @@ import Router from 'koa-router'
 import config from 'config'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
-import Users from '../../models/user'
+import Users, {sendUserEmail} from '../../models/user'
 import moment from 'moment'
 import { Types } from 'mongoose'
 const getUserChecks = function* (user, pre, after) {
@@ -99,6 +99,26 @@ export default function(app) {
             let result = yield getUserChecks(this.req.user, false, getUserFavorites)
             this.body = result
         })
+        .post('/profile/save-email/', function* () {
+            let {save_email} = this.request.body
+            let result = { error: false, status: 'success' }
+            try {
+
+                let user = yield Users.findOne({
+                    verifyEmailToken: save_email
+                })
+                if (user) {
+                    user.tmpEmail = ''
+                    user.email = user.tmpEmail
+                    user.verifyEmailToken = ''
+                    user.save()
+                }
+            } catch (e) {
+                console.error(e)
+                result = {error: { message: e.message, code: e.code} }
+            }
+            this.body = result
+        })
         .post('/profile/change/', function* () {
             let result
             let items = ['displayName', 'email', 'phone', 'photo']
@@ -110,17 +130,44 @@ export default function(app) {
                         _id: this.req.user._id
                     })
                     result = user
-                    items.map(el => {
+                    for (let i in items) {
+                        let el = items[i]
                         if (this.request.body[el] && this.request.body[el] !== user[el]) {
-                            user[el] = this.request.body[el]
-                            changed = true
                             if (el === 'email') {
                                 emailChanged = true
                                 user.verifyEmailToken = Math.random().toString(36).slice(2, 10)
-                                user.verifiedEmail = false
+                                user.tmpEmail = this.request.body[el]
+                                let mailFields = {
+                                    message: {
+                                        subject: 'Смена пароля',
+                                        to: [{email: user.email, name: user.displayName}],
+                                        merge: true,
+                                        inline_css: true,
+                                        merge_language: 'handlebars',
+                                        'global_merge_vars': [
+                                            {
+                                                'name': 'user_name',
+                                                'content': user.displayName
+                                            }
+                                        ],
+                                    },
+                                    template_name: 'russell',
+                                    template_content: [{
+                                        name: 'content',
+                                        content: `<h3>Подтвердите ваш новый электронный адрес.</h3><br/>
+                                                    <a href='http://${config.domain}/?save_email=${user.verifyEmailToken}' class='button'>Подтвердить</a>`
+                                    }, {
+                                        name: 'additional',
+                                        content: '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td class="center padding"><img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/></td></tr></table>'
+                                    }]
+                                }
+                                yield sendUserEmail(mailFields)
+                            } else {
+                                user[el] = this.request.body[el]
+                                changed = true
                             }
                         }
-                    })
+                    }
                     if (changed) {
                         yield user.save()
                     }

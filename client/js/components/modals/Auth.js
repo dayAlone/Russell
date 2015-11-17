@@ -177,7 +177,7 @@ class AuthModal extends Component {
     }
     getRegistration() {
         return <div className='modal__content'>
-            <h2 className='modal__title'>Регистрация по эл. почте</h2>
+            <h2 className='modal__title'>Регистрация <nobr>по эл. почте</nobr></h2>
             <Formsy.Form ref='form' onValidSubmit={this.sendRegister.bind(this)} className='form'>
                 {this.state.error ? <div className='alert alert-danger' role='alert'>{this.state.error}</div> : false}
                 <Input name='displayName' title='Имя и фамилия *' placeholder='Иван Сидоров' validations='minLengthOrEmpty:1'/>
@@ -201,7 +201,7 @@ class AuthModal extends Component {
     }
     getRegistrationSuccess() {
         return <div>
-            <h2 className='modal__title modal__title--padding'>Регистрация по эл. почте</h2>
+            <h2 className='modal__title modal__title--padding'>Регистрация <nobr>по эл. почте</nobr></h2>
             <div className='modal__message'>
                 Почти готово! Осталось только подтвердить ваш электронный адрес. Пожалуйста, проверьте вашу почту.
             </div>

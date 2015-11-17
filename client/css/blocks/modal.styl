@@ -117,17 +117,19 @@
                 .alert
                     margin-bottom 21px
             &--forget
-                .form-group
-                    width calc(50% - 10px)
-                    float left
-                    &:nth-child(2)
-                        float right
+                @media (min-width: $scr_s)
+                    .form-group
+                        width calc(50% - 10px)
+                        float left
+                        &:nth-child(2)
+                            float right
             &__login
                 padding-bottom 0px
                 input[type='password'], input[type='email']
-                    width calc(50% - 5px)
-                    float left
-                    margin-right 5px
+                    @media (min-width: $scr_s)
+                        width calc(50% - 5px)
+                        float left
+                        margin-right 5px
                     &:focus
                         outline 0
             .captcha
@@ -142,19 +144,22 @@
                 margin-bottom -10px
                 margin-top -10px
                 font-size 14px
-            .form-group:nth-child(4), .form-group:nth-child(5)
-                width calc(50% - 10px)
-                float left
-            .form-group:nth-child(5)
-                float right
+
             .button
                 width auto
                 padding 0 25px
                 margin-top 20px
                 line-height 40px
+            @media (min-width: $scr_s)
+                .form-group:nth-child(4), .form-group:nth-child(5)
+                    width calc(50% - 10px)
+                    float left
+                .form-group:nth-child(5)
+                    float right
         #password
-            margin-right 0px
-            margin-left 5px
+            @media (min-width: $scr_s)
+                margin-right 0px
+                margin-left 5px
         button
             width 20%
             float none

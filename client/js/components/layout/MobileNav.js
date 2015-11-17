@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import * as actionCreators from '../../actions/catalog'
 
+import { connect } from 'react-redux'
+import * as actionCreators from '../../actions/login'
+import { bindActionCreators } from 'redux'
+
+@connect(state => ({ isLogin: state.login.isLogin }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Nav extends Component {
+    openModal(e) {
+        const { openModal } = this.props.actions
+        this.props.closeNav()
+        openModal()
+        e.preventDefault()
+    }
     render() {
         return <div className='nav'>
             <div className='nav__col'>
@@ -21,6 +31,13 @@ class Nav extends Component {
                 <Link to='/games/' className='nav__item' activeClassName='nav__item--active'>Выиграй мечту!</Link>
             </div>
             <div className='nav__line' style={{backgroundImage: `url(${this.props.line ? this.props.line : '/layout/images/menu.jpg'})`}}></div>
+            {!this.props.isLogin ?
+                <div className='nav__auth'>
+                    <a onClick={this.openModal.bind(this)} href='#'>Регистрация</a> <span>/</span> <a onClick={this.openModal.bind(this)} href='#'>Авторизация</a></div>
+                : <div className='nav__auth'>
+                <Link to='/profile/'>Личный кабинет</Link>
+                </div> }
+
         </div>
     }
 }

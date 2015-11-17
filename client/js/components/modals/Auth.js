@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Modal from '../ui/Modal'
 import LoginSocial from '../LoginSocial'
 import LoginEmail from '../LoginEmail'
-
+import IconSVG from 'svg-inline-loader/lib/component.jsx'
 import Formsy from 'formsy-react'
 import {Input, File} from './../forms/'
 
@@ -291,12 +291,14 @@ class AuthModal extends Component {
         return (e) => {
             const { openModal } = this.props.actions
             openModal(name)
+            this.refs.modal.checkOwerflow()
             e.preventDefault()
         }
     }
     render() {
 
         return <Modal ref='modal' className='modal modal--auth center' onHide={this.hideModal.bind(this)}>
+            <a href='#' className='modal__close' onClick={this.hideModal.bind(this)}><IconSVG src={require('svg-inline!../../../public/images/svg/close.svg')}/></a>
             {this.getContent()}
             </Modal>
     }

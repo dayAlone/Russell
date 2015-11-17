@@ -52,7 +52,6 @@ class ProfileFavorites extends Component {
         }
     }
     handleDropdown(el) {
-        console.log(el)
         this.setState({current: el.code})
     }
     render() {

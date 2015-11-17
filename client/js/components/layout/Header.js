@@ -15,7 +15,7 @@ class Header extends Component {
         this.refs.nav.show()
     }
     closeNav(e) {
-        e.preventDefault()
+        if (e) e.preventDefault()
         this.refs.nav.hide()
     }
     componentDidUpdate() {
@@ -50,7 +50,7 @@ class Header extends Component {
                 </div>
                 <Modal ref='nav' className='modal modal--nav'>
                     <a href='#' className='modal__close' onClick={this.closeNav.bind(this)}><img src='/layout/images/svg/close.svg' alt='' width='20'/></a>
-                    <Nav />
+                    <Nav closeNav={this.closeNav.bind(this)}/>
                 </Modal>
                 <Modal ref='modal' className='modal'>
                     <div className='text'>

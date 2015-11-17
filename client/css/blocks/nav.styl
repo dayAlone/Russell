@@ -4,8 +4,23 @@
     z-index 40
     .modal-open &
         z-index 1
+
+        padding-bottom 120px
     @media (min-width: $scr_s)
         margin-bottom 24px
+    &__auth
+        width 100%
+        bottom 25px
+        position absolute
+        left 0
+        > span
+            color white
+            margin 0 5px
+        a
+            color white
+            font-size 16px
+            border-line(alpha(@color, .5))
+
     &__col
         display none
 

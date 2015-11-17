@@ -54,6 +54,13 @@
                     border-line(alpha(red,.5))
     &--auth
         .modal
+            &__close
+                position absolute
+                right 20px
+                svg
+                    size 20px
+                    path
+                        fill red
             &__links
                 line-height 2
                 a
@@ -64,7 +71,10 @@
                         color red
                         border-line(alpha(red, .5))
             &__content
-                padding 20px 40px
+                padding 20px 10px
+                overflow hidden
+                @media (min-width: $scr_s)
+                    padding 20px 40px
         small
             font-size 10px
             line-height 1.1
@@ -382,6 +392,7 @@
         overflow auto
         @media (min-width: $scr_s)
             background-color alpha(black, .9)
+
     &--nav
         min-height 100%
         width 100% !important

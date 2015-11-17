@@ -181,7 +181,7 @@ class ProfileChecks extends Component {
                             }
                         })}/>
         }
-        return <div className='checks'>
+        return <div className={'checks checks--' + checks.length}>
             <Helmet title='Russell Hobbs | Личный кабинет | Чеки'/>
             <a href='#' onClick={this.openModal()} className='button button--small'>Добавить чек</a>
             <div className='table checks__table'>

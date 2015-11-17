@@ -86,7 +86,7 @@ class ProfileFavorites extends Component {
 
             }
         })
-        return <div className='favorites'>
+        return <div className={'favorites favorites--' + favorites.length}>
             <Helmet title='Russell Hobbs | Личный кабинет | Избранное'/>
             <div className='table favorites__table'>
                 <div className='table__title'>

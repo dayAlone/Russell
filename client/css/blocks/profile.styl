@@ -78,6 +78,7 @@
                     border-line(alpha(red, .3))
 
     .favorites
+
         &__table
             @media (max-width: $scr_s)
                 .table
@@ -119,6 +120,18 @@
                     padding 32px 0 27px
                     &:last-of-type
                         display none
+        &--0
+            .table
+                @media (min-width: $scr_s)
+                    &__row:last-of-type
+                        display block
+                @media (max-width: $scr_s)
+
+                    &__title
+                        display none
+                    &__row
+                        width 100%
+                        border 0
         .favorite
             &__name
                 position relative
@@ -147,6 +160,7 @@
                     left 70px
 
     .checks
+
         &-stat
             font-size 13px
             line-height 1.6
@@ -204,6 +218,18 @@
                             lost-column 1.4/8 0 0
                         &:last-of-type
                             display none
+        &--0
+            .table
+                @media (min-width: $scr_s)
+                    &__row:last-of-type
+                        display block
+                @media (max-width: $scr_s)
+
+                    &__title
+                        display none
+                    &__row
+                        width 100%
+                        border 0
         .check
             position relative
             &__edit

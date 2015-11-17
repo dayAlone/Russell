@@ -44,7 +44,7 @@ class EditProfileModal extends Component {
         let file = this.refs.file.getFiles()
         if (file) formData.append('photo', file)
         for (let el in fields) {
-            if (el !== 'photo') {
+            if (el !== 'photo' && fields[el]) {
                 formData.append(el, fields[el])
             }
         }

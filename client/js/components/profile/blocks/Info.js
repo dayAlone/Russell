@@ -12,7 +12,8 @@ class ProfileInfo extends Component {
 
     render() {
         if (this.props.user) {
-            let { displayName: name, photo, created, email, providers } = this.props.user
+            let { displayName: name, photo, created, email, providers, phone } = this.props.user
+            console.log(phone)
             name = name.split(' ')
             created = moment(created).format('DD.MM.YYYY')
             return <div className='info'>
@@ -22,13 +23,17 @@ class ProfileInfo extends Component {
                         <span className='info__date'>Дата регистрации: {created}</span>
                     </div>
                     <div className='info__links'>
-                        <div className='info__link info__link--email'><img src='/layout/images/svg/mail.svg' width='20'/><span>{email}</span></div>
+                        <div className='info__link info__link--email'><img src='/layout/images/svg/profile-email.svg' width='30'/><span>{email}</span></div>
                         {providers[0] ?
                             <a href={providers[0].profile.profileUrl} target='_blank' className='info__link info__link--profile'>
-                                <img src='/layout/images/svg/profile.svg' width='16'/>
+                                <img src='/layout/images/svg/profile-link.svg' width='30'/>
                                 <span>{providers[0].profile.profileUrl}</span>
                             </a>
                             : null}
+                        {phone ? <div className='info__link info__link--phone'><img src='/layout/images/svg/profile-phone.svg' width='30'/><span>{phone}</span></div> : null}
+
+                        <a href='#' className='info__edit'>Изменить личные данные</a>
+                        <a href='#' className='info__edit'>Изменить пароль</a>
                     </div>
                 </div>
         }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>profile-link</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="profile-link" sketch:type="MSLayerGroup" transform="translate(1.000000, 1.000000)">
+            <path d="M22.717,45.767 C10.31,45.767 0.217,35.673 0.217,23.267 C0.217,10.86 10.31,0.767 22.717,0.767 C35.123,0.767 45.217,10.86 45.217,23.267 C45.217,35.673 35.123,45.767 22.717,45.767 L22.717,45.767 Z" id="Stroke-1" stroke="#DD2827" stroke-width="2" sketch:type="MSShapeGroup"></path>
+            <path d="M34.137,34.062 L11.296,34.062 L11.296,33.477 C11.296,29.939 18.005,27.062 19.834,26.697 C19.901,26.557 19.964,26.235 19.988,25.921 C19.567,25.45 18.547,24.178 18.166,22.525 C17.776,22.342 17.449,21.946 17.245,21.392 C16.957,20.611 16.936,19.534 17.493,18.836 C17.491,18.824 17.49,18.813 17.489,18.801 C17.384,17.823 17.105,15.225 18.635,13.522 C19.544,12.51 20.918,11.997 22.717,11.997 C24.516,11.997 25.89,12.511 26.799,13.523 C28.329,15.227 28.049,17.825 27.943,18.803 C27.942,18.814 27.941,18.825 27.94,18.836 C28.497,19.533 28.476,20.609 28.189,21.389 C27.985,21.945 27.657,22.341 27.267,22.524 C26.885,24.177 25.866,25.449 25.445,25.92 C25.469,26.238 25.531,26.558 25.599,26.696 C27.428,27.062 34.137,29.939 34.137,33.477 L34.137,34.062" id="Fill-2" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

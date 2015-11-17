@@ -61,13 +61,23 @@
         &__date
             color #9a9ca0
             font-size 12px
+        &__edit
+            font-size 12px
+            color red
+            border-line(alpha(red, .5))
+            //@media (min-width: $scr_s)
+            margin-right 40px
+            &:hover
+                color white
+                border-line(alpha(white, .5))
         &__link
             background transparent
             position relative
-            margin-left 30px
+            margin-left 40px
+            margin-bottom 10px
             img
                 position absolute
-                left -17px
+                left -25px
                 top 50%
                 transform translateY(-50%) translateX(-50%)
         a

@@ -140,7 +140,7 @@ export default function(app) {
                                 let mailFields = {
                                     message: {
                                         subject: 'Смена пароля',
-                                        to: [{email: user.email, name: user.displayName}],
+                                        to: [{email: user.tmpEmail, name: user.displayName}],
                                         merge: true,
                                         inline_css: true,
                                         merge_language: 'handlebars',

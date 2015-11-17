@@ -108,10 +108,10 @@ export default function(app) {
                     verifyEmailToken: save_email
                 })
                 if (user) {
-                    user.tmpEmail = ''
                     user.email = user.tmpEmail
+                    user.tmpEmail = ''
                     user.verifyEmailToken = ''
-                    user.save()
+                    yield user.save()
                 }
             } catch (e) {
                 console.error(e)
@@ -164,8 +164,8 @@ export default function(app) {
                                 yield sendUserEmail(mailFields)
                             } else {
                                 user[el] = this.request.body[el]
-                                changed = true
                             }
+                            changed = true
                         }
                     }
                     if (changed) {

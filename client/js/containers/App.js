@@ -38,7 +38,7 @@ class App extends Component {
                 if (!response.error) {
                     openModal('confirm')
 
-                    if (this.props.isLogin) authCheck(false)
+                    if (this.props.isLogin) setTimeout(authCheck, 2000)
                 }
             })
         }

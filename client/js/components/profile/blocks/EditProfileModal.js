@@ -22,6 +22,9 @@ class EditProfileModal extends Component {
     componentWillMount() {
     }
     show() {
+        this.setState({
+            message: false
+        })
         this.refs.modal.show()
     }
     hide(e) {
@@ -78,14 +81,9 @@ class EditProfileModal extends Component {
                 })
             })
     }
-    onShow() {
-        this.setState({
-            message: false
-        })
-    }
     render() {
         let {displayName, email, phone, photo} = this.props.user
-        return <Modal ref='modal' onShow={this.onShow.bind(this)} className='modal modal--profile-edit' onValidSubmit={this.submitForm.bind(this)}>
+        return <Modal ref='modal' className='modal modal--profile-edit' onValidSubmit={this.submitForm.bind(this)}>
             {this.state.message ? <div className='center'>
                 <div className='modal__title'>
                     <h3>Подтверждение эл. почты</h3>

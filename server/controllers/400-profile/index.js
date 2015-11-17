@@ -40,7 +40,7 @@ const addOrUpdateCheck = function* () {
     let ctx = this
     let {id, photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value} = this.request.body
 
-    let until = yield Game.findCurrentRaffle('dream')
+    let until = yield Game.findCurrentRaffle('checks')
     let error = false
     let fields = {
         user: Types.ObjectId(this.req.user._id),

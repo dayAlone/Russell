@@ -22,7 +22,10 @@ gameSchema.pre('save', function(next) {
 
 gameSchema.statics.findCurrentRaffle = function* (code) {
     let game = yield Game.findOne({ code: code })
-    let current = game.raffles.filter(el => (moment(el) > moment()))[0]
+    let current = false
+    if (game) {
+        current = game.raffles.filter(el => (moment(el) > moment()))[0]    
+    }
     return current
 }
 

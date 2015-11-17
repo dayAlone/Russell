@@ -35,7 +35,7 @@ class Nav extends Component {
                 <div className='nav__auth'>
                     <a onClick={this.openModal.bind(this)} href='#'>Регистрация</a> <span>/</span> <a onClick={this.openModal.bind(this)} href='#'>Авторизация</a></div>
                 : <div className='nav__auth'>
-                <Link to='/profile/'>Личный кабинет</Link>
+                    <Link to='/profile/'>Личный кабинет</Link> <span>/</span> <a href='/auth/logout/'>Выход</a>
                 </div> }
 
         </div>

@@ -32,7 +32,7 @@ class ProfileInfo extends Component {
                             : null}
                         {phone ? <div className='info__link info__link--phone'><img src='/layout/images/svg/profile-phone.svg' width='30'/><span>{phone}</span></div> : null}
 
-                        <a href='#' className='info__edit'>Изменить личные данные</a>
+                        <a href='#' className='info__edit'>Изменить личные данные</a><br/>
                         <a href='#' className='info__edit'>Изменить пароль</a>
                     </div>
                 </div>

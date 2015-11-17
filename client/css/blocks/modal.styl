@@ -386,11 +386,13 @@
         left 0
         overflow auto
         z-index 1000
+        -webkit-overflow-scrolling: touch
     &-overflow
         overflow: hidden
     &-backdrop
         background-color alpha(black, .98)
         overflow auto
+        -webkit-overflow-scrolling: touch
         @media (min-width: $scr_s)
             background-color alpha(black, .9)
 

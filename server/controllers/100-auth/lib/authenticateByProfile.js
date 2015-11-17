@@ -105,8 +105,12 @@ export default function(req, profile, done) {
                     // auto-register
                     user = new User()
                 }
+            } else {
+                if (!user.verifiedEmail) throw new UserAuthError('Ваш email не подтверждён, проверьте почту.')
             }
         }
+
+
 
         try {
             yield* mergeProfile(user, profile)
@@ -127,6 +131,8 @@ export default function(req, profile, done) {
             // maybe, when the user was on the remote social login screen, he disallowed something?
             throw new UserAuthError('Недостаточно данных, разрешите их передачу, пожалуйста.')
         }
+
+
 
         yield user.save()
 

@@ -183,7 +183,7 @@ class AuthModal extends Component {
             <Formsy.Form ref='form' onValidSubmit={this.sendRegister.bind(this)} className='form'>
                 {this.state.error ? <div className='alert alert-danger' role='alert'>{this.state.error}</div> : false}
                 <Input name='displayName' title='Имя и фамилия *' placeholder='Иван Сидоров' validations='minLengthOrEmpty:1'/>
-                <Input name='email' title='Эл. почта *' placeholder='ivan@sydorov.ru' validations='minLengthOrEmpty:1,isEmail'/>
+                <Input name='email' type='email' title='Эл. почта *' placeholder='ivan@sydorov.ru' validations='minLengthOrEmpty:1,isEmail'/>
                 <Input name='phone' title='Телефон' placeholder='+7 903 123-45-67' validations='minLength:1'/>
                 <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'/>
                 <Input type='password' name='password_confirm' title='Повтор пароля' validations='minLengthOrEmpty:6,equalsField:password'/>

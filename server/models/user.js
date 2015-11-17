@@ -190,13 +190,13 @@ userSchema.post('save', function(next) {
             template_name: 'russell',
             template_content: []
         }
-        if (this.wasNew) {
-            if (this.verifyEmail !== true) {
+        if (this.wasNew || this._original.email !== this.email) {
+            if (this.verifiedEmail !== true) {
                 mailFields.message.subject = 'Подтверждение эл. почты'
                 mailFields.template_content = [{
                     name: 'content',
                     content: `<h3>Для завершения регистрации, пожалуйста, подтвердите ваш электронный адрес.</h3><br/>
-                        <a href='http://${config.domain}/?confirm=${this.verifyEmailToken}' class='button'>Подтвердить</a>`
+                    <a href='http://${config.domain}/?${this.wasNew ? 'confirm_new' : 'confirm'}=${this.verifyEmailToken}' class='button'>Подтвердить</a>`
                 }, {
                     name: 'additional',
                     content: '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td class="center padding"><img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/></td></tr></table>'
@@ -206,13 +206,17 @@ userSchema.post('save', function(next) {
         }
     }.bind(this)).then(next, next)
 })
+userSchema.post('init', function(next) {
+    co(function*() {
+        this._original = this.toObject()
+    }.bind(this)).then(next, next)
+})
 
 userSchema.pre('save', function(next) {
     if (this.deleted || this.profileName) return next()
     co(function*() {
         yield* this.generateProfileName()
         this.wasNew = this.isNew
-
     }.bind(this)).then(next, next)
 })
 

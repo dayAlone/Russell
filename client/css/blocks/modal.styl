@@ -176,8 +176,23 @@
         .auth-social
             margin-bottom 30px
     &--profile-edit
-        @extend .modal--auth .form
+        label
+            @extend .modal--auth .form label
+        .alert
+            margin-bottom 21px
         .form
+            &__avatar
+                size 70px
+                border-radius 5px
+                float left
+                margin-right 25px
+                margin-bottom 0px
+                background-size cover
+                margin-top 10px
+                & + .file
+                    float left
+                    width 50%
+                    margin-top 25px
             button
                 float right
         .modal__footer

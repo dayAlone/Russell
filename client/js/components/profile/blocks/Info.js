@@ -23,7 +23,7 @@ class ProfileInfo extends Component {
     render() {
         if (this.props.user) {
             let { displayName: name, photo, created, email, providers, phone } = this.props.user
-            console.log(phone)
+            
             name = name.split(' ')
             created = moment(created).format('DD.MM.YYYY')
             return <div className='info'>

@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import config from 'config'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
+import Users from '../../models/user'
 import moment from 'moment'
 import { Types } from 'mongoose'
 const getUserChecks = function* (user, pre, after) {
@@ -66,7 +67,7 @@ const addOrUpdateCheck = function* () {
             fields['kpk_id'] = ''
             fields['status_comment'] = 'Чек в очереди на автоматическую проверку'
             delete(fields.user)
-            let result = yield Check.findOneAndUpdate(
+            yield Check.findOneAndUpdate(
                 { _id: id, user: this.req.user._id },
                 { $set: fields },
                 { safe: true, upsert: true }
@@ -96,6 +97,42 @@ export default function(app) {
         })
         .get('/profile/favorites/get/', function* () {
             let result = yield getUserChecks(this.req.user, false, getUserFavorites)
+            this.body = result
+        })
+        .post('/profile/change/', function* () {
+            let result
+            let items = ['displayName', 'email', 'phone', 'photo']
+            let changed = false
+            let emailChanged = false
+            if (this.req.user) {
+                try {
+                    let user = yield Users.findOne({
+                        _id: this.req.user._id
+                    })
+                    result = user
+                    items.map(el => {
+                        if (this.request.body[el] && this.request.body[el] !== user[el]) {
+                            user[el] = this.request.body[el]
+                            changed = true
+                            if (el === 'email') {
+                                emailChanged = true
+                                user.verifyEmailToken = Math.random().toString(36).slice(2, 10)
+                                user.verifiedEmail = false
+                            }
+                        }
+                    })
+                    if (changed) {
+                        yield user.save()
+                    }
+                    result = { status: 'success', emailChanged: emailChanged }
+                } catch (e) {
+                    console.log(e)
+                    if (e.code == 11000) {
+                        result = {error: { message: 'Есть еще один пользователь с таким же эл. ящиком, выберите другой адрес', code: e.code} }
+                    }
+                    else result = {error: { message: e.message, code: e.code} }
+                }
+            }
             this.body = result
         })
         .post('/profile/checks/remove-product/', function* () {

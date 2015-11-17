@@ -76,33 +76,75 @@
             &:hover
                 span
                     border-line(alpha(red, .3))
+
     .favorites
         &__table
-            .table__col
-                lost-column 1.1/6 0 0
-                &:first-of-type
-                    lost-column 1.6/6 0 0
-            .table__row
-                padding 32px 0 27px
+            @media (max-width: $scr_s)
+                .table
+
+                    &__col
+                        width 100%
+                        padding 15px 0 13px
+                        border-bottom 1px solid #383b43
+                        min-height 45px
+                        &.right
+                            text-align center !important
+                        &:nth-child(2)
+                            br
+                                display none
+                    &__row
+                        display none
+                        lost-column 2.4/4 0 0
+                        border 0
+                        padding 0
+                        border-top 1px solid #383b43
+                        &:last-of-type
+                            display block
+                    &__title
+                        lost-column 1.6/4 0 0
+                        border 0
+                        padding 0
+                        border-top 1px solid #383b43
+                        .table__col
+                            text-align left
+                            white-space no-wrap
+                            &:first-of-type
+                                min-height 134px
+            @media (min-width: $scr_s)
+                .table__col
+                    lost-column 1.1/6 0 0
+                    &:first-of-type
+                        lost-column 1.6/6 0 0
+                .table__row
+                    padding 32px 0 27px
+                    &:last-of-type
+                        display none
         .favorite
             &__name
                 position relative
                 padding-left 90px
                 display inline-block
                 background transparent
+                @media (max-width: $scr_s)
+                    text-align center
+                    width 100%
+                    padding-left 0px
+                    margin-top -5px
+                    margin-bottom 10px
             &__delete
                 color red
                 font-size 11px
                 border-line(alpha(red, .2))
             &__image
-                float left
                 margin-right 15px
-                position absolute
-                top 50%
-                left 70px
+
                 max-width 70px
                 max-height 70px
-                transform translateX(-100%) translateY(-50%)
+                @media (min-width: $scr_s)
+                    transform translateX(-100%) translateY(-50%)
+                    position absolute
+                    top 50%
+                    left 70px
 
     .checks
         &-stat

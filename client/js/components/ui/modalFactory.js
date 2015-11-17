@@ -69,7 +69,6 @@ export default function(animation) {
         },
 
         checkOwerflow() {
-            console.log(123)
             setTimeout(() => {
                 const scrollbarWidth = this.measureScrollbar()
                 const bodyPadding = parseInt(($('body').css('padding-right') || 0), 10)

@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import Info from './blocks/Info'
 import ChecksStat from './blocks/ChecksStat'
 import GamesShortStat from './blocks/GamesShortStat'
+
 class ProfileIndex extends Component {
 
     render() {

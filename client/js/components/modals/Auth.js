@@ -21,9 +21,11 @@ class AuthModal extends Component {
     state = { captcha: false, disabled: false }
 
     componentDidUpdate(prevProps) {
-        if (this.props.isLogin === true
-            || (this.props.modal === false && prevProps.modal !== false)) this.refs.modal.hide()
-        if (this.props.modal !== false && this.refs.modal.hasHidden()) this.refs.modal.show()
+        let {isLogin, modal} = this.props
+        if (
+            (isLogin === true && modal !== 'forget-form-success' && modal !== 'forget-form')
+            || (modal === false && prevProps.modal !== false)) this.refs.modal.hide()
+        if (modal !== false && this.refs.modal.hasHidden()) this.refs.modal.show()
     }
     hideModal() {
         const { hideModal } = this.props.actions
@@ -218,9 +220,9 @@ class AuthModal extends Component {
     }
     getForgetPasswordFormSuccess() {
         return <div>
-            <h2 className='modal__title modal__title--padding'>Восстановление пароля</h2>
+            <h2 className='modal__title modal__title--padding'>Изменение пароля</h2>
             <div className='modal__message'>
-                Ваш пароль изменен. Теперь вы можете авторизоваться на сайте.
+                Ваш пароль изменен. {!this.props.isLogin ? 'Теперь вы можете авторизоваться на сайте.' : null}
             </div>
             {!this.props.isLogin ? <a href='#' onClick={this.showBlock()} className='button button--small'>Войти на сайт</a> : null}
         </div>
@@ -254,7 +256,7 @@ class AuthModal extends Component {
     }
     getForgetPasswordForm() {
         return <div className='modal__content'>
-            <h2 className='modal__title'>Восстановление пароля</h2>
+            <h2 className='modal__title'>Изменение пароля</h2>
             <Formsy.Form ref='form' onValidSubmit={this.sendNewPasswordForm.bind(this)} className='form form--forget'>
                 {this.state.error ? <div className='alert alert-danger' role='alert'>{this.state.error}</div> : false}
                 <Input type='password' name='password' title='Пароль' validations='minLengthOrEmpty:6'/>

@@ -5,11 +5,21 @@ import Spinner from '../../ui/Spinner'
 
 import moment from 'moment'
 import 'moment/locale/ru'
+import * as actionCreators from '../../../actions/login'
+import { bindActionCreators } from 'redux'
+import EditProfileModal from './EditProfileModal'
 
-
-@connect(state => ({ user: state.login.data }))
+@connect(state => ({ user: state.login.data }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileInfo extends Component {
-
+    changePassword(e) {
+        const { openModal } = this.props.actions
+        openModal('forget-form')
+        e.preventDefault()
+    }
+    editProfile(e) {
+        this.refs.modal.getWrappedInstance().show()
+        e.preventDefault()
+    }
     render() {
         if (this.props.user) {
             let { displayName: name, photo, created, email, providers, phone } = this.props.user
@@ -23,18 +33,19 @@ class ProfileInfo extends Component {
                         <span className='info__date'>Дата регистрации: {created}</span>
                     </div>
                     <div className='info__links'>
-                        <div className='info__link info__link--email'><img src='/layout/images/svg/profile-email.svg' width='30'/><span>{email}</span></div>
                         {providers[0] ?
                             <a href={providers[0].profile.profileUrl} target='_blank' className='info__link info__link--profile'>
                                 <img src='/layout/images/svg/profile-link.svg' width='30'/>
                                 <span>{providers[0].profile.profileUrl}</span>
                             </a>
                             : null}
-                        {phone ? <div className='info__link info__link--phone'><img src='/layout/images/svg/profile-phone.svg' width='30'/><span>{phone}</span></div> : null}
+                        <div className='info__link info__link--email'><img src='/layout/images/svg/profile-email.svg' width='30'/><span>{email}</span></div>
 
-                        <a href='#' className='info__edit'>Изменить личные данные</a><br/>
-                        <a href='#' className='info__edit'>Изменить пароль</a>
+                        {phone ? <div className='info__link info__link--phone'><img src='/layout/images/svg/profile-phone.svg' width='30'/><span>{phone}</span></div> : null}
+                        <a href='#' className='info__edit' onClick={this.editProfile.bind(this)}>Изменить личные данные</a><br/>
+                        <a href='#' className='info__edit' onClick={this.changePassword.bind(this)}>Изменить пароль</a>
                     </div>
+                    <EditProfileModal ref='modal'/>
                 </div>
         }
         return <Spinner />

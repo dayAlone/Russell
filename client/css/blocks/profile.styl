@@ -65,8 +65,8 @@
             font-size 12px
             color red
             border-line(alpha(red, .5))
-            margin-right 40px
             @media (min-width: $scr_s)
+                margin-right 40px
                 & + br
                     display none
             &:hover
@@ -76,7 +76,11 @@
             background transparent
             position relative
             margin-left 40px
+            display block
+            width 100%
             margin-bottom 10px
+            &:hover
+                background-image none
             img
                 position absolute
                 left -25px

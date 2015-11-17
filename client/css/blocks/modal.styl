@@ -10,6 +10,8 @@
         max-width 970px
         .modal__content
             padding 20px 40px 15px
+
+
     &--checks
         @media (min-width: $scr_s)
             max-width 450px
@@ -173,6 +175,24 @@
             margin-bottom 10px
         .auth-social
             margin-bottom 30px
+    &--profile-edit
+        @extend .modal--auth .form
+        .form
+            button
+                float right
+        .modal__footer
+            a
+                color black
+                float right
+                margin-right 30px
+                font-weight bold
+                margin-top 12px
+                border-line(alpha(black, .5), 16px)
+                &:hover
+                    color red
+                    border-line(alpha(red, .5), 16px)
+                    span
+                        background-image none !important
     &--recept
         @media (min-width: $scr_s)
             max-width 640px

@@ -70,10 +70,11 @@ router
     })
     .post('/new-password/', function* () {
         let {password, passwordResetToken} = this.request.body
-        console.log(password)
+        let search = { passwordResetToken: passwordResetToken }
+        if (this.req.user) search = { _id: this.req.user._id }
         try {
             let user = yield User.findOne(
-                { passwordResetToken: passwordResetToken }
+                search
             )
             if (user) {
                 user.password = password

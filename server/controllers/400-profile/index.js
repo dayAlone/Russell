@@ -139,7 +139,7 @@ export default function(app) {
                                 user.tmpEmail = this.request.body[el]
                                 let mailFields = {
                                     message: {
-                                        subject: 'Смена пароля',
+                                        subject: 'Подтверждение нового эл. адреса',
                                         to: [{email: user.tmpEmail, name: user.displayName}],
                                         merge: true,
                                         inline_css: true,

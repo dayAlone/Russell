@@ -3,7 +3,7 @@ import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import Users from '../../models/user'
 import stringify from 'csv-stringify'
-
+import {Iconv} from 'iconv'
 export default function(app) {
     const router = new Router()
     router

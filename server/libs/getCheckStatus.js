@@ -101,9 +101,8 @@ export const addCheck = function* (jar, income) {
             eklz: $(el).find('td:nth-child(5)').text(),
             result: getStatus($(el).find('td:nth-child(6) span').attr('class').split(' ')[1])
         }
-        if (row.organisation === tmp && row.eklz === eklz) result = row
+        if (row.organisation.toString() === tmp && parseInt(row.eklz) === parseInt(eklz)) result = row
     })
-
     return result ? result : { error: true, message: $('#documentError div').html().replace(/\s\s/g, '') }
 
 }

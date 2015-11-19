@@ -26,7 +26,7 @@ const RadioGroup = React.createClass({
                     return <span key={i}>
                         <input
                             onChange={this.onChange}
-                            type='checkbox'
+                            type='radio'
                             name={name}
                             value={current}
                             checked={current == this.getValue()} />

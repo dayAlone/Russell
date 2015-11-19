@@ -3,7 +3,7 @@ import Helmet from 'react-helmet'
 import ReactDOM from 'react-dom'
 import ReactPaginate from 'react-paginate'
 import { connect } from 'react-redux'
-
+import { toObj } from 'form-data-to-object'
 import Spinner from '../ui/Spinner'
 import Formsy from 'formsy-react'
 import {Dropdown, RadioGroup} from '../forms/'
@@ -30,14 +30,17 @@ class Competition extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.games.length > 0 && prevProps.games.length === 0) this.setList()
     }
-    handleFormChange(fields) {
+    handleFormChange(fields, e) {
         if (fields.game !== this.state.game) {
             this.setState({
                 game: fields.game
             }, () => {
                 this.setList()
             })
-        } else this.setState(fields, this.loadDataFromServer.bind(this))
+        } else {
+            console.log(toObj(fields))
+            this.setState(fields, this.loadDataFromServer.bind(this))
+        }
     }
     loadDataFromServer() {
 
@@ -113,24 +116,35 @@ class Competition extends Component {
     getRow(type, el, i) {
         switch (type) {
         case 'checks':
-            let {_id, added, user} = el
+            let {_id, added, user, products} = el
             let name = user ? user.displayName : null
             if (typeof _id !== 'object') {
                 return <div className='table__row' key={i}>
                     <div className='table__col'>{_id}</div>
                     <div className='table__col'>{moment(added).format('DD.MM.YYYY HH:mm')}</div>
                     <div className='table__col'>{name}</div>
-                    <div className='table__col'>Связанные товары</div>
+                    <div className='table__col'>{products.length > 0 ?
+                        products.map((el, i) => {
+                            return <div key={i}><a href={`/catalog/product/${el.product.code}/`} target='_blank'>{el.product.name}</a><br/><br/></div>
+                        })
+                        : 'нет'}</div>
                 </div>
             }
             return null
         default:
             let {total, _id: profile} = el
+            let id = profile._id
             return <div className='table__row' key={i}>
                 <div className='table__col'>{total}</div>
                 <div className='table__col'>{profile.displayName}</div>
                 <div className='table__col'>{parseInt(this.state.offset, 10) + i + 1}</div>
-                <div className='table__col'>Установка мест</div>
+                <div className='table__col'>
+                    <RadioGroup name={'place[' + id + ']'} items={[
+                        {name: '1', code: 1},
+                        {name: '2', code: 2},
+                        {name: '3', code: 3},
+                    ]} />
+                </div>
                 <div className='table__col'>Случайный выбор</div>
             </div>
         }

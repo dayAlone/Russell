@@ -184,7 +184,7 @@ export default function(app) {
                         { $skip: parseInt(offset, 10) },
                         { $sort: { total: -1 } }
                     ]).exec()
-                    let result = yield Users.populate(data, {path: '_id', select: 'displayName photo'})
+                    let result = yield Users.populate(data, {path: '_id', select: 'displayName photo _id'})
                     this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {
                     console.error(e)

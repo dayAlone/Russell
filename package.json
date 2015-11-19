@@ -42,6 +42,7 @@
     "eslint-config-airbnb": "^0.1.0",
     "expose-loader": "^0.7.0",
     "extract-text-webpack-plugin": "^0.8.2",
+    "form-data-to-object": "^0.2.0",
     "form-generator-react": "^1.0.5",
     "formsy-react": "^0.17.0",
     "gulp": "^3.9.0",

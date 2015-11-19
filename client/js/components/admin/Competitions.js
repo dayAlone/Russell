@@ -60,7 +60,7 @@ class Competition extends Component {
                     if (data) this.setState({data: data.list, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)})
                 },
                 error: (xhr, status, err) => {
-                    console.error(url,status, err.toString())
+                    console.error(url, status, err.toString())
                 }
             })
         }
@@ -111,7 +111,6 @@ class Competition extends Component {
         }
     }
     getRow(type, el, i) {
-        console.log(type)
         switch (type) {
         case 'checks':
             let {_id, added, user} = el
@@ -123,14 +122,14 @@ class Competition extends Component {
                     <div className='table__col'>{name}</div>
                     <div className='table__col'>Связанные товары</div>
                 </div>
-            } else {
-                return null
             }
+            return null
         default:
+            let {total, _id: profile} = el
             return <div className='table__row' key={i}>
-                <div className='table__col'>Баллов</div>
-                <div className='table__col'>Пользователь</div>
-                <div className='table__col'>Место в рейтинге</div>
+                <div className='table__col'>{total}</div>
+                <div className='table__col'>{profile.displayName}</div>
+                <div className='table__col'>{parseInt(this.state.offset, 10) + i + 1}</div>
                 <div className='table__col'>Установка мест</div>
                 <div className='table__col'>Случайный выбор</div>
             </div>

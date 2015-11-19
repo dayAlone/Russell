@@ -38,6 +38,7 @@ class Competition extends Component {
                 this.setList()
             })
         } else {
+            console.log(toObj(fields))
             this.setState(toObj(fields), this.loadDataFromServer.bind(this))
         }
     }
@@ -138,9 +139,9 @@ class Competition extends Component {
                 <div className='table__col'>{profile.displayName}</div>
                 <div className='table__col'>{parseInt(this.state.offset, 10) + i + 1}</div>
                 <div className='table__col'>
-                    <RadioGroup name={'place[1]'} items={[{name: '1', code: id}]} />
-                    <RadioGroup name={'place[2]'} items={[{name: '2', code: id}]} />
-                    <RadioGroup name={'place[3]'} items={[{name: '3', code: id}]} />
+                    <RadioGroup name={'place[1]'} items={[{name: '1', code: id}]} value={this.state.place ? this.state.place[1] : null}/>
+                    <RadioGroup name={'place[2]'} items={[{name: '2', code: id}]} value={this.state.place ? this.state.place[2] : null}/>
+                    <RadioGroup name={'place[3]'} items={[{name: '3', code: id}]} value={this.state.place ? this.state.place[3] : null}/>
                 </div>
                 <div className='table__col'>Случайный выбор</div>
             </div>

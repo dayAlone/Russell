@@ -9,6 +9,7 @@ const RadioGroup = React.createClass({
     onChange(e) {
         let value = e.target.value
         this.setValue(e.target.value)
+        e.preventDefault()
     },
     onClick(val) {
         return (e) => {
@@ -17,7 +18,7 @@ const RadioGroup = React.createClass({
         }
     },
     render() {
-        let {items, title, name, trigger} = this.props
+        let {items, title, name} = this.props
         const errorMessage = this.getErrorMessage()
         return <div className='form-group radio-group'>
                 {title ? <label htmlFor={name}>{title}</label> : null}

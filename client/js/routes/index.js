@@ -28,6 +28,16 @@ export default function configureRoutes(reducerRegistry) {
                         })
                     })
                 }}
+                getChildRoutes={(location, callback) => {
+                    require.ensure([], require => {
+                        callback(null, [
+                            {
+                                path: 'competitions/',
+                                component: require('../components/admin/Competitions')
+                            }
+                        ])
+                    })
+                }}
                 />
             <Route path='/' component={App} name='Начальная страница'>
 

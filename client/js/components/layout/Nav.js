@@ -81,6 +81,9 @@ class Nav extends Component {
             <div className='nav__col center'>
                 <Link to='/buy/' className='nav__item' activeClassName='nav__item--active'>Где купить</Link>
             </div>
+            <div className='nav__col center'>
+                <Link to='/winners/' className='nav__item' activeClassName='nav__item--active'>Победители</Link>
+            </div>
             <div className='nav__col right'>
                 <Link to='/games/' className='nav__item' activeClassName='nav__item--active'>Выиграй мечту!</Link>
             </div>

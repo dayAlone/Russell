@@ -179,6 +179,7 @@ export default function(app) {
                     let data = yield Scores.aggregate([
                         query,
                         group,
+                        {$match: {total: { $gt: 0 }}},
                         { $limit: parseInt(limit, 10) },
                         { $skip: parseInt(offset, 10) },
                         { $sort: { total: -1 } }

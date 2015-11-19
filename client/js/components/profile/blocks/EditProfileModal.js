@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import IconSVG from 'svg-inline-loader/lib/component.jsx'
 
 import Formsy from 'formsy-react'
 import {Input, File} from '../../forms/'
@@ -84,6 +85,7 @@ class EditProfileModal extends Component {
     render() {
         let {displayName, email, phone, photo} = this.props.user
         return <Modal ref='modal' className='modal modal--profile-edit' onValidSubmit={this.submitForm.bind(this)}>
+            <a href='#' className='modal__close' onClick={this.hide.bind(this)}><IconSVG src={require('svg-inline!../../../../public/images/svg/close.svg')}/></a>
             {this.state.message ? <div className='center'>
                 <div className='modal__title'>
                     <h3>Подтверждение эл. почты</h3>

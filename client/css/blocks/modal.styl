@@ -176,6 +176,13 @@
         .auth-social
             margin-bottom 30px
     &--profile-edit
+        .modal
+            &__close
+                @extend .modal--auth .modal__close
+                top 15px
+                right 15px
+                &:hover
+                    background-image none
         label
             @extend .modal--auth .form label
         .alert
@@ -190,19 +197,25 @@
                 background-size cover
                 margin-top 10px
                 & + .file
-                    float left
-                    width 50%
                     margin-top 25px
+                    @media (min-width: $scr_s)
+                        float left
+                        width 50%
             button
-                float right
+                @media (min-width: $scr_s)
+                    float right
         .modal__footer
+            @media (max-width: $scr_s)
+                text-align center
             a
                 color black
-                float right
-                margin-right 30px
                 font-weight bold
                 margin-top 12px
                 border-line(alpha(black, .5), 16px)
+                display inline-block
+                @media (min-width: $scr_s)
+                    float right
+                    margin-right 30px
                 &:hover
                     color red
                     border-line(alpha(red, .5), 16px)

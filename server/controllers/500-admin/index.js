@@ -3,7 +3,8 @@ import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import Users from '../../models/user'
 import stringify from 'csv-stringify'
-
+import {Iconv} from 'iconv'
+import moment from 'moment'
 export default function(app) {
     const router = new Router()
     router
@@ -21,6 +22,7 @@ export default function(app) {
                         'Эл. почта',
                         'Телефон',
                         'Пол',
+                        'Дата регистрации',
                         'Соц. сеть',
                         'Профиль'
                     ]]
@@ -28,12 +30,13 @@ export default function(app) {
                         role: { $ne: 'admin' }
                     })
                     data.map(el => {
-                        let {displayName, email, phone, gender, providers} = el
+                        let {displayName, email, phone, gender, providers, created} = el
                         users.push([
                             displayName,
                             email,
                             phone,
                             gender,
+                            moment(created).format('DD.MM.YYYY HH:mm:ss'),
                             providers[0] ? providers[0].name : null,
                             providers[0] ? providers[0].profile.profileUrl : null
                         ])

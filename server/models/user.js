@@ -231,7 +231,7 @@ userSchema.methods.checkPassword = function(password) {
 const User = mongoose.model('User', userSchema)
 
 User.count({}, (err, count) => {
-    require('./fixtures/users')(User)
+    if (count === 0) require('./fixtures/users')(User)
 })
 
 export default User

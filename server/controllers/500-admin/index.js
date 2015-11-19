@@ -89,7 +89,7 @@ export default function(app) {
         .get('/admin/checks/get/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 let fields = {}
-                let {type, offset, limit, id} = this.query
+                let {type, offset, limit, id, raffle} = this.query
                 if (type && type !== 'all') {
                     let until = yield Game.findCurrentRaffle('checks')
                     switch (type) {
@@ -104,6 +104,10 @@ export default function(app) {
                         fields['status'] = type
                         fields['until'] = { $gte: until }
                     }
+                } else {
+                    raffle = JSON.parse(raffle)
+                    fields['created'] = { $lte: new Date(raffle[1]), $gt: new Date(raffle[0])}
+                    fields['status'] = 'active'
                 }
                 if (parseInt(id, 10) > 0) {
                     fields['_id'] = id

@@ -26,17 +26,17 @@ class Raring extends Component {
         url: '/games/rating/get/',
         timer: false,
         game: this.props.location.query.game ? this.props.location.query.game : 'kitchen',
-        ignore: ['checks', 'present'],
+        accepted: ['test', 'kitchen'],
         games: [],
-        ruffle: false,
-        currentPage: 1
+        raffle: false,
+        currentPage: 1,
     }
     loadRatingFromServer() {
         let {url, limit, offset} = this.state
-        let {game, ruffle} = this.refs.form_top.getCurrentValues()
+        let {game, raffle} = this.refs.form_top.getCurrentValues()
         $.ajax({
             url: url,
-            data: {limit: limit, offset: offset, game: game, ruffle: ruffle},
+            data: {limit: limit, offset: offset, game: game, raffle: raffle},
             type: 'GET',
             success: data => {
                 if (data) this.setState({data: data.list, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)})
@@ -62,18 +62,18 @@ class Raring extends Component {
     handleTopFormChange() {
         let values = this.refs.form_top.getCurrentValues()
         let changes = false;
-        ['limit', 'game', 'ruffle'].map(el => {
+        ['limit', 'game', 'raffle'].map(el => {
             if (values[el] !== this.state[el]) {
                 changes = true
             }
         })
 
         if (changes) {
-            let { limit, game, ruffle } = values
+            let { limit, game, raffle } = values
             this.setState({
                 limit: limit,
                 game: game,
-                ruffle: ruffle
+                raffle: raffle
             }, () => {
                 this.loadRatingFromServer()
             })
@@ -91,7 +91,7 @@ class Raring extends Component {
         if (this.state.games.length === 0 && this.props.games.length > 0) {
             let games = []
             this.props.games.map(el => {
-                if (this.state.ignore.indexOf(el.code) === -1) {
+                if (this.state.accepted.indexOf(el.code) !== -1) {
                     el.raffles = el.raffles.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = [[el.start, el.raffles[0]]]
 
@@ -116,7 +116,7 @@ class Raring extends Component {
         this.getGamesList()
     }
     render() {
-        let {game, games, limit, ruffle, pageNum, currentPage} = this.state
+        let {game, games, limit, raffle, pageNum, currentPage} = this.state
         let dates = []
         games.filter(el => (el.code === game)).map(el => {
             el.raffles.map(d => {
@@ -134,7 +134,7 @@ class Raring extends Component {
                 </div>
                 <div className='rating__select'>
                     <h3>к</h3>
-                    <Dropdown name='ruffle' className='dropdown--small dropdown--dates' items={dates} value={ruffle ? ruffle : dates[0] ? dates[0].code : null}/>
+                    <Dropdown name='raffle' className='dropdown--small dropdown--dates' items={dates} value={raffle ? raffle : dates[0] ? dates[0].code : null}/>
                     <span>Дата розыгрыша</span>
                 </div>
                 <div className='rating__tools'>

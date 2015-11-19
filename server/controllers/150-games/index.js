@@ -146,21 +146,21 @@ export default function(app) {
     const router = new Router()
     router
         .get('/games/rating/get/', function*() {
-            let {limit, offset, game, ruffle} = this.query
-            if (limit && offset && game && ruffle) {
-                ruffle = JSON.parse(ruffle)
+            let {limit, offset, game, raffle} = this.query
+            if (limit && offset && game && raffle) {
+                raffle = JSON.parse(raffle)
                 let query = {
                     $match: {
                         type: game,
                         $and: [
                             {
                                 created: {
-                                    $gte: new Date(ruffle[0])
+                                    $gte: new Date(raffle[0])
                                 }
                             },
                             {
                                 created: {
-                                    $lte: new Date(ruffle[1])
+                                    $lte: new Date(raffle[1])
                                 }
                             }
                         ]

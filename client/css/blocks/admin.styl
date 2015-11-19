@@ -81,8 +81,37 @@
 
     &-competition
         .admin
+            &__footer
+                margin-top 20px
+                full-width()
+                .form-group
+                    float right
             &__toolbar
+                full-width()
+                margin-bottom 20px
                 .form-group
                     float left
                     width 200px
                     margin-right 20px
+        &__table
+            full-width()
+            &--checks
+                .table
+                    &__title
+                        white-space no-wrap
+                    &__col
+                        text-align left
+                        width (90/3)%
+                        &:first-of-type
+                            width 10%
+            &--kitchen, &--test
+                .table
+                    &__title
+                        white-space no-wrap
+                    &__col
+                        text-align left
+                        width (75/3)%
+                        &:first-of-type
+                            width 10%
+                        &:nth-child(3)
+                            width 15%

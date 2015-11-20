@@ -77,6 +77,7 @@ export default function* () {
                             case 'kitchen':
                                 text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
                                             по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`
+                                break
                             default:
                                 text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
                                 по нашей акции «${game.name}».`

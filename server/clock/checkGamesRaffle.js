@@ -73,7 +73,7 @@ export default function* () {
                 if (!skip) {
                     for (let u = 0; u < users.length; u++) {
                         let text
-                        switch (game.name) {
+                        switch (game.code) {
                             case 'kitchen':
                                 text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
                                             по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`

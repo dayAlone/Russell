@@ -18,15 +18,3 @@ initMiddlewares(app)
 initControllers(app)
 
 app.listen(process.env.NODE_ENV === 'dev' ? 3000 : ( process.env.PORT ? process.env.PORT : 80 ))
-
-
-/*
-import selectel from 'selectel-manager'
-selectel.authorize(config.selectel.login, config.selectel.password, (err, data) => {
-    if (!err) {
-        selectel.createLink(config.__dirname + '/index.js', '/russell/index.js', (err, data) => {
-            console.log(data)
-        })
-    }
-})
-*/

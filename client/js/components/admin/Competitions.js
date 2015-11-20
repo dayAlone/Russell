@@ -7,6 +7,7 @@ import { toObj } from 'form-data-to-object'
 import Spinner from '../ui/Spinner'
 import Formsy, {Mixin} from 'formsy-react'
 import {Input, Dropdown, RadioGroup} from '../forms/'
+import RandomScores from './blocks/GetRandomScoresModal'
 import moment from 'moment'
 
 import * as actionCreators from '../../actions/games'
@@ -69,7 +70,7 @@ const TableRowsRadio = React.createClass({
                     })}
                 </div>
                 <div className='table__col'>
-                    <input type='checkbox' name='random[]' value={profile._id} onChange={this.onChangeCheckbox}/>
+                    <input type='checkbox' name='random[]' value={i} onChange={this.onChangeCheckbox}/>
                 </div>
             </div>
         })}</div>
@@ -111,7 +112,6 @@ class Competition extends Component {
         }
     }
     loadDataFromServer() {
-
         let {perPage, offset, game, raffle} = this.state
         let url
         switch (game) {
@@ -181,9 +181,9 @@ class Competition extends Component {
             </div>
         }
     }
-    getRows(data, type) {
+    getRows(data) {
         let rows = []
-        switch (type) {
+        switch (this.state.game) {
         case 'checks':
             rows = data.map((el, i) => {
                 let {_id, added, user, products} = el
@@ -207,20 +207,33 @@ class Competition extends Component {
         }
 
     }
+    getButtons() {
+        switch (this.state.game) {
+        case 'checks':
+            return <div className='table__buttons'>
+                    <a href='#'>Выбрать случайные чеки</a>
+                </div>
+        default:
+            return <div className='table__buttons'>
+                    <a href='#'>Победитель из случайных</a>
+                    <a href='#'>Сформировать победителей</a>
+                </div>
+        }
+    }
     render() {
-        let { game, raffle, list, raffles, data } = this.state
+        let { game, raffle, list, raffles, data, values} = this.state
         if (game && raffle) {
-
             return <div className='admin-competition'>
                 <Helmet title='Russell Hobbs | Кабинет модератора | Розыгрыш'/>
                 <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                     <div className='admin__toolbar'>
                         <Dropdown name='game' className='dropdown--small' items={list} value={game}/>
                         <Dropdown name='raffle' className='dropdown--small' items={raffles} value={raffle}/>
+                        {this.getButtons()}
                     </div>
                     <div className={`table admin-competition__table admin-competition__table--${game}`}>
                         {this.getHeader()}
-                        {data.length > 0 ? this.getRows(data, game) : <div className='table__row table__row--message center'>
+                        {data.length > 0 ? this.getRows(data) : <div className='table__row table__row--message center'>
                             Нет данных за текущий период.
                         </div>}
                     </div>
@@ -244,6 +257,7 @@ class Competition extends Component {
 
                     </div>
                 </Formsy.Form>
+                <RandomScores data={data} values={values}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

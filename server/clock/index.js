@@ -27,3 +27,9 @@ let checkRaffles = function() {
 }
 
 checkRaffles()
+
+new CronJob({
+    cronTime: '0 0 */2 * * *',
+    onTick: checkRaffles,
+    start: true
+})

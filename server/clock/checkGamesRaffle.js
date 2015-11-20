@@ -9,7 +9,7 @@ import 'moment/locale/ru'
 
 let mandrill = require('node-mandrill')(config.mandrill)
 
-let sendMessage = function*(user, name, raffle) {
+let sendMessage = function*(user, text) {
     let fields = {
         message: {
             to: [{email: user.email, name: user.displayName}],
@@ -27,8 +27,7 @@ let sendMessage = function*(user, name, raffle) {
         template_name: 'russell',
         template_content: [{
             name: 'content',
-            content: `<h3>Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
-                        по нашей акции «${name}».<br/><br/>
+            content: `<h3>${text}<br/><br/>
                         Если вы еще не успели в ней поучаствовать, самое время начать!
                         И, возможно, именно вы выиграете приз – технику Russell Hobbs.<br/><br/>
 
@@ -48,7 +47,7 @@ let sendMessage = function*(user, name, raffle) {
 
 export default function* () {
     let games = yield Games.find({
-        code: { $in: ['checks', 'kitchen', 'test', 'present'] }
+        code: { $in: ['checks', 'kitchen'] }
     })
 
     let data = yield Notifications.aggregate({$group: {
@@ -73,7 +72,16 @@ export default function* () {
                 let skip = notifications[game.code] && notifications[game.code].indexOf(raffle) === -1
                 if (!skip) {
                     for (let u = 0; u < users.length; u++) {
-                        yield sendMessage(users[u], game.name, raffle)
+                        let text
+                        switch (game.name) {
+                            case 'kitchen':
+                                text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
+                                            по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`
+                            default:
+                                text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
+                                            по нашей акции «${name}».`
+                        }
+                        yield sendMessage(users[u], text)
                     }
                     yield Notifications.create({
                         raffle: new Date(raffle),

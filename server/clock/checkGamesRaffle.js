@@ -79,7 +79,7 @@ export default function* () {
                                             по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`
                             default:
                                 text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
-                                            по нашей акции «${name}».`
+                                по нашей акции «${game.name}».`
                         }
                         yield sendMessage(users[u], text)
                     }

@@ -5,12 +5,70 @@ import ReactPaginate from 'react-paginate'
 import { connect } from 'react-redux'
 import { toObj } from 'form-data-to-object'
 import Spinner from '../ui/Spinner'
-import Formsy from 'formsy-react'
-import {Dropdown, RadioGroup} from '../forms/'
+import Formsy, {Mixin} from 'formsy-react'
+import {Input, Dropdown, RadioGroup} from '../forms/'
 import moment from 'moment'
 
 import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
+
+
+const TableRowsRadio = React.createClass({
+
+    mixins: [Mixin],
+    getInitialState() {
+        return {active: false, trigger: this.props.trigger}
+    },
+    onChange(e) {
+        let value = e.target.value
+
+        this.setValue(e.target.value)
+        e.preventDefault()
+    },
+    onClick(name, val) {
+        let o = {}
+        o[name] = val
+        return (e) => {
+            this.setValue(Object.assign({}, this.getValue(), o))
+            e.preventDefault()
+        }
+    },
+    render() {
+        let {items, title, name} = this.props
+        let value = this.getValue()
+
+        return <div>{this.props.data.map((el, i) => {
+            let {total, _id: profile} = el
+            let id = profile._id
+            return <div className='table__row' key={i}>
+                <div className='table__col'>{total}</div>
+                <div className='table__col'>{profile.displayName}</div>
+                <div className='table__col'>{parseInt(this.props.offset, 10) + i + 1}</div>
+                <div className='table__col'>
+                    {[{name: 1, code: id}, {name: 2, code: id}, {name: 3, code: id}].map((r, i) => {
+                        let current = r.code ? r.code : r.name
+                        if (name=== 'place') console.log(current, value)
+                        return <span key={i} className='radio-group'>
+                                <input
+                                    checked={typeof value === 'object' && current.toString() === value[r.name]}
+                                    type='radio'
+                                    name={`places[${r.name}]`}
+                                    value={current}
+                                    onChange={this.onChange}
+                                     />
+                                 <a key={i} href='#' onClick={this.onClick(r.name, current)}>{r.name}</a>
+                            </span>
+                    })}
+                </div>
+                <div className='table__col'>Случайный выбор</div>
+            </div>
+        })}</div>
+    }
+})
+
+export default RadioGroup
+
+
 @connect(state => ({ games: state.games.list }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Competition extends Component {
     state = {
@@ -30,15 +88,17 @@ class Competition extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.games.length > 0 && prevProps.games.length === 0) this.setList()
     }
-    handleFormChange(fields, e) {
-        if (fields.game !== this.state.game) {
+    handleFormChange(fields) {
+        if (!fields.game) fields = this.refs.form.getCurrentValues()
+
+        if (fields.game && fields.game !== this.state.game) {
             this.setState({
                 game: fields.game
             }, () => {
                 this.setList()
             })
         } else {
-            console.log(toObj(fields))
+            console.log(fields)
             this.setState(toObj(fields), this.loadDataFromServer.bind(this))
         }
     }
@@ -113,38 +173,29 @@ class Competition extends Component {
             </div>
         }
     }
-    getRow(type, el, i) {
+    getRows(data, type) {
+        let rows = []
         switch (type) {
         case 'checks':
-            let {_id, added, user, products} = el
-            let name = user ? user.displayName : null
-            if (typeof _id !== 'object') {
-                return <div className='table__row' key={i}>
-                    <div className='table__col'>{_id}</div>
-                    <div className='table__col'>{moment(added).format('DD.MM.YYYY HH:mm')}</div>
-                    <div className='table__col'>{name}</div>
-                    <div className='table__col'>{products.length > 0 ?
-                        products.map((el, i) => {
-                            return <div key={i}><a href={`/catalog/product/${el.product.code}/`} target='_blank'>{el.product.name}</a><br/><br/></div>
-                        })
-                        : 'нет'}</div>
-                </div>
-            }
-            return null
+            rows = data.map((el, i) => {
+                let {_id, added, user, products} = el
+                let name = user ? user.displayName : null
+                if (typeof _id !== 'object') {
+                    return <div className='table__row' key={i}>
+                        <div className='table__col'>{_id}</div>
+                        <div className='table__col'>{moment(added).format('DD.MM.YYYY HH:mm')}</div>
+                        <div className='table__col'>{name}</div>
+                        <div className='table__col'>{products.length > 0 ?
+                            products.map((el, i) => {
+                                return <div key={i}><a href={`/catalog/product/${el.product.code}/`} target='_blank'>{el.product.name}</a><br/><br/></div>
+                            })
+                            : 'нет'}</div>
+                    </div>
+                }
+            })
+            return rows
         default:
-            let {total, _id: profile} = el
-            let id = profile._id
-            return <div className='table__row' key={i}>
-                <div className='table__col'>{total}</div>
-                <div className='table__col'>{profile.displayName}</div>
-                <div className='table__col'>{parseInt(this.state.offset, 10) + i + 1}</div>
-                <div className='table__col'>
-                    <RadioGroup name={'place[1]'} items={[{name: '1', code: id}]} value={this.state.place ? this.state.place[1] : null}/>
-                    <RadioGroup name={'place[2]'} items={[{name: '2', code: id}]} value={this.state.place ? this.state.place[2] : null}/>
-                    <RadioGroup name={'place[3]'} items={[{name: '3', code: id}]} value={this.state.place ? this.state.place[3] : null}/>
-                </div>
-                <div className='table__col'>Случайный выбор</div>
-            </div>
+            return <TableRowsRadio data={data} name='places' offset={this.state.offset}/>
         }
 
     }
@@ -161,7 +212,7 @@ class Competition extends Component {
                     </div>
                     <div className={`table admin-competition__table admin-competition__table--${game}`}>
                         {this.getHeader()}
-                        {data.length > 0 ? data.map((el, i) => (this.getRow(game, el, i))) : <div className='table__row table__row--message center'>
+                        {data.length > 0 ? this.getRows(data, game) : <div className='table__row table__row--message center'>
                             Нет данных за текущий период.
                         </div>}
                     </div>
@@ -182,6 +233,7 @@ class Competition extends Component {
                             {name: '50', code: 50},
                             {name: '100', code: 100},
                         ]} value='10'/>
+
                     </div>
                 </Formsy.Form>
             </div>

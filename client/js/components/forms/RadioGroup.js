@@ -19,18 +19,23 @@ const RadioGroup = React.createClass({
     },
     render() {
         let {items, title, name} = this.props
+        let value = this.getValue()
+        if (value) value = value.toString()
+
         const errorMessage = this.getErrorMessage()
         return <div className='form-group radio-group'>
                 {title ? <label htmlFor={name}>{title}</label> : null}
                 {items.map((el, i) => {
                     let current = el.code ? el.code : el.name
+                    if (name=== 'place')console.log(current, value)
                     return <span key={i}>
                         <input
-                            onChange={this.onChange}
+                            checked={current.toString() === value}
                             type='radio'
                             name={name}
                             value={current}
-                            checked={current == this.getValue()} />
+                            onChange={this.onChange}
+                             />
                         <a key={i} href='#' onClick={this.onClick(current)}>{el.name}</a>
                     </span>
                 })}

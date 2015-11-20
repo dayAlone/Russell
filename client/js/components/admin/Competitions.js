@@ -12,31 +12,40 @@ import moment from 'moment'
 import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
 
-
 const TableRowsRadio = React.createClass({
 
     mixins: [Mixin],
     getInitialState() {
         return {active: false, trigger: this.props.trigger}
     },
+    componentWillMount() {
+        this.setValue({
+            places: {},
+            random: []
+        })
+    },
     onChange(e) {
-        let value = e.target.value
-
-        this.setValue(e.target.value)
         e.preventDefault()
     },
-    onClick(name, val) {
+    onClickRadio(name, val) {
         let o = {}
         o[name] = val
+        let places = Object.assign({}, this.getValue().places, o)
         return (e) => {
-            this.setValue(Object.assign({}, this.getValue(), o))
+            this.setValue(Object.assign({}, this.getValue(), {places: places}))
             e.preventDefault()
         }
+    },
+    onChangeCheckbox(e) {
+        let current = this.getValue().random
+        let val = e.target.value
+        if (current.indexOf(val) === -1) current.push(val)
+        else current = _.without(current, val)
+        this.setValue(Object.assign({}, this.getValue(), {random: current}))
     },
     render() {
         let {items, title, name} = this.props
         let value = this.getValue()
-
         return <div>{this.props.data.map((el, i) => {
             let {total, _id: profile} = el
             let id = profile._id
@@ -47,20 +56,21 @@ const TableRowsRadio = React.createClass({
                 <div className='table__col'>
                     {[{name: 1, code: id}, {name: 2, code: id}, {name: 3, code: id}].map((r, i) => {
                         let current = r.code ? r.code : r.name
-                        if (name=== 'place') console.log(current, value)
                         return <span key={i} className='radio-group'>
                                 <input
-                                    checked={typeof value === 'object' && current.toString() === value[r.name]}
+                                    checked={current.toString() === value['places'][r.name]}
                                     type='radio'
                                     name={`places[${r.name}]`}
                                     value={current}
                                     onChange={this.onChange}
                                      />
-                                 <a key={i} href='#' onClick={this.onClick(r.name, current)}>{r.name}</a>
+                                 <a key={i} href='#' onClick={this.onClickRadio(r.name, current)}>{r.name}</a>
                             </span>
                     })}
                 </div>
-                <div className='table__col'>Случайный выбор</div>
+                <div className='table__col'>
+                    <input type='checkbox' name='random[]' value={profile._id} onChange={this.onChangeCheckbox}/>
+                </div>
             </div>
         })}</div>
     }
@@ -90,7 +100,6 @@ class Competition extends Component {
     }
     handleFormChange(fields) {
         if (!fields.game) fields = this.refs.form.getCurrentValues()
-
         if (fields.game && fields.game !== this.state.game) {
             this.setState({
                 game: fields.game
@@ -98,7 +107,6 @@ class Competition extends Component {
                 this.setList()
             })
         } else {
-            console.log(fields)
             this.setState(toObj(fields), this.loadDataFromServer.bind(this))
         }
     }
@@ -195,7 +203,7 @@ class Competition extends Component {
             })
             return rows
         default:
-            return <TableRowsRadio data={data} name='places' offset={this.state.offset}/>
+            return <TableRowsRadio data={data} name='values' offset={this.state.offset}/>
         }
 
     }

@@ -6,7 +6,7 @@ const MyInput = React.createClass({
     mixins: [Mixin],
 
     changeValue(event) {
-        this.setValue(event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value'])
+        this.setValue(event.currentTarget['value'])
     },
     render() {
         let { type, name, title, placeholder, className, maxLength } = this.props

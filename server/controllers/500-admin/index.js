@@ -173,6 +173,23 @@ export default function(app) {
                 this.res.end()
             }
         })
+        .post('/admin/winners/save-prize/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                let result
+                try {
+                    let { id, prize } = this.request.body
+                    yield Winners.findOneAndUpdate(
+                        { _id: id },
+                        { $set: {
+                            prize: Types.ObjectId(prize)
+                        }})
+                    result = {error: false, result: 'success'}
+                } catch (e) {
+                    result = {error: e.message, code: e.code}
+                }
+                this.body = result
+            }
+        })
         .post('/admin/winners/add/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result
@@ -186,7 +203,6 @@ export default function(app) {
                     })
 
                     let exist = data.map(el => (el.position))
-                    console.log(exist)
                     for (let i = 0; i < items.length; i++) {
                         let {user, place, additional} = items[i]
                         if (exist.indexOf(parseInt(place, 10)) === -1) {

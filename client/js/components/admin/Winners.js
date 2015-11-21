@@ -14,7 +14,9 @@ import { bindActionCreators } from 'redux'
 
 class GameRow extends Component {
     state = {
-        hover: false
+        hover: false,
+        disabled_save: false,
+        disabled_send: false
     }
     onMouseEnter() {
         this.setState({ hover: true })
@@ -22,22 +24,33 @@ class GameRow extends Component {
     onMouseLeave() {
         this.setState({ hover: false })
     }
+    savePrize(e) {
+        let { savePrize, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_save: true }, savePrize(_id, this.savedCallback.bind(this)))
+        e.preventDefault()
+    }
+    savedCallback() {
+        this.setState({ disabled_save: false })
+    }
     render() {
-        let {user, additional, position, prize} = this.props.el
-        let {hover} = this.state
+        let {user, additional, position, prize, _id} = this.props.el
+        let {hover, disabled_save, disabled_send} = this.state
         return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
             <div className='table__col'>{user.displayName}</div>
             <div className='table__col'>{additional.scores}</div>
             <div className='table__col'>{position}</div>
             <div className='table__col'>
-                <Dropdown name={`prize-{user._id}`} className='dropdown--small' items={this.props.prizes.map(el=>({
+                <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
                     name: el.name,
                     code: el._id
-                }))} value={prize}/>
-                {hover ? <a href='#'>Сохранить</a> : null}
+                }))} value={prize ? prize : this.props.prizes[0]._id}/>
+            {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
+                    {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
+                </a> : null}
             </div>
             <div className='table__col'>
-                {hover ? <a href='#'>Уведомить</a> : null}
+                {hover || disabled_send ? <a href='#' className='btn'>Уведомить</a> : null}
             </div>
         </div>
     }
@@ -73,6 +86,17 @@ class Competition extends Component {
             this.setState(toObj(fields), this.loadDataFromServer.bind(this))
         }
     }
+    savePrize(id, callback) {
+        let {prizes} = this.state
+        return (e) => {
+            $.post('/admin/winners/save-prize/', {
+                id: id,
+                prize: prizes[id]
+            }, response => {
+                if (callback) callback()
+            })
+        }
+    }
     loadDataFromServer() {
         let {game, raffle} = this.state
         let url = '/games/winners/get/'
@@ -83,7 +107,6 @@ class Competition extends Component {
                 data: {game: game, raffle: raffle},
                 type: 'GET',
                 success: data => {
-                    console.log(data)
                     if (data) this.setState({data: data.list})
                 },
                 error: (xhr, status, err) => {
@@ -146,7 +169,7 @@ class Competition extends Component {
         default:
             return <div>
                 {data.map((el, i) => {
-                    return <GameRow el={el} key={i} prizes={this.props.prizes}/>
+                    return <GameRow savePrize={this.savePrize.bind(this)} el={el} key={i} prizes={this.props.prizes}/>
                 })}
             </div>
         }

@@ -166,6 +166,18 @@ export default function(app) {
                 this.body = result
             }
         })
+
+        .get('/games/prizes/get/', function* () {
+            let result
+            try {
+                let data = yield Prizes.find({})
+                result = { error: false, result: data }
+            } catch (e) {
+                result = { error: e }
+            }
+            this.set('Cache-Control', 'max-age=36000, must-revalidate')
+            this.body = result
+        })
         .get('/games/rating/get/', function*() {
             let {limit, offset, game, raffle, ruffle} = this.query
             if (limit && offset && game && (raffle || ruffle)) {
@@ -269,11 +281,6 @@ export default function(app) {
             }
             this.set('Cache-Control', 'max-age=36000, must-revalidate')
             this.body = result
-        })
-        .get('/games/prizes/get/', function* () {
-            let result
-            this.set('Cache-Control', 'max-age=36000, must-revalidate')
-            this.body = 123
         })
         .get('/games/clear/', function* () {
             if (this.req.user) {

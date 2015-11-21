@@ -8,19 +8,32 @@
         margin -3px 0
         &__trigger
             font-size 12px
+            line-height 31px
             background-color transparent
             border 1px solid white
             border-radius 5px
             font-weight bold
+            .admin &
+                border-radius 0
+                border 0
+            svg
+                top 10px
+            &:hover
+                border-radius 0
+                border-color red
             &:after
                 background-color black
     &--small
-
         .dropdown
             &__trigger, &__item
                 height 27px
                 line-height 29px
                 font-size 13px
+            &__item
+                height auto
+                line-height 1
+                padding 7px 10px 5px
+                min-height 0
             &__trigger
                 background-color #717b84
                 svg
@@ -87,19 +100,22 @@
         transition .3s all .1s
         visibility hidden
     a&__item
-        line-height 34px
-        height 31px
+        min-height 29px
         background transparent
         width 100%
         display inline-block
-        padding 0 15px
-        font-size 14px
+        padding 7px 15px 5px
+        font-size 12px
         color white
+        white-space normal
+        @media (min-width: $scr_sm)
+            font-size 14px
         &:hover
             color white
             background-color alpha(white, .1)
     html:not(.mobile) &
         &--hover
+            z-index 20
             .dropdown
                 &__frame
                     opacity 1

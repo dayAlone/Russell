@@ -19,14 +19,14 @@ class GetRandomScoresModal extends Component {
         if (e) e.preventDefault()
     }
     tick() {
-
+        let data = this.props.data.filter((el, i) => (this.props.values.indexOf(i.toString()) !== -1))
         if (this.state.counts < 10) {
             this.setState({
                 counts: this.state.counts + 1,
-                result: parseInt(Math.random() * (100 - 1) + 1, 10)
+                result: parseInt(Math.random() * data.length, 10)
             })
         } else {
-            let data = this.props.data.filter((el, i) => (this.props.values.indexOf(i.toString()) !== -1))
+
             clearInterval(this.state.counter)
             this.setState({
                 step: 2,

@@ -33,6 +33,7 @@ class Admin extends Component {
                             <div className='admin__nav'>
                                 {[
                                     {name: 'Чеки', link: '/admin/'},
+                                    {name: 'Победители', link: '/admin/winners/'},
                                     {name: 'Розыгрыш', link: '/admin/competitions/'},
                                 ].map((el, i) => {
                                     if (i === 0 && this.props.location.pathname !== '/admin/') {

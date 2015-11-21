@@ -2,9 +2,12 @@ import Router from 'koa-router'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import Users from '../../models/user'
+import Winners from '../../models/winners'
 import stringify from 'csv-stringify'
-import {Iconv} from 'iconv'
+import { Iconv } from 'iconv'
+import { Types } from 'mongoose'
 import moment from 'moment'
+
 export default function(app) {
     const router = new Router()
     router
@@ -170,6 +173,35 @@ export default function(app) {
                 this.res.end()
             }
         })
+        .post('/admin/winners/add/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                let result
+                try {
+                    let {places, game, raffle} = this.request.body
+                    raffle = JSON.parse(raffle)
+                    let data = yield Winners.find({
+                        game: Types.ObjectId(game),
+                        raffle: raffle[1]
+                    })
+                    let exist = data.map(el => (el.position))
+                    for (let i in places) {
+                        if (exist.indexOf(parseInt(i, 10) + 1) === -1) {
+                            Winners.create({
+                                user: Types.ObjectId(places[i]),
+                                game: Types.ObjectId(game),
+                                raffle: raffle[1],
+                                position: parseInt(i, 10) + 1
+                            })    
+                        }
+                    }
+                    result = {error: false, result: 'success'}
+                } catch (e) {
+                    result = {error: e.message, code: e.code}
+                }
+                this.body = result
+            }
+        })
+
         /*.get('/admin/*', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 this.body = this.render('index')

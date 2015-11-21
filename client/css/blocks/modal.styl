@@ -10,8 +10,26 @@
         max-width 970px
         .modal__content
             padding 20px 40px 15px
-
-
+    &--message
+        .button
+            margin-bottom 0px !important
+    &--random-scores
+        h5
+            margin-top 40px
+            margin-bottom 20px
+            color #717b84
+        h4
+            margin-bottom 21px
+            margin-top 0px
+        h1
+            font-size 100px
+            margin 80px 0 50px
+        ol
+            li
+                line-height 2
+        a.button
+            color white
+            margin-top 30px
     &--checks
         @media (min-width: $scr_s)
             max-width 450px
@@ -598,6 +616,8 @@
                 border-color #005b9c
         &:focus
             outline 0
+    .button
+        color white
     .alert
         font-size 11px
         border 1px solid alpha(white, .5)

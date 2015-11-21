@@ -114,15 +114,7 @@ class Competition extends Component {
     }
     loadDataFromServer() {
         let {perPage, offset, game, raffle} = this.state
-        let url
-        switch (game) {
-        case 'checks':
-            url = '/admin/checks/get/'
-            break
-        default:
-            url = '/games/rating/get/'
-            break
-        }
+        let url = '/winners/get/'
         if (game && raffle) {
             $.ajax({
                 url: url,
@@ -141,7 +133,7 @@ class Competition extends Component {
         let { accepted, game, raffle } = this.state
         if (this.props.games.length > 0) {
             let list = this.props.games.filter(el => (accepted.indexOf(el.code) !== -1)).map(el => ({code: el.code, name: el.name}))
-            if (!game) game = list[0].code
+            if (!game) game = this.props.location.query.game ? this.props.location.query.game : list[0].code
             let current = this.props.games.filter(el => (el.code === game))[0]
             let raffles = []
             current.raffles.map((el, i) => {
@@ -154,7 +146,7 @@ class Competition extends Component {
                     code: JSON.stringify(raffle)
                 })
             })
-            if (!raffle) raffle = raffles[0].code
+            if (!raffle) raffle = this.props.location.query.raffle ? this.props.location.query.raffle : raffles[0].code
             this.setState({
                 list: list,
                 game: game,
@@ -208,44 +200,22 @@ class Competition extends Component {
         }
 
     }
-    showRandomModal(e) {
-        this.refs.random.show()
-        e.preventDefault()
-    }
-    createWinners(e) {
-        let {values, game, raffle} = this.state
-        game = this.props.games.filter(el => (el.code === game))[0]
-        $.post('/admin/winners/add/', {
-            places: values.places,
-            game: game._id,
-            raffle: raffle
-        }, response => {
-            if (!response.error) {
-                this.refs.result.show()
-            }
-        })
-        if (e) e.preventDefault()
-    }
     getButtons() {
         switch (this.state.game) {
         case 'checks':
             return <div className='table__buttons'>
-                    <a href='#'>Выбрать случайные чеки</a>
                 </div>
         default:
             let count = 0
-            if (this.state.values) for (let i in this.state.values.places) count++
             return <div className='table__buttons'>
-                    <a href='#' onClick={this.showRandomModal.bind(this)} className={this.state.values && this.state.values.random.length < 2 ? 'disabled' : null}>Победитель из случайных</a>
-                    <a href='#' onClick={this.createWinners.bind(this)} className={count === 0 ? 'disabled' : null}>Сформировать победителей</a>
                 </div>
         }
     }
     render() {
-        let { game, raffle, list, raffles, data, values} = this.state
+        let { game, raffle, list, raffles, data} = this.state
         if (game && raffle) {
             return <div className='admin-competition'>
-                <Helmet title='Russell Hobbs | Кабинет модератора | Розыгрыш'/>
+                <Helmet title='Russell Hobbs | Кабинет модератора | Победители'/>
                 <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                     <div className='admin__toolbar'>
                         <Dropdown name='game' className='dropdown--small' items={list} value={game}/>
@@ -278,14 +248,6 @@ class Competition extends Component {
 
                     </div>
                 </Formsy.Form>
-                <Modal ref='result' className='modal modal--message center'>
-                    <h2 className='modal__title modal__title--border'>Победители сформированы</h2>
-                    <div className='modal__message'>
-                        Теперь им необходимо раздать призы и отправить уведомления
-                    </div>
-                    <Link to={`/admin/winners/?game=${game}&raffle=${raffle}`} className='button--small button'>Перейти в раздел с победителями</Link>
-                </Modal>
-                <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : el._id.displayName))} values={values ? values.random : null}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

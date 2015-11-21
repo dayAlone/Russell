@@ -14,9 +14,12 @@ html
         meta(property='og:description', content='#{meta.description}')
         link(rel='image_src', href='#{meta.image}')
   body
+    div=dev
     #app=data
     script(type="application/javascript", src="#{app}", async, defer)
-    if dev !== Y
+    if dev == 'Y'
+        link(rel='stylesheet', href='/layout/css/style.css')
+    else
         noscript
             div
                 img(src="https://mc.yandex.ru/watch/33079538" style="position:absolute; left:-9999px;" alt="")
@@ -26,5 +29,3 @@ html
 
             ga('create', 'UA-68931467-1', 'auto');
             ga('send', 'pageview');
-    if dev == 'Y'
-        link(rel='stylesheet', href='/layout/css/style.css')

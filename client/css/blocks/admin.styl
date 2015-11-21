@@ -35,6 +35,27 @@
                 color #ea7814
             &--vinner
                 color #356ebb
+    &-winners
+        &__table
+            full-width()
+            &--kitchen, &--test
+                .table
+                    &__col
+                        a
+                            height 27px
+                            line-height 30px
+                            color white
+                            padding 0 20px
+                            display inline-block
+                            background-color red
+                            text-align center
+                            white-space no-wrap
+                            background-image none
+                            margin -10px 0
+                        text-align left
+                        width (55/2)%
+                        &:nth-child(2), &:nth-child(3), &:nth-child(5)
+                            width 15%
     &-checks
         .form
             .dropdown
@@ -78,7 +99,6 @@
                         lost-column .84/6 0
                     &:nth-child(5), &:nth-child(6)
                         lost-column 1.38/6 0
-
     &-competition
         .admin
             &__footer

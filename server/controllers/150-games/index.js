@@ -3,6 +3,7 @@ import Games from '../../models/games'
 import Scores from '../../models/scores'
 import Users from '../../models/user'
 import Winners from '../../models/winners'
+import Prizes from '../../models/prizes'
 import { Types } from 'mongoose'
 import moment from 'moment'
 import config from 'config'
@@ -156,10 +157,10 @@ export default function(app) {
                     raffle: raffle[1]
                 }
                 try {
-                    let data = yield Winners.find(query)
-                    this.body = { error: false, list: data }
+                    let raw = yield Winners.find(query)
+                    let data = yield Users.populate(raw, {path: 'user', select: 'displayName photo _id'})
+                    result = { error: false, list: data }
                 } catch (e) {
-                    console.error(e)
                     result = { error: e }
                 }
                 this.body = result
@@ -257,16 +258,22 @@ export default function(app) {
         .get('/games/get/', function* () {
             let result
             try {
-                result = yield Games.find({}, {}, {
+                let data = yield Games.find({}, {}, {
                     sort: {
                         sort: 1
                     }
                 })
+                result = { error: false, result: data }
             } catch (e) {
-                this.body = { error: e }
+                result = { error: e }
             }
             this.set('Cache-Control', 'max-age=36000, must-revalidate')
-            this.body = { error: false, result: result }
+            this.body = result
+        })
+        .get('/games/prizes/get/', function* () {
+            let result
+            this.set('Cache-Control', 'max-age=36000, must-revalidate')
+            this.body = 123
         })
         .get('/games/clear/', function* () {
             if (this.req.user) {

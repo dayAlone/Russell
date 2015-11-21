@@ -12,11 +12,41 @@ import moment from 'moment'
 import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
 
+class GameRow extends Component {
+    state = {
+        hover: false
+    }
+    onMouseEnter() {
+        this.setState({ hover: true })
+    }
+    onMouseLeave() {
+        this.setState({ hover: false })
+    }
+    render() {
+        let {user, additional, position, prize} = this.props.el
+        let {hover} = this.state
+        return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
+            <div className='table__col'>{user.displayName}</div>
+            <div className='table__col'>{additional.scores}</div>
+            <div className='table__col'>{position}</div>
+            <div className='table__col'>
+                <Dropdown name={`prize-{user._id}`} className='dropdown--small' items={this.props.prizes.map(el=>({
+                    name: el.name,
+                    code: el._id
+                }))} value={prize}/>
+                {hover ? <a href='#'>Сохранить</a> : null}
+            </div>
+            <div className='table__col'>
+                {hover ? <a href='#'>Уведомить</a> : null}
+            </div>
+        </div>
+    }
+}
 
-@connect(state => ({ games: state.games.list }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+@connect(state => ({ games: state.games.list, prizes: state.games.prizes }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Competition extends Component {
     state = {
-        accepted: ['checks', 'kitchen', 'test'],
+        accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'present'],
         game: false,
         raffle: false,
         data: [],
@@ -25,6 +55,7 @@ class Competition extends Component {
     }
     componentDidMount() {
         if (this.props.games.length === 0) this.props.actions.getGames()
+        if (this.props.prizes.length === 0) this.props.actions.getPrizes()
         this.setList()
     }
     componentDidUpdate(prevProps) {
@@ -52,7 +83,8 @@ class Competition extends Component {
                 data: {game: game, raffle: raffle},
                 type: 'GET',
                 success: data => {
-                    if (data) this.setState({data: data.list, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)})
+                    console.log(data)
+                    if (data) this.setState({data: data.list})
                 },
                 error: (xhr, status, err) => {
                     console.error(url, status, err.toString())
@@ -97,20 +129,26 @@ class Competition extends Component {
             </div>
         default:
             return <div className='table__title'>
-                <div className='table__col'>Баллов</div>
                 <div className='table__col'>Пользователь</div>
-                <div className='table__col'>Место в рейтинге</div>
-                <div className='table__col'>Установка мест</div>
-                <div className='table__col'>Случайный выбор</div>
+                <div className='table__col'>Набрано баллов</div>
+                <div className='table__col'>Место</div>
+                <div className='table__col'>Приз</div>
+                <div className='table__col'>Письмо</div>
             </div>
         }
     }
     getRows(data) {
         switch (this.state.game) {
         case 'checks':
-            return <div/>
+            return <div>
+
+            </div>
         default:
-            return <div/>
+            return <div>
+                {data.map((el, i) => {
+                    return <GameRow el={el} key={i} prizes={this.props.prizes}/>
+                })}
+            </div>
         }
 
     }
@@ -133,7 +171,7 @@ class Competition extends Component {
                         <Dropdown name='raffle' className='dropdown--small' items={raffles} value={raffle}/>
                         {this.getButtons()}
                     </div>
-                    <div className={`table admin-competition__table admin-competition__table--${game}`}>
+                    <div className={`table admin-winners__table admin-winners__table--${game}`}>
                         {this.getHeader()}
                         {data.length > 0 ? this.getRows(data) : <div className='table__row table__row--message center'>
                             Нет данных за текущий период.

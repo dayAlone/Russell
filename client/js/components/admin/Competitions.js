@@ -108,7 +108,8 @@ class Competition extends Component {
         if (!fields.game) fields = this.refs.form.getCurrentValues()
         if (fields.game && fields.game !== this.state.game) {
             this.setState({
-                game: fields.game
+                game: fields.game,
+                raffle: false
             }, () => {
                 this.setList()
             })

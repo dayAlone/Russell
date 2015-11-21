@@ -173,6 +173,20 @@ export default function(app) {
                 this.res.end()
             }
         })
+        .post('/admin/winners/send/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                let result
+                try {
+                    let { id } = this.request.body
+                    let data = yield Winners.findOne({ _id: id }).populate('user').populate('prize')
+                    console.log(data)
+                    result = {error: false, result: 'success'}
+                } catch (e) {
+                    result = {error: e.message, code: e.code}
+                }
+                this.body = result
+            }
+        })
         .post('/admin/winners/save-prize/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result

@@ -34,7 +34,7 @@ class GameRow extends Component {
         this.setState({ disabled_save: false })
     }
     render() {
-        let {user, additional, position, prize, _id} = this.props.el
+        let {user, additional, position, prize, _id, sended} = this.props.el
         let {hover, disabled_save, disabled_send} = this.state
         return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
             <div className='table__col'>{user.displayName}</div>
@@ -50,7 +50,7 @@ class GameRow extends Component {
                 </a> : null}
             </div>
             <div className='table__col'>
-                {hover || disabled_send ? <a href='#' className='btn'>Уведомить</a> : null}
+                {!sended && (hover || disabled_send) ? <a href='#' className='btn'>Уведомить</a> : null}
             </div>
         </div>
     }
@@ -78,7 +78,8 @@ class Competition extends Component {
         if (!fields.game) fields = this.refs.form.getCurrentValues()
         if (fields.game && fields.game !== this.state.game) {
             this.setState({
-                game: fields.game
+                game: fields.game,
+                raffle: false
             }, () => {
                 this.setList()
             })

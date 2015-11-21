@@ -158,6 +158,7 @@ export default function(app) {
                 }
                 try {
                     let raw = yield Winners.find(query)
+                    console.log(raffle)
                     let data = yield Users.populate(raw, {path: 'user', select: 'displayName photo _id'})
                     result = { error: false, list: data }
                 } catch (e) {

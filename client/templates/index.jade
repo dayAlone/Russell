@@ -16,7 +16,7 @@ html
   body
     #app=data
     script(type="application/javascript", src="#{app}", async, defer)
-    if !dev
+    if dev !== Y
         noscript
             div
                 img(src="https://mc.yandex.ru/watch/33079538" style="position:absolute; left:-9999px;" alt="")

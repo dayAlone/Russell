@@ -34,6 +34,9 @@ const TableRowsRadio = React.createClass({
         let o = {}
         o[name] = val
         let places = Object.assign({}, this.getValue().places, o)
+
+        if (this.getValue().places[name] === val) delete(places[name])
+
         return (e) => {
             this.setValue(Object.assign({}, this.getValue(), {places: places}))
             e.preventDefault()
@@ -42,6 +45,7 @@ const TableRowsRadio = React.createClass({
     onChangeCheckbox(e) {
         let current = this.getValue().random
         let val = e.target.value
+
         if (current.indexOf(val) === -1) current.push(val)
         else current = _.without(current, val)
         this.setValue(Object.assign({}, this.getValue(), {random: current}))

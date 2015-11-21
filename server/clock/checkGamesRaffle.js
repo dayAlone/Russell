@@ -63,7 +63,6 @@ export default function* () {
     })
 
     let users = yield Users.find()
-    console.log(`users: ${users.length}`)
     for (let i = 0; i < games.length; i++) {
         let game = games[i]
         for (let r = 0; r < game.raffles.length; r++ ) {
@@ -74,13 +73,13 @@ export default function* () {
                     for (let u = 0; u < users.length; u++) {
                         let text
                         switch (game.code) {
-                            case 'kitchen':
-                                text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
-                                            по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`
-                                break
-                            default:
-                                text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
-                                по нашей акции «${game.name}».`
+                        case 'kitchen':
+                            text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
+                                        по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`
+                            break
+                        default:
+                            text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
+                            по нашей акции «${game.name}».`
                         }
                         yield sendMessage(users[u], text)
                     }

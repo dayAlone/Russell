@@ -56,7 +56,11 @@ const TableRowsRadio = React.createClass({
                 <div className='table__col'>{profile.displayName}</div>
                 <div className='table__col'>{parseInt(this.props.offset, 10) + i + 1}</div>
                 <div className='table__col'>
-                    {[{name: 1, code: id}, {name: 2, code: id}, {name: 3, code: id}].map((r, i) => {
+                    {[
+                        {name: 1, code: id},
+                        {name: 2, code: id},
+                        {name: 3, code: id}
+                    ].map((r, i) => {
                         let current = r.code ? r.code : r.name
                         return <span key={i} className='radio-group'>
                                 <input
@@ -214,12 +218,27 @@ class Competition extends Component {
     }
     createWinners(e) {
         let {values, game, raffle} = this.state
+
         game = this.props.games.filter(el => (el.code === game))[0]
+
+        let ids = []
+        for (let i in values.places) ids.push(values.places[i])
+        let items = this.state.data
+            .filter(el => (ids.indexOf(el._id._id) !== -1))
+            .map(el => ({
+                user: el._id._id,
+                place: ids.indexOf(el._id._id) + 1,
+                additional: {
+                    scores: el.total
+                }
+            }))
+
         $.post('/admin/winners/add/', {
-            places: values.places,
-            game: game._id,
-            raffle: raffle
+            items: items,
+            raffle: raffle,
+            game: game._id
         }, response => {
+            console.log(response)
             if (!response.error) {
                 this.refs.result.show()
             }

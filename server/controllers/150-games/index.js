@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import Games from '../../models/games'
 import Scores from '../../models/scores'
 import Users from '../../models/user'
+import Winners from '../../models/winners'
 import { Types } from 'mongoose'
 import moment from 'moment'
 import config from 'config'
@@ -145,6 +146,25 @@ const getUserScores = function* (user, pre, after) {
 export default function(app) {
     const router = new Router()
     router
+        .get('/games/winners/get/', function*() {
+            let result
+            let {game, raffle} = this.query
+            if (game && raffle) {
+                raffle = JSON.parse(raffle)
+                let query = {
+                    game: Types.ObjectId(game),
+                    raffle: raffle[1]
+                }
+                try {
+                    let data = yield Winners.find(query)
+                    this.body = { error: false, list: data }
+                } catch (e) {
+                    console.error(e)
+                    result = { error: e }
+                }
+                this.body = result
+            }
+        })
         .get('/games/rating/get/', function*() {
             let {limit, offset, game, raffle, ruffle} = this.query
             if (limit && offset && game && (raffle || ruffle)) {

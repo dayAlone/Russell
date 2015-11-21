@@ -177,25 +177,31 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result
                 try {
-                    let {places, game, raffle} = this.request.body
+                    let { items, game, raffle } = this.request.body
                     raffle = JSON.parse(raffle)
+
                     let data = yield Winners.find({
                         game: Types.ObjectId(game),
                         raffle: raffle[1]
                     })
+
                     let exist = data.map(el => (el.position))
-                    for (let i in places) {
-                        if (exist.indexOf(parseInt(i, 10) + 1) === -1) {
-                            Winners.create({
-                                user: Types.ObjectId(places[i]),
+                    console.log(exist)
+                    for (let i = 0; i < items.length; i++) {
+                        let {user, place, additional} = items[i]
+                        if (exist.indexOf(parseInt(place, 10)) === -1) {
+                            yield Winners.create({
+                                user: Types.ObjectId(user),
                                 game: Types.ObjectId(game),
                                 raffle: raffle[1],
-                                position: parseInt(i, 10) + 1
-                            })    
+                                position: place,
+                                additional: additional
+                            })
                         }
                     }
                     result = {error: false, result: 'success'}
                 } catch (e) {
+                    console.error(e.stack)
                     result = {error: e.message, code: e.code}
                 }
                 this.body = result

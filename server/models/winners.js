@@ -9,7 +9,7 @@ const winnerSchema = new mongoose.Schema({
     prizes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Products' }],
     raffle: Date,
     position: Number,
-    additional: {}
+    additional: Object
 })
 
 const Winner = mongoose.model('Winner', winnerSchema)

@@ -63,7 +63,7 @@ export default function* () {
     })
 
     let users = yield Users.find()
-
+    console.log(`users: ${users.length}`)
     for (let i = 0; i < games.length; i++) {
         let game = games[i]
         for (let r = 0; r < game.raffles.length; r++ ) {

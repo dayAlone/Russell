@@ -78,3 +78,96 @@
                         lost-column .84/6 0
                     &:nth-child(5), &:nth-child(6)
                         lost-column 1.38/6 0
+
+    &-competition
+        .admin
+            &__footer
+                margin-top 20px
+                full-width()
+                .form-group
+                    float right
+            &__toolbar
+                full-width()
+                margin-bottom 20px
+                .form-group
+                    float left
+                    width 200px
+                    margin-right 20px
+        .table
+            &__buttons
+                float right
+                a
+                    display inline-block
+                    size auto 27px
+                    background-color #e40f0f
+                    color white
+                    padding 0 20px
+                    line-height 30px
+                    font-size 12px
+                    background-image none
+                    margin-left 20px
+                    &.disabled
+                        background-color alpha(#717b84, .5)
+                        pointer-events none
+        &__table
+            full-width()
+
+            &--checks
+                .table
+                    &__title
+                        white-space no-wrap
+                    &__col
+                        text-align left
+                        width (90/3)%
+                        &:first-of-type
+                            width 10%
+            &--kitchen, &--test
+                .table
+                    &__title
+                        white-space no-wrap
+                    &__col
+                        text-align left
+                        width (75/3)%
+                        &:first-of-type
+                            width 10%
+                        &:nth-child(3)
+                            width 15%
+                        input[type='checkbox']
+                            appearance none
+                            size 17px
+                            border 1px solid black
+                            float left
+                            margin-top -3px
+                            t all
+                            &:hover
+                                border-color red
+                            &:focus
+                                outline none
+                            &:checked
+                                border-color red
+                                background-color red
+                                box-shadow inset 0 0 0 4px #f2f2f2
+                        .radio-group
+                            display inline-block
+                            position relative
+                            input
+
+                                &:checked + a:before
+                                    border-color red
+                                    background-color red
+                                    box-shadow inset 0 0 0 4px #f2f2f2
+                            a
+                                margin-left 30px
+                                position relative
+                                margin-right 20px
+                                background-image none
+                                &:before
+                                    t all
+                                    content ""
+                                    display inline-block
+                                    size 19px
+                                    border 1px solid black
+                                    position absolute
+                                    left -30px
+                                    top -6px
+                                    border-radius 50%

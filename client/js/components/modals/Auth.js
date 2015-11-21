@@ -22,12 +22,14 @@ class AuthModal extends Component {
 
     componentDidUpdate(prevProps) {
         let {isLogin, modal} = this.props
-        if (
-            (isLogin === true && modal !== 'forget-form-success' && modal !== 'forget-form' && modal !== 'confirm')
-            || (modal === false && prevProps.modal !== false && modal !== 'confirm')) {
-                this.refs.modal.hide()
-                console.log(modal, 'close')
-            }
+        if (!this.refs.modal.hasHidden()) {
+            if (
+                (isLogin === true && modal !== 'forget-form-success' && modal !== 'forget-form' && modal !== 'confirm')
+                || (modal === false && prevProps.modal !== false && modal !== 'confirm')) {
+                    this.refs.modal.hide()
+                }    
+        }
+
         if (modal !== false && this.refs.modal.hasHidden()) this.refs.modal.show()
     }
     hideModal() {

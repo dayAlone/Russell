@@ -32,10 +32,12 @@ class Admin extends Component {
                         { this.props.isLogin ? <div>
                             <div className='admin__nav'>
                                 {[
-                                    {name: 'Чеки', link: '/admin/'}
+                                    {name: 'Чеки', link: '/admin/'},
+                                    {name: 'Победители', link: '/admin/winners/'},
+                                    {name: 'Розыгрыш', link: '/admin/competitions/'},
                                 ].map((el, i) => {
                                     if (i === 0 && this.props.location.pathname !== '/admin/') {
-                                        return <IndexLink key={i} to='/admin/' className='admin__link' activeClassName='admin__link--active'>Общая информация</IndexLink>
+                                        return <IndexLink key={i} to='/admin/' className='admin__link' activeClassName='admin__link--active'>Чеки</IndexLink>
                                     }
                                     return <Link key={i} to={el.link} className='admin__link' activeClassName='admin__link--active'>{el.name}</Link>
                                 })}

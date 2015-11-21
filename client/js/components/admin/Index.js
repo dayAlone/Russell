@@ -136,7 +136,6 @@ class AdminChecks extends Component {
     }
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.photoswipe === true && this.state.photoswipe === true) return false
-        console.log(nextState.photoswipe, this.state.photoswipe)
         return true
     }
     openPhotoSwipe(image, sizes = {w: 0, h: 0}) {

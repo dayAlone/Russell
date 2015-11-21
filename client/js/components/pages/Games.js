@@ -9,9 +9,9 @@ import Countdown from '../ui/GamesTimer'
 
 @connect(state => ({ games: state.games.list }))
 class PageGames extends Component {
-
+    state = { accepted: ['test', 'kitchen', 'checks', 'present'] }
     render() {
-        const games = this.props.games.map((el, i) => {
+        const games = this.props.games.filter(el=>(this.state.accepted.indexOf(el.code) !== -1)).map((el, i) => {
 
             let { name, code, description, start: dateStart, end: dateStop, image, link, flag, raffles } = el
             let start = moment(dateStart).format('D MMMM')

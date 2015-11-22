@@ -19,7 +19,7 @@ class Footer extends Component {
         }
         let path = this.props.routes.pathname
         return <div>
-            {path.indexOf('profile') === -1 && path.indexOf('games/') === -1 ? <ShareLove routes={this.props.routes} /> : null}
+            {path.indexOf('profile') === -1 && path.indexOf('games/') === -1 && path.indexOf('winners/') === -1 ? <ShareLove routes={this.props.routes} /> : null}
             <div className='footer'>
                 <div className='footer__social center'>
                     <Social/>

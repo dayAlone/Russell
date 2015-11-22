@@ -12,7 +12,8 @@ import Page404 from '../components/pages/404'
 import Category from '../components/pages/Category'
 import Product from '../components/pages/Product'
 import Conditions from '../components/pages/Conditions'
-import Rating from '../components/pages/Rating'
+import Winners from '../components/pages/Winners'
+
 export default function configureRoutes(reducerRegistry) {
     return <div>
             <Route path='/admin/' name='Личный кабинет модератора'
@@ -47,6 +48,7 @@ export default function configureRoutes(reducerRegistry) {
 
             <Route path='history/' component={History} name='История бренда'/>>
             <Route path='conditions/' component={Conditions} name='Условия проведения акции'/>
+            <Route path='winners/' component={Winners} name='Победители'/>
 
             <Route path='buy/' name='Где купить' getComponent={(location, callback) => {
                 require.ensure([], require => {

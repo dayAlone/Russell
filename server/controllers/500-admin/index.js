@@ -217,6 +217,7 @@ export default function(app) {
                     })
 
                     let exist = data.map(el => (el.position))
+                    let skip = false
                     for (let i = 0; i < items.length; i++) {
                         let {user, place, additional} = items[i]
                         if (exist.indexOf(parseInt(place, 10)) === -1) {
@@ -227,9 +228,11 @@ export default function(app) {
                                 position: place,
                                 additional: additional
                             })
+                        } else {
+                            skip = true
                         }
                     }
-                    result = {error: false, result: 'success'}
+                    result = {error: false, result: skip ? 'skip' : 'success'}
                 } catch (e) {
                     console.error(e.stack)
                     result = {error: e.message, code: e.code}

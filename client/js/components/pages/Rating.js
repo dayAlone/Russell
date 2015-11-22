@@ -10,15 +10,8 @@ import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
 
-
-class Row extends Component {
-    render() {
-
-    }
-}
-
 @connect(state => ({ games: state.games.list }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
-class Raring extends Component {
+class Rating extends Component {
     state = {
         limit: 50,
         offset: 0,
@@ -92,19 +85,21 @@ class Raring extends Component {
             let games = []
             this.props.games.map(el => {
                 if (this.state.accepted.indexOf(el.code) !== -1) {
-                    el.raffles = el.raffles.sort((a, b) => (moment(a) - moment(b)))
-                    let raffles = [[el.start, el.raffles[0]]]
-
-                    el.raffles.map((r, i) => {
-                        if (moment(r) < moment() && el.raffles[i + 1]) {
-                            raffles.push([r, el.raffles[i + 1]])
+                    let list = [el.start].concat(el.raffles)
+                    list = list.sort((a, b) => (moment(a) - moment(b)))
+                    let raffles = [];
+                    list.map((r, i) => {
+                        if (moment(list[i + 1]) < moment() && list[i + 1]) {
+                            raffles.push([r, list[i + 1]])
                         }
                     })
-                    games.push({
-                        name: el.name,
-                        code: el.code,
-                        raffles: raffles
-                    })
+                    if (raffles.length !== 0) {
+                        games.push({
+                            name: el.name,
+                            code: el.code,
+                            raffles: raffles
+                        })
+                    }
                 }
             })
             this.setState({
@@ -112,8 +107,9 @@ class Raring extends Component {
             }, this.loadRatingFromServer)
         }
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         this.getGamesList()
+        if (prevState.game !== this.state.game) this.setState({ raffle: false })
     }
     render() {
         let {game, games, limit, raffle, pageNum, currentPage} = this.state
@@ -209,4 +205,4 @@ class Raring extends Component {
     }
 }
 
-export default Raring
+export default Rating

@@ -245,7 +245,12 @@ class Competition extends Component {
         }, response => {
             console.log(response)
             if (!response.error) {
-                this.refs.result.show()
+                if (response.result === 'success') {
+                    this.setState({message: 'Теперь им необходимо раздать призы и отправить уведомления'}, this.refs.result.show)
+                } else {
+                    this.setState({message: 'Один или несколько победителей в этом разделе уже были ранее сформированы, недостающие места дополненны'}, this.refs.result.show)
+                }
+
             }
         })
         if (e) e.preventDefault()
@@ -266,7 +271,7 @@ class Competition extends Component {
         }
     }
     render() {
-        let { game, raffle, list, raffles, data, values} = this.state
+        let { game, raffle, list, raffles, data, values, message} = this.state
         if (game && raffle) {
             return <div className='admin-competition'>
                 <Helmet title='Russell Hobbs | Кабинет модератора | Розыгрыш'/>
@@ -305,7 +310,7 @@ class Competition extends Component {
                 <Modal ref='result' className='modal modal--message center'>
                     <h2 className='modal__title modal__title--border'>Победители сформированы</h2>
                     <div className='modal__message'>
-                        Теперь им необходимо раздать призы и отправить уведомления
+                        {message}
                     </div>
                     <Link to={`/admin/winners/?game=${game}&raffle=${raffle}`} className='button--small button'>Перейти в раздел с победителями</Link>
                 </Modal>

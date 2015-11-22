@@ -157,9 +157,9 @@ export default function(app) {
                     raffle: raffle[1]
                 }
                 try {
-                    let raw = yield Winners.find(query)
-                    console.log(raffle)
+                    let raw = yield Winners.find(query).sort({position: 1})
                     let data = yield Users.populate(raw, {path: 'user', select: 'displayName photo _id'})
+                    data = yield Prizes.populate(data, {path: 'prize'})
                     result = { error: false, list: data }
                 } catch (e) {
                     result = { error: e }
@@ -276,6 +276,7 @@ export default function(app) {
                         sort: 1
                     }
                 })
+                console.log(data)
                 result = { error: false, result: data }
             } catch (e) {
                 result = { error: e }
@@ -304,14 +305,11 @@ export default function(app) {
             if (this.req.user) {
                 let result
                 let {type, finished} = this.request.body
-                let now = new time.Date()
-                now.setTimezone('Europe/Moscow')
                 try {
-
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.create({
                             type: type,
-                            created: now,
+                            created: moment().add(3, 'hours').toDate(),
                             user: Types.ObjectId(user._id),
                             finished: finished
                         })

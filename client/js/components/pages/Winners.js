@@ -141,6 +141,7 @@ class Winners extends Component {
                 dates.push({name: moment(d[1]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
             })
         })
+        if (!raffle) console.log(dates[0])
         return <div className='rating'>
             <Helmet title='Russell Hobbs | Итоги конкурса'/>
 
@@ -153,7 +154,9 @@ class Winners extends Component {
                     </div>
                     <div className='rating__select'>
                         <h3>от</h3>
-                        <Dropdown name='raffle' className='dropdown--small dropdown--dates' items={dates} value={raffle ? raffle : dates[0] ? dates[0].code : null}/>
+                        <Dropdown name='raffle' className='dropdown--small dropdown--dates' items={dates}
+                            value={raffle ? raffle : dates[0] ? dates[0].code : null}
+                            />
                         <span>Дата розыгрыша</span>
                     </div>
                     {data.length > 0 ? this.getRusults() : <div className='center padding'>

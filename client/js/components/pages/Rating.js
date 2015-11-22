@@ -111,8 +111,11 @@ class Rating extends Component {
         }
     }
     componentDidUpdate(prevProps, prevState) {
-        this.getGamesList()
-        if (prevState.game !== this.state.game) this.setState({ raffle: false })
+
+        if (prevState.game !== this.state.game) {
+            this.setState({ raffle: false }, this.getGamesList)
+        }
+        else this.getGamesList()
     }
     render() {
         let {game, games, limit, raffle, pageNum, currentPage} = this.state
@@ -133,7 +136,8 @@ class Rating extends Component {
                 </div>
                 <div className='rating__select'>
                     <h3>к</h3>
-                    <Dropdown name='raffle' className='dropdown--small dropdown--dates' items={dates} value={raffle ? raffle : dates[0] ? dates[0].code : null}/>
+                    <Dropdown name='raffle' className='dropdown--small dropdown--dates' items={dates}
+                        value={raffle ? raffle : dates[0] ? dates[0].code : null}/>
                     <span>Дата розыгрыша</span>
                 </div>
                 <div className='rating__tools'>

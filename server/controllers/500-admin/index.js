@@ -210,7 +210,7 @@ export default function(app) {
                 try {
                     let { items, game, raffle } = this.request.body
                     raffle = JSON.parse(raffle)
-
+                    console.log(items)
                     let data = yield Winners.find({
                         game: Types.ObjectId(game),
                         raffle: raffle[1]

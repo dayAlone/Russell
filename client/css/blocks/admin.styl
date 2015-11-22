@@ -36,6 +36,7 @@
             &--vinner
                 color #356ebb
     &-winners
+        min-height 700px
         &__table
             full-width()
             .table
@@ -122,7 +123,7 @@
                         lost-column .84/6 0
                     &:nth-child(5), &:nth-child(6)
                         lost-column 1.38/6 0
-    &-competition
+    &-competition, &-winners
         .admin
             &__footer
                 margin-top 20px
@@ -152,6 +153,7 @@
                     &.disabled
                         background-color alpha(#717b84, .5)
                         pointer-events none
+    &-competition
         &__table
             full-width()
 

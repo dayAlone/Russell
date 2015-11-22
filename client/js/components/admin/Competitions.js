@@ -227,12 +227,15 @@ class Competition extends Component {
         game = this.props.games.filter(el => (el.code === game))[0]
 
         let ids = []
+
         for (let i in values.places) ids.push(values.places[i])
+        
+
         let items = this.state.data
             .filter(el => (ids.indexOf(el._id._id) !== -1))
             .map(el => ({
                 user: el._id._id,
-                place: ids.indexOf(el._id._id) + 1,
+                place: Object.keys(values.places).filter(function(key) {return values.places[key] === el._id._id})[0],
                 additional: {
                     scores: el.total
                 }

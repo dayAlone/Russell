@@ -37,7 +37,9 @@ const Dropdown = React.createClass({
                 trigger: this.props.trigger
             })
         }
-        if (prevProps.items.length === 0 && this.props.items.length > 0 || prevProps.value !== this.props.value) this.setTriggerFromValue()
+        if (prevProps.items.length === 0 && this.props.items.length > 0 || prevProps.value !== this.props.value) {
+            this.setTriggerFromValue()
+        }
         this.initHover()
     },
     initHover() {

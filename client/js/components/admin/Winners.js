@@ -187,7 +187,7 @@ class Competition extends Component {
     render() {
         let { game, raffle, list, raffles, data} = this.state
         if (game && raffle) {
-            return <div className='admin-competition'>
+            return <div className='admin-winners'>
                 <Helmet title='Russell Hobbs | Кабинет модератора | Победители'/>
                 <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                     <div className='admin__toolbar'>

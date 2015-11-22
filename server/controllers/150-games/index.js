@@ -137,7 +137,7 @@ const getUserScores = function* (user, pre, after) {
             if (typeof after === 'function') result = yield after(result)
 
         } catch (e) {
-            console.error('getUserScores' + e)
+            console.error('getUserScores' + e, e.stack)
             return { error: e }
         }
         return { error: false, result: result }

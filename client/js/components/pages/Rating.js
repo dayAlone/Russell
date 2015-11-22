@@ -89,7 +89,7 @@ class Rating extends Component {
                     list = list.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = [];
                     list.map((r, i) => {
-                        if (moment(list[i + 1]) < moment() && list[i + 1]) {
+                        if (moment(r) < moment() && list[i + 1]) {
                             raffles.push([r, list[i + 1]])
                         }
                     })
@@ -102,9 +102,11 @@ class Rating extends Component {
                     }
                 }
             })
-            this.setState({
-                games: games
-            }, this.loadRatingFromServer)
+            if (games.length > 0) {
+                this.setState({
+                    games: games
+                }, this.loadRatingFromServer)
+            }
         }
     }
     componentDidUpdate(prevProps, prevState) {

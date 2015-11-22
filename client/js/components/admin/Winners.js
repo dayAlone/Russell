@@ -30,6 +30,12 @@ class GameRow extends Component {
         this.setState({ disabled_save: true }, savePrize(_id, this.savedCallback.bind(this)))
         e.preventDefault()
     }
+    sendMail(e) {
+        let { sendMail, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_send: true }, sendMail(_id))
+        e.preventDefault()
+    }
     deleteWinner(e) {
         let { deleteWinner, el} = this.props
         let { _id } = el
@@ -56,10 +62,10 @@ class GameRow extends Component {
                 </a> : null}
             </div>
             <div className='table__col'>
-                {!sended && (hover || disabled_send) ? <a href='#' className='btn'>Уведомить</a> : null}
+                {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className='btn'>Уведомить</a> : null}
             </div>
             <div className='table__col'>
-                <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a>
+                {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
             </div>
         </div>
     }

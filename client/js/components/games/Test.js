@@ -99,7 +99,7 @@ class Test extends Component {
                 $('a.test__answer').removeClass('test__answer--wrong test__answer--true')
                 $('.test__answers').removeClass('.test__answers--block')
                 this.setState({
-                    time: time + ( status ? 1 : -1 )
+                    time: time + ( status ? 1 : -5 )
                 }, ()=> {
                     if (questions.length > current + 1) {
                         this.setState({

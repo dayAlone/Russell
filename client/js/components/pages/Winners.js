@@ -92,10 +92,12 @@ class Winners extends Component {
                     }
                 }
             })
+            if (games.length > 0) {
+                this.setState({
+                    games: games
+                }, this.loadRatingFromServer)    
+            }
 
-            this.setState({
-                games: games
-            }, this.loadRatingFromServer)
         }
     }
     componentDidUpdate(prevProps, prevState) {

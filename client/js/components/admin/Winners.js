@@ -44,7 +44,7 @@ class GameRow extends Component {
                 <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
                     name: el.name,
                     code: el._id
-                }))} value={prize ? prize : this.props.prizes[0]._id}/>
+                }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
             {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
                     {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
                 </a> : null}

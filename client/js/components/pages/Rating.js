@@ -93,6 +93,7 @@ class Rating extends Component {
                             raffles.push([r, list[i + 1]])
                         }
                     })
+                    raffles = raffles.sort((a, b) => (moment(b[1]) - moment(a[1])))
                     if (raffles.length !== 0) {
                         games.push({
                             name: el.name,

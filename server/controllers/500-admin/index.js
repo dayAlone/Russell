@@ -204,6 +204,21 @@ export default function(app) {
                 this.body = result
             }
         })
+        .post('/admin/winners/remove/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                let result
+                try {
+                    let { id } = this.request.body
+                    yield Winners.remove({
+                        _id: id
+                    })
+                    result = {error: false, result: 'success'}
+                } catch (e) {
+                    result = {error: e.message, code: e.code}
+                }
+                this.body = result
+            }
+        })
         .post('/admin/winners/add/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result

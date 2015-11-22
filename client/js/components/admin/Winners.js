@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { toObj } from 'form-data-to-object'
 import Spinner from '../ui/Spinner'
 import Formsy from 'formsy-react'
-import {Dropdown, RadioGroup} from '../forms/'
+import { Dropdown } from '../forms/'
 import moment from 'moment'
 
 import * as actionCreators from '../../actions/games'
@@ -30,6 +30,12 @@ class GameRow extends Component {
         this.setState({ disabled_save: true }, savePrize(_id, this.savedCallback.bind(this)))
         e.preventDefault()
     }
+    deleteWinner(e) {
+        let { deleteWinner, el} = this.props
+        let { _id } = el
+        deleteWinner(_id)()
+        e.preventDefault()
+    }
     savedCallback() {
         this.setState({ disabled_save: false })
     }
@@ -51,6 +57,9 @@ class GameRow extends Component {
             </div>
             <div className='table__col'>
                 {!sended && (hover || disabled_send) ? <a href='#' className='btn'>Уведомить</a> : null}
+            </div>
+            <div className='table__col'>
+                <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a>
             </div>
         </div>
     }
@@ -89,12 +98,21 @@ class Competition extends Component {
     }
     savePrize(id, callback) {
         let {prizes} = this.state
-        return (e) => {
+        return () => {
             $.post('/admin/winners/save-prize/', {
                 id: id,
                 prize: prizes[id]
-            }, response => {
+            }, () => {
                 if (callback) callback()
+            })
+        }
+    }
+    deleteWinner(id) {
+        return () => {
+            $.post('/admin/winners/remove/', {
+                id: id
+            }, () => {
+                this.loadDataFromServer()
             })
         }
     }
@@ -170,7 +188,7 @@ class Competition extends Component {
         default:
             return <div>
                 {data.map((el, i) => {
-                    return <GameRow savePrize={this.savePrize.bind(this)} el={el} key={i} prizes={this.props.prizes}/>
+                    return <GameRow deleteWinner={this.deleteWinner.bind(this)} savePrize={this.savePrize.bind(this)} el={el} key={i} prizes={this.props.prizes}/>
                 })}
             </div>
         }

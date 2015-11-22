@@ -2,6 +2,7 @@ require('dotenv').config({silent: true})
 import co from 'co'
 import {getAuthData, addChecksToValidate, checksValidate} from './checksValidate'
 import checkGamesRaffles from './checkGamesRaffle'
+import checkShares from './checkShares'
 import {CronJob} from 'cron'
 
 let getChecks = function() {
@@ -33,3 +34,9 @@ new CronJob({
     onTick: checkRaffles,
     start: true
 })
+
+/*
+co(function*() {
+    yield checkShares()
+}).catch(e => (console.error(e.stack)))
+*/

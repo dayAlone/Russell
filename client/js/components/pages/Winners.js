@@ -95,7 +95,7 @@ class Winners extends Component {
             if (games.length > 0) {
                 this.setState({
                     games: games
-                }, this.loadRatingFromServer)    
+                }, this.loadRatingFromServer)
             }
 
         }
@@ -152,7 +152,7 @@ class Winners extends Component {
                         })} value={game} />
                     </div>
                     <div className='rating__select'>
-                        <h3>к</h3>
+                        <h3>от</h3>
                         <Dropdown name='raffle' className='dropdown--small dropdown--dates' items={dates} value={raffle ? raffle : dates[0] ? dates[0].code : null}/>
                         <span>Дата розыгрыша</span>
                     </div>

@@ -1,0 +1,55 @@
+.present
+    padding 40px 0 80px
+    full-width()
+    &__description
+        width 85%
+        margin-left 7.5%
+        > p:first-of-type
+            margin-bottom 35px
+        .button
+            min-width 190px
+            font-size 14px
+            margin 0 15px
+        a.small
+            font-size 12px
+            color red
+            border-line(alpha(red ,.5))
+            display inline-block
+            margin-top 20px
+            margin-bottom 10px
+    &__col
+        width (100/3)%
+        float left
+
+    &__item
+        margin-top 30px
+        padding 0 20%
+        img
+            max-width 150px
+        span
+            font-size 14px
+            line-height 1
+            display inline-block
+    .text
+        p
+            @extends .dream .text p
+            max-width none
+            & + .text__divider
+                margin-top 10px
+        &__number
+            @extends .dream .text__number
+            margin-bottom 10px
+            padding-right 10px
+        span.text__number:before
+            top -10px
+
+        &__divider
+            margin 20px 0
+            display inline-block
+    h3
+        margin-top 0px
+        margin-bottom 40px
+    h2
+        text-align center
+        font-size 33px
+        margin-bottom 30px

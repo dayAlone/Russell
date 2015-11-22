@@ -95,7 +95,7 @@ class Competition extends Component {
         accepted: ['checks', 'kitchen', 'test'],
         game: false,
         raffle: false,
-        perPage: 10,
+        perPage: 50,
         offset: 0,
         data: [],
         list: false,
@@ -229,7 +229,7 @@ class Competition extends Component {
         let ids = []
 
         for (let i in values.places) ids.push(values.places[i])
-        
+
 
         let items = this.state.data
             .filter(el => (ids.indexOf(el._id._id) !== -1))
@@ -273,8 +273,16 @@ class Competition extends Component {
                 </div>
         }
     }
+    handlePageClick(data) {
+        let selected = data.selected
+        let offset = Math.ceil(selected * this.state.perPage)
+
+        this.setState({offset: offset}, () => {
+            this.loadDataFromServer()
+        })
+    }
     render() {
-        let { game, raffle, list, raffles, data, values, message} = this.state
+        let { game, raffle, list, raffles, data, values, message, perPage} = this.state
         if (game && raffle) {
             return <div className='admin-competition'>
                 <Helmet title='Russell Hobbs | Кабинет модератора | Розыгрыш'/>
@@ -303,10 +311,10 @@ class Competition extends Component {
                             subContainerClassName={'pages pagination'}
                             activeClassName={'active'} /> : null}
                         <RadioGroup name='limit' title='Показывать по:' items={[
-                            {name: '10', code: 10},
                             {name: '50', code: 50},
                             {name: '100', code: 100},
-                        ]} value='10'/>
+                            {name: '150', code: 150},
+                        ]} value={perPage}/>
 
                     </div>
                 </Formsy.Form>

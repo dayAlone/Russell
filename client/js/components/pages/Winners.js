@@ -106,7 +106,6 @@ class Winners extends Component {
     }
     getRusults() {
         let { data, game } = this.state
-        console.log(game)
         switch (game) {
         case 'test':
         case 'kitchen':
@@ -141,7 +140,6 @@ class Winners extends Component {
                 dates.push({name: moment(d[1]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
             })
         })
-        if (!raffle) console.log(dates[0])
         return <div className='rating'>
             <Helmet title='Russell Hobbs | Итоги конкурса'/>
 

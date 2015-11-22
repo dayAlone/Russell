@@ -2,6 +2,7 @@ import React from 'react'
 import { Mixin } from 'formsy-react'
 import { findDOMNode } from 'react-dom'
 import hoverintent from 'hoverintent'
+import moment from 'moment'
 
 import IconSVG from 'svg-inline-loader/lib/component.jsx'
 const Dropdown = React.createClass({
@@ -37,7 +38,7 @@ const Dropdown = React.createClass({
                 trigger: this.props.trigger
             })
         }
-        if (prevProps.items.length === 0 && this.props.items.length > 0 || prevProps.value !== this.props.value) {
+        if ((prevProps.items.length === 0 && this.props.items.length > 0) || prevProps.value !== this.props.value) {
             this.setTriggerFromValue()
         }
         this.initHover()
@@ -56,7 +57,7 @@ const Dropdown = React.createClass({
         })
     },
     setTriggerFromValue() {
-        let value = this.getValue()
+        let value = this.props.value ? this.props.value : this.getValue()
         if (value) {
             let el = this.props.items.filter(el => (el.code === value || el.name === value))[0]
             this.setState({

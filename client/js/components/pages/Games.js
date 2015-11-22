@@ -30,6 +30,7 @@ class PageGames extends Component {
                         <Countdown
                             rating={`/games/rating/?game=${code}`}
                             link={`/games/${code}/`}
+                            code={code}
                             raffles={raffles}
                             dateStart={dateStart.toString()}
                             dateStop={dateStop.toString()}

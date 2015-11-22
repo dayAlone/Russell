@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 
 class GamesTimer extends Component {
     render() {
-        let {dateStart, dateStop, raffles, link, rating} = this.props
+        let {dateStart, dateStop, raffles, link, rating, code} = this.props
         dateStart = moment(dateStart)
         dateStop = moment(dateStop)
         let till = dateStart
@@ -26,7 +26,7 @@ class GamesTimer extends Component {
                 <Countdown till={till}/>
             </div>
             { dateStart !== till ? <Link to={link} className='countdown__button'>Участвовать</Link> : null }<br/>
-            { dateStart !== till ? <Link to={rating} className='countdown__rating'>Рейтинг игроков ближайшего розыгрыша</Link> : null }
+            { dateStart !== till && code !== 'present' ? <Link to={rating} className='countdown__rating'>Рейтинг игроков ближайшего розыгрыша</Link> : null }
         </div>
     }
 }

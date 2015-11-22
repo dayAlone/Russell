@@ -57,12 +57,12 @@ class GameRow extends Component {
                     name: el.name,
                     code: el._id
                 }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
-            {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
+                {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
                     {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
                 </a> : null}
             </div>
             <div className='table__col'>
-                {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className='btn'>Уведомить</a> : null}
+                {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className={`btn ${disabled_send ? 'btn--disabled' : ''}`}>{disabled_send ? <img src='/layout/images/loading.gif' alt='' /> : null} Уведомить</a> : null}
             </div>
             <div className='table__col'>
                 {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
@@ -110,6 +110,16 @@ class Competition extends Component {
                 prize: prizes[id]
             }, () => {
                 if (callback) callback()
+            })
+        }
+    }
+    sendMail(id) {
+        return () => {
+            $.post('/admin/winners/send/', {
+                id: id,
+                raffle: this.state.raffle
+            }, () => {
+                this.loadDataFromServer()
             })
         }
     }
@@ -194,7 +204,13 @@ class Competition extends Component {
         default:
             return <div>
                 {data.map((el, i) => {
-                    return <GameRow deleteWinner={this.deleteWinner.bind(this)} savePrize={this.savePrize.bind(this)} el={el} key={i} prizes={this.props.prizes}/>
+                    return <GameRow
+                            sendMail={this.sendMail.bind(this)}
+                            deleteWinner={this.deleteWinner.bind(this)}
+                            savePrize={this.savePrize.bind(this)}
+                            el={el}
+                            key={i}
+                            prizes={this.props.prizes}/>
                 })}
             </div>
         }

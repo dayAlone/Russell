@@ -1,7 +1,7 @@
 import Router from 'koa-router'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
-import Users from '../../models/user'
+import Users, { sendUserEmail } from '../../models/user'
 import Winners from '../../models/winners'
 import stringify from 'csv-stringify'
 import { Iconv } from 'iconv'
@@ -177,9 +177,73 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result
                 try {
-                    let { id } = this.request.body
-                    let data = yield Winners.findOne({ _id: id }).populate('user').populate('prize')
-                    console.log(data)
+                    let { id, raffle } = this.request.body
+                    if (raffle) raffle = JSON.parse(raffle)
+                    let data = yield Winners.findOne({ _id: id }).populate('user').populate('prize').populate('game')
+                    let { game, user, position, additional, prize} = data
+                    let mailFields = {
+                        message: {
+                            subject: 'Поздравляем!',
+                            to: [{email: user.email, name: user.displayName}],
+                            merge: true,
+                            inline_css: true,
+                            merge_language: 'handlebars',
+                            'global_merge_vars': [
+                                {
+                                    'name': 'user_name',
+                                    'content': user.displayName
+                                }
+                            ],
+                        },
+                        template_name: 'russell',
+                        template_content: []
+                    }
+                    switch (game.code) {
+                    case 'kitchen':
+                    case 'test':
+                        mailFields.template_content.push({
+                            name: 'content',
+                            content: `<h3>Ура! Russell Hobbs поздравляет вас с победой!<br />
+                            Вы заняли ${position} место в нашем конкурсе «Собери коллекцию»<br />
+                            от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли приз –<br/>
+                            <img src="${prize.photo}" width="160"/> <br/>
+                            ${prize.name}
+                            </h3>`
+                        })
+                        mailFields.template_content.push({
+                            name: 'additional',
+                            content: `<table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td class="center padding">
+                                    <img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center">
+                                    <h3 style="margin-bottom: 0">Примите наши поздравления!</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center padding">
+                                    <img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="center">
+                                    <p>Чтобы получить ваш выигрыш, свяжитесь, пожалуйста, <br/>с нами по электронной почте: <br/>
+                                    <a href='mailto:support@russellhobbs-promo.ru'>support@russellhobbs-promo.ru</a>
+                                    <br/><br/>Ваш Russell Hobbs</p>
+                                    <h1><a href="http://russellhobbs-promo.ru">russellhobbs-promo.ru</a></h1>
+                                </td>
+                            </tr>
+                        </table>`
+                        })
+                        break
+                    default:
+                    }
+
+                    yield sendUserEmail(mailFields)
+                    yield Winners.update({_id: id}, {$set: {sended: true} })
                     result = {error: false, result: 'success'}
                 } catch (e) {
                     result = {error: e.message, code: e.code}

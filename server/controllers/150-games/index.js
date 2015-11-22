@@ -276,7 +276,6 @@ export default function(app) {
                         sort: 1
                     }
                 })
-                console.log(data)
                 result = { error: false, result: data }
             } catch (e) {
                 result = { error: e }

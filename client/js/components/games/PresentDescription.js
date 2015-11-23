@@ -19,38 +19,28 @@ class PresentDescription extends Component {
                 <h2 className='center'>В подарок. Для себя</h2>
                 <div className='present__description text'>
 
-                    <p className='center'>Выбирать подарок – это не просто. Мы поможем вам облегчить этот процесс для ваших близких и друзей. <br/>Выберите модель техники Russell Hobbs, которую вы бы хотели получить в качестве подарка. И мы намекнем об этом вашим близким и друзьям.<br/>При этом вы можете проявить фантазию. Авторы трех самых креативных «намеков» получат призы от Russell Hobbs.<br/>Итак, что нужно сделать, чтобы получить от друзей в подарок технику Russell Hobbs, а потом еще и выиграть приз?</p>
+                    <p className='center'>Техника Russell Hobbs - отличный подарок!<br/>Мы поможем намекнуть вашим близким, что они могли бы подарить вам на Новый год.<br/>Как? Да очень просто! </p>
                     <div className='present__col'>
                         <p className='text__number' data-text='1'>
-                            С помощью специальной формы на странице акции начать создавать письмо другу.
+                            Выберите технику, которую вы бы хотели получить в подарок
                         </p>
                     </div>
                     <div className='present__col'>
                         <p className='text__number' data-text='2'>
-                            Выбрать технику Russell Hobbs из каталога.
+                            Загрузите свое фото в специальный шаблон
                         </p>
                     </div>
                     <div className='present__col'>
                         <p className='text__number' data-text='3'>
-                            Загрузить свою фотографию, где вы демонстрируете ваше желание получить в подарок технику. Вставить фото в шаблон письма рядом с изображением техники.
+                            Отправьте письмо другу или близкому человеку
                         </p>
                     </div>
-                    <div className='present__col'>
-                        <p className='text__number' data-text='4'>
-                            Указать электронный адрес друга, а также его и свое имена, которые будут вставлены в письмо.
-                        </p>
-                    </div>
-                    <div className='present__col'>
-                        <p className='text__number' data-text='5'>
-                            Отправить письмо и ждать подарка от друга и приза от Russell Hobbs.
-                        </p>
-                    </div>
-                    <h3 className='center'>Время проведения акции – с 23 ноября по 30 декабря.</h3>
+                    <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                     <div className='center'>
-
+                        <p>Делая фото, постарайтесь использовать фантазию. Потому что ваш ждет конкурс на самую креативную фотографию! Авторы трех фото, набравших по итогам голосования на сайте самое большое количество лайков, становятся победителями и получают призы.</p>
                         {this.props.isLogin ?
-                            <Link to='/games/present/make/' className='button button--small'>Принять участие</Link>
-                            : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Принять участие</a>}
+                            <Link to='/games/present/make/' className='button button--small'>Отправить письмо</Link>
+                            : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
                         <Link to='/games/present/gallery/' className='button button--small' style={{display: 'none'}}>Галерея работ</Link>
                         <br />
                         <a href='#' className='small'>Подробные условия акции</a>
@@ -63,8 +53,8 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/0abc0ff15e44d27f09daca5b.png' alt='' /><br/>
-                                <span>Кухонный комбайн Illumina<br/><br/>20240-56</span>
+                                <img src='http://164623.selcdn.com/russell/upload/products/aa8c09fbbe5590fe86276b9c.png' alt='' /><br/>
+                                <span>Компактный гриль со съемными пластинами<br/><br/>20830-56</span>
                             </div>
                         </div>
                         <div className='present__col'>
@@ -72,8 +62,8 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/112ad7942078982fd9669900.png' alt='' /><br/>
-                                <span>Чайник Clarity с системой фильтрации воды<br/><br/>20760-70</span>
+                                <img src='http://164623.selcdn.com/russell/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                <span>Кофеварка Futura<br/><br/>18663-56</span>
                             </div>
                         </div>
                         <div className='present__col'>
@@ -81,8 +71,8 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/b078522bb2d3a631123b5c9b.png' alt='' /><br/>
-                                <span>Погружной  блендер Illumina<br/><br/>20210-56</span>
+                                <img src='http://164623.selcdn.com/russell/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                <span>Кофеварка Futura<br/><br/>18663-56</span>
                             </div>
                         </div>
                     </div>

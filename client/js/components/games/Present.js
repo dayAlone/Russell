@@ -297,8 +297,8 @@ class Step4 extends Component {
 
                     Мы с моей кухней будем счастливы получить это в подарок :)<br/><br/>
 
-                    Заранее спасибо,
-                    {from}
+                    Заранее спасибо,<br/>
+                    {from}<br/><br/>
                 </div>
                 <div className='present__letter-col center'>
                     <img src={`/layout/images/products/${product}.jpg`} width='100%' alt='' />

@@ -6,14 +6,29 @@ import Spinner from '../ui/Spinner'
 import { bindActionCreators } from 'redux'
 import * as actionCreators from '../../actions/profile'
 import { connect } from 'react-redux'
+import { PhotoSwipe } from 'react-photoswipe'
+
 
 @connect(state => ({presents: state.profile.presents}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileIndex extends Component {
+    state = {photoswipe: false, image: []}
     componentDidMount() {
         if (!this.props.presents) this.props.actions.getPresents()
     }
+    openPhotoSwipe(image) {
+        return (e) => {
+            let img = new Image()
+            img.onload = () => {
+                this.setState({photoswipe: true, image: [{src: image, w: img.width, h: img.height}]})
+            }
+            img.src = image.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${image}` : image
+
+            e.preventDefault()
+        }
+    }
     render() {
         let { presents } = this.props
+
         return <div>
             <Helmet title='Russell Hobbs | Личный кабинет | Мои фото'/>
             <div className='presents'>
@@ -30,7 +45,7 @@ class ProfileIndex extends Component {
                         status_text = 'На модерации'
                     }
                     return <div className='presents__item' key={i}>
-                        <div className='presents__image' style={{backgroundImage: `url(${el.image})`}}></div>
+                        <div onClick={this.openPhotoSwipe(el.image)} className='presents__image' style={{backgroundImage: `url(${el.image})`}}></div>
                         <div className='presents__likes'>
                             <img src='/layout/images/svg/heart-border.svg' width='18' alt='' /> {el.likes.length}
                         </div>
@@ -42,6 +57,11 @@ class ProfileIndex extends Component {
                 <img src='/layout/images/mail-line.jpg' alt='' width='100%'/>
                 <Link to='/games/present/make/' className='button button--small'>Добавить фото</Link>
             </div>
+            <PhotoSwipe
+                isOpen={this.state.photoswipe}
+                options={{shareEl: false}}
+                items={this.state.image}
+                />
         </div>
     }
 }

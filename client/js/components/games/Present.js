@@ -219,6 +219,7 @@ class Step3 extends Component {
 }
 
 class Step4 extends Component {
+    state = { locked: false }
     componentWillMount() {
         let image = this.props.getStateValue('image')
         let fields = this.props.getStateValue('fields')
@@ -229,8 +230,47 @@ class Step4 extends Component {
             product: product
         })
     }
+    dataURItoBlob(dataURI) {
+        let byteString = atob(dataURI.split(',')[1]);
+        let ab = new ArrayBuffer(byteString.length);
+        let ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], { type: 'image/jpeg' });
+    }
+    sendPresent(e) {
+        this.setState({ locked: true })
+        let { image, fields, product } = this.state
+        let { to, from, email } = fields
+        let formData = new FormData()
+
+        formData.append('image', this.dataURItoBlob(image))
+        formData.append('product', product)
+        formData.append('to', to)
+        formData.append('from', from)
+        formData.append('email', email)
+
+        $.ajax({
+            type: 'POST',
+            url: '/profile/presents/add/',
+            processData: false,
+            cache: false,
+            contentType: false,
+            data: formData
+        }).done(data => {
+            console.log(data)
+            this.setState({ locked: false })
+            if (!data.error) {
+                let status = this.props.getStateValue('status')
+                status[3] = true
+                this.props.setStateValue({ status: status, step: 4 })
+            }
+        })
+        e.preventDefault()
+    }
     render() {
-        let {image, fields, product} = this.state
+        let {image, fields, product, locked} = this.state
         let {from, to} = fields
         return <div>
             <div className='center'>
@@ -262,7 +302,9 @@ class Step4 extends Component {
                 <div className='present__letter-footer center'>©2015 SPECTRUM BRANDS , INC., ALL RIGHTS RESERVED</div>
             </div>
             <div className='center'>
-                <a href='#' onClick={this.props.sen} className='button button--send'>Отправить</a><br/>
+                <a href='#' onClick={this.sendPresent.bind(this)} className={`button button--send ${locked ? 'button--locked' : ''}`}>
+                    {locked ? <img src='/layout/images/loading.gif' alt='' /> : null} Отправить
+                </a><br/>
                 <small>Отправляя данное письмо, я подтверждаю, что действия выполняются лично мной и все возможные претензии, полученные в адрес Организатора, за нежелательную рассылку будут урегулированы мной с получателем данного письма. </small>
 
             </div>
@@ -272,15 +314,19 @@ class Step4 extends Component {
 
 class Step5 extends Component {
     render() {
-        return <div/>
+        return <div className='center'>
+            <p>Как только мы убедимся в том, что в загруженной вами фотографии нет<br/> ничего противозаконного, то сразу же отправим ваше письмо адресату.<br/>Информация будет доступна в вашем личном кабинете</p>
+            <a href='/games/present/make/' className='button button--again'>Отправить еще одно письмо?</a>
+        </div>
     }
 }
 
 @connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(loginActionCreators, dispatch)}))
 class Present extends Component {
-    state = {
+    state = {}
+    initialState = {
         step: 0,
-        max: 5,
+        max: 4,
         titles: [
             'Выбери подарок',
             'Загрузи фотографию',
@@ -309,6 +355,14 @@ class Present extends Component {
         },
         product: false
     }
+    componentWillMount() {
+        this.setState(this.initialState)
+    }
+    makeNew(e) {
+        console.log(this.initialState)
+        this.setState(this.initialState)
+        e.preventDefault()
+    }
     getStateValue(id) {
         return this.state[id]
     }
@@ -330,7 +384,7 @@ class Present extends Component {
     render() {
         let { step, titles, max, status, components } = this.state
         let steps = []
-        for (let i = 0; i < max - 1; i++) {
+        for (let i = 0; i < max; i++) {
             steps.push(<span key={i} className={`present__step ${i === step ? 'present__step--active' : ''}`}>{i + 1}</span>)
         }
         let Component = components[step]
@@ -343,14 +397,14 @@ class Present extends Component {
                     <div className='present__col center'>
                         <h4>{titles[step]}</h4>
                     </div>
-                    <div className='present__col right'>
+                    {step != max ? <div className='present__col right'>
                         {step > 0 ? <a href='#' className='button button--small' onClick={this.goBack.bind(this)}>Назад</a> : false }
                         {status[step] ? <a href='#' className='button button--small' onClick={this.goNext.bind(this)}>Далее</a> : false }
-                    </div>
+                    </div> : null }
                 </div>
                 <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                 <div className='present__content'>
-                <Component getStateValue={this.getStateValue.bind(this)} setStateValue={this.setStateValue.bind(this)}/>
+                <Component makeNew={this.makeNew.bind(this)} getStateValue={this.getStateValue.bind(this)} setStateValue={this.setStateValue.bind(this)}/>
                 </div>
                 <div className='center'>
                     {status[step] ? <a href='#' onClick={this.goNext.bind(this)} className='button button--next button--small'>Следующий шаг</a> : false }

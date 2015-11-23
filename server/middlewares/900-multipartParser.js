@@ -30,7 +30,9 @@ export default function* (next) {
     while (part = yield parser) {
         if (part.mimeType.split('/')[0] === 'image' && part.filename) {
             const splits = part.filename.split('.')
-            const filename = randomstring.generate() + '.' + splits[splits.length - 1]
+            const ext = splits[splits.length - 1]
+            const filename = randomstring.generate() + '.' + (ext === 'blob' ? 'jpg' : ext)
+            console.log(filename)
             const path = tmp + filename
             const stream = fs.createWriteStream(path)
 

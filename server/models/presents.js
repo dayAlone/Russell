@@ -13,7 +13,11 @@ const presentSchema = new mongoose.Schema({
     email: String,
     image: String,
     from: String,
-    to: String
+    to: String,
+    sended: {
+        type: Boolean,
+        default: false,
+    }
 })
 
 const Present = mongoose.model('Present', presentSchema)

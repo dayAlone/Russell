@@ -270,7 +270,6 @@ export default function(app) {
 
             this.body = this.render('index', {cancelAdaptive: true, meta: meta})
         })
-
         .get('/games/get/', function* () {
             let result
             try {

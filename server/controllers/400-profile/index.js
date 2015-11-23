@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import config from 'config'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
+import Present from '../../models/presents'
 import Users, {sendUserEmail} from '../../models/user'
 import moment from 'moment'
 import { Types } from 'mongoose'
@@ -239,6 +240,27 @@ export default function(app) {
             })
             this.body = result[0]
 
+        })
+        .post('/profile/presents/add/', function* () {
+            if (this.req.user) {
+                let result
+                let { image, product, to, from, email } = this.request.body
+                try {
+                    yield Present.create({
+                        image: image,
+                        user: Types.ObjectId(this.req.user._id),
+                        product: Types.ObjectId(product),
+                        to: to,
+                        from: from,
+                        email: email,
+                        created: moment().add(3, 'hours').toDate(),
+                    })
+                    result = { error: false, result: 'success'}
+                } catch (e) {
+                    result = { error: true, message: e.message }
+                }
+                this.body = result
+            }
         })
         .get('/profile/*', function* () {
             if (this.req.user) {

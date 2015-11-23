@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Spinner from '../ui/Spinner'
 
-import { Link } from 'react-router'
 import * as loginActionCreators from '../../actions/login'
 import * as catalogActionCreators from '../../actions/catalog'
 
@@ -74,19 +73,21 @@ class Step1 extends Component {
         let items = []
         for (let i in data) {
             let products = []
-            if (i === active) data[i].items.map((el, i) => {
-                let {_id, preview, name, artnumber} = el
-                products.push(<div onClick={this.setProduct(_id)} className={`present__product products__item ${product === _id ? 'products__item--active':''}`} key={i}>
-                    <div className='products__link'>
-                        <div className='products__image'>
-                            <img src={preview} alt={name} />
+            if (i === active) {
+                data[i].items.map((el, i) => {
+                    let {_id, preview, name, artnumber} = el
+                    products.push(<div onClick={this.setProduct(_id)} className={`present__product products__item ${product === _id ? 'products__item--active' : ''}`} key={i}>
+                        <div className='products__link'>
+                            <div className='products__image'>
+                                <img src={preview} alt={name} />
+                            </div>
+                            <div className={`products__name`}>{name}</div>
+                            <div className='products__artnumber'>{artnumber}</div>
                         </div>
-                        <div className={`products__name`}>{name}</div>
-                        <div className='products__artnumber'>{artnumber}</div>
-                    </div>
-                </div>)
-            })
-            items.push(<div key={i} className={`present__category-frame ${i === active ? 'present__category-frame--active': ''}`}>
+                    </div>)
+                })
+            }
+            items.push(<div key={i} className={`present__category-frame ${i === active ? 'present__category-frame--active' : ''}`}>
                 <a href='#' onClick={this.makeActive(i)} className='present__category-name'>{data[i].name}</a>
                 {i === active ? <div className='products products--ready'>{products}</div> : null}
             </div>)
@@ -102,9 +103,9 @@ class Step2 extends Component {
         cropper: false
     }
     addFile() {
-        let reader = new FileReader();
+        let reader = new FileReader()
         reader.onload = () => {
-            this.setState({file: reader.result});
+            this.setState({file: reader.result})
         }
         reader.readAsDataURL(this.refs.file.getFiles())
     }
@@ -159,7 +160,7 @@ class Step2 extends Component {
         e.preventDefault()
     }
     render() {
-        let {file, image} = this.state
+        let { file } = this.state
         return <div className='center'>
                     <p>Загрузи свою фотографию, которую увидит получатель твоего письма.</p>
                     <Formsy.Form className='form' onValid={this.addFile.bind(this)}>
@@ -237,13 +238,13 @@ class Step4 extends Component {
         })
     }
     dataURItoBlob(dataURI) {
-        let byteString = atob(dataURI.split(',')[1]);
-        let ab = new ArrayBuffer(byteString.length);
-        let ia = new Uint8Array(ab);
+        let byteString = atob(dataURI.split(',')[1])
+        let ab = new ArrayBuffer(byteString.length)
+        let ia = new Uint8Array(ab)
         for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
+            ia[i] = byteString.charCodeAt(i)
         }
-        return new Blob([ab], { type: 'image/jpeg' });
+        return new Blob([ab], { type: 'image/jpeg' })
     }
     sendPresent(e) {
         this.setState({ locked: true })
@@ -288,13 +289,11 @@ class Step4 extends Component {
                 <div className='present__letter-col'>
                     Привет, {to}!<br/><br/>
 
-<<<<<<< Updated upstream
                     Выбор подарка – это не просто. Но что не сделаешь ради друга! Надо немного облегчить для тебя этот процесс. Намек – на фотографии.<br/><br/>
-=======
                     Выбирать подарок – это не просто.<br/>Но что не сделаешь ради друга! Хочу облегчить для тебя этот процесс.<br/>
                     Намек – на фото.<br/>
                     Мы с моей кухней будем счастливы получить это в подарок.<br/><br/>
->>>>>>> Stashed changes
+
 
                     Мы с моей кухней будем счастливы получить это в подарок :)<br/><br/>
 
@@ -327,13 +326,9 @@ class Step4 extends Component {
 class Step5 extends Component {
     render() {
         return <div className='center'>
-<<<<<<< Updated upstream
             <p>Как только мы убедимся в том, что в загруженной вами фотографии нет<br/> ничего противозаконного, то сразу же отправим ваше письмо адресату.<br/>Информация будет доступна в вашем личном кабинете</p>
             <a href='#' className='button button--again' onClick={this.props.makeNew}>Отправить еще одно письмо?</a>
-=======
-            <p>Как только мы убедимся в том, что загруженная вами фотографии отвечает нашим требованиям, мы сразу же отправим письмо вашему другу. Информация об этом будет доступна в вашем Личном кабинете.</p>
-            <a href='/games/present/make/' className='button button--again'>Отправить еще одно письмо?</a>
->>>>>>> Stashed changes
+
         </div>
     }
 }
@@ -365,7 +360,7 @@ class Present extends Component {
             false,
             false
         ],
-        fields : {
+        fields: {
             from: null,
             email: null,
             to: null
@@ -415,7 +410,7 @@ class Present extends Component {
         for (let i = 0; i < max; i++) {
             steps.push(<span key={i} className={`present__step ${i === step ? 'present__step--active' : ''}`}>{i + 1}</span>)
         }
-        let Component = components[step]
+        let Element = components[step]
         return <div className='present present--bg'>
                 <h2 className='center'>В подарок. Для себя</h2>
                 <div className='present__toolbar'>
@@ -425,14 +420,14 @@ class Present extends Component {
                     <div className='present__col center'>
                         <h4>{titles[step]}</h4>
                     </div>
-                    {step != max ? <div className='present__col right'>
+                    {step !== max ? <div className='present__col right'>
                         {step > 0 ? <a href='#' className='button button--small' onClick={this.goBack.bind(this)}>Назад</a> : false }
                         {status[step] ? <a href='#' className='button button--small' onClick={this.goNext.bind(this)}>Далее</a> : false }
                     </div> : null }
                 </div>
                 <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                 <div className='present__content'>
-                <Component makeNew={this.makeNew.bind(this)} getStateValue={this.getStateValue.bind(this)} setStateValue={this.setStateValue.bind(this)}/>
+                <Element makeNew={this.makeNew.bind(this)} getStateValue={this.getStateValue.bind(this)} setStateValue={this.setStateValue.bind(this)}/>
                 </div>
                 <div className='center'>
                     {status[step] ? <a href='#' onClick={this.goNext.bind(this)} className='button button--next button--small'>Следующий шаг</a> : false }

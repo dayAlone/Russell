@@ -29,7 +29,7 @@ class ProfileIndex extends Component {
                     default:
                         status_text = 'На модерации'
                     }
-                    return <div className='presents__item'>
+                    return <div className='presents__item' key={i}>
                         <div className='presents__image' style={{backgroundImage: `url(${el.image})`}}></div>
                         <div className='presents__likes'>
                             <img src='/layout/images/svg/heart-border.svg' width='18' alt='' /> {el.likes.length}

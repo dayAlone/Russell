@@ -19,7 +19,7 @@ class PresentDescription extends Component {
                 <h2 className='center'>В подарок. Для себя</h2>
                 <div className='present__description text'>
 
-                    <p className='center'>Выбирать подарок – это не просто. Мы поможем вам облегчить этот процесс для ваших близких и друзей. <br>Выберите модель техники Russell Hobbs, которую вы бы хотели получить в качестве подарка. И мы намекнем об этом вашим близким и друзьям.<br>При этом вы можете проявить фантазию. Авторы трех самых креативных «намеков» получат призы от Russell Hobbs.<br>Итак, что нужно сделать, чтобы получить от друзей в подарок технику Russell Hobbs, а потом еще и выиграть приз?</p>
+                    <p className='center'>Выбирать подарок – это не просто. Мы поможем вам облегчить этот процесс для ваших близких и друзей. <br/>Выберите модель техники Russell Hobbs, которую вы бы хотели получить в качестве подарка. И мы намекнем об этом вашим близким и друзьям.<br/>При этом вы можете проявить фантазию. Авторы трех самых креативных «намеков» получат призы от Russell Hobbs.<br/>Итак, что нужно сделать, чтобы получить от друзей в подарок технику Russell Hobbs, а потом еще и выиграть приз?</p>
                     <div className='present__col'>
                         <p className='text__number' data-text='1'>
                             С помощью специальной формы на странице акции начать создавать письмо другу.
@@ -47,7 +47,7 @@ class PresentDescription extends Component {
                     </div>
                     <h3 className='center'>Время проведения акции – с 23 ноября по 30 декабря.</h3>
                     <div className='center'>
-                        
+
                         {this.props.isLogin ?
                             <Link to='/games/present/make/' className='button button--small'>Принять участие</Link>
                             : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Принять участие</a>}

@@ -133,6 +133,22 @@ class Step2 extends Component {
             })
         }
     }
+    zoomIn(e) {
+        this.refs.cropper.zoom(0.1)
+        e.preventDefault()
+    }
+    zoomOut(e) {
+        this.refs.cropper.zoom(-0.1)
+        e.preventDefault()
+    }
+    rotateRight(e) {
+        this.refs.cropper.rotate(10)
+        e.preventDefault()
+    }
+    rotateLeft(e) {
+        this.refs.cropper.rotate(-10)
+        e.preventDefault()
+    }
     render() {
         let {file, image} = this.state
         return <div className='center'>
@@ -143,15 +159,22 @@ class Step2 extends Component {
 
                     <div style={{display: file ? 'block' : 'none'}}>
                         <small>Для перемещения фотографии используй мышь или передвигай пальцем на touch-устройствах. Для масштабирования используй скролл мыши, жесты масштабирования или кнопки управления. Для поворота - кнопки управления.</small>
-                        <Cropper
-                        className='crop'
-                        ref='cropper'
-                        src={file}
-                        data={this.state.cropper}
-                        style={{height: 600, width: 600}}
-                        aspectRatio={1 / 1}
-                        guides={false}
-                        crop={this._crop.bind(this)} />
+                        <div className='crop'>
+                            <Cropper
+                                ref='cropper'
+                                src={file}
+                                data={this.state.cropper}
+                                style={{height: 600, width: 600}}
+                                aspectRatio={1 / 1}
+                                guides={false}
+                                crop={this._crop.bind(this)} />
+                            <div className='crop__buttons'>
+                                <a href='#' onClick={this.zoomIn.bind(this)}><img src='/layout/images/svg/zoom-in.svg' alt='' /></a><br/>
+                                <a href='#' onClick={this.zoomOut.bind(this)}><img src='/layout/images/svg/zoom-out.svg' alt='' /></a><br/>
+                                <a href='#' onClick={this.rotateRight.bind(this)}><img src='/layout/images/svg/rotate1.svg' alt='' /></a><br/>
+                                <a href='#' onClick={this.rotateLeft.bind(this)}><img src='/layout/images/svg/rotate2.svg' alt='' /></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
     }
@@ -167,6 +190,7 @@ class Step3 extends Component {
         })
     }
     enableNext() {
+        console.log(this.refs)
         let fields = this.refs.form.getCurrentValues()
         let status = this.props.getStateValue('status')
         status[2] = true
@@ -181,7 +205,7 @@ class Step3 extends Component {
     render() {
         if (this.state.fields) {
             let { from, email, to} = this.state.fields
-            return <Formsy.Form className='form' onValid={this.enableNext.bind(this)}>
+            return <Formsy.Form className='form' ref='form' onValid={this.enableNext.bind(this)}>
                 <p className='center'>Укажи электронный адрес и имя того человека кому нам нужно намекнуть о подарке, который ты хочешь получить.</p>
                 <Input value={this.props.user ? this.props.user.displayName : from} name='from' validations='minLengthOrEmpty:1' title='Имя отправителя'/>
                 <Input value={email} name='email' validations='isEmail,minLengthOrEmpty:1' type='email' title='Контакты получателя' placeholder='Электронная почта получателя'/>
@@ -207,7 +231,7 @@ class Step5 extends Component {
 @connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(loginActionCreators, dispatch)}))
 class Present extends Component {
     state = {
-        step: 1,
+        step: 0,
         max: 5,
         titles: [
             'Выбери подарок',

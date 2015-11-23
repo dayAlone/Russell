@@ -2,6 +2,7 @@
     padding 40px 0 80px
     min-height 700px
     full-width()
+    position relative
     &--bg
         background url(/layout/images/texture.jpg) bottom center no-repeat
         background-size 140% auto
@@ -37,6 +38,16 @@
         width 620px !important
         height 620px !important
         position relative
+        &__buttons
+            position absolute
+            top 0
+            right -65px
+            a
+                display inline-block
+                margin-bottom 10px
+                t opacity
+                &:hover
+                    opacity .5
         .cropper-container
             position relative
             z-index 2

@@ -67,7 +67,7 @@ export default function* () {
         let game = games[i]
         for (let r = 0; r < game.raffles.length; r++ ) {
             let raffle = game.raffles[r]
-            if (moment(raffle).diff(moment(), 'days') < 3) {
+            if (moment(raffle).diff(moment(), 'days') < 3 && moment() < moment(raffle)) {
                 let skip = notifications[game.code] && notifications[game.code].indexOf(raffle) === -1
                 if (!skip) {
                     for (let u = 0; u < users.length; u++) {
@@ -91,5 +91,5 @@ export default function* () {
             }
         }
     }
-    console.log('sended')
+    console.log('checkGamesRaffle')
 }

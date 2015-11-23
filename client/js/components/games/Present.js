@@ -85,10 +85,9 @@ class Step1 extends Component {
                 {i === active ? <div className='products products--ready'>{products}</div> : null}
             </div>)
         }
-        return <div>{items}</div>
+        return <div><p className='center'>Выбери технику из каталога, которую хочешь получить в подарок.</p>{items}</div>
     }
 }
-
 
 class Step2 extends Component {
     render() {
@@ -99,7 +98,7 @@ class Step2 extends Component {
 @connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(loginActionCreators, dispatch)}))
 class Present extends Component {
     state = {
-        step: 0,
+        step: 1,
         max: 5,
         titles: [
             'Выбери подарок',

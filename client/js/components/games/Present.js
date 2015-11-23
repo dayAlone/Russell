@@ -190,7 +190,6 @@ class Step3 extends Component {
         })
     }
     enableNext() {
-        console.log(this.refs)
         let fields = this.refs.form.getCurrentValues()
         let status = this.props.getStateValue('status')
         status[2] = true
@@ -217,8 +216,54 @@ class Step3 extends Component {
 }
 
 class Step4 extends Component {
+    componentWillMount() {
+        let image = this.props.getStateValue('image')
+        let fields = this.props.getStateValue('fields')
+        let product = this.props.getStateValue('product')
+        this.setState({
+            image: image,
+            fields: fields,
+            product: product
+        })
+    }
     render() {
-        return <div/>
+        let {image, fields, product} = this.state
+        let {from, to} = fields
+        return <div>
+            <div className='center'>
+                <p>Теперь посмотри, что получилось и отправь письмо</p>
+            </div>
+            <div className='present__letter'>
+                <img src='/layout/images/mail-header.jpg' alt='' width='100%'/>
+                <img src={image} alt='' width='100%'/>
+                <div className='present__letter-col'>
+                    Привет, {to}!<br/><br/>
+
+                    Выбор подарка – это не просто. Но что не сделаешь ради друга! Надо немного облегчить для тебя этот процесс. Намек – на фотографии.<br/><br/>
+
+                    Мы с моей кухней будем счастливы получить это в подарок :)<br/><br/>
+
+                    Заранее спасибо,
+                    {from}
+                </div>
+                <div className='present__letter-col center'>
+                    <img src={`/layout/images/products/${product}.jpg`} width='100%' alt='' />
+                </div>
+                <img src='/layout/images/mail-line.jpg' alt='' width='100%'/>
+                <div className='center present__letter-social'>
+                    <img src='/layout/images/mail-fb.jpg' alt='' />
+                    <img src='/layout/images/mail-vk.jpg' alt='' />
+                    <img src='/layout/images/mail-inst.jpg' alt='' />
+                </div>
+                <img src='/layout/images/mail-footer.jpg' alt='' width='100%'/>
+                <div className='present__letter-footer center'>©2015 SPECTRUM BRANDS , INC., ALL RIGHTS RESERVED</div>
+            </div>
+            <div className='center'>
+                <a href='#' className='button button--send'>Отправить</a><br/>
+                <small>Отправляя данное письмо, я подтверждаю, что действия выполняются лично мной и все возможные претензии, полученные в адрес Организатора, за нежелательную рассылку будут урегулированы мной с получателем данного письма. </small>
+
+            </div>
+        </div>
     }
 }
 
@@ -231,7 +276,7 @@ class Step5 extends Component {
 @connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(loginActionCreators, dispatch)}))
 class Present extends Component {
     state = {
-        step: 0,
+        step: 3,
         max: 5,
         titles: [
             'Выбери подарок',

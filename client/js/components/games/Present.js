@@ -266,7 +266,6 @@ class Step4 extends Component {
             contentType: false,
             data: formData
         }).done(data => {
-            console.log(data)
             this.setState({ locked: false })
             if (!data.error) {
                 let status = this.props.getStateValue('status')
@@ -288,15 +287,9 @@ class Step4 extends Component {
                 <img src={image} alt='' width='100%'/>
                 <div className='present__letter-col'>
                     Привет, {to}!<br/><br/>
-
-                    Выбор подарка – это не просто. Но что не сделаешь ради друга! Надо немного облегчить для тебя этот процесс. Намек – на фотографии.<br/><br/>
                     Выбирать подарок – это не просто.<br/>Но что не сделаешь ради друга! Хочу облегчить для тебя этот процесс.<br/>
                     Намек – на фото.<br/>
-                    Мы с моей кухней будем счастливы получить это в подарок.<br/><br/>
-
-
                     Мы с моей кухней будем счастливы получить это в подарок :)<br/><br/>
-
                     Заранее спасибо,<br/>
                     {from}<br/><br/>
                 </div>
@@ -340,10 +333,10 @@ class Present extends Component {
         step: 0,
         max: 4,
         titles: [
-            'Выбери подарок',
-            'Загрузи фотографию',
-            'Укажи получателя',
-            'Отправь письмо',
+            'Выберите подарок',
+            'Загрузите фотографию',
+            'Укажите получателя',
+            'Отправьте письмо',
             'Письмо на модерации'
         ],
         components: [

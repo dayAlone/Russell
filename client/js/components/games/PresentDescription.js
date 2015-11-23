@@ -8,6 +8,13 @@ import { bindActionCreators } from 'redux'
 
 @connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class PresentDescription extends Component {
+    state = {more: false}
+    toggleMore(status) {
+        return (e) => {
+            this.setState({more: status})
+            e.preventDefault()
+        }
+    }
     openModal(e) {
         const { openModal } = this.props.actions
         openModal()
@@ -43,8 +50,33 @@ class PresentDescription extends Component {
                             : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
                         <Link to='/games/present/gallery/' className='button button--small' style={{display: 'none'}}>Галерея работ</Link>
                         <br />
-                        <a href='#' className='small'>Подробные условия акции</a>
+                        { this.state.more ? null : <a className='small' href='#' onClick={this.toggleMore(true)}>Подробные условия акции</a> }
                     </div>
+                    { this.state.more ? <div className='present__more'>
+                        <p><br/><br/></p>
+                        <p>Чтобы вам было проще составить письмо другу, мы разделили этапы его формирования на отдельные шаги:</p>
+
+                        <p>1. Выбор техники из каталога.<br/>
+                        2. Загрузка вашей фотографии.<br/>
+                        3. Указание вашего имени, электронного адреса вашего друга и его имени. Все имена должны быть в именительном падеже.<br/>
+                        4. Затем ваша фотография вставляется в нашу форму, вместе с изображением выбранной вами техники и готовым текстом.<br/>
+                        5. Последний шаг - просмотр вами получившегося письма и его отправка на модерацию.</p>
+
+                    <p>После проверки того, чтобы загруженная вами фотографии соответствовала всем нашим требованиям, письмо отправляется вашему другу. Информация об этом сразу появляется в вашем Личном кабинете.</p>
+
+                        <p>Все загруженные вами фотографии размещаются в вашем Личном Кабинете, с указанием статуса («на модерации», «активен», «отклонен»).</p>
+
+                        <p>Если вам отказал модератор, вам необходимо создавать письмо заново. Вы не можете заменить или отредактировать уже загруженные фотографии, в каком бы статусе они не находились.</p>
+
+                        <p>Ваша фотография также появляется на странице «Галерея фотографий», где размещаются все загруженные пользователями фотографии, прошедшие модерацию.</p>
+
+                        <p>Выбор лучших трех фотографий происходит путем голосования зарегистрированных пользователей сайта. По итогам голосования 3 фотографии, набравшие наибольшее количество лайков, становятся победителями.</p>
+
+                        <p>Вы можете проголосовать за разные фотографии, но только один раз за каждую.</p>
+                        <div className='center'>
+                            <a className='small' href='#' onClick={this.toggleMore(false)}>Скрыть условия акции</a>
+                        </div>
+                    </div> : null }
                     <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                     <div className='center'>
                         <h3 className='center'>Призы победителям</h3>

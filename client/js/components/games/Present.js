@@ -276,7 +276,7 @@ class Step5 extends Component {
 @connect(state => ({isLogin: state.login.isLogin}), dispatch => ({actions: bindActionCreators(loginActionCreators, dispatch)}))
 class Present extends Component {
     state = {
-        step: 3,
+        step: 0,
         max: 5,
         titles: [
             'Выбери подарок',

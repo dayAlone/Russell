@@ -19,28 +19,38 @@ class PresentDescription extends Component {
                 <h2 className='center'>В подарок. Для себя</h2>
                 <div className='present__description text'>
 
-                    <p className='center'>Техника Russell Hobbs - отличный подарок!<br/>Мы поможем намекнуть вашим близким, что они могли бы подарить вам на Новый год.<br/>Как? Да очень просто! </p>
+                    <p className='center'>Выбирать подарок – это не просто. Мы поможем вам облегчить этот процесс для ваших близких и друзей. <br>Выберите модель техники Russell Hobbs, которую вы бы хотели получить в качестве подарка. И мы намекнем об этом вашим близким и друзьям.<br>При этом вы можете проявить фантазию. Авторы трех самых креативных «намеков» получат призы от Russell Hobbs.<br>Итак, что нужно сделать, чтобы получить от друзей в подарок технику Russell Hobbs, а потом еще и выиграть приз?</p>
                     <div className='present__col'>
                         <p className='text__number' data-text='1'>
-                            Выберите технику, какую бы вы хотели получить в подарок
+                            С помощью специальной формы на странице акции начать создавать письмо другу.
                         </p>
                     </div>
                     <div className='present__col'>
                         <p className='text__number' data-text='2'>
-                            Загрузите свое фото в специальный шаблон
+                            Выбрать технику Russell Hobbs из каталога.
                         </p>
                     </div>
                     <div className='present__col'>
                         <p className='text__number' data-text='3'>
-                            Отправьте письмо близкому человеку или другу
+                            Загрузить свою фотографию, где вы демонстрируете ваше желание получить в подарок технику. Вставить фото в шаблон письма рядом с изображением техники.
                         </p>
                     </div>
-                    <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
+                    <div className='present__col'>
+                        <p className='text__number' data-text='4'>
+                            Указать электронный адрес друга, а также его и свое имена, которые будут вставлены в письмо.
+                        </p>
+                    </div>
+                    <div className='present__col'>
+                        <p className='text__number' data-text='5'>
+                            Отправить письмо и ждать подарка от друга и приза от Russell Hobbs.
+                        </p>
+                    </div>
+                    <h3 className='center'>Время проведения акции – с 23 ноября по 30 декабря.</h3>
                     <div className='center'>
-                        <p>Кроме того, ваше фото будет участвовать в конкурсе самых креативных фотографий. <br/>3 Самых креативных решения по итогам голосования на сайте получат призы от компании Russell Hobbs.</p>
+                        
                         {this.props.isLogin ?
-                            <Link to='/games/present/make/' className='button button--small'>Отправить письмо</Link>
-                            : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
+                            <Link to='/games/present/make/' className='button button--small'>Принять участие</Link>
+                            : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Принять участие</a>}
                         <Link to='/games/present/gallery/' className='button button--small' style={{display: 'none'}}>Галерея работ</Link>
                         <br />
                         <a href='#' className='small'>Подробные условия акции</a>

@@ -37,7 +37,7 @@ class PresentDescription extends Component {
                     </div>
                     <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                     <div className='center'>
-                        <p>Делая фото, постарайтесь использовать фантазию. Потому что ваш ждет конкурс на самую креативную фотографию!<br/>Авторы трех фото, набравших по итогам голосования на сайте самое большое количество лайков, становятся победителями и получают призы.</p>
+                        <p>Делая фото, постарайтесь использовать фантазию. Потому что ваш ждет конкурс на самую креативную фотографию! Авторы трех фото, набравших по итогам голосования на сайте самое большое количество лайков, становятся победителями и получают призы.</p>
                         {this.props.isLogin ?
                             <Link to='/games/present/make/' className='button button--small'>Отправить письмо</Link>
                             : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
@@ -53,8 +53,8 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/0abc0ff15e44d27f09daca5b.png' alt='' /><br/>
-                                <span>Кухонный комбайн Illumina<br/><br/>20240-56</span>
+                                <img src='http://164623.selcdn.com/russell/upload/products/aa8c09fbbe5590fe86276b9c.png' alt='' /><br/>
+                                <span>Компактный гриль со съемными пластинами<br/><br/>20830-56</span>
                             </div>
                         </div>
                         <div className='present__col'>
@@ -62,8 +62,8 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/112ad7942078982fd9669900.png' alt='' /><br/>
-                                <span>Чайник Clarity с системой фильтрации воды<br/><br/>20760-70</span>
+                                <img src='http://164623.selcdn.com/russell/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                <span>Кофеварка Futura<br/><br/>18663-56</span>
                             </div>
                         </div>
                         <div className='present__col'>
@@ -71,8 +71,8 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/b078522bb2d3a631123b5c9b.png' alt='' /><br/>
-                                <span>Погружной  блендер Illumina<br/><br/>20210-56</span>
+                                <img src='http://164623.selcdn.com/russell/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                <span>Кофеварка Futura<br/><br/>18663-56</span>
                             </div>
                         </div>
                     </div>

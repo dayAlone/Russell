@@ -127,6 +127,10 @@ export default function configureRoutes(reducerRegistry) {
                                 component: require('../components/profile/Prizes')
                             },
                             {
+                                path: 'presents',
+                                component: require('../components/profile/Presents')
+                            },
+                            {
                                 path: 'feedback',
                                 component: require('../components/profile/Feedback')
                             }

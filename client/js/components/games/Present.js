@@ -91,7 +91,7 @@ class Step1 extends Component {
                 {i === active ? <div className='products products--ready'>{products}</div> : null}
             </div>)
         }
-        return <div><p className='center'>Выбери технику из каталога, которую хочешь получить в подарок.</p>{items}</div>
+        return <div><p className='center'>Выберите в каталоге технику, которую хотите получить в подарок</p>{items}</div>
     }
 }
 
@@ -155,13 +155,13 @@ class Step2 extends Component {
     render() {
         let {file, image} = this.state
         return <div className='center'>
-                    <p>Загрузи свою фотографию, которую увидит получатель твоего письма.</p>
+                    <p>Загрузите фотографию, которую увидит ваш друг или близкий человек</p>
                     <Formsy.Form className='form' onValid={this.addFile.bind(this)}>
                         <File name='photo' noName={true} ref='file' title='Выбрать фото' validations='minLengthOrEmpty:1' value='' accept='image/jpeg,image/png,image/gif'/>
                     </Formsy.Form>
 
                     <div style={{display: file ? 'block' : 'none'}}>
-                        <small>Для перемещения фотографии используй мышь или передвигай пальцем на touch-устройствах. Для масштабирования используй скролл мыши, жесты масштабирования или кнопки управления. Для поворота - кнопки управления.</small>
+                        <small>Для перемещения фотографии используйте мышь или передвигайте пальцем на touch-устройствах. Для масштабирования используйте скролл мыши, жесты масштабирования или кнопки управления. Для поворота - кнопки управления.</small>
                         <div className='crop'>
                             <Cropper
                                 ref='cropper'
@@ -208,7 +208,7 @@ class Step3 extends Component {
         if (this.state.fields) {
             let { from, email, to} = this.state.fields
             return <Formsy.Form className='form' ref='form' onValid={this.enableNext.bind(this)}>
-                <p className='center'>Укажи электронный адрес и имя того человека кому нам нужно намекнуть о подарке, который ты хочешь получить.</p>
+                <p className='center'>Укажите свое имя, электронный адрес вашего друга или близкого челоекка и его имя</p>
                 <Input value={this.props.user ? this.props.user.displayName : from} name='from' validations='minLengthOrEmpty:1' title='Имя отправителя'/>
                 <Input value={email} name='email' validations='isEmail,minLengthOrEmpty:1' type='email' title='Контакты получателя' placeholder='Электронная почта получателя'/>
                 <Input value={to} name='to' validations='minLengthOrEmpty:1' placeholder='Имя получателя'/>
@@ -234,7 +234,7 @@ class Step4 extends Component {
         let {from, to} = fields
         return <div>
             <div className='center'>
-                <p>Теперь посмотри, что получилось и отправь письмо</p>
+                <p>Теперь посмотрите, что получилось, и отправьте письмо.</p>
             </div>
             <div className='present__letter'>
                 <img src='/layout/images/mail-header.jpg' alt='' width='100%'/>
@@ -242,11 +242,11 @@ class Step4 extends Component {
                 <div className='present__letter-col'>
                     Привет, {to}!<br/><br/>
 
-                    Выбор подарка – это не просто. Но что не сделаешь ради друга! Надо немного облегчить для тебя этот процесс. Намек – на фотографии.<br/><br/>
+                    Выбирать подарок – это не просто. Но что не сделаешь ради друга! Хочу облегчить для тебя этот процесс.<br/>
+                    Намек – на фото.<br/>
+                    Мы с моей кухней будем счастливы получить это в подарок.<br/><br/>
 
-                    Мы с моей кухней будем счастливы получить это в подарок :)<br/><br/>
-
-                    Заранее спасибо,
+                    Заранее спасибо,<br/>
                     {from}
                 </div>
                 <div className='present__letter-col center'>
@@ -282,10 +282,10 @@ class Present extends Component {
         step: 0,
         max: 5,
         titles: [
-            'Выбери подарок',
-            'Загрузи фотографию',
-            'Укажи получателя',
-            'Отправь письмо',
+            'Выберите подарок',
+            'Загрузите фотографию',
+            'Укажите получателя',
+            'Отправьте письмо',
             'Письмо на модерации'
         ],
         components: [

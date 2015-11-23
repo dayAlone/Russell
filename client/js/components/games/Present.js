@@ -104,22 +104,25 @@ class Step2 extends Component {
     addFile() {
         let reader = new FileReader();
         reader.onload = () => {
-
             this.setState({file: reader.result});
         }
         reader.readAsDataURL(this.refs.file.getFiles())
     }
     _crop() {
-        let status = this.props.getStateValue('status')
-        status[1] = true
-        let fields = {
-            image: this.refs.cropper.getCroppedCanvas().toDataURL(),
-            cropper: this.refs.cropper.getData(),
-            file: this.state.file,
-            status: status
-        }
-        this.props.setStateValue(fields)
-        this.setState(fields)
+        setTimeout(()=> {
+            let status = this.props.getStateValue('status')
+            status[1] = true
+            let fields = {
+                image: this.refs.cropper.getCroppedCanvas().toDataURL(),
+                cropper: this.refs.cropper.getData(),
+                file: this.state.file,
+                status: status
+            }
+            console.log('crop')
+            this.props.setStateValue(fields)
+            this.setState(fields)
+        }, 300)
+
     }
     componentWillMount() {
         let image = this.props.getStateValue('image')
@@ -259,7 +262,7 @@ class Step4 extends Component {
                 <div className='present__letter-footer center'>©2015 SPECTRUM BRANDS , INC., ALL RIGHTS RESERVED</div>
             </div>
             <div className='center'>
-                <a href='#' className='button button--send'>Отправить</a><br/>
+                <a href='#' onClick={this.props.sen} className='button button--send'>Отправить</a><br/>
                 <small>Отправляя данное письмо, я подтверждаю, что действия выполняются лично мной и все возможные претензии, полученные в адрес Организатора, за нежелательную рассылку будут урегулированы мной с получателем данного письма. </small>
 
             </div>

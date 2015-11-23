@@ -96,6 +96,7 @@ export default function(app) {
             let result = yield getUserChecks(this.req.user)
             this.body = result
         })
+
         .get('/profile/favorites/get/', function* () {
             let result = yield getUserChecks(this.req.user, false, getUserFavorites)
             this.body = result
@@ -240,6 +241,21 @@ export default function(app) {
             })
             this.body = result[0]
 
+        })
+        .get('/profile/presents/get/', function* () {
+            if (this.req.user) {
+                let result
+                let { image, product, to, from, email } = this.request.body
+                try {
+                    let data = yield Present.find({
+                        user: this.req.user._id
+                    }).sort({created: -1})
+                    result = { error: false, result: data}
+                } catch (e) {
+                    result = { error: true, message: e.message }
+                }
+                this.body = result
+            }
         })
         .post('/profile/presents/add/', function* () {
             if (this.req.user) {

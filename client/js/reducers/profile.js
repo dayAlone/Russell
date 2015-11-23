@@ -5,14 +5,16 @@ import {
     ASSIGN_PRODUCT_TO_CHECK,
     START_GAME,
     UPDATE_GAME,
-    GET_SCORES
+    GET_SCORES,
+    GET_PRESENTS
 } from '../constants/Profile'
 
 const initialState = {
     checks: [],
     favorites: false,
     scores: false,
-    prizes: []
+    presents: false,
+    prizes: [],
 }
 
 export default function(state = initialState, action) {
@@ -36,6 +38,10 @@ export default function(state = initialState, action) {
     case START_GAME:
         return Object.assign({}, state, {
             scores: action.data
+        })
+    case GET_PRESENTS:
+        return Object.assign({}, state, {
+            presents: action.data
         })
     default:
         return state

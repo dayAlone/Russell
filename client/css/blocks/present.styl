@@ -1,15 +1,16 @@
 .present
     padding 40px 0 80px
+    min-height 700px
     full-width()
+    &--bg
+        background url(/layout/images/texture.jpg) bottom center no-repeat
+        background-size 140% auto
     &__description
         width 85%
         margin-left 7.5%
         > p:first-of-type
             margin-bottom 35px
-        .button
-            min-width 190px
-            font-size 14px
-            margin 0 15px
+
         a.small
             font-size 12px
             color red
@@ -17,10 +18,59 @@
             display inline-block
             margin-top 20px
             margin-bottom 10px
+    .button
+        min-width 190px
+        font-size 14px
+        margin 0 15px
+    &__category
+        &-name
+            height 40px
+            line-height 41px
+            background-color #575c65
+            border-radius 3px
+            padding 0 20px
+            text-align center
+            font-weight bold
+            font-size 18px
+            t background-color
+            display inline-block
+            color white
+            width 100%
+        &-frame
+            border 1px solid #575c65
+            full-width()
+            border-radius 3px
+            margin-bottom 4px
+            t border-color
+            &--active
+                border-color #717b84
+                .present__category-name
+                    background-color #717b84
+            .products
+                padding 30px 20px 0
+    .products
+        background-image none
+        &__item
+            height 295px
+            cursor pointer
+            &--active
+                box-shadow 0 0 0 1px red
+        &__link
+            min-height 295px
+    &__content
+        padding 30px 0
+        full-width()
     &__col
         width (100/3)%
         float left
-
+        min-height 1px
+    &__toolbar
+        .button--small
+            background-color #575c65
+            min-width 90px
+            height 33px
+            line-height 34px
+            font-size 14px
     &__item
         margin-top 30px
         padding 0 20%
@@ -30,6 +80,17 @@
             font-size 14px
             line-height 1
             display inline-block
+    &__step
+        display inline-block
+        size 30px
+        margin-right 10px
+        border 2px solid red
+        border-radius 50%
+        text-align center
+        line-height 28px
+        font-weight bold
+        &--active
+            background-color red
     .text
         p
             @extends .dream .text p
@@ -49,6 +110,9 @@
     h3
         margin-top 0px
         margin-bottom 40px
+    h4
+        margin-top 5px
+        margin-bottom 0px
     h2
         text-align center
         font-size 33px

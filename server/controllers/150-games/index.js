@@ -226,6 +226,9 @@ export default function(app) {
                 }
             }
         })
+        .get('/games/present/make/', function* () {
+            this.body = this.render('index')
+        })
         .get('/games/:id/:el', function* () {
             let meta
 

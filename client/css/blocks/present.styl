@@ -22,6 +22,51 @@
         min-width 190px
         font-size 14px
         margin 0 15px
+    small
+        max-width 600px
+        margin 0 auto
+        display inline-block
+        color #aeb4b8
+        font-size 12px
+        line-height 1.2
+        margin-bottom 30px
+    .crop
+        margin 0 auto
+        border 1px solid #2b2b2b
+        padding 10px
+        width 620px !important
+        height 620px !important
+        position relative
+        .cropper-container
+            position relative
+            z-index 2
+        &:after
+            content: ""
+            background-color #1c1e21
+            size 600px
+            top 10px
+            left 10px
+            position absolute
+            z-index 1
+    .form
+        max-width 60%
+        margin 0 auto
+        margin-bottom 30px
+        .file
+            display inline-block
+            float none
+            margin-top 10px
+            &__trigger
+                background-color red
+                font-size 21px
+                size 220px 52px
+                line-height 54px
+                margin-right 0px
+
+        input
+            background-color white
+            color black
+            placeholder(color alpha(black, .4),)
     &__category
         &-name
             height 40px
@@ -48,15 +93,14 @@
                     background-color #717b84
             .products
                 padding 30px 20px 0
-    .products
-        background-image none
-        &__item
-            height 295px
-            cursor pointer
-            &--active
-                box-shadow 0 0 0 1px red
-        &__link
-            min-height 295px
+                background-image none
+                &__item
+                    height 295px
+                    cursor pointer
+                    &--active
+                        box-shadow 0 0 0 1px red
+                &__link
+                    min-height 295px
     &__content
         padding 30px 0
         full-width()

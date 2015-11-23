@@ -106,6 +106,7 @@
     "postcss-will-change": "^1.0.0",
     "randomstring": "^1.1.0",
     "raw-loader": "^0.5.1",
+    "react-cropper": "^0.5.1",
     "react-dom": "^0.14.0",
     "react-google-recaptcha": "^0.5.1",
     "react-helmet": "^2.1.0",

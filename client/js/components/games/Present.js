@@ -8,6 +8,13 @@ import * as catalogActionCreators from '../../actions/catalog'
 
 import { bindActionCreators } from 'redux'
 
+import Cropper from 'react-cropper'
+
+import Formsy from 'formsy-react'
+import { Input, File } from '../forms/'
+Formsy.addValidationRule('minLengthOrEmpty', (values, value, length) => {
+    return value && value.length >= length
+})
 
 @connect(state => ({ categories: state.catalog.categories, products: state.catalog.products }), dispatch => ({actions: bindActionCreators(catalogActionCreators, dispatch)}))
 class Step1 extends Component {
@@ -37,7 +44,6 @@ class Step1 extends Component {
             }))
             products.map(el => (data[el.categories].items.push(el)))
             this.setState({data: data, active: Object.keys(data)[0]})
-            console.log(data)
         }
 
     }
@@ -90,6 +96,109 @@ class Step1 extends Component {
 }
 
 class Step2 extends Component {
+    state = {
+        file: null,
+        image: false,
+        cropper: false
+    }
+    addFile() {
+        let reader = new FileReader();
+        reader.onload = () => {
+
+            this.setState({file: reader.result});
+        }
+        reader.readAsDataURL(this.refs.file.getFiles())
+    }
+    _crop() {
+        let status = this.props.getStateValue('status')
+        status[1] = true
+        let fields = {
+            image: this.refs.cropper.getCroppedCanvas().toDataURL(),
+            cropper: this.refs.cropper.getData(),
+            file: this.state.file,
+            status: status
+        }
+        this.props.setStateValue(fields)
+        this.setState(fields)
+    }
+    componentWillMount() {
+        let image = this.props.getStateValue('image')
+        let cropper = this.props.getStateValue('cropper')
+        let file = this.props.getStateValue('file')
+        if (cropper && image) {
+            this.setState({
+                image: image,
+                cropper: cropper,
+                file: file
+            })
+        }
+    }
+    render() {
+        let {file, image} = this.state
+        return <div className='center'>
+                    <p>Загрузи свою фотографию, которую увидит получатель твоего письма.</p>
+                    <Formsy.Form className='form' onValid={this.addFile.bind(this)}>
+                        <File name='photo' noName={true} ref='file' title='Выбрать фото' validations='minLengthOrEmpty:1' value='' accept='image/jpeg,image/png,image/gif'/>
+                    </Formsy.Form>
+
+                    <div style={{display: file ? 'block' : 'none'}}>
+                        <small>Для перемещения фотографии используй мышь или передвигай пальцем на touch-устройствах. Для масштабирования используй скролл мыши, жесты масштабирования или кнопки управления. Для поворота - кнопки управления.</small>
+                        <Cropper
+                        className='crop'
+                        ref='cropper'
+                        src={file}
+                        data={this.state.cropper}
+                        style={{height: 600, width: 600}}
+                        aspectRatio={1 / 1}
+                        guides={false}
+                        crop={this._crop.bind(this)} />
+                    </div>
+                </div>
+    }
+}
+
+@connect(state => ({user: state.login.data}))
+class Step3 extends Component {
+    state = { fields: false }
+    componentWillMount() {
+        let fields = this.props.getStateValue('fields')
+        this.setState({
+            fields: fields
+        })
+    }
+    enableNext() {
+        let fields = this.refs.form.getCurrentValues()
+        let status = this.props.getStateValue('status')
+        status[2] = true
+        this.props.setStateValue({
+            fields: fields,
+            status: status
+        })
+        this.setState({
+            fields: fields
+        })
+    }
+    render() {
+        if (this.state.fields) {
+            let { from, email, to} = this.state.fields
+            return <Formsy.Form className='form' onValid={this.enableNext.bind(this)}>
+                <p className='center'>Укажи электронный адрес и имя того человека кому нам нужно намекнуть о подарке, который ты хочешь получить.</p>
+                <Input value={this.props.user ? this.props.user.displayName : from} name='from' validations='minLengthOrEmpty:1' title='Имя отправителя'/>
+                <Input value={email} name='email' validations='isEmail,minLengthOrEmpty:1' type='email' title='Контакты получателя' placeholder='Электронная почта получателя'/>
+                <Input value={to} name='to' validations='minLengthOrEmpty:1' placeholder='Имя получателя'/>
+            </Formsy.Form>
+        }
+        return <Spinner/>
+    }
+}
+
+class Step4 extends Component {
+    render() {
+        return <div/>
+    }
+}
+
+class Step5 extends Component {
     render() {
         return <div/>
     }
@@ -109,7 +218,10 @@ class Present extends Component {
         ],
         components: [
             Step1,
-            Step2
+            Step2,
+            Step3,
+            Step4,
+            Step5
         ],
         status: [
             false,
@@ -118,6 +230,11 @@ class Present extends Component {
             false,
             false
         ],
+        fields : {
+            from: null,
+            email: null,
+            to: null
+        },
         product: false
     }
     getStateValue(id) {

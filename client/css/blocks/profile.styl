@@ -6,11 +6,16 @@
             img
                 margin-bottom 20px
         &__item
-            width 25%
+
             float left
             padding 5px
             margin-bottom 30px
             text-align center
+            width 100%
+            @media (min-width: $scr_xs)
+                width (100/3)%
+            @media (min-width: $scr_md)
+                width 25%
         &__likes
 
             color #4f535c
@@ -29,7 +34,8 @@
             &--canceled
                 color red
         &__image
-            size 100% 220px
+            width 100%
+            padding-bottom 100%
             background-size cover
             box-shadow inset 0 0 0 5px black
             border 1px solid #2b2b2b

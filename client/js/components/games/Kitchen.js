@@ -506,7 +506,8 @@ class Kitchen extends Component {
             <p><strong>Время действия акции - с 9 ноября по 30 декабря.</strong></p>
             <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
             <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
-            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a><br/><a href="http://164623.selcdn.com/russell/rules/Soberi_kollekciyu_rules.pdf" target="_blank" style="font-size:10px;">Условия и правила проведения акции</a>
+            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a><br/>
+            <small><a href='http://164623.selcdn.com/russell/rules/Soberi_kollekciyu_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small>
         </div>
     }
     getResultsScreen() {

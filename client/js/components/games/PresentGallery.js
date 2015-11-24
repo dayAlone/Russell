@@ -13,7 +13,6 @@ class PresentGallery extends Component {
         e.preventDefault()
     }
     render() {
-
         return <div className='present'>
             <h2 className='center'>В подарок. Для себя</h2>
             <h4 className='center'>Галерея фотографий</h4>

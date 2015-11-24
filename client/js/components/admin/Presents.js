@@ -68,13 +68,12 @@ class AdminPresents extends Component {
     handlePageClick(data) {
         let selected = data.selected
         let offset = Math.ceil(selected * this.state.perPage)
-
         this.setState({offset: offset}, () => {
             this.loadPresentsFromServer()
         })
     }
     handleFormChange() {
-        let {limit, sort} = this.refs.form.getCurrentValues()
+        let { limit } = this.refs.form.getCurrentValues()
         this.setState({perPage: limit}, () => {
             this.loadPresentsFromServer()
         })

@@ -1,8 +1,11 @@
 .present
-    padding 40px 0 80px
+
     min-height 700px
     full-width()
     position relative
+    padding 20px 0 40px
+    @media (min-width: $scr_s)
+        padding 40px 0 80px
     &--bg
         background url(/layout/images/texture.jpg) bottom center no-repeat
         background-size 140% auto
@@ -20,7 +23,7 @@
             display inline-block
             margin-top 20px
             margin-bottom 10px
-        @media (max-width: $scr_sm)
+        @media (max-width: $scr_s)
             .button
                 margin-bottom 20px
     .button
@@ -47,17 +50,23 @@
         border 1px solid #2b2b2b
         margin 10px auto 30px
         &-social
+            full-width()
+            height 35px
+            margin-bottom 15px
+            @media (min-width: $scr_s)
+                margin-bottom -15px
             img
                 margin 20px 10px -45px
                 position relative
                 z-index 2
+
         &-col
             width 50%
             float left
             font-size 14px
             line-height 1.3
             padding 20px 5px 0
-            margin-bottom -10px
+
         &-footer
             color #686868
             font-size 10px
@@ -72,25 +81,43 @@
         line-height 1.2
         margin-bottom 30px
     .crop
-        margin 0 auto
+
         border 1px solid #2b2b2b
         padding 10px
-        width 620px !important
-        height 620px !important
+
         position relative
+        margin-bottom 55px
+        @media (min-width: $scr_s)
+            width 620px !important
+            height 620px !important
+            margin 0 auto
         &__buttons
             position absolute
             top 0
             right -65px
+            @media (max-width: $scr_s)
+                right 0
+                top auto
+                bottom -65px
+                width 100%
+                a
+                    margin 0 10px
+                br
+                    display none
             a
                 display inline-block
                 margin-bottom 10px
                 t opacity
                 &:hover
                     opacity .5
-        .cropper-container
-            position relative
-            z-index 2
+        > div
+            @media (max-width: $scr_s)
+                max-width 100%
+            .cropper-container
+                position relative
+                z-index 2
+                @media (max-width: $scr_s)
+                    max-width 100%
         &:after
             content: ""
             background-color #1c1e21
@@ -99,10 +126,13 @@
             left 10px
             position absolute
             z-index 1
+            @media (max-width: $scr_s)
+                max-width calc(100% - 20px)
     .form
-        max-width 60%
         margin 0 auto
         margin-bottom 30px
+        @media (min-width: $scr_sm)
+            max-width 60%
         .file
             display inline-block
             float none
@@ -155,28 +185,46 @@
     &__content
         padding 30px 0
         full-width()
+        @media (max-width: $scr_s)
+            padding 30px
     &__col
         float left
         min-height 1px
         margin-bottom 20px
         width 100%
-        @media (min-width: $scr_sm)
+        @media (min-width: $scr_s)
             width (100/3)%
             margin-bottom 0px
     &__prizes
-        @media (max-width: $scr_sm)
+        @media (max-width: $scr_s)
             .present__col
                 margin-bottom 50px
                 &:first-of-type
                     img
                         margin-top -70px
     &__toolbar
+        @media (max-width: $scr_s)
+            .present__col
+                text-align center !important
+        @media (min-width: $scr_s)
+            .present__col
+                width 50%
+                white-space no-wrap
+                &:first-of-type, &:last-of-type
+                    width 25%
         .button--small
             background-color #575c65
             min-width 90px
             height 33px
             line-height 34px
             font-size 14px
+            margin 0 5px
+            &:first-of-type
+                margin-left 0px
+            &:last-of-type
+                margin-right 0px
+                @media (min-width: $scr_s) and (max-width: $scr_sm)
+                    display none
     &__item
         margin-top 30px
         padding 0 20%
@@ -221,8 +269,9 @@
         margin-bottom 0px
     h2
         text-align center
-        font-size 33px
         margin-bottom 30px
+        @media (min-width: $scr_s)
+            font-size 33px
         & + h4
             margin-top -10px
     &__footer, &__toolbar
@@ -232,13 +281,22 @@
         margin-left -10px
 
     &__gallery
-
+        padding 0 20px
+        @media (min-width: $scr_s)
+            padding 0
         .present-item
-            width 25%
+
             float left
             padding 10px
             text-align center
             margin-bottom 10px
+            width 100%
+            @media (min-width: $scr_xs)
+                width 50%
+            @media (min-width: $scr_s)
+                width (100/3)%
+            @media (min-width: $scr_md)
+                width 25%
             &__likes
                 color #575c65
                 &--liked
@@ -273,10 +331,14 @@
             svg
                 width 20px
         .form
-            max-width none
+            max-width none !important
             margin 0
             &-group
                 float left
+                &:first-of-type
+                    @media (max-width: $scr_s)
+                        width calc(100% - 94px)
+
             .radio-group
 
                 margin-top 3px
@@ -285,11 +347,18 @@
                 a
                     color white
                     border-line(alpha(@color, .5))
-            .radio-group:last-of-type
-                float right
+
+                &:last-of-type
+                    float right
+                    @media (max-width: $scr_s)
+                        width 100%
+                        text-align center
         .direction
-            float left
-            margin-left 7px
+
+            float right
+            @media (min-width: $scr_s)
+                float left
+                margin-left 7px
             a
                 background-image none !important
                 size 40px
@@ -300,6 +369,8 @@
                 float left
                 line-height 40px
                 margin-top -3px
+                @media (max-width: $scr_s)
+                    margin-right 0px
             input:checked + a
                 background-image none
                 border-color red
@@ -318,7 +389,8 @@
                 border-line(alpha(@color, .5))
 
         .dropdown
-            width 265px
+            @media (min-width: $scr_s)
+                width 265px
             &__item
                 font-size 13px
                 padding 9px 10px 0px
@@ -331,11 +403,14 @@
                 background-color transparent
                 border 1px solid red
                 height 40px
-                padding 0 10px
-                font-size 13px
+                padding 0 30px 0 10px
+                font-size 11px
                 line-height 41px
                 border-radius 4px
+                @media (min-width: $scr_xs)
+                    font-size 13px
                 svg
                     top 15px
                 &:after
-                    display none
+                    background-color black
+                    width 30px

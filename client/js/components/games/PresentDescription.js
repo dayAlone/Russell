@@ -50,7 +50,8 @@ class PresentDescription extends Component {
                             : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
                         <Link to='/games/present/gallery/' className='button button--small'>Галерея работ</Link>
                         <br />
-                        { this.state.more ? null : <a className='small' href='#' onClick={this.toggleMore(true)}>Подробные условия акции</a> }
+                        { this.state.more ? null : <a className='small' href='#' onClick={this.toggleMore(true)}>Подробнее</a><br/>
+                        <small><a href='http://164623.selcdn.com/russell/rules/V_podarok_dlya_sebya_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small> }
                     </div>
                     { this.state.more ? <div className='present__more'>
                         <p><br/><br/></p>
@@ -74,7 +75,7 @@ class PresentDescription extends Component {
 
                         <p>Вы можете проголосовать за разные фотографии, но только один раз за каждую.</p>
                         <div className='center'>
-                            <a className='small' href='#' onClick={this.toggleMore(false)}>Скрыть условия акции</a>
+                            <a className='small' href='#' onClick={this.toggleMore(false)}>Свернуть</a>
                         </div>
                     </div> : null }
                     <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>

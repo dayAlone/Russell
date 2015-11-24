@@ -142,7 +142,7 @@ class PresentGallery extends Component {
                             <Dropdown name='sort' className='dropdown--border' items={[
                                 {name: 'Сортировка по дате добавления', code: 'created'},
                                 {name: 'Сортировка по рейтингу', code: 'count'}
-                            ]} value='likes'/>
+                            ]} value='count'/>
                             <RadioGroup name='direction' className='direction' items={[
                                 {name: <IconSVG src={require('svg-inline!../../../public/images/svg/arrow-up.svg')}/>, code: -1},
                                 {name: <IconSVG src={require('svg-inline!../../../public/images/svg/arrow-down.svg')}/>, code: 1}

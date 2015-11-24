@@ -81,31 +81,33 @@ class PresentDescription extends Component {
                     <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                     <div className='center'>
                         <h3 className='center'>Призы победителям</h3>
-                        <div className='present__col'>
-                            <span className='text__number' data-text='1'>
-                                Место
-                            </span>
-                            <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/upload/products/aa8c09fbbe5590fe86276b9c.png' alt='' /><br/>
-                                <span>Компактный гриль со съемными пластинами<br/><br/>20830-56</span>
+                        <div className='present__prizes'>
+                            <div className='present__col'>
+                                <span className='text__number' data-text='1'>
+                                    Место
+                                </span>
+                                <div className='present__item'>
+                                    <img src='http://164623.selcdn.com/russell/upload/products/aa8c09fbbe5590fe86276b9c.png' alt='' /><br/>
+                                    <span>Компактный гриль со съемными пластинами<br/><br/>20830-56</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className='present__col'>
-                            <span className='text__number' data-text='2'>
-                                Место
-                            </span>
-                            <div className='present__item'>
-                                <img src='/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
-                                <span>Кофеварка Futura<br/><br/>18663-56</span>
+                            <div className='present__col'>
+                                <span className='text__number' data-text='2'>
+                                    Место
+                                </span>
+                                <div className='present__item'>
+                                    <img src='/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                    <span>Кофеварка Futura<br/><br/>18663-56</span>
+                                </div>
                             </div>
-                        </div>
-                        <div className='present__col'>
-                            <span className='text__number' data-text='3'>
-                                Место
-                            </span>
-                            <div className='present__item'>
-                                <img src='/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
-                                <span>Кофеварка Futura<br/><br/>18663-56</span>
+                            <div className='present__col'>
+                                <span className='text__number' data-text='3'>
+                                    Место
+                                </span>
+                                <div className='present__item'>
+                                    <img src='/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                    <span>Кофеварка Futura<br/><br/>18663-56</span>
+                                </div>
                             </div>
                         </div>
                     </div>

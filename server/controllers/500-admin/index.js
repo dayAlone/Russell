@@ -5,6 +5,7 @@ import Users, { sendUserEmail } from '../../models/user'
 import Winners from '../../models/winners'
 import Presents from '../../models/presents'
 import stringify from 'csv-stringify'
+import config from 'config'
 import { Iconv } from 'iconv'
 import { Types } from 'mongoose'
 import moment from 'moment'
@@ -325,11 +326,51 @@ export default function(app) {
                 let result
                 let { id, status } = this.request.body
                 try {
-                    yield Presents.update({
+                    let letter = yield Presents.findOneAndUpdate({
                         _id: id
                     }, {
                         $set: { status: status }
                     })
+                    if (status === 'active') {
+                        let { from, to, email, product, image } = letter
+
+                        let mandrill = require('node-mandrill')(config.mandrill)
+                        let mailFields = {
+                            message: {
+                                subject: `Russell Hobbs знает, что хочет в подарок ${from}.`,
+                                to: [{email: email, name: to}],
+                                merge: true,
+                                inline_css: true,
+                                merge_language: 'handlebars',
+                                'global_merge_vars': [
+                                    {
+                                        'name': 'from',
+                                        'content': from
+                                    },
+                                    {
+                                        'name': 'to',
+                                        'content': to
+                                    },
+                                    {
+                                        'name': 'product',
+                                        'content': product
+                                    },
+                                    {
+                                        'name': 'image',
+                                        'content': image
+                                    }
+                                ],
+                            },
+                            template_name: 'russell-present',
+                            template_content: []
+                        }
+                        yield new Promise((fulfill, reject) => {
+                            mandrill('/messages/send-template', mailFields, (error, response) => {
+                                if (error) reject(error)
+                                fulfill(response)
+                            })
+                        })
+                    }
                     result = {error: false, result: true}
                 } catch (e) {
                     result = {error: e.message, code: e.code}

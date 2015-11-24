@@ -23,11 +23,11 @@ const RadioGroup = React.createClass({
         if (value) value = value.toString()
 
         const errorMessage = this.getErrorMessage()
-        return <div className='form-group radio-group'>
+        return <div className={`form-group radio-group ${this.props.className}`}>
                 {title ? <label htmlFor={name}>{title}</label> : null}
                 {items.map((el, i) => {
                     let current = el.code ? el.code : el.name
-                    if (name=== 'place')console.log(current, value)
+                    
                     return <span key={i}>
                         <input
                             checked={current.toString() === value}

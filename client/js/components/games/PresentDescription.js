@@ -51,7 +51,7 @@ class PresentDescription extends Component {
                         <Link to='/games/present/gallery/' className='button button--small'>Галерея работ</Link>
                         <br />
                         { this.state.more ? null : <span><a className='small' href='#' onClick={this.toggleMore(true)}>Подробнее</a><br/>
-                    <small><a href='http://164623.selcdn.com/russell/rules/V_podarok_dlya_sebya_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small></span> }
+                                <small><a href='http://164623.selcdn.com/russell/rules/V_podarok_dlya_sebya_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small></span> }
                     </div>
                     { this.state.more ? <div className='present__more'>
                         <p><br/><br/></p>

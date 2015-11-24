@@ -227,14 +227,14 @@ export default function(app) {
             }
         })
         .get('/games/presents/get/', function*() {
-            let {limit, offset, sort, status} = this.query
+            let {limit, offset, sort, status, direction} = this.query
             if (limit && offset && sort) {
                 try {
                     let query = {}
                     if (status && status !== 'all') query['status'] = status
                     let total = yield Presents.find(query)
                     let by = {}
-                    by[sort] = -1
+                    by[sort] = direction ? direction : -1
                     let result = yield Presents.find(query).limit(limit).skip(offset).sort(by)
                     this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {
@@ -243,7 +243,7 @@ export default function(app) {
                 }
             }
         })
-        .get('/games/present/make/', function* () {
+        .get('/games/present/*', function* () {
             this.body = this.render('index')
         })
         .get('/games/:id/:el', function* () {

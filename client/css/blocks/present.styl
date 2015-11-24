@@ -210,3 +210,116 @@
         margin-bottom 30px
         & + h4
             margin-top -10px
+    &__footer, &__toolbar
+        full-width()
+    &__list
+        margin-right -10px
+        margin-left -10px
+
+    &__gallery
+
+        .present-item
+            width 25%
+            float left
+            padding 10px
+            text-align center
+            margin-bottom 10px
+            &__likes
+                color #575c65
+                &--liked
+                    pointer-events none
+                    svg
+                        path
+                            stroke red
+                            opacity 1
+                            fill red
+                &:hover
+                    color white
+                    svg
+                        path
+                            stroke red
+                            opacity 1
+                svg
+                    middle()
+                    position relative
+                    top -3px
+                    margin-right 3px
+                    path
+                        t all
+            &__image
+                margin-bottom 10px
+                width 100%
+                padding-bottom 100%
+                border 1px solid #2b2b2b
+                background-size cover
+                box-shadow inset 0 0 0 10px black
+                cursor pointer
+            svg
+                width 20px
+        .form
+            max-width none
+            margin 0
+            &-group
+                float left
+            .radio-group
+
+                margin-top 3px
+                &, label
+                    font-weight bold
+                a
+                    color white
+                    border-line(alpha(@color, .5))
+            .radio-group:last-of-type
+                float right
+        .direction
+            float left
+            margin-left 7px
+            a
+                background-image none !important
+                size 40px
+                text-align center
+                border 1px solid #454a51
+                display inline-block
+                border-radius 4px
+                float left
+                line-height 40px
+                margin-top -3px
+            input:checked + a
+                background-image none
+                border-color red
+                svg path
+                    fill white
+            svg
+                height 25px
+                middle()
+                path
+                    fill #454a51
+        .pagination
+            font-weight bold
+            margin-top 10px
+            a
+                color white
+                border-line(alpha(@color, .5))
+
+        .dropdown
+            width 265px
+            &__item
+                font-size 13px
+                padding 9px 10px 0px
+
+            &__frame
+                background-color red
+                margin-top -5px
+                border-radius 0 0 4px 4px
+            &__trigger
+                background-color transparent
+                border 1px solid red
+                height 40px
+                padding 0 10px
+                font-size 13px
+                line-height 41px
+                border-radius 4px
+                svg
+                    top 15px
+                &:after
+                    display none

@@ -121,7 +121,7 @@ class Step2 extends Component {
             let status = this.props.getStateValue('status')
             status[1] = true
             let fields = {
-                image: this.refs.cropper.getCroppedCanvas().toDataURL(),
+                image: this.refs.cropper.getCroppedCanvas({width: 800, height: 800}).toDataURL(),
                 cropper: this.refs.cropper.getData(),
                 file: this.state.file,
                 status: status

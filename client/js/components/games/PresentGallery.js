@@ -24,8 +24,7 @@ class Present extends Component {
     render() {
         let { user, el } = this.props
         let { image, likes } = el
-        let liked = likes.indexOf(user._id) !== -1
-
+        let liked = user && likes.indexOf(user._id) !== -1
         return <div className='present-item'>
             <div onClick={this.props.openPhotoSwipe(image)} className='present-item__image' style={{backgroundImage: `url(${image})`}}></div>
             <a href='#' onClick={this.handleClick.bind(this)} className={`present-item__likes ${liked ? 'present-item__likes--liked' : ''}`}>
@@ -67,7 +66,7 @@ class PresentGallery extends Component {
     }
     loadPresentsFromServer() {
         let { url, perPage, offset } = this.state
-        let { type, sort, status, direction } = this.refs.form.getCurrentValues()
+        let { sort, status, direction } = this.refs.form.getCurrentValues()
         $.ajax({
             url: url,
             data: {
@@ -103,6 +102,7 @@ class PresentGallery extends Component {
     }
     handleFormChange(fields) {
         let { limit } = fields
+        if (!limit) limit = this.refs.form.getCurrentValues().limit
         this.setState({perPage: limit}, this.loadPresentsFromServer)
     }
     openPhotoSwipe(image) {

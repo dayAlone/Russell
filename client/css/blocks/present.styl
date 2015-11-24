@@ -7,8 +7,9 @@
         background url(/layout/images/texture.jpg) bottom center no-repeat
         background-size 140% auto
     &__description
-        width 85%
-        margin-left 7.5%
+        @media (min-width: $scr_sm)
+            width 85%
+            margin-left 7.5%
         > p:first-of-type
             margin-bottom 35px
 

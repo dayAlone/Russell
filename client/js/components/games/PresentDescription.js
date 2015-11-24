@@ -48,7 +48,7 @@ class PresentDescription extends Component {
                         {this.props.isLogin ?
                             <Link to='/games/present/make/' className='button button--small'>Отправить письмо</Link>
                             : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
-                        <Link to='/games/present/gallery/' className='button button--small' style={{display: 'none'}}>Галерея работ</Link>
+                        <Link to='/games/present/gallery/' className='button button--small'>Галерея работ</Link>
                         <br />
                         { this.state.more ? null : <a className='small' href='#' onClick={this.toggleMore(true)}>Подробные условия акции</a> }
                     </div>

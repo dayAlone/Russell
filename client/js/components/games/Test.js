@@ -342,7 +342,7 @@ class Test extends Component {
             <img src='/layout/images/line.png' alt='' className='test__divider' />
 
             <a href='#' onClick={this.startGame.bind(this)} className='button'>Начать игру</a><br/>
-            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
+            <a href='#' onClick={this.toggleRules(true)}>Правила игры</a> | <a href='#' onClick={this.toggleRules(true)}>Правила игры</a>
         </div>
     }
     getResultsScreen() {

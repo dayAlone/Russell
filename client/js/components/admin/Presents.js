@@ -43,7 +43,6 @@ class AdminPresents extends Component {
         offset: 0,
         data: [],
         url: '/games/presents/get/',
-        timer: false,
         photoswipe: false,
         image: []
     }

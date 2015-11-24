@@ -14,6 +14,7 @@ const presentSchema = new mongoose.Schema({
     image: String,
     from: String,
     to: String,
+    created: Date,
     sended: {
         type: Boolean,
         default: false,

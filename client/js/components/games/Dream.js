@@ -54,7 +54,7 @@ class Dream extends Component {
                 <div className='center'>
                     {this.props.isLogin ? <Link to='/profile/checks/' className='button'>Принять участие</Link> : <a onClick={this.openModal.bind(this)} href='#' className='button'>Принять участие</a>}<br/>
                     { this.state.more ? null : <a href='#' onClick={this.toggleMore(true)}>Подробнее</a><br/>
-                    <small><a href='http://164623.selcdn.com/russell/rules/Vyigray_mechtu_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small> }
+                    <div><small><a href='http://164623.selcdn.com/russell/rules/Vyigray_mechtu_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small></div> }
                 </div>
                 { this.state.more ? <div className='dream__more'>
                     <p>В акции могут участвовать чеки от покупок, сделанных в период с 12 октября по 27 декабря.</p>

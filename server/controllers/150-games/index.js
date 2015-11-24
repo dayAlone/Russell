@@ -118,21 +118,20 @@ const getUserScores = function* (user, pre, after) {
                     $and: [
                         {
                             created: {
-                                $gte: moment().startOf('day')
+                                $gte: moment().add(3, 'hours').startOf('day')
                             }
                         },
                         {
                             created: {
-                                $lte: moment().endOf('day')
+                                $lte: moment().add(3, 'hours').endOf('day')
                             }
                         }
                     ]
                 })
             })
             let scores = yield Scores.find({ user: user._id, $or: query }).sort({ created: -1 })
-
             scores.map(el => {
-                if (result[el.type]) result[el.type]['today'].push(el)
+                result[el.type]['today'].push(el)
             })
 
             if (typeof after === 'function') result = yield after(result)

@@ -20,7 +20,7 @@ class GamesTimer extends Component {
             <div className='countdown__info'>C {dateStart.format('D MMMM')}<br/> по {dateStop.format('D MMMM')}</div>
             <div className='countdown__frame'>
                 <div className='countdown__till'>
-                    { dateStart === till ? <span>До начала <br/>акции</span> : <span>До очередного <br/>розыгрыша</span> }
+                    { dateStart === till ? <span>До начала <br/>акции</span> : <span>До {code !== 'present' ? 'очередного' : null }<br/>розыгрыша</span> }
 
                 </div>
                 <Countdown till={till}/>

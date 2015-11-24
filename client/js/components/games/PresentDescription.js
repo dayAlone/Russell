@@ -94,7 +94,7 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                <img src='/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
                                 <span>Кофеварка Futura<br/><br/>18663-56</span>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ class PresentDescription extends Component {
                                 Место
                             </span>
                             <div className='present__item'>
-                                <img src='http://164623.selcdn.com/russell/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
+                                <img src='/layout/images/prizes/18663-56_Futura_Coffee_Maker_CO.png' alt='' /><br/>
                                 <span>Кофеварка Futura<br/><br/>18663-56</span>
                             </div>
                         </div>

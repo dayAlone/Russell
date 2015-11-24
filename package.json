@@ -147,7 +147,6 @@
     "throttled-request": "^0.1.1",
     "through-gulp": "^0.3.8",
     "through2": "^2.0.0",
-    "time": "^0.11.4",
     "trace": "^1.2.0",
     "transform-loader": "^0.2.3",
     "typograf": "^4.1.0",

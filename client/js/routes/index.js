@@ -39,6 +39,10 @@ export default function configureRoutes(reducerRegistry) {
                             {
                                 path: 'winners/',
                                 component: require('../components/admin/Winners')
+                            },
+                            {
+                                path: 'presents/',
+                                component: require('../components/admin/Presents')
                             }
                         ])
                     })

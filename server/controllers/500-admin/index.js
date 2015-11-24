@@ -3,6 +3,7 @@ import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import Users, { sendUserEmail } from '../../models/user'
 import Winners from '../../models/winners'
+import Presents from '../../models/presents'
 import stringify from 'csv-stringify'
 import { Iconv } from 'iconv'
 import { Types } from 'mongoose'
@@ -319,7 +320,23 @@ export default function(app) {
                 this.body = result
             }
         })
-
+        .post('/admin/presents/update/', function *(){
+            if (this.req.user && this.req.user.role === 'admin') {
+                let result
+                let { id, status } = this.request.body
+                try {
+                    yield Presents.update({
+                        _id: id
+                    }, {
+                        $set: { status: status }
+                    })
+                    result = {error: false, result: true}
+                } catch (e) {
+                    result = {error: e.message, code: e.code}
+                }
+                this.body = result
+            }
+        })
         /*.get('/admin/*', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 this.body = this.render('index')

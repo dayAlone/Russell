@@ -4,6 +4,7 @@ import Scores from '../../models/scores'
 import Users from '../../models/user'
 import Winners from '../../models/winners'
 import Prizes from '../../models/prizes'
+import Presents from '../../models/presents'
 import { Types } from 'mongoose'
 import moment from 'moment'
 import config from 'config'
@@ -219,6 +220,23 @@ export default function(app) {
                         { $sort: { total: -1 } }
                     ]).exec()
                     let result = yield Users.populate(data, {path: '_id', select: 'displayName photo _id'})
+                    this.body = { list: result, meta: { limit: limit, total_count: total.length }}
+                } catch (e) {
+                    console.error(e)
+                    this.body = { error: e }
+                }
+            }
+        })
+        .get('/games/presents/get/', function*() {
+            let {limit, offset, sort, status} = this.query
+            if (limit && offset && sort) {
+                try {
+                    let query = {}
+                    if (status && status !== 'all') query['status'] = status
+                    let total = yield Presents.find(query)
+                    let by = {}
+                    by[sort] = -1
+                    let result = yield Presents.find(query).limit(limit).skip(offset).sort(by)
                     this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {
                     console.error(e)

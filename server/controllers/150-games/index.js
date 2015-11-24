@@ -235,7 +235,7 @@ export default function(app) {
                     if (status && status !== 'all') query['status'] = status
                     let total = yield Presents.find(query)
                     let by = {}
-                    by[sort] = -1
+                    by[sort] = sort === 'created' ? 1 : -1
                     let result = yield Presents.find(query).limit(limit).skip(offset).sort(by)
                     this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {

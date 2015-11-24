@@ -329,7 +329,7 @@ export default function(app) {
                     let letter = yield Presents.findOneAndUpdate({
                         _id: id
                     }, {
-                        $set: { status: status }
+                        $set: { status: status, sended: status === 'active' }
                     })
                     if (status === 'active') {
                         let { from, to, email, product, image } = letter

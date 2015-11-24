@@ -9,7 +9,7 @@ import { Types } from 'mongoose'
 import moment from 'moment'
 import config from 'config'
 import pluralize from '../../../client/js/libs/pluralize'
-import time from 'time'
+
 const getUserRating = function* (user, type, scores, raffles) {
     try {
         let position = false

@@ -141,7 +141,7 @@ class PresentGallery extends Component {
                         <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                             <Dropdown name='sort' className='dropdown--border' items={[
                                 {name: 'Сортировка по дате добавления', code: 'created'},
-                                {name: 'Сортировка по рейтингу', code: 'likes'}
+                                {name: 'Сортировка по рейтингу', code: 'count'}
                             ]} value='likes'/>
                             <RadioGroup name='direction' className='direction' items={[
                                 {name: <IconSVG src={require('svg-inline!../../../public/images/svg/arrow-up.svg')}/>, code: -1},

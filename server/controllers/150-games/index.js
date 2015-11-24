@@ -232,10 +232,16 @@ export default function(app) {
                 try {
                     let query = {}
                     if (status && status !== 'all') query['status'] = status
-                    let total = yield Presents.find(query)
                     let by = {}
-                    by[sort] = direction ? direction : -1
-                    let result = yield Presents.find(query).limit(limit).skip(offset).sort(by)
+                    by[sort] = direction ? parseInt(direction, 0) : -1
+                    let fields = [
+                        {$match: query},
+                        {$project: { count: {$size: '$likes'}, likes: 1, image: 1 }},
+                        {$sort: by}]
+                    let total = yield Presents.aggregate(fields).exec()
+                    fields.push({$limit: parseInt(limit, 10)})
+                    fields.push({$skip: parseInt(offset, 10)})
+                    let result = yield Presents.aggregate(fields).exec()
                     this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {
                     console.error(e)

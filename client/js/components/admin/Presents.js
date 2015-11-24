@@ -121,7 +121,7 @@ class AdminPresents extends Component {
                 ]} value='all'/>
                 <Dropdown name='sort' className='dropdown--small' items={[
                     {name: 'Сортировка: добавление', code: 'created'},
-                    {name: 'Сортировка: рейтинг', code: 'likes'}
+                    {name: 'Сортировка: рейтинг', code: 'count'}
                 ]} value='created'/>
                 <RadioGroup name='limit' title='Показывать по:' items={[
                     {name: '50', code: 50},

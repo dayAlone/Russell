@@ -95,7 +95,6 @@ class AdminPresents extends Component {
     }
     updatePresent(id, status) {
         return (e) => {
-            console.log(id, status)
             $.post('/admin/presents/update/', {
                 id: id,
                 status: status

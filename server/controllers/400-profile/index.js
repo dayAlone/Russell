@@ -245,12 +245,33 @@ export default function(app) {
         .get('/profile/presents/get/', function* () {
             if (this.req.user) {
                 let result
-                let { image, product, to, from, email } = this.request.body
                 try {
                     let data = yield Present.find({
                         user: this.req.user._id
                     }).sort({created: -1})
                     result = { error: false, result: data}
+                } catch (e) {
+                    result = { error: true, message: e.message }
+                }
+                this.body = result
+            }
+        })
+        .post('/profile/presents/like/', function* () {
+            if (this.req.user) {
+                let result
+                let { id } = this.request.body
+                try {
+                    let present = yield Present.findOne({
+                        _id: id
+                    })
+                    if (present && present.likes.indexOf(this.req.user._id) === -1) {
+                        yield Present.update({
+                            _id: id
+                        }, {
+                            $push: { likes: this.req.user._id }
+                        })
+                    }
+                    result = { error: false, result: true}
                 } catch (e) {
                     result = { error: true, message: e.message }
                 }

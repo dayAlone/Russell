@@ -18,12 +18,13 @@ import { bindActionCreators } from 'redux'
 class Present extends Component {
     handleClick(e) {
         if (!this.props.user) this.props.openModal()
+        else this.props.likePresent(this.props.el._id)()
         e.preventDefault()
     }
     render() {
         let { user, el } = this.props
         let { image, likes } = el
-        let liked = likes.indexOf(user) !== -1
+        let liked = likes.indexOf(user._id) !== -1
 
         return <div className='present-item'>
             <div onClick={this.props.openPhotoSwipe(image)} className='present-item__image' style={{backgroundImage: `url(${image})`}}></div>
@@ -120,6 +121,15 @@ class PresentGallery extends Component {
         $('body').removeClass('photoswipe-open')
         this.setState({photoswipe: false})
     }
+    likePresent(id) {
+        return () => {
+            $.post('/profile/presents/like/', {
+                id: id
+            }, response => {
+                if (!response.error) this.loadPresentsFromServer()
+            })
+        }
+    }
     render() {
         return <div className='present'>
             <h2 className='center'>В подарок. Для себя</h2>
@@ -146,7 +156,7 @@ class PresentGallery extends Component {
                     </div>
                     <div className='present__list'>
                         {this.state.data.length > 0 ? this.state.data.map((el, i) => {
-                            return <Present el={el} key={i} openModal={this.openModal.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} user={this.props.user}/>
+                            return <Present el={el} key={i} likePresent={this.likePresent.bind(this)} openModal={this.openModal.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} user={this.props.user}/>
                         }) : <Spinner/>}
                     </div>
                     <div className='present__footer'>

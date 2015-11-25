@@ -36,6 +36,7 @@ class Admin extends Component {
                                     {name: 'Победители', link: '/admin/winners/'},
                                     {name: 'Фото', link: '/admin/presents/'},
                                     {name: 'Розыгрыш', link: '/admin/competitions/'},
+                                    {name: 'Отчеты', link: '/admin/reports/'},
                                 ].map((el, i) => {
                                     if (i === 0 && this.props.location.pathname !== '/admin/') {
                                         return <IndexLink key={i} to='/admin/' className='admin__link' activeClassName='admin__link--active'>Чеки</IndexLink>

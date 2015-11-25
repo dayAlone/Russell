@@ -64,7 +64,8 @@ class Winners extends Component {
             let { game, raffle } = values
             this.setState({
                 game: game,
-                raffle: raffle
+                raffle: raffle,
+                data: []
             }, () => {
                 this.loadRatingFromServer()
             })
@@ -152,20 +153,26 @@ class Winners extends Component {
             return <div className='winners'>
                 {data.map((el, i) => {
                     let { position, user, additional, prize } = el
-                    return <div className={`winners__item winners__item--games-${position}`} key={i}>
-                        <div className='winners__position'>
-                            {position} место
+                    if (user) {
+                        let { photo, displayName } = user
+                        let { photo: image, name } = prize
+                        let { scores } = additional
+                        return <div className={`winners__item winners__item--games-${position}`} key={i}>
+                            <div className='winners__position'>
+                                {position} место
+                            </div>
+                            <div className='winners__scores'>
+                                <strong>{scores}</strong><br/>
+                                {pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])}
+                            </div>
+                            <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
+                            <div className='winners__name'>{displayName}</div>
+                            {prize ? <div className='winners__prize'>
+                                <img src={image} alt='' /> {name}
+                            </div> : null}
                         </div>
-                        <div className='winners__scores'>
-                            <strong>{additional.scores}</strong><br/>
-                            {pluralize(additional.scores, ['балл', 'балла', 'баллов', 'балла'])}
-                        </div>
-                        <div className='winners__photo' style={{backgroundImage: `url(${user.photo ? user.photo : '/layout/images/svg/avatar.svg'})`}}/>
-                        <div className='winners__name'>{user.displayName}</div>
-                        {prize ? <div className='winners__prize'>
-                            <img src={prize.photo} alt='' /> {prize.name}
-                        </div> : null}
-                    </div>
+                    }
+                    return null
                 })}
             </div>
         default:

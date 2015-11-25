@@ -10,6 +10,8 @@ import { Iconv } from 'iconv'
 import { Types } from 'mongoose'
 import moment from 'moment'
 
+import request from 'co-request'
+
 let getChecks = function * (ctx) {
     let fields = {}
     let {type, offset, limit, id, raffle} = ctx.query
@@ -50,11 +52,79 @@ let getChecks = function * (ctx) {
 export default function(app) {
     const router = new Router()
     router
-        .get('/admin/users/get-csv/', function* () {
+        .get('/admin/get-report/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
+                let { fields } = this.query
+                let { id, code, raffle } = JSON.parse(fields)
                 this.res.writeHead(200, {
                     'Content-Type': 'text/csv; charset=utf-16le; header=present;',
-                    'Content-Disposition': 'attachment;filename=users.csv'
+                    'Content-Disposition': 'attachment;filename=' + code + '-' + moment(raffle[0]).format('DD.MM') + '-' + moment(raffle[1]).format('DD.MM.YYYY') + '.csv'
+                })
+                this.res.write(new Buffer([0xff, 0xfe]))
+                try {
+                    switch (code) {
+                    case 'kitchen':
+                    case 'test':
+                        let itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
+                            qs: {
+                                limit: '1000000',
+                                offset: '0',
+                                game: code,
+                                raffle: JSON.stringify(raffle)
+                            }
+                        })
+                        let winnersRaw = yield request.get(`http://${config.domain}/games/winners/get/`, {
+                            qs: {
+                                game: id,
+                                raffle: JSON.stringify(raffle)
+                            }
+                        })
+                        let winners = {}
+                        let items = JSON.parse(itemsRaw.body).list
+
+                        JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
+
+                        let data = [[
+                            'Место в рейтинге',
+                            'Участник',
+                            'Набранно баллов',
+                            'Приз'
+                        ]]
+                        items.map((el, i) => {
+                            data.push([
+                                i + 1,
+                                el._id.displayName,
+                                el.total,
+                                winners[el._id._id] ? winners[el._id._id].name : ''
+                            ])
+                        })
+
+                        break
+                    default:
+
+                    }
+                    let text = yield new Promise((fulfill, reject) => {
+                        stringify(data, {delimiter: '\t'}, (err, text) => {
+                            if (err) reject(err)
+                            fulfill(text)
+                        })
+                    })
+                    let iconv = new Iconv('utf8', 'utf16le')
+                    let buffer = iconv.convert(text)
+                    this.res.write(buffer)
+                    this.res.end()
+                } catch (e) {
+                    console.error(e.message, e.stack)
+                }
+
+            }
+        })
+        .get('/admin/users/get-csv/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+
+                this.res.writeHead(200, {
+                    'Content-Type': 'text/csv; charset=utf-16le; header=present;',
+                    'Content-Disposition': 'attachment;filename=users-' + moment().format('DD.MM.YYYY-HH-mm') + '.csv'
                 })
                 this.res.write(new Buffer([0xff, 0xfe]))
 
@@ -190,7 +260,7 @@ export default function(app) {
                     let { id, raffle } = this.request.body
                     if (raffle) raffle = JSON.parse(raffle)
                     let data = yield Winners.findOne({ _id: id }).populate('user').populate('prize').populate('game')
-                    let { game, user, position, additional, prize} = data
+                    let { game, user, position, prize} = data
                     let mailFields = {
                         message: {
                             subject: 'Поздравляем!',
@@ -240,7 +310,7 @@ export default function(app) {
                             </tr>
                             <tr>
                                 <td class="center">
-                                    <p>Чтобы получить ваш выигрыш, свяжитесь, пожалуйста, <br/>с нами по электронной почте: <br/>
+                                    <p>Чтобы получить ваш выигрыш, свяжитесь, пожалуйста, <br/>с нами по электронной почте:<br/>
                                     <a href='mailto:support@russellhobbs-promo.ru'>support@russellhobbs-promo.ru</a>
                                     <br/><br/>Ваш Russell Hobbs</p>
                                     <h1><a href="http://russellhobbs-promo.ru">russellhobbs-promo.ru</a></h1>
@@ -329,7 +399,7 @@ export default function(app) {
                 this.body = result
             }
         })
-        .post('/admin/presents/update/', function *(){
+        .post('/admin/presents/update/', function *() {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result
                 let { id, status } = this.request.body

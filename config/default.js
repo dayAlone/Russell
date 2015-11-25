@@ -4,7 +4,7 @@ import { deferConfig as defer } from 'config/defer'
 export default {
 
     cdn: `http://164623.selcdn.com/russell`,
-    version: process.env.VERSION || 'v1.4.14',
+    version: process.env.VERSION || 'v1.4.15',
     domain: 'localhost:3000',
     __dirname: defer(function(cfg) {
         return cfg.root

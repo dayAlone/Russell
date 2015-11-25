@@ -50,7 +50,7 @@ let getChecks = function * (ctx) {
         sort: {
             created: -1
         }
-    }).skip(offset).limit(limit).populate('products.product').populate('user')
+    }).skip(offset).limit(limit).populate('products.product').populate('user', 'displayName _id email photo')
     return {
         total: total,
         result: result
@@ -107,23 +107,39 @@ export default function(app) {
 
                         break
                     case 'checks':
-                        itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
+                        itemsRaw = yield request.get(`http://${config.domain}/admin/checks/get/`, {
                             qs: {
                                 limit: '1000000',
                                 offset: '0',
-                                game: code,
                                 raffle: JSON.stringify(raffle)
                             }
 
                         })
                         items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
+                        console.log(items)
 
                         data = [[
-                            'Место в рейтинге',
-                            'Участник',
-                            'Набранно баллов',
-                            'Приз'
+                            'ID чека',
+                            'Пользователь',
+                            'Эл. почта',
+                            'Дата загрузки',
+                            'КПК',
+                            'SKU',
+                            'Сумма',
+                            'Статус'
                         ]]
+                        items.map(el => {
+                            data.push([
+                                el._id,
+                                el.user.displayName,
+                                el.user.email,
+                                moment(el.crated).format('DD.MM.YYYY HH:mm'),
+                                el.kpk_number,
+                                el.products ? el.products.map(p => (p.product.name)).join(', ') : '',
+                                el.total,
+                                el.status
+                            ])
+                        })
                         break
                     default:
 
@@ -232,9 +248,11 @@ export default function(app) {
 
         })
         .get('/admin/checks/get/', function* () {
-            if (this.req.user && this.req.user.role === 'admin') {
-                let { limit } = this.query
+            let { limit, raffle } = this.query
+            if (this.req.user && this.req.user.role === 'admin' || raffle) {
+
                 let data = yield getChecks(this)
+
                 this.body = { list: data.result, meta: { limit: limit, total_count: data.total }}
             }
         })

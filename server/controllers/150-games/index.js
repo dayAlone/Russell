@@ -232,6 +232,7 @@ export default function(app) {
                 try {
                     let query = {}
                     if (status && status !== 'all') query['status'] = status
+                    else query['status'] = 'active'
                     let by = {}
                     by[sort] = direction ? parseInt(direction, 0) : -1
                     let fields = [

@@ -11,6 +11,14 @@ import { Types } from 'mongoose'
 import moment from 'moment'
 
 import request from 'co-request'
+let IsJsonString = (str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
 let getChecks = function * (ctx) {
     let fields = {}
@@ -76,10 +84,10 @@ export default function(app) {
                             }
                         })
                         let winners = {}
-                        let items = JSON.parse(itemsRaw.body).list
+                        let items = IsJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
 
-                        JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
-
+                        if (IsJsonString(winnersRaw.body)) JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
+                        
                         data = [[
                             'Место в рейтинге',
                             'Участник',

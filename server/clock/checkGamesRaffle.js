@@ -59,7 +59,7 @@ export default function* () {
 
     let notifications = {}
     data.map(el => {
-        notifications[el._id.code] = el.dates
+        if (el._id) notifications[el._id.code] = el.dates
     })
 
     let users = yield Users.find()

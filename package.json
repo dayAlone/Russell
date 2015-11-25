@@ -112,7 +112,7 @@
     "react-google-recaptcha": "^0.5.1",
     "react-helmet": "^2.1.0",
     "react-hot-loader": "^2.0.0-alpha-4",
-    "react-kit": "^0.1.8",
+    "react-kit": "https://github.com/grimor/react-kit.git#patch-1",
     "react-modal": "^0.5.0",
     "react-paginate": "^0.4.0",
     "react-photoswipe": "^0.4.0",

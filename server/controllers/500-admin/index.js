@@ -11,13 +11,13 @@ import { Types } from 'mongoose'
 import moment from 'moment'
 
 import request from 'co-request'
-let IsJsonString = (str) {
+let isJsonString = function (str) {
     try {
-        JSON.parse(str);
+        JSON.parse(str)
     } catch (e) {
-        return false;
+        return false
     }
-    return true;
+    return true
 }
 
 let getChecks = function * (ctx) {
@@ -65,6 +65,7 @@ export default function(app) {
                 let { fields } = this.query
                 let { id, code, raffle } = JSON.parse(fields)
                 let data = []
+                let items = []
                 try {
                     switch (code) {
                     case 'kitchen':
@@ -84,10 +85,10 @@ export default function(app) {
                             }
                         })
                         let winners = {}
-                        let items = IsJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
+                        items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
 
-                        if (IsJsonString(winnersRaw.body)) JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
-                        
+                        if (isJsonString(winnersRaw.body)) JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
+
                         data = [[
                             'Место в рейтинге',
                             'Участник',
@@ -105,7 +106,23 @@ export default function(app) {
 
                         break
                     case 'checks':
-                        console.log(123)
+                        let itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
+                            qs: {
+                                limit: '1000000',
+                                offset: '0',
+                                game: code,
+                                raffle: JSON.stringify(raffle)
+                            }
+
+                        })
+                        items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
+
+                        data = [[
+                            'Место в рейтинге',
+                            'Участник',
+                            'Набранно баллов',
+                            'Приз'
+                        ]]
                         break
                     default:
 

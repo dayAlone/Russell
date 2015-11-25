@@ -111,7 +111,8 @@ export default function(app) {
                             qs: {
                                 limit: '1000000',
                                 offset: '0',
-                                raffle: JSON.stringify(raffle)
+                                raffle: JSON.stringify(raffle),
+                                type: all
                             }
 
                         })

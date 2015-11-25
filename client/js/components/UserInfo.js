@@ -12,6 +12,7 @@ class UserInfo extends Component {
     }
     openModal(e) {
         const { openModal } = this.props.actions
+        if (window.yaCounter33079538) window.yaCounter33079538.reachGoal('registration_head')
         openModal()
         e.preventDefault()
     }

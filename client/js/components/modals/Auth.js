@@ -27,7 +27,7 @@ class AuthModal extends Component {
                 (isLogin === true && modal !== 'forget-form-success' && modal !== 'forget-form' && modal !== 'confirm')
                 || (modal === false && prevProps.modal !== false && modal !== 'confirm')) {
                     this.refs.modal.hide()
-                }    
+                }
         }
 
         if (modal !== false && this.refs.modal.hasHidden()) this.refs.modal.show()
@@ -62,6 +62,7 @@ class AuthModal extends Component {
                 error: 'Укажите, что вы не робот;)'
             })
         } else {
+            if (window.yaCounter33079538) window.yaCounter33079538.reachGoal('registration')
             this.setState({
                 error: false,
                 disabled: true

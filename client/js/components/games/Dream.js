@@ -23,6 +23,9 @@ class Dream extends Component {
     componentDidMount() {
         (window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=Fj1uTj08NP*2HhNOZRXYaXPRqd6LQx7gdiwJZ41GmCCLOHsNDHgf10KsTi/nRPksosF6cxt8P2Rn4m*mvgksp6QnVtaLOfCqjqhzjDW9YUiaZegMPQ/54CXBC3GvFvJhcBcpDNH79Hn8lVZURIVLDDfuvi/mWkIw4KW*yHe58fw-'
     }
+    handleClick() {
+        if (window.yaCounter33079538) window.yaCounter33079538.reachGoal('takepart')
+    }
     render() {
         return <div className='dream'>
             <Title type='short'/>
@@ -55,7 +58,7 @@ class Dream extends Component {
                 <h3 className='center'>Время проведения акции – с 12 октября по 28 декабря.</h3>
                 <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                 <div className='center'>
-                    {this.props.isLogin ? <Link to='/profile/checks/' className='button'>Принять участие</Link> : <a onClick={this.openModal.bind(this)} href='#' className='button'>Принять участие</a>}<br/>
+                    {this.props.isLogin ? <Link to='/profile/checks/' className='button' onClick={this.handleClick.bind(this)}>Принять участие</Link> : <a onClick={this.openModal.bind(this)} href='#' className='button'>Принять участие</a>}<br/>
                 { this.state.more ? null : <span><a href='#' onClick={this.toggleMore(true)}>Подробнее</a><br/><small><a href='http://164623.selcdn.com/russell/rules/Vyigray_mechtu_rules.pdf' target='_blank'>Условия и правила проведения акции</a></small></span> }
                 </div>
                 { this.state.more ? <div className='dream__more'>

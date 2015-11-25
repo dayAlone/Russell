@@ -220,10 +220,13 @@
                 text-align center !important
         @media (min-width: $scr_s)
             .present__col
-                width 50%
+
                 white-space no-wrap
+
                 &:first-of-type, &:last-of-type
                     width 25%
+                &:nth-child(2)
+                    width 50%
         .button--small
             background-color #575c65
             min-width 90px

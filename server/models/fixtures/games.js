@@ -1,4 +1,5 @@
 import moment from 'moment'
+import oid from '../../libs/oid'
 
 export default (Game) => {
     let games = [
@@ -43,7 +44,7 @@ export default (Game) => {
             image: '/layout/images/banner-4.jpg',
             code: 'present',
             flag: 'Акция!',
-            raffles: ['30.11.2015 18:00', '14.12.2015 18:00', '28.12.2015 18:00'],
+            raffles: ['30.12.2015 18:00'],
             sort: 400
         },
         {
@@ -77,6 +78,7 @@ export default (Game) => {
         el.raffles = el.raffles.map(r => {
             return moment(r, 'DD.MM.YYYY HH:mm').toDate()
         })
+        el._id = oid(el.name)
 
         Game.create(el, err => (console.log(err)))
     })

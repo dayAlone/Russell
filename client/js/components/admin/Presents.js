@@ -44,7 +44,8 @@ class AdminPresents extends Component {
         data: [],
         url: '/games/presents/get/',
         photoswipe: false,
-        image: []
+        image: [],
+        type: 'all'
     }
     loadPresentsFromServer() {
         let {url, perPage, offset} = this.state

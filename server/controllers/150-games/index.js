@@ -232,12 +232,12 @@ export default function(app) {
                 try {
                     let query = {}
                     if (status && status !== 'all') query['status'] = status
-                    else query['status'] = 'active'
+                    else if (!status) query['status'] = 'active'
                     let by = {}
                     by[sort] = direction ? parseInt(direction, 0) : -1
                     let fields = [
                         {$match: query},
-                        {$project: { count: {$size: '$likes'}, likes: 1, image: 1 }},
+                        {$project: { count: {$size: '$likes'}, likes: 1, image: 1, status: 1, created: 1 }},
                         {$sort: by}]
                     let total = yield Presents.aggregate(fields).exec()
                     fields.push({$limit: parseInt(limit, 10)})

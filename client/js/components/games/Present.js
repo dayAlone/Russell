@@ -177,6 +177,9 @@ class Step2 extends Component {
                                 style={{height: 600, width: 600}}
                                 aspectRatio={1 / 1}
                                 guides={false}
+                                minCropBoxHeight={200}
+                                minCropBoxWidth={200}
+                                autoCropArea={1}
                                 crop={this._crop.bind(this)} />
                             <div className='crop__buttons'>
                                 <a href='#' onClick={this.zoomIn.bind(this)}><img src='/layout/images/svg/zoom-in.svg' alt='' /></a><br/>

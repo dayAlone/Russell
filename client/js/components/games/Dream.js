@@ -20,6 +20,9 @@ class Dream extends Component {
         openModal()
         e.preventDefault()
     }
+    componentDidMount() {
+        (window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=Fj1uTj08NP*2HhNOZRXYaXPRqd6LQx7gdiwJZ41GmCCLOHsNDHgf10KsTi/nRPksosF6cxt8P2Rn4m*mvgksp6QnVtaLOfCqjqhzjDW9YUiaZegMPQ/54CXBC3GvFvJhcBcpDNH79Hn8lVZURIVLDDfuvi/mWkIw4KW*yHe58fw-'
+    }
     render() {
         return <div className='dream'>
             <Title type='short'/>

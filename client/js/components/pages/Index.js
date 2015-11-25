@@ -5,7 +5,9 @@ import Title from '../layout/Title'
 import Categories from '../Categories'
 
 class PageIndex extends Component {
-
+    componentDidMount() {
+        (window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=eI/5AIf05VJO6X4NteuvCFMyU4l8kS204P4e3inO8QGQ2z4SfXIpyAGEpi52OvJ30cQz5dpJ/wk0HhFKeY6H8upQJwKZQQlpUn/TKyallyKqB3ObAMua*7RTWDvxygEAQZ/vIPUFK7tOsEGld/KTnaLAdy4E4CfC2GKksbvF6k0-'
+    }
     render() {
         return <div className='page page--index'>
             <Helmet title='Russell Hobbs' />

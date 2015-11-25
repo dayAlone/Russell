@@ -116,8 +116,6 @@ export default function(app) {
 
                         })
                         items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
-                        console.log(items)
-
                         data = [[
                             'ID чека',
                             'Пользователь',
@@ -133,11 +131,42 @@ export default function(app) {
                                 el._id,
                                 el.user.displayName,
                                 el.user.email,
-                                moment(el.crated).format('DD.MM.YYYY HH:mm'),
+                                moment(el.created).format('DD.MM.YYYY HH:mm'),
                                 el.kpk_number,
                                 el.products ? el.products.map(p => (p.product.name)).join(', ') : '',
                                 el.total,
                                 el.status
+                            ])
+                        })
+                        break
+                    case 'present':
+                        itemsRaw = yield request.get(`http://${config.domain}/games/presents/get/`, {
+                            qs: {
+                                limit: '1000000',
+                                offset: '0',
+                                raffle: JSON.stringify(raffle),
+                                sort: 'count',
+                                status: 'all',
+                                admin: 'qwerty'
+                            }
+
+                        })
+                        items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
+                        console.log(items)
+                        data = [[
+                            'Дата/время',
+                            'Позиция',
+                            'Участник',
+                            'Фото',
+                            'Лайков'
+                        ]]
+                        items.map((el, i) => {
+                            data.push([
+                                moment(el.created).format('DD.MM.YYYY HH:mm'),
+                                i + 1,
+                                el.user.displayName,
+                                el.image,
+                                el.count
                             ])
                         })
                         break

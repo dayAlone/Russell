@@ -40,7 +40,7 @@ let getChecks = function * (ctx) {
     } else if (raffle) {
         raffle = JSON.parse(raffle)
         fields['created'] = { $lte: new Date(raffle[1]), $gt: new Date(raffle[0])}
-        fields['status'] = 'active'
+        if (!type) fields['status'] = 'active'
     }
     if (parseInt(id, 10) > 0) {
         fields['_id'] = id

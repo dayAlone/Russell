@@ -129,7 +129,7 @@ export default function(app) {
                         items.map(el => {
                             data.push([
                                 el._id,
-                                el.user.displayName,
+                                el.user ? el.user.displayName : '',
                                 el.user.email,
                                 moment(el.created).format('DD.MM.YYYY HH:mm'),
                                 el.kpk_number,
@@ -152,7 +152,6 @@ export default function(app) {
 
                         })
                         items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
-                        console.log(items)
                         data = [[
                             'Дата/время',
                             'Позиция',

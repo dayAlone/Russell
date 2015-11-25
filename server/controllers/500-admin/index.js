@@ -112,7 +112,7 @@ export default function(app) {
                                 limit: '1000000',
                                 offset: '0',
                                 raffle: JSON.stringify(raffle),
-                                type: all
+                                type: 'all'
                             }
 
                         })

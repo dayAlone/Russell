@@ -268,7 +268,7 @@ class Competition extends Component {
             let count = 0
             if (this.state.values) for (let i in this.state.values.places) count++
             return <div className='table__buttons'>
-                    <a href='#' onClick={this.showRandomModal.bind(this)} className={this.state.values && this.state.values.random.length < 2 && !this.state.values ? 'disabled' : null}>Победитель из случайных</a>
+                    <a href='#' onClick={this.showRandomModal.bind(this)} className={(this.state.values && this.state.values.random.length < 2) || !this.state.values ? 'disabled' : null}>Победитель из случайных</a>
                     <a href='#' onClick={this.createWinners.bind(this)} className={count === 0 ? 'disabled' : null}>Сформировать победителей</a>
                 </div>
         }

@@ -36,6 +36,9 @@
             margin-bottom 30px
         &--again
             margin-top 20px
+            @media (max-width: $scr_s)
+                font-size 16px
+                overflow hidden
         &--locked
             background-color #383c41
             pointer-events none
@@ -100,8 +103,9 @@
                 top auto
                 bottom -65px
                 width 100%
+                white-space no-wrap
                 a
-                    margin 0 10px
+                    margin 0 8px
                 br
                     display none
             a
@@ -116,6 +120,7 @@
             .cropper-container
                 position relative
                 z-index 2
+                padding-bottom 100%
                 @media (max-width: $scr_s)
                     max-width 100%
         &:after
@@ -162,13 +167,16 @@
             display inline-block
             color white
             width 100%
+            overflow hidden
         &-frame
             border 1px solid #575c65
             full-width()
-            border-radius 3px
+            border-radius 5px
             margin-bottom 4px
             t border-color
+            max-height 42px
             &--active
+                max-height none
                 border-color #717b84
                 .present__category-name
                     background-color #717b84
@@ -186,7 +194,7 @@
         padding 30px 0
         full-width()
         @media (max-width: $scr_s)
-            padding 30px
+            padding 20px
     &__col
         float left
         min-height 1px
@@ -270,6 +278,7 @@
     h2
         text-align center
         margin-bottom 30px
+        padding 0 20px
         @media (min-width: $scr_s)
             font-size 33px
         & + h4

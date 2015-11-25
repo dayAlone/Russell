@@ -56,11 +56,7 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'admin') {
                 let { fields } = this.query
                 let { id, code, raffle } = JSON.parse(fields)
-                this.res.writeHead(200, {
-                    'Content-Type': 'text/csv; charset=utf-16le; header=present;',
-                    'Content-Disposition': 'attachment;filename=' + code + '-' + moment(raffle[0]).format('DD.MM') + '-' + moment(raffle[1]).format('DD.MM.YYYY') + '.csv'
-                })
-                this.res.write(new Buffer([0xff, 0xfe]))
+                let data = []
                 try {
                     switch (code) {
                     case 'kitchen':
@@ -84,7 +80,7 @@ export default function(app) {
 
                         JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
 
-                        let data = [[
+                        data = [[
                             'Место в рейтинге',
                             'Участник',
                             'Набранно баллов',
@@ -100,19 +96,30 @@ export default function(app) {
                         })
 
                         break
+                    case 'checks':
+                        console.log(123)
+                        break
                     default:
 
                     }
-                    let text = yield new Promise((fulfill, reject) => {
-                        stringify(data, {delimiter: '\t'}, (err, text) => {
-                            if (err) reject(err)
-                            fulfill(text)
+                    if (data.length > 0) {
+                        this.res.writeHead(200, {
+                            'Content-Type': 'text/csv; charset=utf-16le; header=present;',
+                            'Content-Disposition': 'attachment;filename=' + code + '-' + moment(raffle[0]).format('DD.MM') + '-' + moment(raffle[1]).format('DD.MM.YYYY') + '.csv'
                         })
-                    })
-                    let iconv = new Iconv('utf8', 'utf16le')
-                    let buffer = iconv.convert(text)
-                    this.res.write(buffer)
-                    this.res.end()
+                        this.res.write(new Buffer([0xff, 0xfe]))
+                        let text = yield new Promise((fulfill, reject) => {
+                            stringify(data, {delimiter: '\t'}, (err, text) => {
+                                if (err) reject(err)
+                                fulfill(text)
+                            })
+                        })
+                        let iconv = new Iconv('utf8', 'utf16le')
+                        let buffer = iconv.convert(text)
+                        this.res.write(buffer)
+                        this.res.end()
+                    }
+
                 } catch (e) {
                     console.error(e.message, e.stack)
                 }

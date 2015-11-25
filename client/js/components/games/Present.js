@@ -174,7 +174,7 @@ class Step2 extends Component {
                                 ref='cropper'
                                 src={file}
                                 data={this.state.cropper}
-                                style={{height: 600}}
+                                minContainerHeight={320}
                                 aspectRatio={1 / 1}
                                 guides={false}
                                 minCropBoxHeight={200}

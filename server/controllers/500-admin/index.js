@@ -130,7 +130,7 @@ export default function(app) {
                             data.push([
                                 el._id,
                                 el.user ? el.user.displayName : '',
-                                el.user.email,
+                                el.user ? el.user.email : '',
                                 moment(el.created).format('DD.MM.YYYY HH:mm'),
                                 el.kpk_number,
                                 el.products ? el.products.map(p => (p.product.name)).join(', ') : '',

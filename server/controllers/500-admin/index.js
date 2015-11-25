@@ -66,11 +66,12 @@ export default function(app) {
                 let { id, code, raffle } = JSON.parse(fields)
                 let data = []
                 let items = []
+                let itemsRaw
                 try {
                     switch (code) {
                     case 'kitchen':
                     case 'test':
-                        let itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
+                        itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
                             qs: {
                                 limit: '1000000',
                                 offset: '0',
@@ -106,7 +107,7 @@ export default function(app) {
 
                         break
                     case 'checks':
-                        let itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
+                        itemsRaw = yield request.get(`http://${config.domain}/games/rating/get/`, {
                             qs: {
                                 limit: '1000000',
                                 offset: '0',

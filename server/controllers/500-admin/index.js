@@ -10,6 +10,43 @@ import { Iconv } from 'iconv'
 import { Types } from 'mongoose'
 import moment from 'moment'
 
+let getChecks = function * (ctx) {
+    let fields = {}
+    let {type, offset, limit, id, raffle} = ctx.query
+    if (type && type !== 'all') {
+        let until = yield Game.findCurrentRaffle('checks')
+        switch (type) {
+        case 'gameover':
+            fields['until'] = { $lt: until }
+            fields['vinner'] = false
+            break
+        case 'vinner':
+            fields['vinner'] = true
+            break
+        default:
+            fields['status'] = type
+            fields['until'] = { $gte: until }
+        }
+    } else if (raffle) {
+        raffle = JSON.parse(raffle)
+        fields['created'] = { $lte: new Date(raffle[1]), $gt: new Date(raffle[0])}
+        fields['status'] = 'active'
+    }
+    if (parseInt(id, 10) > 0) {
+        fields['_id'] = id
+    }
+    let total = yield Check.count(fields)
+    let result = yield Check.find(fields, {}, {
+        sort: {
+            created: -1
+        }
+    }).skip(offset).limit(limit).populate('products.product').populate('user')
+    return {
+        total: total,
+        result: result
+    }
+}
+
 export default function(app) {
     const router = new Router()
     router
@@ -93,38 +130,9 @@ export default function(app) {
         })
         .get('/admin/checks/get/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
-                let fields = {}
-                let {type, offset, limit, id, raffle} = this.query
-                console.log(type)
-                if (type && type !== 'all') {
-                    let until = yield Game.findCurrentRaffle('checks')
-                    switch (type) {
-                    case 'gameover':
-                        fields['until'] = { $lt: until }
-                        fields['vinner'] = false
-                        break
-                    case 'vinner':
-                        fields['vinner'] = true
-                        break
-                    default:
-                        fields['status'] = type
-                        fields['until'] = { $gte: until }
-                    }
-                } else if (raffle) {
-                    raffle = JSON.parse(raffle)
-                    fields['created'] = { $lte: new Date(raffle[1]), $gt: new Date(raffle[0])}
-                    fields['status'] = 'active'
-                }
-                if (parseInt(id, 10) > 0) {
-                    fields['_id'] = id
-                }
-                let total = yield Check.count(fields)
-                let result = yield Check.find(fields, {}, {
-                    sort: {
-                        created: -1
-                    }
-                }).skip(offset).limit(limit).populate('products.product').populate('user')
-                this.body = { list: result, meta: { limit: limit, total_count: total }}
+                let { limit } = this.query
+                let data = yield getChecks(this)
+                this.body = { list: data.result, meta: { limit: limit, total_count: data.total }}
             }
         })
         .get('/admin/checks/get-csv/', function* () {

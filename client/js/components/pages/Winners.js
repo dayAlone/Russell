@@ -104,30 +104,41 @@ class Winners extends Component {
         this.getGamesList()
         if (prevState.game !== this.state.game) this.setState({ raffle: false })
     }
+    getByLink(link) {
+        let matches
+        let network = ''
+        if (link) {
+            matches = link.match(/:\/\/(?:www\.)?(.[^/]+)(.*)/)
+            switch (matches[1]) {
+            case 'vk.com':
+                network = 'Вконтакте'
+                break
+            case 'instagram.com':
+                network = 'Instagram'
+                break
+            default:
+                network = 'Facebook'
+            }
+        }
+        return network
+    }
     getRusults() {
         let { data, game } = this.state
         switch (game) {
         case 'share-history':
         case 'maraphon':
         case 'heart':
+            data.sort((a, b) => {
+                if (a.additional.link && b.additional.link) return this.getByLink(a.additional.link).length - this.getByLink(b.additional.link).length
+                return 0
+            })
             return <div className='winners'>
                 {data.map((el, i) => {
                     let { additional, prize } = el
                     let { photo, name, link } = additional
-                    let matches = link.match(/:\/\/(?:www\.)?(.[^/]+)(.*)/);
-                    let network
-                    switch (matches[1]) {
-                    case 'vk.com':
-                        network = 'Вконтакте'
-                        break
-                    case 'instagram.com':
-                        network = 'Instagram'
-                        break
-                    default:
-                        network = 'Facebook'
-                    }
+                    let network = this.getByLink(link)
                     return <div className={`winners__item`} key={i}>
-                        <div className='winners__network'>{network}</div>
+                        {network ? <div className='winners__network'>{network}</div> : null}
                         <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
                         <div className='winners__name'>{name}</div>
                         {prize ? <div className='winners__prize'>

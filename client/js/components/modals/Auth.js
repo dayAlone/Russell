@@ -198,10 +198,12 @@ class AuthModal extends Component {
                     ref='captha'
                     sitekey='6Le-9BATAAAAAHSGueTMzAjoTDxlWMIxsKeVjuGO'
                     onChange={this.onCaptchaChange.bind(this)}/>
-                <button className='button' type='submit' disabled={this.state.disabled}>
-                    {this.state.disabled ? <img src='/layout/images/loading.gif' /> : null}
-                    Зарегистрироваться
-                </button>
+                <div className='modal__submit'>
+                    <button className='button' type='submit' disabled={this.state.disabled}>
+                        {this.state.disabled ? <img src='/layout/images/loading.gif' /> : null}
+                        Зарегистрироваться
+                    </button>
+                </div>
                 {this.getMessage()}
 
             </Formsy.Form>

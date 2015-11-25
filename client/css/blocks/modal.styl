@@ -2,6 +2,10 @@
     width 100%
     @media (min-width: $scr_s)
         max-width 600px
+    &__submit
+        full-width()
+        & + small
+            full-width()
     .modal-overflow &
         position relative !important
         top 0 !important

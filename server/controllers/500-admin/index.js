@@ -87,7 +87,7 @@ export default function(app) {
                         })
                         let winners = {}
                         items = isJsonString(itemsRaw.body) ? JSON.parse(itemsRaw.body).list : []
-
+                        if (items.length === 0) console.log(itemsRaw.body)
                         if (isJsonString(winnersRaw.body)) JSON.parse(winnersRaw.body).list.map(el => (winners[el.user._id] = el.prize))
 
                         data = [[

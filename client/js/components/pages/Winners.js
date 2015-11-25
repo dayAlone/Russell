@@ -107,6 +107,35 @@ class Winners extends Component {
     getRusults() {
         let { data, game } = this.state
         switch (game) {
+        case 'share-history':
+        case 'maraphon':
+        case 'heart':
+            return <div className='winners'>
+                {data.map((el, i) => {
+                    let { additional, prize } = el
+                    let { photo, name, link } = additional
+                    let matches = link.match(/:\/\/(?:www\.)?(.[^/]+)(.*)/);
+                    let network
+                    switch (matches[1]) {
+                    case 'vk.com':
+                        network = 'Вконтакте'
+                        break
+                    case 'instagram.com':
+                        network = 'Instagram'
+                        break
+                    default:
+                        network = 'Facebook'
+                    }
+                    return <div className={`winners__item`} key={i}>
+                        <div className='winners__network'>{network}</div>
+                        <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
+                        <div className='winners__name'>{name}</div>
+                        {prize ? <div className='winners__prize'>
+                            <img src={prize.photo} alt='' /> {prize.name}
+                        </div> : null}
+                    </div>
+                })}
+            </div>
         case 'test':
         case 'kitchen':
             return <div className='winners'>
@@ -135,7 +164,7 @@ class Winners extends Component {
     render() {
         let {game, games, raffle, data} = this.state
         let dates = []
-        games.filter(el => (el.code === game)).map(el => {
+        games.filter(el => (el.code === game)).map((el, i) => {
             el.raffles.map(d => {
                 dates.push({name: moment(d[1]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
             })

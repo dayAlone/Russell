@@ -239,6 +239,11 @@ export default function(app) {
                         {$match: query},
                         {$project: { count: {$size: '$likes'}, likes: 1, image: 1, status: 1, created: 1 }},
                         {$sort: by}]
+                    if (this.req.user && this.req.user.role === 'admin') {
+                        fields[1].$project.from = 1
+                        fields[1].$project.to = 1
+                        fields[1].$project.email = 1
+                    }
                     let total = yield Presents.aggregate(fields).exec()
                     fields.push({$limit: parseInt(limit, 10)})
                     fields.push({$skip: parseInt(offset, 10)})

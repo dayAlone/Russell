@@ -13,7 +13,7 @@ import {PhotoSwipe} from 'react-photoswipe'
 class Present extends Component {
     render() {
         let status_text = ''
-        let { _id, status, image, likes } = this.props.el
+        let { _id, status, image, likes, from, to, email } = this.props.el
         switch (status) {
         case 'active':
             status_text = 'Активен'
@@ -26,6 +26,10 @@ class Present extends Component {
         }
         return <div className='check'>
             <div onClick={this.props.openPhotoSwipe(image)} className='check__image' style={{backgroundImage: `url(${image})`}}></div>
+            <div className='check__text'>
+                <strong>От</strong>: {from}<br/>
+                <strong>Адресат</strong>:<br/> {to}<br/>({email})
+            </div>
             <div className='check__likes'>
                 <IconSVG src={require('svg-inline!../../../public/images/svg/heart.svg')}/> {likes.length}
             </div>

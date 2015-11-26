@@ -49,13 +49,6 @@ export default {
             'window.jQuery': 'jquery',
             '_': 'lodash'
         }),
-        new CompressionPlugin({
-            asset: '{file}.gz',
-            algorithm: 'gzip',
-            regExp: /\.js$|\.html$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

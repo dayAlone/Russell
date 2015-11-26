@@ -27,14 +27,15 @@ class Check extends Component {
         e.preventDefault()
     }
     getImage() {
-
-        let img = new Image()
-        let photo = this.props.data.photo
-        img.onload = () => {
-            if (img.width > 0) $(findDOMNode(this.refs.photo)).addClass('check__preview--active')
-            this.setState({sizes: {w: img.width, h: img.height}})
+        if (!this.state.sizes) {
+            let img = new Image()
+            let photo = this.props.data.photo
+            img.onload = () => {
+                if (img.width > 0) $(findDOMNode(this.refs.photo)).addClass('check__preview--active')
+                this.setState({sizes: {w: img.width, h: img.height}})
+            }
+            img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
         }
-        img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
     }
     componentDidMount() {
         this.getImage()

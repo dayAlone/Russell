@@ -21,9 +21,10 @@ const checkSchema = new mongoose.Schema({
     kpk_number: String,
     kpk_value: String,
     photo: String,
+    photo2: String,
     status: {
         type: String,
-        default: 'added',
+        default: 'moderation',
     },
     status_comment: {
         type: String,

@@ -18,7 +18,7 @@ import Formsy from 'formsy-react'
     actions: { games: bindActionCreators(gamesActions, dispatch), profile: bindActionCreators(profileActions, dispatch)}}))
 class Raring extends Component {
     state = {
-        ignore: ['present'],
+        ignore: ['present', 'share-history', 'maraphon', 'heart'],
         stat: [],
         current: 0
     }
@@ -30,7 +30,7 @@ class Raring extends Component {
     componentDidUpdate() {
         this.setStat()
     }
-    
+
     setStat() {
         if (this.props.scores && this.props.games.length > 0 && this.state.stat.length === 0) {
             let stat = []

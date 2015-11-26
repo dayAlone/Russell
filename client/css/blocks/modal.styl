@@ -333,7 +333,9 @@
             float right
         .modal__content
             padding 20px 40px 24px
-
+            label
+                br
+                    display none
             @media (min-width: $scr_s)
                 input[type='text']
                     lost-column 5/7 3 20px
@@ -341,14 +343,32 @@
                     lost-column 2/7 3 20px
                     text-align right
                     font-size 15px
+                    br
+                        display block
+                .short
+                    line-height 1
+                    margin-top 3px
+                    display inline-block
             .form
                 &__file-description, &__submit-description
                     float left
-                    lost-column 2/7 3 20px
                     font-size 11px
                     color alpha(black, .8)
+
+                &__submit-description
                     position relative
                     top -2px
+                    lost-column 2/7 3 20px
+
+                &__file
+                    full-width()
+                    margin-bottom 10px
+                    margin-top 5px
+                    .form__file-description
+                        lost-column 5/7 3 20px
+                        text-align left
+                        float right !important
+                        margin-top 10px
                 &__cancel
 
                     font-weight bold
@@ -381,7 +401,7 @@
                         &:first-of-type
                             margin-right 10px
                             input
-                                width 153px
+                                width 173px
                                 margin-right 0px
                         &:last-of-type
                             margin 0 10px 0 20px
@@ -411,11 +431,12 @@
                     label
                         &:last-of-type
                             width 70px
+                            margin-left 15px
                     .form-group
                         float left
                         margin-right 8px
                     input[type='text']
-                        width 46px
+                        width 52px
                         padding 0 10px
                         text-align center
     &.modal--edit-check

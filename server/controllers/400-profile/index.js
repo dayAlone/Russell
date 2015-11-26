@@ -40,18 +40,15 @@ const getUserFavorites = function* (raw) {
 
 const addOrUpdateCheck = function* () {
     let ctx = this
-    let {id, photo, organisation, inn, eklz, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, kpk_number, kpk_value} = this.request.body
+    let {id, photo, organisation, date__day, date__month, date__year, time__hours, time__minutes, total__rubles, total__cents, photo2} = this.request.body
 
     let until = yield Game.findCurrentRaffle('checks')
     let error = false
     let fields = {
         user: Types.ObjectId(this.req.user._id),
         photo: photo,
+        photo2: photo2,
         organisation: organisation,
-        inn: inn,
-        eklz: eklz,
-        kpk_number: kpk_number,
-        kpk_value: kpk_value,
         total: total__rubles + (total__cents && total__cents !== 'undefined' ? '.' + total__cents : ''),
         date: date__day + '.' + date__month + '.' + date__year,
         time: time__hours + ':' + time__minutes,
@@ -64,9 +61,9 @@ const addOrUpdateCheck = function* () {
                     delete(fields[f])
                 }
             }
-            fields['status'] = 'added'
+            fields['status'] = 'moderation'
             fields['kpk_id'] = ''
-            fields['status_comment'] = 'Чек в очереди на автоматическую проверку'
+            fields['status_comment'] = 'Чек ожидает проверки модератором'
             delete(fields.user)
             yield Check.findOneAndUpdate(
                 { _id: id, user: this.req.user._id },

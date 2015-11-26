@@ -108,9 +108,9 @@ class Check extends Component {
                     : 'нет'}
             </div>
             <div className='table__col'>
-                {available}
+                {status === 'active' ? available : 0}
                 <br />
-                {available > 0 ? <Link to='/catalog/' className='check__connect'>связать</Link> : null}
+                {available > 0 && status === 'active' ? <Link to='/catalog/' className='check__connect'>связать</Link> : null}
             </div>
             <div className='table__col'>{moment(until).format('DD.MM.YYYY')}</div>
             <div className='table__col'>{vinner ? <Link to='/profile/prizes/' className='check__vinner'>Да</Link> : null}</div>

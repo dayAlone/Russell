@@ -111,10 +111,10 @@ class CheckModal extends Component {
                     <Input placeholder='КК' name='count' value={count}/>
                     <div className='form__title'>Статус чека</div>
                     <Dropdown name='status' className='dropdown--small' items={[
-                        {name: 'Прошел АВ', code: 'correct'},
                         {name: 'Ждет отправки на АВ', code: 'added'},
                         {name: 'Активен', code: 'active'},
-                        {name: 'Отклонен', code: 'canceled'}
+                        {name: 'Отклонен', code: 'canceled'},
+                        {name: 'Ждет модерации', code: 'moderation'},
                     ]} value={condition}/>
                     <Textarea placeholder='Комментарий модератора' name='status_comment' value={status_comment}/>
                     <div className='modal__footer'>

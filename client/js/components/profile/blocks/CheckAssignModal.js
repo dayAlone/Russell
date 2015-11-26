@@ -35,6 +35,7 @@ class ChecksAssignModal extends Component {
         let checks = []
         if (this.props.checks.length > 0) {
             this.props.checks
+                .filter(el => (el.status === 'active'))
                 .filter(el => (el.count - el.products.length > 0))
                 .filter(el => {
                     let exist = false

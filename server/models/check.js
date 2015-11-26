@@ -28,7 +28,7 @@ const checkSchema = new mongoose.Schema({
     },
     status_comment: {
         type: String,
-        default: 'Чек в очереди на автоматическую проверку',
+        default: 'Чек ожидает проверки модератором',
     },
     count: {
         type: Number,

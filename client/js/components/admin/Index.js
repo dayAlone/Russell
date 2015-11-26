@@ -46,6 +46,11 @@ const getStatus = (status, until, vinner) => {
             message: 'Ждет отправки на АВ',
             class: 'added'
         }
+    case 'moderation':
+        return {
+            message: 'Ждет модерации',
+            class: 'moderation'
+        }
     default:
         return {
             message: 'Отправлен на АВ',
@@ -161,7 +166,7 @@ class AdminChecks extends Component {
             <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
                 <Dropdown name='type' className='dropdown--small' trigger='Выберите статус чека' items={[
                     {name: 'Все', code: 'all'},
-                    {name: 'Прошел АВ', code: 'correct'},
+                    {name: 'Ждет проверки модератором', code: 'moderation'},
                     {name: 'Ждет отправки на АВ', code: 'added'},
                     {name: 'Отправлен на АВ', code: 'processign'},
                     {name: 'Активен', code: 'active'},

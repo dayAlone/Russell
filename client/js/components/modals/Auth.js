@@ -226,6 +226,14 @@ class AuthModal extends Component {
             {!this.props.isLogin ? <a href='#' onClick={this.showBlock()} className='button button--small'>Войти на сайт</a> : null}
         </div>
     }
+    getUnsubscribe() {
+        return <div>
+            <h2 className='modal__title modal__title--padding'>Отписка от рассылки</h2>
+            <div className='modal__message'>
+                Вы успешно отписались от рассылки
+            </div>
+        </div>
+    }
     getForgetPasswordFormSuccess() {
         return <div>
             <h2 className='modal__title modal__title--padding'>Изменение пароля</h2>
@@ -293,6 +301,8 @@ class AuthModal extends Component {
             return this.getForgetPasswordForm()
         case 'forget-form-success':
             return this.getForgetPasswordFormSuccess()
+        case 'unsubscribe':
+            return this.getUnsubscribe()
         default:
             return this.getForms()
         }

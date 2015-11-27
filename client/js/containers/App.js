@@ -24,12 +24,19 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        let {confirm, change_password, save_email} = this.props.location.query
+        let {confirm, change_password, save_email, unsubscribe} = this.props.location.query
         let {openModal, authCheck} = this.props.login
         if (confirm) {
             $.post('/auth/local/confirm-email/', { confirm: confirm, isNew: true }).done(response => {
                 if (!response.error) {
                     openModal('confirm')
+                }
+            })
+        }
+        if (unsubscribe) {
+            $.post('/unsubscribe/', { _id: unsubscribe }).done(response => {
+                if (!response.error) {
+                    openModal('unsubscribe')
                 }
             })
         }

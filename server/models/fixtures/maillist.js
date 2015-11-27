@@ -1,12 +1,32 @@
 import fs from 'fs'
 import { Converter } from 'csvtojson'
 import parse from 'csv-parse'
+import oid from '../../libs/oid'
 const excludes = [
     '.DS_Store'
 ]
 let total = 0
 let errors = 0
 export default (Maillist) => {
+    let emails = [
+        {
+            email: 'mariya.smirnova@coralpromo.ru',
+            name: 'Мария Смирнова'
+        },
+        {
+            name: 'Андрей',
+            email: 'ak@radia.ru'
+        },
+        {
+            name: 'Дмитрий',
+            email: 'dp@radia.ru'
+        }
+    ]
+    for (let i = 0; i < emails.length; i++) {
+        let user = emails[i]
+        user._id = oid(user.email)
+        Maillist.create(user)
+    }
     const files = fs.readdirSync(__dirname + '/csv/')
         .filter(file => { return !excludes.includes(file) })
     for (let i = 0; i < files.length; i++) {
@@ -51,9 +71,9 @@ export default (Maillist) => {
                 }
                 try {
                     if (user.email.length > 0) {
+                        user._id = oid(user.email)
                         Maillist.create(user, (err) => {
                             if (err) errors++
-                            console.log(total, errors)
                         })
                     } else errors++
                 } catch (e) {

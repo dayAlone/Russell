@@ -1,5 +1,6 @@
 import Router from 'koa-router'
 import Recepts from '../../models/recepts'
+import Maillist from '../../models/maillist'
 export default function(app) {
     const router = new Router()
     router
@@ -23,6 +24,17 @@ export default function(app) {
                 }
             }
             this.body = this.render('index', {meta: meta})
+        })
+        .post('/unsubscribe/', function* () {
+            let {_id} = this.request.body
+            if (_id.length > 0) {
+                yield Maillist.update({
+                    _id: _id
+                }, {
+                    $set: {active: false}
+                })
+            }
+            this.body = { error: false }
         })
     app.use(router.routes())
 }

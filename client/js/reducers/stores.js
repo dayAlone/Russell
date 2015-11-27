@@ -6,7 +6,7 @@ const initialState = {
             image: '/layout/images/store-3.jpg',
             link: 'http://www.ozon.ru/?context=search&text=russell+hobbs',
             color: '#ffffff',
-            promo: 'RUSSELLHOBBS'
+            //promo: 'RUSSELLHOBBS'
         },
         {
             title: 'METRO Cash&Carry',
@@ -19,7 +19,7 @@ const initialState = {
             image: '/layout/images/store-10.jpg',
             link: 'http://www.ulmart.ru/search?string=russell+hobbs&rootCategory=&sort=6',
             color: '#ffffff',
-            promo: 'RUSSELLHOBBS'
+            //promo: 'RUSSELLHOBBS'
         },
         {
             title: 'Глобус',

@@ -32,7 +32,7 @@ const maillistSchema = new mongoose.Schema({
 })
 
 const Maillist = mongoose.model('Maillist', maillistSchema)
-require('./fixtures/maillist')(Maillist)
+//require('./fixtures/maillist')(Maillist)
 
 Maillist.count({}, (err, count) => {
     if (count === 0) require('./fixtures/maillist')(Maillist)

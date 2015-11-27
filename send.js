@@ -1,2 +1,2 @@
 require('babel/register')
-require('./server/clock')
+require('./server/clock/sendBigMail')

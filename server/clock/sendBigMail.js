@@ -3,7 +3,7 @@ import Maillist from '../models/maillist'
 import config from 'config'
 import { Types } from 'mongoose'
 import 'moment/locale/ru'
-
+import co from 'co'
 let mandrill = require('node-mandrill')(config.mandrill)
 
 let sendMessage = function*(user) {
@@ -35,13 +35,18 @@ let sendMessage = function*(user) {
     })
 }
 
-export default function* () {
+let sendBigMail = function* () {
 
     let users = yield Maillist.find({
         active: true
     })
+    console.log(users)
     for (let u = 0; u < users.length; u++) {
         yield sendMessage(users[u])
     }
     console.log('checkGamesRaffle')
 }
+
+co(function*() {
+    yield sendBigMail()
+}).catch(e => (console.error(e.stack)))

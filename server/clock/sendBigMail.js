@@ -40,7 +40,6 @@ let sendBigMail = function* () {
     let users = yield Maillist.find({
         active: true
     })
-    console.log(users)
     for (let u = 0; u < users.length; u++) {
         yield sendMessage(users[u])
     }

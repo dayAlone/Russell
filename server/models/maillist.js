@@ -36,6 +36,7 @@ const Maillist = mongoose.model('Maillist', maillistSchema)
 
 Maillist.count({}, (err, count) => {
     if (count === 0) require('./fixtures/maillist')(Maillist)
+    else console.log(count)
 })
 
 export default Maillist

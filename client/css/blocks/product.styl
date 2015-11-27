@@ -8,6 +8,7 @@
         padding 15px 30px 25px
     @media (min-width: $scr_sm)
         background url(/layout/images/texture.jpg) top center
+
     &__name
         text-transform uppercase
         margin-bottom 10px
@@ -144,10 +145,26 @@
             margin-bottom 6px
     &__image
         width 100%
-    &__video, &__pdf, &__icons
+    &__video, &__pdf, &__icons, &__sale
         padding-top 20px
         margin-top 20px
         background url(/layout/images/divide.png) top center no-repeat
+    &__sale
+        color black
+        h4
+            font-size 16px
+            color black
+            margin-top 0
+        &-link
+            size 140px 44px
+            display inline-block
+            border 1px solid #9a9a9a
+            background-repeat no-repeat
+            background-position center center
+            border-radius 5px
+            margin 10px 15px 5px 0px
+            &:hover
+                border-color red
     &__icons
         @media (max-width: $scr_sm)
             padding 0 30px 0 30px

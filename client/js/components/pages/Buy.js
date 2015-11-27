@@ -10,7 +10,7 @@ class PageBuy extends Component {
     render() {
         let items = this.props.stores ?
             this.props.stores.map((el, i) => {
-                let { image, link, color } = el
+                let { image, link, color, promo } = el
                 return <a key={i}
                             className='stores__item'
                             href={link}
@@ -18,7 +18,10 @@ class PageBuy extends Component {
                             style={{
                                 backgroundImage: `url(${image})`,
                                 backgroundColor: color
-                            }} />
+                            }}>
+                            { promo ? <div className='stores__promo'>Промо-код:<br/>{promo}</div> : null }
+                            { promo ? <div className='stores__banner'>%</div> : null }
+                </a>
             }) : false
         return <div className='page page--stores'>
             <Helmet title={'Russell Hobbs | Где купить'}/>
@@ -30,6 +33,7 @@ class PageBuy extends Component {
             <div className='stores'>
                 {items}
             </div>
+
             <p>*Внимание: не вся продукция Russell Hobbs может быть в наличии</p>
         </div>
     }

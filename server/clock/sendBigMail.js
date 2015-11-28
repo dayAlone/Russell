@@ -1,7 +1,8 @@
 import '../libs/mongoose'
 import Maillist from '../models/maillist'
 import config from 'config'
-import { Types } from 'mongoose'
+import oid from '../libs/oid'
+
 import 'moment/locale/ru'
 import co from 'co'
 let mandrill = require('node-mandrill')(config.mandrill)
@@ -43,9 +44,11 @@ let sendBigMail = function* () {
     for (let u = 0; u < users.length; u++) {
         yield sendMessage(users[u])
     }
-    console.log('checkGamesRaffle')
+
 }
 
 co(function*() {
     yield sendBigMail()
+}).then(() => {
+    console.log('All sended')
 }).catch(e => (console.error(e.stack)))

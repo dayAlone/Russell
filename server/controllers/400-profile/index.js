@@ -261,12 +261,14 @@ export default function(app) {
                     let present = yield Present.findOne({
                         _id: id
                     })
-                    if (present && present.likes.indexOf(this.req.user._id) === -1) {
+                    if (present) {
+                        let action = {}
+                        if (present.likes.indexOf(this.req.user._id) === -1) action = { $push: { likes: this.req.user._id } }
+                        else action = { $pull: { likes: this.req.user._id } }
+
                         yield Present.update({
                             _id: id
-                        }, {
-                            $push: { likes: this.req.user._id }
-                        })
+                        }, action)
                     }
                     result = { error: false, result: true}
                 } catch (e) {

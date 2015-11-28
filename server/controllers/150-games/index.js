@@ -227,7 +227,7 @@ export default function(app) {
             }
         })
         .get('/games/presents/get/', function*() {
-            let {limit, offset, sort, status, direction, admin} = this.query
+            let { limit, offset, sort, status, direction } = this.query
             if (limit && offset && sort) {
                 try {
                     let query = {}
@@ -237,12 +237,11 @@ export default function(app) {
                     by[sort] = direction ? parseInt(direction, 0) : -1
                     let fields = [
                         {$match: query},
-                        {$project: { count: {$size: '$likes'}, likes: 1, image: 1, status: 1, created: 1, user: 1 }},
+                        {$project: { count: {$size: '$likes'}, likes: 1, product: 1, image: 1, status: 1, created: 1, user: 1 }},
                         {$sort: by}]
 
                     if ((this.req.user && this.req.user.role === 'admin')) {
                         fields[1].$project.from = 1
-                        fields[1].$project.user = 1
                         fields[1].$project.to = 1
                         fields[1].$project.email = 1
                     }
@@ -251,7 +250,7 @@ export default function(app) {
                     fields.push({$skip: parseInt(offset, 10)})
                     let result = yield Presents.aggregate(fields).exec()
                     result = yield Users.populate(result, {path: 'user', select: 'displayName photo _id'})
-                    
+
                     this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {
                     console.error(e)

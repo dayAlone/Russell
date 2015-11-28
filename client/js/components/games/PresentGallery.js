@@ -23,13 +23,20 @@ class Present extends Component {
     }
     render() {
         let { user, el } = this.props
-        let { image, likes } = el
+        let { image, likes, product, user: author } = el
         let liked = user && likes.indexOf(user._id) !== -1
         return <div className='present-item'>
-            <div onClick={this.props.openPhotoSwipe(image)} className='present-item__image' style={{backgroundImage: `url(${image})`}}></div>
-            <a href='#' onClick={this.handleClick.bind(this)} className={`present-item__likes ${liked ? 'present-item__likes--liked' : ''}`}>
-                <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/> {likes.length}
-            </a>
+            <div className='present-item__frame'>
+                <div onClick={this.props.openPhotoSwipe(image)} className='present-item__image' style={{backgroundImage: `url(${image})`}} />
+                <div className='present-item__info'>
+                    <div className='present-item__author'>{author ? author.displayName.replace(' ', '\n') : null}</div><br/>
+                    <a href='#' onClick={this.handleClick.bind(this)} className={`present-item__likes ${liked ? 'present-item__likes--liked' : ''}`}>
+                        <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/> {likes.length}
+                    </a>
+                </div>
+
+                <img src={`/layout/images/products/${product}.jpg`} alt='' width='50%'/>
+            </div>
         </div>
     }
 }

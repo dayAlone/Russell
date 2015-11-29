@@ -251,11 +251,19 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'admin') {
                 let error = false
                 try {
-                    let {status, status_comment, id, count} = this.request.body
+                    let {status, status_comment, id, count, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, condition} = this.request.body
                     let fields = {
                         status: status,
                         status_comment: status_comment,
                         count: count,
+                        organisation: organisation,
+                        inn: inn,
+                        eklz: eklz,
+                        date: date,
+                        time: time,
+                        total: total,
+                        kpk_number: kpk_number,
+                        kpk_value: kpk_value
                     }
                     if (fields['status'] === 'added') {
                         fields['kpk_id'] = ''

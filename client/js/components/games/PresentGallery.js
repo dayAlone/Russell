@@ -22,14 +22,20 @@ class Present extends Component {
         e.preventDefault()
     }
     render() {
+        console.log(this.props.el)
         let { user, el } = this.props
         let { image, likes, product, user: author } = el
         let liked = user && likes.indexOf(user._id) !== -1
+        let firstName, lastName
+        if (author) {
+            firstName = author.displayName.split(' ')[0]
+            lastName = author.displayName.split(' ')[1]
+        }
         return <div className='present-item'>
             <div className='present-item__frame'>
                 <div onClick={this.props.openPhotoSwipe(image)} className='present-item__image' style={{backgroundImage: `url(${image})`}} />
                 <div className='present-item__info'>
-                    <div className='present-item__author'>{author ? author.displayName.replace(' ', '\n') : null}</div><br/>
+                    <div className='present-item__author'>{author ? <span>{firstName}<br/>{lastName}</span> : null}</div><br/>
                     <a href='#' onClick={this.handleClick.bind(this)} className={`present-item__likes ${liked ? 'present-item__likes--liked' : ''}`}>
                         <IconSVG src={require('svg-inline!../../../public/images/svg/heart-border.svg')}/> {likes.length}
                     </a>

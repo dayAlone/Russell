@@ -9,10 +9,10 @@ const MyInput = React.createClass({
         this.setValue(event.currentTarget['value'])
     },
     render() {
-        let { type, name, title, placeholder, className, maxLength } = this.props
+        let { type, name, title, placeholder, className, maxLength, classFrame } = this.props
         const classNames = (className ? className : '') + ' ' + (this.showError() && !this.isPristine() ? 'error' : '')
         const errorMessage = this.getErrorMessage()
-        return <div className='form-group'>
+        return <div className={`form-group  ${classFrame ? classFrame : ''}`}>
             {title ? <label htmlFor={name}>{title}</label> : null}
             <input
                 type={type || 'text'}

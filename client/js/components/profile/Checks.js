@@ -22,30 +22,16 @@ class Check extends Component {
 
         e.preventDefault()
     }
-    handleClickPreview(e) {
-        this.props.openPhotoSwipe(this.props.data.photo, this.state.sizes)
-        e.preventDefault()
-    }
-    getImage() {
-        if (!this.state.sizes) {
-            let img = new Image()
-            let photo = this.props.data.photo
-            img.onload = () => {
-                if (img.width > 0) $(findDOMNode(this.refs.photo)).addClass('check__preview--active')
-                this.setState({sizes: {w: img.width, h: img.height}})
-            }
-            img.src = photo.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${photo}` : photo
+    handleClickPreview(link) {
+        return (e) => {
+            this.props.openPhotoSwipe(link)
+            e.preventDefault()
         }
-    }
-    componentDidMount() {
-        this.getImage()
-    }
-    componentDidUpdate() {
-        this.getImage()
+
     }
     render() {
         let {list, handleDropdown, current} = this.props
-        let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo, status, status_comment, count, vinner, products, until, created} = this.props.data
+        let {_id, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, photo, status, status_comment, count, vinner, products, until, created, photo2} = this.props.data
         let available = count - products.length
         let condition
         switch (status) {
@@ -84,14 +70,15 @@ class Check extends Component {
                 </Formsy.Form> : `ID: ${_id}`}</span><br/>
                 <div className={`check__info ${!this.state.hidden ? 'check__info--visible' : ''}`}>
                     {organisation ? <span>Организация: {organisation}<br/></span> : null}
-                    <span>ИНН: {inn}</span><br/>
-                    <span>ЭКЛЗ: {eklz}</span><br/>
+                    {inn ? <span>ИНН: {inn}<br/></span> : null}
+                    {eklz ? <span>ЭКЛЗ: {eklz}<br/></span> : null}
                     <span>Дата: {date}</span><br/>
                     <span>Время: {time}</span><br/>
                     <span>Сумма: {total}</span><br/>
-                    <span>Номер КПК: {kpk_number}</span><br/>
-                    <span>Значение КПК: {kpk_value}</span><br/>
-                    <a href='#' ref='photo' onClick={this.handleClickPreview.bind(this)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
+                    {kpk_number ? <span>Номер КПК: {kpk_number}<br/></span> : null}
+                    {kpk_value ? <span>Значение КПК: {kpk_value}<br/></span> : null}
+                    <a href='#' ref='photo' onClick={this.handleClickPreview(photo)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
+                    {photo2 ? <a href='#' ref='photo2' onClick={this.handleClickPreview(photo2)} className='check__preview' style={{backgroundImage: `url(${photo2})`}}></a> : null }
                 </div>
                 <a href='#' className='check__show' onClick={this.handleClick.bind(this)}>{!this.state.hidden ? 'Скрыть' : 'Показать'} детали</a>
             </div>
@@ -124,9 +111,16 @@ class Check extends Component {
 @connect(state => ({checks: state.profile.checks}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileChecks extends Component {
     state = {photoswipe: false, image: [], current: 0}
-    openPhotoSwipe(image, sizes) {
-        this.setState({photoswipe: true, image: [{src: image, w: sizes.w, h: sizes.h}]})
-        $('body').addClass('photoswipe-open')
+    openPhotoSwipe(image) {
+
+        let img = new Image()
+        img.onload = () => {
+            this.setState({photoswipe: true, image: [{src: image, w: img.width, h: img.height}]})
+            $('body').addClass('photoswipe-open')
+        }
+        img.src = image.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${image}` : image
+
+
     }
     closePhotoSwipe() {
         $('body').removeClass('photoswipe-open')

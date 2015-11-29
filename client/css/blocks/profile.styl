@@ -324,9 +324,8 @@
                 box-shadow inset 0 0 0 3px black
                 t border
                 margin-bottom 5px
-                display none
-                &--active
-                    display inline-block
+                margin-right 5px
+                display inline-block
                 &:hover
                     border-color red
             &__comment
@@ -377,6 +376,8 @@
                 font-size 12px
                 @media (max-width: $scr_s)
                     padding-top 25px
+                > span
+                    width 100%
                 br
                     display block !important
                 &--visible

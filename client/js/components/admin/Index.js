@@ -39,7 +39,7 @@ const getStatus = (status, until, vinner) => {
     case 'check_canceled':
         return {
             message: 'Не прошел АВ',
-            class: 'canceled'
+            class: 'check_canceled'
         }
     case 'active':
         return {
@@ -148,10 +148,15 @@ class AdminChecks extends Component {
         if (nextState.photoswipe === true && this.state.photoswipe === true) return false
         return true
     }
-    openPhotoSwipe(image, sizes = {w: 0, h: 0}) {
+    openPhotoSwipe(image) {
         return (e) => {
-            this.setState({photoswipe: true, image: [{src: image, w: sizes.w, h: sizes.h}]})
-            $('body').addClass('photoswipe-open')
+            let img = new Image()
+            img.onload = () => {
+                this.setState({photoswipe: true, image: [{src: image, w: img.width, h: img.height}]})
+                $('body').addClass('photoswipe-open')
+            }
+            img.src = image.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${image}` : image
+
             e.preventDefault()
         }
     }

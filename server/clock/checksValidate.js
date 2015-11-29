@@ -16,7 +16,7 @@ export const addChecksToValidate = function* (jar) {
             if (data.error) {
                 yield Check.findOneAndUpdate(
                     { _id: check._id },
-                    { $set: { status: 'canceled', status_comment: data.message } },
+                    { $set: { status: 'check_canceled', status_comment: data.message } },
                     { safe: true, upsert: true }
                 )
             } else if (data.id) {

@@ -111,6 +111,7 @@ class CheckModal extends Component {
                             {name: 'Ждет отправки на АВ', code: 'added'},
                             {name: 'Активен', code: 'active'},
                             {name: 'Отклонен', code: 'canceled'},
+                            {name: 'Не прошел АВ', code: 'check_canceled'},
                             {name: 'Ждет модерации', code: 'moderation'},
                         ]} value={condition}/>
                     </div>

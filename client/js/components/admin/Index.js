@@ -36,6 +36,11 @@ const getStatus = (status, until, vinner) => {
             message: 'Отклонен',
             class: 'canceled'
         }
+    case 'check_canceled':
+        return {
+            message: 'Не прошел АВ',
+            class: 'canceled'
+        }
     case 'active':
         return {
             message: 'Активен',
@@ -171,6 +176,7 @@ class AdminChecks extends Component {
                     {name: 'Отправлен на АВ', code: 'processign'},
                     {name: 'Активен', code: 'active'},
                     {name: 'Отклонен', code: 'canceled'},
+                    {name: 'Не прошел АВ', code: 'check_canceled'},
                     {name: 'Сыгран', code: 'gameover'},
                     {name: 'Выиграл', code: 'vinner'}
                 ]} value=''/>

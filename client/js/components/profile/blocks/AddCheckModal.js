@@ -66,9 +66,11 @@ class AddCheckModal extends Component {
         })
         let formData = new FormData()
         let file = this.refs.file.getFiles()
+        let file2 = this.refs.file2.getFiles()
         formData.append('photo', file)
+        formData.append('photo2', file2)
         for (let el in fields) {
-            if (el !== 'photo') {
+            if (el !== 'photo' && el !== 'photo2') {
                 formData.append(el, fields[el])
             }
         }
@@ -141,7 +143,7 @@ class AddCheckModal extends Component {
                 </div>
                 <div className='form__file'>
                     <label className='short'>Фото чека<br/ >с техникой</label>
-                    <File name='photo2' ref='file' title='Загрузить фото' validations={photo2.length === 0 ? 'minLengthOrEmpty:1' : false } value='' accept='image/jpeg,image/png,image/gif'/>
+                    <File name='photo2' ref='file2' title='Загрузить фото' validations={photo2.length === 0 ? 'minLengthOrEmpty:1' : false } value='' accept='image/jpeg,image/png,image/gif'/>
                     <div className='form__file-description'>
                         Сфотографируйте чек на фоне техники, которую вы приобрели
                     </div>

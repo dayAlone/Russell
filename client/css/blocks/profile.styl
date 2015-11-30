@@ -1,4 +1,77 @@
 .profile
+    .prizes
+
+        &__table
+            a
+                color red
+                border-line(alpha(red,.5))
+            @media (max-width: $scr_s)
+                .table
+                    &__title
+                        border 0
+                        width 30%
+                        float left
+                        .table__col
+                            text-align left
+                            min-height 57px
+                            padding-top 23px
+                            padding-bottom 17px
+                            white-space no-wrap
+                            &:first-of-type
+                                min-height 136px
+                    &__row
+                        display none
+                        .table__col
+                            text-align center !important
+                        &:last-of-type
+                            width 70%
+                            float left
+                            display block
+                            border 0
+                    &__col
+                        width 100%
+                        border-bottom 1px solid #333741
+                        min-height 36px
+                        padding 20px 0
+                        img
+                            margin-bottom 10px
+                            margin-top -30px
+                            max-height 70px
+                            & + span
+                                width 100%
+                                display inline-block
+
+            @media (min-width: $scr_s)
+                .table
+                    &__row
+                        &:last-of-type
+                            display none
+                        .table__col
+                            padding 13px 0
+                    &__col
+                        width 25%
+
+                        img
+                            max-height 70px
+                            margin -28px 0
+                            margin-right 20px
+                            & + span
+                                width calc(100% - 90px)
+                            & + span, &
+                                vertical-align middle
+                                display inline-block
+        &--0
+            .table
+                @media (min-width: $scr_s)
+                    &__row:last-of-type
+                        display block
+
+                @media (max-width: $scr_s)
+                    &__title
+                        display none
+                    &__row
+                        border 0
+                        width 100% !important
     .presents
         padding 20px 0px
         full-width()
@@ -287,7 +360,6 @@
                     &__row:last-of-type
                         display block
                 @media (max-width: $scr_s)
-
                     &__title
                         display none
                     &__row

@@ -3,6 +3,7 @@ import config from 'config'
 import { check as Check } from '../../models/check'
 import Game from '../../models/games'
 import Present from '../../models/presents'
+import Winners from '../../models/winners'
 import Users, {sendUserEmail} from '../../models/user'
 import moment from 'moment'
 import { Types } from 'mongoose'
@@ -246,6 +247,20 @@ export default function(app) {
                     let data = yield Present.find({
                         user: this.req.user._id
                     }).sort({created: -1})
+                    result = { error: false, result: data}
+                } catch (e) {
+                    result = { error: true, message: e.message }
+                }
+                this.body = result
+            }
+        })
+        .get('/profile/prizes/get/', function* () {
+            if (this.req.user) {
+                let result
+                try {
+                    let data = yield Winners.find({
+                        user: this.req.user._id
+                    }).populate('prize').populate('game')
                     result = { error: false, result: data}
                 } catch (e) {
                     result = { error: true, message: e.message }

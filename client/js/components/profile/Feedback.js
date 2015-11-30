@@ -15,7 +15,7 @@ class ProfileFeedback extends Component {
                     </div>
                 </div>
                 <div className='profile__col'>
-                    <FeedbackForm/>
+                    <FeedbackForm location={this.props.location}/>
                 </div>
             </div>
         </div>

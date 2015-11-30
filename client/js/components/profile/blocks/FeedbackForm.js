@@ -35,6 +35,7 @@ class FeedbackForm extends Component {
     }
 
     render() {
+        let { message, subject } = this.props.location.query
         return <Formsy.Form ref='form' onValidSubmit={this.submitForm.bind(this)} className='form'>
                     {this.state.message ? <div className='alert' role='alert'>{this.state.message}</div> : null}
                     <Dropdown name='subject' trigger='Выберите тему сообщения' items={[
@@ -42,9 +43,9 @@ class FeedbackForm extends Component {
                         {name: 'Вопрос по чекам'},
                         {name: 'Получение выигрыша'},
                         {name: 'Другая тема'},
-                    ]} validations='minLengthOrEmpty:1' value=''/>
+                    ]} validations='minLengthOrEmpty:1' value={subject}/>
                     <Input name='phone' placeholder='Телефон для связи' validations='minLengthOrEmpty:1' value=''/>
-                    <Textarea name='message' placeholder='Ваше сообщение' validations='minLengthOrEmpty:1' value=''/>
+                    <Textarea name='message' placeholder='Ваше сообщение' validations='minLengthOrEmpty:1' value={message}/>
                     <button type='submit' disabled={this.state.disabled}>
                         {this.state.disabled ? <img src='/layout/images/loading.gif' /> : null}
                         Отправить

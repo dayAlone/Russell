@@ -46,7 +46,7 @@ export default function(state = initialState, action) {
         })
     case GET_PRIZES:
         return Object.assign({}, state, {
-            presents: action.data
+            prizes: action.data
         })
     default:
         return state

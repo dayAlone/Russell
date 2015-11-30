@@ -1,4 +1,14 @@
-import { GET_CHECKS, GET_FAVORITES, REMOVE_PRODUCT_FROM_CHECK, ASSIGN_PRODUCT_TO_CHECK, START_GAME, UPDATE_GAME, GET_SCORES, GET_PRESENTS } from '../constants/Profile'
+import {
+    GET_CHECKS,
+    GET_FAVORITES,
+    REMOVE_PRODUCT_FROM_CHECK,
+    ASSIGN_PRODUCT_TO_CHECK,
+    START_GAME,
+    UPDATE_GAME,
+    GET_SCORES,
+    GET_PRESENTS,
+    GET_PRIZES
+} from '../constants/Profile'
 
 export function getChecks() {
     return dispatch => {
@@ -6,6 +16,19 @@ export function getChecks() {
             if (!data.error) {
                 dispatch({
                     type: GET_CHECKS,
+                    data: data.result
+                })
+            }
+        })
+    }
+}
+
+export function getPrizes() {
+    return dispatch => {
+        $.get('/profile/prizes/get/', data => {
+            if (!data.error) {
+                dispatch({
+                    type: GET_PRIZES,
                     data: data.result
                 })
             }

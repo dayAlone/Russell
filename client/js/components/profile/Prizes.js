@@ -7,11 +7,11 @@ import { connect } from 'react-redux'
 
 import moment from 'moment'
 
-@connect(state => ({checks: state.profile.checks}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
+@connect(state => ({prizes: state.profile.prizes}), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class ProfileFavorites extends Component {
     componentDidMount() {
-        if (this.props.checks.length === 0) {
-            this.props.actions.getChecks()
+        if (this.props.prizes.length === 0) {
+            this.props.actions.getPrizes()
         }
     }
     render() {

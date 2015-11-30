@@ -20,12 +20,12 @@ let sendMessage = function*(user) {
                     'content': user.name
                 },
                 {
-                    'name': 'id',
-                    'content': user._id
+                    'name': 'redirect_merge_var',
+                    'content': 'http://russellhobbs-promo.ru/?unsubscribe=' + user._id
                 }
             ]
         },
-        template_name: 'russell-mass',
+        template_name: 'remington',
         template_content: []
     }
     yield new Promise((fulfill, reject) => {

@@ -33,7 +33,7 @@ class Profile extends Component {
             {name: 'Избранное', link: '/profile/favorites/'},
             {name: 'Мои фото', link: '/profile/presents/'},
             //{name: 'Статистика', link: '/profile/statistic/'},
-            //{name: 'Мои выигрыши', link: '/profile/prizes/'},
+            {name: 'Мои выигрыши', link: '/profile/prizes/'},
             {name: 'Обратная связь', link: '/profile/feedback/'},
         ]
         let dropdownNav = nav.map(el => {

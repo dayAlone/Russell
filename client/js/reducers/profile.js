@@ -6,7 +6,8 @@ import {
     START_GAME,
     UPDATE_GAME,
     GET_SCORES,
-    GET_PRESENTS
+    GET_PRESENTS,
+    GET_PRIZES
 } from '../constants/Profile'
 
 const initialState = {
@@ -40,6 +41,10 @@ export default function(state = initialState, action) {
             scores: action.data
         })
     case GET_PRESENTS:
+        return Object.assign({}, state, {
+            presents: action.data
+        })
+    case GET_PRIZES:
         return Object.assign({}, state, {
             presents: action.data
         })

@@ -325,7 +325,7 @@ class Competition extends Component {
                     </div>
                     <Link to={`/admin/winners/?game=${game}&raffle=${raffle}`} className='button--small button'>Перейти в раздел с победителями</Link>
                 </Modal>
-                <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : el ? el._id.displayName : null))} values={values ? values.random : null}/>
+                <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : typeof el === 'object' ? el._id.displayName : null))} values={values ? values.random : null}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

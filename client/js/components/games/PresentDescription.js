@@ -44,7 +44,7 @@ class PresentDescription extends Component {
                     </div>
                     <img src={`/layout/images/line.png`} width='100%' className='text__divider' height='2'/>
                     <div className='center'>
-                        <p>Делая фото, постарайтесь использовать фантазию. Потому что ваш ждет конкурс на самую креативную фотографию! Авторы трех фото, набравших по итогам голосования на сайте самое большое количество лайков, становятся победителями и получают призы.</p>
+                        <p>Загруженное изображение должно содержать вашу фотографию на тему «Я очень хочу получить технику Russell Hobbs в подарок!». Делая фото, постарайтесь использовать фантазию. Потому что ваш ждет конкурс на самую креативную фотографию! Авторы трех фото, набравших по итогам голосования на сайте самое большое количество лайков, становятся победителями и получают призы. Еще одно фото выбирает жюри, его автор тоже получает приз.</p>
                         {this.props.isLogin ?
                             <Link to='/games/present/make/' className='button button--small'>Отправить письмо</Link>
                             : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Отправить письмо</a>}
@@ -55,6 +55,7 @@ class PresentDescription extends Component {
                     </div>
                     { this.state.more ? <div className='present__more'>
                         <p><br/><br/></p>
+                        <p>Время проведения акции – с 23 ноября по 30 декабря.</p>
                         <p>Чтобы вам было проще составить письмо другу, мы разделили этапы его формирования на отдельные шаги:</p>
 
                         <p>1. Выбор техники из каталога.<br/>
@@ -72,7 +73,7 @@ class PresentDescription extends Component {
                         <p>Ваша фотография также появляется на странице «Галерея фотографий», где размещаются все загруженные пользователями фотографии, прошедшие модерацию.</p>
 
                         <p>Выбор лучших трех фотографий происходит путем голосования зарегистрированных пользователей сайта. По итогам голосования 3 фотографии, набравшие наибольшее количество лайков, становятся победителями.</p>
-
+                        <p>Специальный приз – за самое креативное фото по мнению жюри.</p>
                         <p>Вы можете проголосовать за разные фотографии, но только один раз за каждую.</p>
                         <div className='center'>
                             <a className='small' href='#' onClick={this.toggleMore(false)}>Свернуть</a>
@@ -110,6 +111,19 @@ class PresentDescription extends Component {
                                 </div>
                             </div>
                         </div>
+                        <h3 className='center'><br/>Специальный приз жюри</h3>
+                        <div className='present__prizes'>
+                            <div className='present__col'>
+                                <br/>
+                            </div>
+                            <div className='present__col'>
+                                <div className='present__item' style={{marginTop: -40}}>
+                                    <img src='/layout/images/prizes/fb4af634e4f3144a09492351.png' alt='' /><br/>
+                                    <span>Универсальный гриль Fiesta с камнем для жарки<br/><br/>21000-56</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

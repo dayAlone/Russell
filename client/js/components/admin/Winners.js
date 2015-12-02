@@ -116,7 +116,7 @@ class SocialRow extends Component {
                     break
                 default:
                     network = 'Facebook'
-                }    
+                }
             }
 
         }
@@ -362,7 +362,7 @@ class Competition extends Component {
                         </div>}
                     </div>
                 </Formsy.Form>
-                <AddSocialWinnerModal ref='modal' loadDataFromServer={this.loadDataFromServer.bind(this)} shown={true} raffles={raffles} items={list.map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
+                <AddSocialWinnerModal ref='modal' loadDataFromServer={this.loadDataFromServer.bind(this)} raffles={raffles} items={list.map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

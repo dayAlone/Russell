@@ -1,4 +1,32 @@
 .profile
+    .stat
+        .table
+            width 100%
+            full-width()
+            &--checks
+                .table__col
+                    width (100/6)%
+        &__toolbar
+            full-width()
+            .stat__col
+                width 30%
+                float left
+                &:last-of-type
+                    float right
+                    width 70%
+                    text-align right
+            .countdown
+                &__till
+                    top -3px
+                    position relative
+                    font-size 10px
+                    text-transform uppercase
+                    color #7e7f83
+                &__till, &__items
+                    middle()
+                    float none
+                    position relative
+                    margin-top -7px
     .prizes
 
         &__table
@@ -140,7 +168,7 @@
         padding 12px 20px 7px
         background transparent
         margin-right 2px
-        font-size 16px
+        font-size 14px
         display inline-block
         border-radius 5px 5px 0 0
         &:hover
@@ -156,7 +184,6 @@
             margin-top 30px
             padding-top 30px
             full-width()
-
     .info
         &__photo
             float left
@@ -209,9 +236,7 @@
             &:hover
                 span
                     border-line(alpha(red, .3))
-
     .favorites
-
         &__table
             @media (max-width: $scr_s)
                 .table
@@ -291,9 +316,7 @@
                     position absolute
                     top 50%
                     left 70px
-
     .checks
-
         &-stat
             font-size 13px
             line-height 1.6

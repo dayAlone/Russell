@@ -31,10 +31,3 @@ class GamesTimer extends Component {
     }
 }
 export default GamesTimer
-
-/*{!this.props.hideButton ? <div className='countdown__divider' /> : false}
-{
-    till.toDate() < current ?
-    ( !this.props.hideButton ? <a href={this.props.link} className='countdown__button'>Участвовать</a> : false)
-    : <div className='countdown__frame'><div className='countdown__till'>До начала <br/>акции</div></div>
-}*/

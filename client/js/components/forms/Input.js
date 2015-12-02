@@ -6,7 +6,9 @@ const MyInput = React.createClass({
     mixins: [Mixin],
 
     changeValue(event) {
-        this.setValue(event.currentTarget['value'])
+        let value = event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value']
+        if (this.props.onChange) this.props.onChange(value)
+        this.setValue(value)
     },
     render() {
         let { type, name, title, placeholder, className, maxLength, classFrame } = this.props
@@ -14,6 +16,7 @@ const MyInput = React.createClass({
         const errorMessage = this.getErrorMessage()
         return <div className={`form-group  ${classFrame ? classFrame : ''}`}>
             {title ? <label htmlFor={name}>{title}</label> : null}
+
             <input
                 type={type || 'text'}
                 name={name}
@@ -22,7 +25,7 @@ const MyInput = React.createClass({
                 className={classNames}
                 maxLength={maxLength}
                 placeholder={placeholder}
-                checked={type === 'radio' && this.props.value === this.getValue() ? 'checked' : null}
+                checked={(type === 'radio' || type === 'checkbox') && this.getValue() ? 'checked' : null}
                 />
             {errorMessage ? <span className='validation-error'>{errorMessage}</span> : null}
         </div>

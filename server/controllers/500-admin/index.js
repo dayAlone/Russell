@@ -11,7 +11,7 @@ import { Types } from 'mongoose'
 import moment from 'moment'
 
 import request from 'co-request'
-let isJsonString = function (str) {
+let isJsonString = (str) => {
     try {
         JSON.parse(str)
     } catch (e) {
@@ -251,7 +251,7 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'admin') {
                 let error = false
                 try {
-                    let {status, status_comment, id, count, organisation, inn, eklz, date, time, total, kpk_number, kpk_value, condition} = this.request.body
+                    let {status, status_comment, id, count, organisation, inn, eklz, date, time, total, kpk_number, kpk_value} = this.request.body
                     let fields = {
                         status: status,
                         status_comment: status_comment,
@@ -419,6 +419,30 @@ export default function(app) {
                 this.body = result
             }
         })
+        .post('/admin/winners/full/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                let result
+                try {
+                    let { id, value } = this.request.body
+                    let current = yield Winners.findOneAndUpdate(
+                        { _id: id },
+                        { $set: {
+                            'additional.full': value === 'true' ? true : false
+                        }}).exec()
+
+                    yield Winners.update(
+                        { _id: { $ne: id}, game: current.game, 'additional.full': true },
+                        { $set: {
+                            'additional.full': false
+                        }}).exec()
+                    result = {error: false, result: 'success'}
+                } catch (e) {
+                    console.error(e)
+                    result = {error: e.message, code: e.code}
+                }
+                this.body = result
+            }
+        })
         .post('/admin/winners/save-prize/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result
@@ -455,30 +479,44 @@ export default function(app) {
             if (this.req.user && this.req.user.role === 'admin') {
                 let result
                 try {
-                    let { items, game, raffle } = this.request.body
+                    let { item, items, game, raffle } = this.request.body
                     raffle = JSON.parse(raffle)
-                    console.log(items)
-                    let data = yield Winners.find({
-                        game: Types.ObjectId(game),
-                        raffle: raffle[1]
-                    })
-
-                    let exist = data.map(el => (el.position))
                     let skip = false
-                    for (let i = 0; i < items.length; i++) {
-                        let {user, place, additional} = items[i]
-                        if (exist.indexOf(parseInt(place, 10)) === -1) {
-                            yield Winners.create({
-                                user: Types.ObjectId(user),
-                                game: Types.ObjectId(game),
-                                raffle: raffle[1],
-                                position: place,
-                                additional: additional
-                            })
-                        } else {
-                            skip = true
+                    if (items) {
+                        let data = yield Winners.find({
+                            game: Types.ObjectId(game),
+                            raffle: raffle[1]
+                        })
+
+                        let exist = data.map(el => (el.position))
+
+                        for (let i = 0; i < items.length; i++) {
+                            let {user, place, additional} = items[i]
+                            if (exist.indexOf(parseInt(place, 10)) === -1) {
+                                yield Winners.create({
+                                    user: Types.ObjectId(user),
+                                    game: Types.ObjectId(game),
+                                    raffle: raffle[1],
+                                    position: place,
+                                    additional: additional
+                                })
+                            } else {
+                                skip = true
+                            }
                         }
+                    } else if (item) {
+                        let {photo, name, link} = this.request.body
+                        yield Winners.create({
+                            game: Types.ObjectId(game),
+                            raffle: raffle[1],
+                            additional: {
+                                photo: photo,
+                                name: name,
+                                link: link
+                            }
+                        })
                     }
+
                     result = {error: false, result: skip ? 'skip' : 'success'}
                 } catch (e) {
                     console.error(e.stack)

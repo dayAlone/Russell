@@ -154,7 +154,23 @@ export default function(app) {
                 raffle = JSON.parse(raffle)
                 let query = {
                     game: Types.ObjectId(game),
-                    raffle: raffle[1]
+                    $or: [{
+                        $and: [
+                            {
+                                raffle: {
+                                    $gte: moment(raffle[1]).startOf('day')
+                                }
+                            },
+                            {
+                                raffle: {
+                                    $lte: moment(raffle[1]).endOf('day')
+                                }
+                            }
+                        ]
+                    }, {
+                        'additional.full': true
+                    }]
+
                 }
                 try {
                     let raw = yield Winners.find(query).sort({position: 1})

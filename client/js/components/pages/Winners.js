@@ -110,16 +110,19 @@ class Winners extends Component {
         let network = ''
         if (link) {
             matches = link.match(/:\/\/(?:www\.)?(.[^/]+)(.*)/)
-            switch (matches[1]) {
-            case 'vk.com':
-                network = 'Вконтакте'
-                break
-            case 'instagram.com':
-                network = 'Instagram'
-                break
-            default:
-                network = 'Facebook'
+            if (matches) {
+                switch (matches[1]) {
+                case 'vk.com':
+                    network = 'Вконтакте'
+                    break
+                case 'instagram.com':
+                    network = 'Instagram'
+                    break
+                default:
+                    network = 'Facebook'
+                }
             }
+
         }
         return network
     }

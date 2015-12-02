@@ -5,8 +5,9 @@ import ReactPaginate from 'react-paginate'
 import { connect } from 'react-redux'
 import { toObj } from 'form-data-to-object'
 import Spinner from '../ui/Spinner'
+import AddSocialWinnerModal from './blocks/addSocialWinnerModal'
 import Formsy from 'formsy-react'
-import { Dropdown } from '../forms/'
+import { Dropdown, Input } from '../forms/'
 import moment from 'moment'
 
 import * as actionCreators from '../../actions/games'
@@ -49,7 +50,7 @@ class GameRow extends Component {
         let {user, additional, position, prize, _id, sended} = this.props.el
         let {hover, disabled_save, disabled_send} = this.state
         return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
-            <div className='table__col'>{user.displayName}</div>
+            <div className='table__col'>{user ? user.displayName : null}</div>
             <div className='table__col'>{additional.scores}</div>
             <div className='table__col'>{position}</div>
             <div className='table__col'>
@@ -71,11 +72,87 @@ class GameRow extends Component {
     }
 }
 
+class SocialRow extends Component {
+    state = {
+        hover: false,
+        disabled_save: false
+    }
+    onMouseEnter() {
+        this.setState({ hover: true })
+    }
+    onMouseLeave() {
+        this.setState({ hover: false })
+    }
+    savePrize(e) {
+        let { savePrize, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_save: true }, savePrize(_id, this.savedCallback.bind(this)))
+        e.preventDefault()
+    }
+    deleteWinner(e) {
+        let { deleteWinner, el} = this.props
+        let { _id } = el
+        deleteWinner(_id)()
+        e.preventDefault()
+    }
+    savedCallback() {
+        this.setState({ disabled_save: false })
+    }
+    handleChange(value) {
+        this.props.setFullWinner(this.props.el._id, value)
+    }
+    getByLink(link) {
+        let matches
+        let network = ''
+        if (link) {
+            matches = link.match(/:\/\/(?:www\.)?(.[^/]+)(.*)/)
+            if (matches) {
+                switch (matches[1]) {
+                case 'vk.com':
+                    network = 'Вконтакте'
+                    break
+                case 'instagram.com':
+                    network = 'Instagram'
+                    break
+                default:
+                    network = 'Facebook'
+                }    
+            }
+
+        }
+        return network
+    }
+    render() {
+        let {additional, prize, _id} = this.props.el
+        let {name, link, photo, full} = additional
+        let {hover, disabled_save } = this.state
+        return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
+            <div className='table__col'>{name}</div>
+            <div className='table__col'>{this.getByLink(link)}</div>
+            <div className='table__col'>
+                <Input type='checkbox' name='full' onChange={this.handleChange.bind(this)} value={full ? true : false}/>
+            </div>
+            <div className='table__col'>
+                <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
+                    name: el.name,
+                    code: el._id
+                }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
+                {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
+                    {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
+                </a> : null}
+            </div>
+            <div className='table__col'>
+                {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
+            </div>
+        </div>
+    }
+}
+
 @connect(state => ({ games: state.games.list, prizes: state.games.prizes }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Competition extends Component {
     state = {
         accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'present'],
-        game: false,
+        game: 'share-history',
         raffle: false,
         data: [],
         list: false,
@@ -132,6 +209,16 @@ class Competition extends Component {
             })
         }
     }
+    setFullWinner(id, value) {
+
+        $.post('/admin/winners/full/', {
+            id: id,
+            value: value
+        }, () => {
+            this.loadDataFromServer()
+        })
+
+    }
     loadDataFromServer() {
         let {game, raffle} = this.state
         let url = '/games/winners/get/'
@@ -153,7 +240,7 @@ class Competition extends Component {
     setList() {
         let { accepted, game, raffle } = this.state
         if (this.props.games.length > 0) {
-            let list = this.props.games.filter(el => (accepted.indexOf(el.code) !== -1)).map(el => ({code: el.code, name: el.name}))
+            let list = this.props.games.filter(el => (accepted.indexOf(el.code) !== -1)).map(el => ({code: el.code, name: el.name, id: el._id}))
             if (!game) game = this.props.location.query.game ? this.props.location.query.game : list[0].code
             let current = this.props.games.filter(el => (el.code === game))[0]
             let raffles = []
@@ -185,6 +272,16 @@ class Competition extends Component {
                 <div className='table__col'>Загружен пользователем</div>
                 <div className='table__col'>Связанные товары</div>
             </div>
+        case 'share-history':
+        case 'maraphon':
+        case 'heart':
+            return <div className='table__title'>
+                <div className='table__col'>пользователь</div>
+                <div className='table__col'>Сеть</div>
+                <div className='table__col'>Победитель акции</div>
+                <div className='table__col'>приз</div>
+                <div className='table__col'></div>
+            </div>
         default:
             return <div className='table__title'>
                 <div className='table__col'>Пользователь</div>
@@ -200,6 +297,20 @@ class Competition extends Component {
         case 'checks':
             return <div>
 
+            </div>
+        case 'share-history':
+        case 'maraphon':
+        case 'heart':
+            return <div>
+                {data.map((el, i) => {
+                    return <SocialRow
+                            setFullWinner={this.setFullWinner.bind(this)}
+                            deleteWinner={this.deleteWinner.bind(this)}
+                            savePrize={this.savePrize.bind(this)}
+                            el={el}
+                            key={i}
+                            prizes={this.props.prizes}/>
+                })}
             </div>
         default:
             return <div>
@@ -218,14 +329,23 @@ class Competition extends Component {
     }
     getButtons() {
         switch (this.state.game) {
-        case 'checks':
-            return <div className='table__buttons'></div>
+        case 'share-history':
+        case 'maraphon':
+        case 'heart':
+            return <div className='table__buttons'>
+                <a href='#' onClick={this.showAddModal.bind(this)} className='btn'>Добавить победителя</a>
+            </div>
         default:
             return <div className='table__buttons'></div>
         }
     }
+    showAddModal(e) {
+        this.refs.modal.show()
+        e.preventDefault()
+    }
     render() {
         let { game, raffle, list, raffles, data} = this.state
+
         if (game && raffle) {
             return <div className='admin-winners'>
                 <Helmet title='Russell Hobbs | Кабинет модератора | Победители'/>
@@ -242,6 +362,7 @@ class Competition extends Component {
                         </div>}
                     </div>
                 </Formsy.Form>
+                <AddSocialWinnerModal ref='modal' loadDataFromServer={this.loadDataFromServer.bind(this)} shown={true} raffles={raffles} items={list.map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

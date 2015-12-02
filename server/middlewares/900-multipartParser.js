@@ -32,7 +32,6 @@ export default function* (next) {
             const splits = part.filename.split('.')
             const ext = splits[splits.length - 1]
             const filename = randomstring.generate() + '.' + (ext === 'blob' ? 'jpg' : ext)
-            console.log(filename)
             const path = tmp + filename
             const stream = fs.createWriteStream(path)
 

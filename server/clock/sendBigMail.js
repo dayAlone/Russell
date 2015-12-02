@@ -2,7 +2,8 @@ import '../libs/mongoose'
 import Maillist from '../models/maillist'
 import config from 'config'
 import oid from '../libs/oid'
-
+import fs from 'fs'
+import { Converter } from 'csvtojson'
 import 'moment/locale/ru'
 import co from 'co'
 let mandrill = require('node-mandrill')(config.mandrill)
@@ -36,13 +37,17 @@ let sendMessage = function*(user) {
     })
 }
 
+
+
 let sendBigMail = function* () {
 
     let users = yield Maillist.find({
         active: true
     })
+    console.log(users.length)
     for (let u = 0; u < users.length; u++) {
-        yield sendMessage(users[u])
+        //if (users[u].email === 'vsv77@rambler.ru') console.log(u)
+        //yield sendMessage(users[u])
     }
 
 }

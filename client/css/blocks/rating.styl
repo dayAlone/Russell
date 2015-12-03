@@ -147,6 +147,10 @@
     position relative
     &__network
         color #8e8e8e
+    &__col
+        @media (min-width: $scr_s)
+            width (100/3)%
+            float left
     &__item
         float left
         width 100%
@@ -157,6 +161,16 @@
         @media (min-width: $scr_s)
             width (100/3)%
             margin-bottom 0px
+        &.winners__item--full
+            width 100%
+            margin-bottom 35px
+            padding-bottom 40px
+            border-bottom 1px solid red
+            h4, .winners__prize
+                margin-top 50px
+                position relative
+            h4
+                top 10px
         &--games-1
             left 50%
             transform translateX(-50%)

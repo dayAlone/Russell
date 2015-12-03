@@ -16,7 +16,7 @@ class Winners extends Component {
     state = {
         data: [],
         url: '/games/winners/get/',
-        game: this.props.location.query.game ? this.props.location.query.game : 'kitchen',
+        game: this.props.location.query.game ? this.props.location.query.game : 'share-history',
         accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present'],
         games: [],
         raffle: false,
@@ -133,6 +133,7 @@ class Winners extends Component {
         case 'maraphon':
         case 'heart':
             data.sort((a, b) => {
+                if (a.additional.full || b.additional.full) return 1
                 if (a.additional.link && b.additional.link) return this.getByLink(a.additional.link).length - this.getByLink(b.additional.link).length
                 return 0
             })
@@ -141,6 +142,22 @@ class Winners extends Component {
                     let { additional, prize } = el
                     let { photo, name, link } = additional
                     let network = this.getByLink(link)
+                    if (additional.full) {
+                        return <div className={`winners__item winners__item--full`} key={i}>
+                            <div className='winners__col'>
+                                <h4>Победитель акции</h4>
+                            </div>
+                            <div className='winners__col'>
+                                <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
+                                <div className='winners__name'>{name}</div>
+                            </div>
+                            <div className='winners__col'>
+                                {prize ? <div className='winners__prize'>
+                                    <img src={prize.photo} alt='' /> {prize.name}
+                                </div> : null}
+                            </div>
+                        </div>
+                    }
                     return <div className={`winners__item`} key={i}>
                         {network ? <div className='winners__network'>{network}</div> : null}
                         <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>

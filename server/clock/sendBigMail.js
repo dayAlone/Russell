@@ -46,8 +46,7 @@ let sendBigMail = function* () {
     })
     console.log(users.length)
     for (let u = 0; u < users.length; u++) {
-        //if (users[u].email === 'vsv77@rambler.ru') console.log(u)
-        //yield sendMessage(users[u])
+        yield sendMessage(users[u])
     }
 
 }

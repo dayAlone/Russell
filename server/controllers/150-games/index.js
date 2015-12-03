@@ -173,7 +173,7 @@ export default function(app) {
 
                 }
                 try {
-                    let raw = yield Winners.find(query).sort({position: 1})
+                    let raw = yield Winners.find(query).sort({position: 1, 'additional.full': -1})
                     let data = yield Users.populate(raw, {path: 'user', select: 'displayName photo _id'})
                     data = yield Prizes.populate(data, {path: 'prize'})
                     result = { error: false, list: data }

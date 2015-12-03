@@ -15,6 +15,7 @@ export default function* () {
             let url = `http://vk.com/share.php?act=count&url=http://${config.domain}/games/${type}/${_id}`
             let response = yield request(url)
             let value = parseInt(response.body.replace('VK.Share.count(0, ', '').replace(')'), 10)
+            console.log('vk ' + value)
             if (value === 0) {
                 yield Scores.update({_id: _id}, { $inc: { scores: -5 }, $set: {'share.vk': false}})
             }
@@ -29,10 +30,13 @@ export default function* () {
             let url = `https://graph.facebook.com/?id=http://${config.domain}/games/${type}/${_id}`
             let response = yield request(url)
             response = JSON.parse(response.body)
+            console.log('fb ' + response.shares)
             if (!response.error && (!response.shares || response.shares === 0)) {
                 yield Scores.update({_id: _id}, { $inc: { scores: -5 }, $set: {'share.fb': false}})
             }
         }
+
+        console.log('Social checked')
 
     } catch (e) {
         console.log(e.stack)

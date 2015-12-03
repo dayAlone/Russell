@@ -68,6 +68,9 @@ class addSocialWinnerModal extends Component {
     componentDidMount() {
         if (this.props.shown === true) this.show()
     }
+    componentDidUpdate() {
+        if (this.props.shown === true && this.refs.modal.hasHidden()) this.show()
+    }
     render() {
         let {raffles, items, game, raffle} = this.props
 
@@ -82,7 +85,7 @@ class addSocialWinnerModal extends Component {
                 <div className='form__cols'>
                     <div className='form__col'>
                         <label>Активность</label>
-                        <Dropdown name='game' items={items} value={game}/>
+                        <Dropdown onChange={this.props.changeGame} name='game' items={items} value={game}/>
                     </div>
                     <div className='form__col'>
                         <label>Дата / период розыгрыша</label>

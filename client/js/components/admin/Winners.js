@@ -153,10 +153,12 @@ class Competition extends Component {
     state = {
         accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'present'],
         game: 'share-history',
+        social: ['share-history', 'maraphon', 'heart'],
         raffle: false,
         data: [],
         list: false,
-        raffles: false
+        raffles: false,
+        modal: false
     }
     componentDidMount() {
         if (this.props.games.length === 0) this.props.actions.getGames()
@@ -178,6 +180,15 @@ class Competition extends Component {
         } else {
             this.setState(toObj(fields), this.loadDataFromServer.bind(this))
         }
+    }
+    changeGame(game) {
+        game = this.state.list.filter(el => (el.id === game.code))[0].code
+        this.setState({
+            game: game,
+            raffle: false
+        }, () => {
+            this.setList()
+        })
     }
     savePrize(id, callback) {
         let {prizes} = this.state
@@ -340,7 +351,9 @@ class Competition extends Component {
         }
     }
     showAddModal(e) {
-        this.refs.modal.show()
+        this.setState({
+            modal: true
+        })
         e.preventDefault()
     }
     render() {
@@ -362,7 +375,7 @@ class Competition extends Component {
                         </div>}
                     </div>
                 </Formsy.Form>
-                <AddSocialWinnerModal ref='modal' loadDataFromServer={this.loadDataFromServer.bind(this)} raffles={raffles} items={list.map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
+                <AddSocialWinnerModal changeGame={this.changeGame.bind(this)} ref='modal' shown={this.state.modal} loadDataFromServer={this.loadDataFromServer.bind(this)} raffles={raffles} items={list.filter(el=>(this.state.social.indexOf(el.code) !== -1)).map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

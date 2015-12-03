@@ -151,9 +151,9 @@ class SocialRow extends Component {
 @connect(state => ({ games: state.games.list, prizes: state.games.prizes }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Competition extends Component {
     state = {
-        accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'present'],
+        accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'focus', 'present'],
         game: 'share-history',
-        social: ['share-history', 'maraphon', 'heart'],
+        social: ['share-history', 'maraphon', 'heart', 'focus'],
         raffle: false,
         data: [],
         list: false,

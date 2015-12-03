@@ -77,7 +77,7 @@ class addSocialWinnerModal extends Component {
         return <Modal ref='modal' className='modal modal--add-winner'>
             <h3 className='modal__title modal__title--border'>Добавить победителя</h3>
             {this.state.error ? <div className='alert' role='alert'>{this.state.error}</div> : null}
-            {game && raffle ? <Formsy.Form ref='form' className='form' onSubmit={this.submitForm.bind(this)}>
+            {game && raffle ? <Formsy.Form ref='form' className='form' onValidSubmit={this.submitForm.bind(this)}>
                 <Input name='name' title='Имя, фамилия' validations='minLengthOrEmpty:1'/>
                 <Input name='link' title='Ссылка на профиль в социальной сети' validations='minLengthOrEmpty:1'/>
                 <label>Фото</label>

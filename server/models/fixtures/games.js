@@ -61,8 +61,8 @@ export default (Game) => {
             sort: 700
         },
         {
-            name: 'В сердце компании',
-            code: 'heart',
+            name: 'Фокус в деталях',
+            code: 'focus',
             raffles: ['11.12.2015 18:00'],
             sort: 800
         },

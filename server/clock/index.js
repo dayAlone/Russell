@@ -35,9 +35,14 @@ new CronJob({
     start: true
 })
 
-checkShares()
+let checkSharesCount = function() {
+    co(function*() {
+        yield checkShares()
+    }).catch(e => (console.error(e.stack)))
+}
+checkSharesCount()
 new CronJob({
     cronTime: '0 */2 * * * *',
-    onTick: checkShares,
+    onTick: checkSharesCount,
     start: true
 })

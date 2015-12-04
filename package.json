@@ -156,6 +156,7 @@
     "typograf": "^4.1.0",
     "typographic": "^2.9.3",
     "vinyl-ftp": "^0.4.5",
+    "vksdk": "^5.2.0",
     "wait.for": "^0.6.6",
     "webpack": "^1.12.2",
     "webpack-hot-middleware": "^2.4.1",

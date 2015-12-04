@@ -3,6 +3,8 @@ import Scores from '../models/scores'
 import config from 'config'
 import request from 'co-request'
 import moment from 'moment'
+import vk from 'vksdk'
+
 
 export default function* () {
     try {

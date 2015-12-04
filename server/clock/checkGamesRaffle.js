@@ -59,7 +59,7 @@ export default function* () {
 
     let notifications = {}
     data.map(el => {
-        if (el._id) notifications[el._id.code] = el.dates
+        if (el._id) notifications[el._id.code] = el.dates.map(el => (el.toString()))
     })
 
     let users = yield Users.find()
@@ -67,8 +67,9 @@ export default function* () {
         let game = games[i]
         for (let r = 0; r < game.raffles.length; r++ ) {
             let raffle = game.raffles[r]
+
             if (moment(raffle).diff(moment(), 'days') < 3 && moment() < moment(raffle)) {
-                let skip = notifications[game.code] && notifications[game.code].indexOf(raffle) === -1
+                let skip = notifications[game.code] && notifications[game.code].indexOf(raffle.toString()) !== -1
                 if (!skip) {
                     for (let u = 0; u < users.length; u++) {
                         let text

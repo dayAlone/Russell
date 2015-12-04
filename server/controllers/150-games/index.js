@@ -355,6 +355,7 @@ export default function(app) {
                 let result
                 let {type, finished} = this.request.body
                 try {
+                    console.log('GameResultStart', this.req.user._id, type)
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.create({
                             type: type,

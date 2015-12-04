@@ -228,16 +228,18 @@ export default function(app) {
                         query,
                         group,
                         match]).exec()
+                    console.log(total)
                     let data = yield Scores.aggregate([
                         query,
                         group,
                         match,
-                        { $limit: parseInt(limit, 10) },
+                        { $sort: { total: -1 } },
                         { $skip: parseInt(offset, 10) },
-                        { $sort: { total: -1 } }
+                        { $limit: parseInt(limit, 10) },
                     ]).exec()
+
                     let result = yield Users.populate(data, {path: '_id', select: 'displayName photo _id'})
-                    this.body = { list: result.filter(el => (el._id !== null)), meta: { limit: limit, total_count: total.length }}
+                    this.body = { list: result, meta: { limit: limit, total_count: total.length }}
                 } catch (e) {
                     console.error(e)
                     this.body = { error: e }

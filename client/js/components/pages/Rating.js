@@ -22,7 +22,7 @@ class Rating extends Component {
         accepted: ['test', 'kitchen'],
         games: [],
         raffle: false,
-        currentPage: 1,
+        currentPage: 0,
     }
     loadRatingFromServer() {
         let {url, limit, offset} = this.state
@@ -87,7 +87,7 @@ class Rating extends Component {
                 if (this.state.accepted.indexOf(el.code) !== -1) {
                     let list = [el.start].concat(el.raffles)
                     list = list.sort((a, b) => (moment(a) - moment(b)))
-                    let raffles = [];
+                    let raffles = []
                     list.map((r, i) => {
                         if (moment(r) < moment() && list[i + 1]) {
                             raffles.push([r, list[i + 1]])
@@ -147,6 +147,7 @@ class Rating extends Component {
                             nextLabel={'след.'}
                             breakLabel={<li className='break'><a href=''>...</a></li>}
                             pageNum={pageNum}
+                            forceSelected={currentPage}
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={5}
                             clickCallback={this.handlePageClick.bind(this)}
@@ -172,10 +173,12 @@ class Rating extends Component {
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {
                         return <div className='table__row' key={i}>
-                            <div className='table__col'><div className='rating__position'>{limit * (currentPage - 1) + i + 1}</div></div>
+                            <div className='table__col'>
+                                <div className='rating__position'>{limit * currentPage + i + 1}</div>
+                            </div>
                             <div className='table__col left'>
-                                <div className='rating__image' style={{backgroundImage: `url(${el._id.photo ? el._id.photo : '/layout/images/svg/avatar.svg'})`}} />
-                                <div className='rating__name'>{el._id.displayName.split(' ')[0]} <br/>{el._id.displayName.split(' ')[1]}</div>
+                                <div className='rating__image' style={{backgroundImage: `url(${el._id && el._id.photo ? el._id.photo : '/layout/images/svg/avatar.svg'})`}} />
+                                <div className='rating__name'>{el._id ? <span>{el._id.displayName.split(' ')[0]} <br/>{el._id.displayName.split(' ')[1]}</span> : null }</div>
                             </div>
                             <div className='table__col'><div className='rating__total'>{el.total}</div></div>
                         </div>
@@ -192,6 +195,7 @@ class Rating extends Component {
                             nextLabel={'след.'}
                             breakLabel={<li className='break'><a href=''>...</a></li>}
                             pageNum={pageNum}
+                            forceSelected={currentPage}
                             marginPagesDisplayed={2}
                             pageRangeDisplayed={5}
                             clickCallback={this.handlePageClick.bind(this)}

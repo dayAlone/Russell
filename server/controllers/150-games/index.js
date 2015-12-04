@@ -228,7 +228,6 @@ export default function(app) {
                         query,
                         group,
                         match]).exec()
-                    console.log(total)
                     let data = yield Scores.aggregate([
                         query,
                         group,

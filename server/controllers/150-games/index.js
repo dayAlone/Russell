@@ -375,7 +375,7 @@ export default function(app) {
                 let {id, fields} = this.request.body
                 try {
                     if (parseInt(fields.level, 10) > 0) fields['level'] = fields.level
-                    console.log('GameResultUpdate', user._id, id, fields)
+                    console.log('GameResultUpdate', this.req.user._id, id, fields)
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.findOneAndUpdate(
                             { _id: id, user: user._id },

@@ -247,12 +247,13 @@ export default function(app) {
         })
         .get('/games/presents/get/', function*() {
             let { limit, offset, sort, status, direction } = this.query
-            if (limit && offset && sort) {
+            if (limit && offset) {
                 try {
                     let query = {}
                     if (status && status !== 'all') query['status'] = status
                     else if (!status) query['status'] = 'active'
                     let by = {}
+                    if (!sort) sort = 'likes'
                     by[sort] = direction ? parseInt(direction, 0) : -1
                     let fields = [
                         {$match: query},

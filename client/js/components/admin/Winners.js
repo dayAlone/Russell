@@ -152,7 +152,7 @@ class SocialRow extends Component {
 class Competition extends Component {
     state = {
         accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'focus', 'present'],
-        game: 'share-history',
+        game: false, 
         social: ['share-history', 'maraphon', 'heart', 'focus'],
         raffle: false,
         data: [],

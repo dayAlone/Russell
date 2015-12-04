@@ -12,6 +12,9 @@ import RandomScores from './blocks/GetRandomScoresModal'
 import moment from 'moment'
 import Modal from '../ui/Modal'
 
+import 'react-photoswipe/lib/photoswipe.css'
+import {PhotoSwipe} from 'react-photoswipe'
+
 import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
 
@@ -38,9 +41,30 @@ const TableRowsRadio = React.createClass({
         if (this.getValue().places[name] === val) delete(places[name])
 
         return (e) => {
-            this.setValue(Object.assign({}, this.getValue(), {places: places}))
             e.preventDefault()
+            for (let i in this.getValue().places) {
+                if (this.getValue().places[i] === val) {
+                    return false
+                }
+            }
+            this.setValue(Object.assign({}, this.getValue(), {places: places}))
+
         }
+    },
+    getRadios(list, value) {
+        return list.map((r, i) => {
+            let current = r.code ? r.code : r.name
+            return <span key={i} className='radio-group'>
+                    <input
+                        checked={current.toString() === value['places'][r.name]}
+                        type='radio'
+                        name={`places[${r.name}]`}
+                        value={current}
+                        onChange={this.onChange}
+                         />
+                     <a key={i} href='#' onClick={this.onClickRadio(r.name, current)}>{r.title ? r.title : r.name}</a>
+                </span>
+        })
     },
     onChangeCheckbox(e) {
         let current = this.getValue().random
@@ -50,38 +74,60 @@ const TableRowsRadio = React.createClass({
         else current = _.without(current, val)
         this.setValue(Object.assign({}, this.getValue(), {random: current}))
     },
-    render() {
-        let value = this.getValue()
-        return <div>{this.props.data.map((el, i) => {
-            let {total, _id: profile} = el
+    socialRow(el, i, value) {
+        let {total, _id: profile} = el
+        if (profile) {
+
             let id = profile._id
             return <div className='table__row' key={i}>
                 <div className='table__col'>{total}</div>
                 <div className='table__col'>{profile.displayName}</div>
                 <div className='table__col'>{parseInt(this.props.offset, 10) + i + 1}</div>
                 <div className='table__col'>
-                    {[
+                    {this.getRadios([
                         {name: 1, code: id},
                         {name: 2, code: id},
                         {name: 3, code: id}
-                    ].map((r, i) => {
-                        let current = r.code ? r.code : r.name
-                        return <span key={i} className='radio-group'>
-                                <input
-                                    checked={current.toString() === value['places'][r.name]}
-                                    type='radio'
-                                    name={`places[${r.name}]`}
-                                    value={current}
-                                    onChange={this.onChange}
-                                     />
-                                 <a key={i} href='#' onClick={this.onClickRadio(r.name, current)}>{r.name}</a>
-                            </span>
-                    })}
+                    ], value)}
                 </div>
                 <div className='table__col'>
                     <input type='checkbox' name='random[]' value={i} onChange={this.onChangeCheckbox}/>
                 </div>
             </div>
+        }
+    },
+    presentRow(el, i, value) {
+        let {_id, count, user: profile, image} = el
+        if (profile) {
+
+            return <div className='table__row' key={i}>
+                <div className='table__col'>{count}</div>
+                <div className='table__col'>{profile.displayName}</div>
+                <div className='table__col'>
+                    <a href='#' onClick={this.props.openPhotoSwipe(image)} className='table__image'><img src={image} alt='' width='30'/></a>
+                </div>
+                <div className='table__col'>
+                    {this.getRadios([
+                        {name: 1, code: _id},
+                        {name: 2, code: _id},
+                        {name: 3, code: _id},
+                        {name: 'full', code: _id, title: 'Победитель акции'}
+                    ], value)}
+                </div>
+                <div className='table__col'>
+                    <input type='checkbox' name='random[]' value={i} onChange={this.onChangeCheckbox}/>
+                </div>
+            </div>
+        }
+    },
+    render() {
+        let value = this.getValue()
+        return <div>{this.props.data.map((el, i) => {
+
+            if (this.props.game === 'present') return this.presentRow(el, i, value)
+            return this.socialRow(el, i, value)
+
+
         })}</div>
     }
 })
@@ -92,14 +138,15 @@ export default RadioGroup
 @connect(state => ({ games: state.games.list }), dispatch => ({actions: bindActionCreators(actionCreators, dispatch)}))
 class Competition extends Component {
     state = {
-        accepted: ['checks', 'kitchen', 'test'],
-        game: false,
+        accepted: ['checks', 'kitchen', 'test', 'present'],
+        game: 'present', //false,
         raffle: false,
         perPage: 50,
         offset: 0,
         data: [],
         list: false,
-        raffles: false
+        raffles: false,
+        photoswipe: false
     }
     componentDidMount() {
         if (this.props.games.length === 0) this.props.actions.getGames()
@@ -107,6 +154,22 @@ class Competition extends Component {
     }
     componentDidUpdate(prevProps) {
         if (this.props.games.length > 0 && prevProps.games.length === 0) this.setList()
+    }
+    openPhotoSwipe(image) {
+        return (e) => {
+            let img = new Image()
+            img.onload = () => {
+                this.setState({photoswipe: true, image: [{src: image, w: img.width, h: img.height}]})
+                $('body').addClass('photoswipe-open')
+            }
+            img.src = image.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${image}` : image
+
+            e.preventDefault()
+        }
+    }
+    closePhotoSwipe() {
+        $('body').removeClass('photoswipe-open')
+        this.setState({photoswipe: false})
     }
     handleFormChange(fields) {
         if (!fields.game) fields = this.refs.form.getCurrentValues()
@@ -127,6 +190,9 @@ class Competition extends Component {
         switch (game) {
         case 'checks':
             url = '/admin/checks/get/'
+            break
+        case 'present':
+            url = '/games/presents/get/'
             break
         default:
             url = '/games/rating/get/'
@@ -181,6 +247,14 @@ class Competition extends Component {
                 <div className='table__col'>Загружен пользователем</div>
                 <div className='table__col'>Связанные товары</div>
             </div>
+        case 'present':
+            return <div className='table__title'>
+                <div className='table__col'>Лайков</div>
+                <div className='table__col'>Пользователь</div>
+                <div className='table__col'>Фото</div>
+                <div className='table__col'>Установка мест</div>
+                <div className='table__col'>Случайный выбор</div>
+            </div>
         default:
             return <div className='table__title'>
                 <div className='table__col'>Баллов</div>
@@ -213,7 +287,7 @@ class Competition extends Component {
             })
             return rows
         default:
-            return <TableRowsRadio data={data} name='values' offset={this.state.offset}/>
+            return <TableRowsRadio openPhotoSwipe={this.openPhotoSwipe.bind(this)} game={this.state.game} data={data} name='values' offset={this.state.offset}/>
         }
 
     }
@@ -230,17 +304,32 @@ class Competition extends Component {
 
         for (let i in values.places) ids.push(values.places[i])
 
-
-        let items = this.state.data
-            .filter(el => (ids.indexOf(el._id._id) !== -1))
-            .map(el => ({
-                user: el._id._id,
-                place: Object.keys(values.places).filter(function(key) {return values.places[key] === el._id._id})[0],
-                additional: {
-                    scores: el.total
-                }
-            }))
-
+        let items
+        if (game.code === 'present') {
+            items = this.state.data
+                .filter(el => (ids.indexOf(el._id) !== -1))
+                .map(el => {
+                    let place = Object.keys(values.places).filter(function(key) {return values.places[key] === el._id})[0]
+                    let fields = {
+                        user: el.user._id,
+                        additional: {
+                            full: place === 'full'
+                        }
+                    }
+                    if (place !== 'full') fields['place'] = place
+                    return fields
+                })
+        } else {
+            items = this.state.data
+                .filter(el => (ids.indexOf(el._id._id) !== -1))
+                .map(el => ({
+                    user: el._id._id,
+                    place: Object.keys(values.places).filter(function(key) {return values.places[key] === el._id._id})[0],
+                    additional: {
+                        scores: el.total
+                    }
+                }))
+        }
         $.post('/admin/winners/add/', {
             items: items,
             raffle: raffle,
@@ -325,7 +414,12 @@ class Competition extends Component {
                     </div>
                     <Link to={`/admin/winners/?game=${game}&raffle=${raffle}`} className='button--small button'>Перейти в раздел с победителями</Link>
                 </Modal>
-                <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : el._id.displayName))} values={values ? values.random : null}/>
+                <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : el._id !== null ? el._id.displayName : ''))} values={values ? values.random : false}/>
+                <PhotoSwipe
+                    isOpen={this.state.photoswipe}
+                    options={{shareEl: false}}
+                    items={this.state.image}
+                    onClose={this.closePhotoSwipe.bind(this)}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

@@ -31,7 +31,7 @@ let sendMessage = function*(user, text) {
                         Если вы еще не успели в ней поучаствовать, самое время начать!
                         И, возможно, именно вы выиграете приз – технику Russell Hobbs.<br/><br/>
 
-                        Удачи на <a href='http:/www.russellhobbs-promo.ru/'>www.russellhobbs-promo.ru</a>.</h3>`
+                    Удачи на <a href='http://www.russellhobbs-promo.ru/' style='color:#ff1627'>www.russellhobbs-promo.ru</a>.</h3>`
         }, {
             name: 'additional',
             content: '<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td class="center padding"><img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/></td></tr></table>'
@@ -47,7 +47,7 @@ let sendMessage = function*(user, text) {
 
 export default function* () {
     let games = yield Games.find({
-        code: { $in: ['checks', 'kitchen'] }
+        code: { $in: ['checks', 'kitchen', 'present'] }
     })
 
     let data = yield Notifications.aggregate({$group: {
@@ -75,12 +75,10 @@ export default function* () {
                         let text
                         switch (game.code) {
                         case 'kitchen':
-                            text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
-                                        по нашим акциям «Cобери коллекцию» и «Выиграй мечту».`
+                            text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/> по нашим акциям «Собери коллекцию» и «История в деталях».`
                             break
                         default:
-                            text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/>
-                            по нашей акции «${game.name}».`
+                            text = `Совсем скоро, ${moment(raffle).format('D MMMM')}, состоится розыгрыш призов<br/> по нашей акции «${game.name}».`
                         }
                         yield sendMessage(users[u], text)
                     }

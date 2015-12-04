@@ -482,12 +482,12 @@ export default function(app) {
                     let { item, items, game, raffle } = this.request.body
                     raffle = JSON.parse(raffle)
                     let skip = false
+                    console.log(items)
                     if (items) {
                         let data = yield Winners.find({
                             game: Types.ObjectId(game),
                             raffle: raffle[1]
                         })
-
                         let exist = data.map(el => (el.position))
 
                         for (let i = 0; i < items.length; i++) {

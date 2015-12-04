@@ -222,14 +222,16 @@ export default function(app) {
                         total: { $sum: '$scores' }
                     }
                 }
+                let match = {$match: {total: { $gt: 0 }}}
                 try {
                     let total = yield Scores.aggregate([
                         query,
-                        group]).exec()
+                        group,
+                        match]).exec()
                     let data = yield Scores.aggregate([
                         query,
                         group,
-                        {$match: {total: { $gt: 0 }}},
+                        match,
                         { $limit: parseInt(limit, 10) },
                         { $skip: parseInt(offset, 10) },
                         { $sort: { total: -1 } }

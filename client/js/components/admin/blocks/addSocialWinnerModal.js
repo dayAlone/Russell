@@ -74,7 +74,7 @@ class addSocialWinnerModal extends Component {
     render() {
         let {raffles, items, game, raffle} = this.props
 
-        return <Modal ref='modal' className='modal modal--add-winner'>
+        return <Modal ref='modal' className='modal modal--add-winner' onHide={this.props.hideAddModal}>
             <h3 className='modal__title modal__title--border'>Добавить победителя</h3>
             {this.state.error ? <div className='alert' role='alert'>{this.state.error}</div> : null}
             {game && raffle ? <Formsy.Form ref='form' className='form' onValidSubmit={this.submitForm.bind(this)}>

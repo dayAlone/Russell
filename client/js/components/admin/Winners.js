@@ -356,6 +356,11 @@ class Competition extends Component {
         })
         e.preventDefault()
     }
+    hideAddModal() {
+        this.setState({
+            modal: false
+        })
+    }
     render() {
         let { game, raffle, list, raffles, data} = this.state
 
@@ -375,7 +380,7 @@ class Competition extends Component {
                         </div>}
                     </div>
                 </Formsy.Form>
-                <AddSocialWinnerModal changeGame={this.changeGame.bind(this)} ref='modal' shown={this.state.modal} loadDataFromServer={this.loadDataFromServer.bind(this)} raffles={raffles} items={list.filter(el=>(this.state.social.indexOf(el.code) !== -1)).map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
+                <AddSocialWinnerModal hideAddModal={this.hideAddModal.bind(this)} changeGame={this.changeGame.bind(this)} ref='modal' shown={this.state.modal} loadDataFromServer={this.loadDataFromServer.bind(this)} raffles={raffles} items={list.filter(el=>(this.state.social.indexOf(el.code) !== -1)).map(el=>({code: el.id, name: el.name}))} game={list.filter(el=>(el.code === game))[0].id} raffle={raffle}/>
             </div>
         }
         return <Spinner color='#e32c21'/>

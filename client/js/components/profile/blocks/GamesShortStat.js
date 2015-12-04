@@ -18,7 +18,7 @@ import Formsy from 'formsy-react'
     actions: { games: bindActionCreators(gamesActions, dispatch), profile: bindActionCreators(profileActions, dispatch)}}))
 class Raring extends Component {
     state = {
-        ignore: ['present', 'share-history', 'maraphon', 'heart'],
+        accepted: ['test', 'kitchen', 'checks'],
         stat: [],
         current: 0
     }
@@ -36,7 +36,8 @@ class Raring extends Component {
             let stat = []
 
             this.props.games.map(el => {
-                if (this.state.ignore.indexOf(el.code) === -1) {
+                console.log(el.code, this.state.accepted.indexOf(el.code))
+                if (this.state.accepted.indexOf(el.code) !== -1) {
                     let till
                     el.raffles.sort((a, b) => (moment(b) - moment(a))).map(el => {
                         if (moment(el) > moment()) till = moment(el)

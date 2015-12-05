@@ -380,6 +380,7 @@ export default function(app) {
                 let {id, fields} = this.request.body
                 try {
                     if (parseInt(fields.level, 10) > 0) fields['level'] = fields.level
+                    if (parseInt(fields.scores, 10) < 0) fields.scores = 0
                     console.log('GameResultUpdate', this.req.user._id, id, fields)
                     result = yield getUserScores(this.req.user, function*(user) {
                         yield Scores.findOneAndUpdate(

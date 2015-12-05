@@ -313,7 +313,8 @@ class Competition extends Component {
                     let fields = {
                         user: el.user._id,
                         additional: {
-                            full: place === 'full'
+                            full: place === 'full',
+                            likes: el.count
                         }
                     }
                     if (place !== 'full') fields['place'] = place

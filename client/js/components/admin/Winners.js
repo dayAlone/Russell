@@ -72,6 +72,71 @@ class GameRow extends Component {
     }
 }
 
+class PresentRow extends Component {
+    state = {
+        hover: false,
+        disabled_save: false,
+        disabled_send: false
+    }
+    onMouseEnter() {
+        this.setState({ hover: true })
+    }
+    onMouseLeave() {
+        this.setState({ hover: false })
+    }
+    savePrize(e) {
+        let { savePrize, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_save: true }, savePrize(_id, this.savedCallback.bind(this)))
+        e.preventDefault()
+    }
+    sendMail(e) {
+        let { sendMail, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_send: true }, sendMail(_id))
+        e.preventDefault()
+    }
+    deleteWinner(e) {
+        let { deleteWinner, el} = this.props
+        let { _id } = el
+        deleteWinner(_id)()
+        e.preventDefault()
+    }
+    savedCallback() {
+        this.setState({ disabled_save: false })
+    }
+    handleChange(value) {
+        this.props.setFullWinner(this.props.el._id, value)
+    }
+    render() {
+        let {user, additional, position, prize, _id, sended} = this.props.el
+        let {hover, disabled_save, disabled_send} = this.state
+        return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
+            <div className='table__col'>{user ? user.displayName : null}</div>
+            <div className='table__col'>{additional.likes}</div>
+            <div className='table__col'>{position}</div>
+            <div className='table__col'>
+                <Input type='checkbox' name='full' onChange={this.handleChange.bind(this)} value={additional.full ? true : false}/>
+            </div>
+            <div className='table__col'>
+                <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
+                    name: el.name,
+                    code: el._id
+                }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
+                {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
+                    {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
+                </a> : null}
+            </div>
+            <div className='table__col'>
+                {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className={`btn ${disabled_send ? 'btn--disabled' : ''}`}>{disabled_send ? <img src='/layout/images/loading.gif' alt='' /> : null} Уведомить</a> : null}
+            </div>
+            <div className='table__col'>
+                {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
+            </div>
+        </div>
+    }
+}
+
 class SocialRow extends Component {
     state = {
         hover: false,
@@ -152,7 +217,7 @@ class SocialRow extends Component {
 class Competition extends Component {
     state = {
         accepted: ['checks', 'kitchen', 'test', 'share-history', 'maraphon', 'heart', 'focus', 'present'],
-        game: false, 
+        game: false,
         social: ['share-history', 'maraphon', 'heart', 'focus'],
         raffle: false,
         data: [],
@@ -283,6 +348,15 @@ class Competition extends Component {
                 <div className='table__col'>Загружен пользователем</div>
                 <div className='table__col'>Связанные товары</div>
             </div>
+        case 'present':
+            return <div className='table__title'>
+                <div className='table__col'>Пользователь</div>
+                <div className='table__col'>Лайков</div>
+                <div className='table__col'>Место</div>
+                <div className='table__col'>Победитель акции</div>
+                <div className='table__col'>Приз</div>
+                <div className='table__col'>Письмо</div>
+            </div>
         case 'share-history':
         case 'maraphon':
         case 'heart':
@@ -323,6 +397,17 @@ class Competition extends Component {
                             prizes={this.props.prizes}/>
                 })}
             </div>
+        case 'present':
+            return <div>{data.map((el, i) => {
+                return <PresentRow
+                        setFullWinner={this.setFullWinner.bind(this)}
+                        sendMail={this.sendMail.bind(this)}
+                        deleteWinner={this.deleteWinner.bind(this)}
+                        savePrize={this.savePrize.bind(this)}
+                        el={el}
+                        key={i}
+                        prizes={this.props.prizes}/>
+            })}</div>
         default:
             return <div>
                 {data.map((el, i) => {

@@ -35,7 +35,7 @@ new CronJob({
     start: true
 })
 
-
+/*
 let checkSharesCount = function() {
     co(function*() {
         yield checkShares()
@@ -43,7 +43,8 @@ let checkSharesCount = function() {
 }
 checkSharesCount()
 new CronJob({
-    cronTime: '0 */2 * * * *',
+    cronTime: '0 /2 * * * *',
     onTick: checkSharesCount,
     start: true
 })
+*/

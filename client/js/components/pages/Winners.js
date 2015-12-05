@@ -80,7 +80,7 @@ class Winners extends Component {
                     list = list.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = []
                     list.map((r, i) => {
-                        if (moment(list[i + 1]) < moment() && list[i + 1]) {
+                        if (list[i + 1]) { // && moment(list[i + 1]) < moment()) {
                             raffles.push([r, list[i + 1]])
                         }
                     })
@@ -170,30 +170,52 @@ class Winners extends Component {
             </div>
         case 'test':
         case 'kitchen':
+        case 'present':
+            console.log(data)
             return <div className='winners'>
-                {data.map((el, i) => {
-                    let { position, user, additional, prize } = el
-                    if (user) {
-                        let { photo, displayName } = user
-                        let { photo: image, name } = prize
-                        let { scores } = additional
-                        return <div className={`winners__item winners__item--games-${position}`} key={i}>
-                            <div className='winners__position'>
-                                {position} место
+                {data
+                    .sort((a, b) => {
+                        if (a.additional.full || b.additional.full) return 1
+                    })
+                    .map((el, i) => {
+                        let { position, user, additional, prize } = el
+                        if (user && prize) {
+                            let { photo, displayName } = user
+                            let { photo: image, name } = prize
+                            let { scores } = additional
+                            if (additional.full) {
+                                return <div className={`winners__item winners__item--full`} key={i}>
+                                    <div className='winners__col'>
+                                        <h4>Победитель акции</h4>
+                                    </div>
+                                    <div className='winners__col'>
+                                        <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
+                                        <div className='winners__name'>{displayName}</div>
+                                    </div>
+                                    <div className='winners__col'>
+                                        {image ? <div className='winners__prize'>
+                                            <img src={image} alt='' /> {name}
+                                        </div> : null}
+                                    </div>
+                                </div>
+                            }
+                            return <div className={`winners__item winners__item--games-${position}`} key={i}>
+                                <div className='winners__position'>
+                                    {position} место
+                                </div>
+                                <div className='winners__scores'>
+                                    <strong>{scores}</strong><br/>
+                                    {pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])}
+                                </div>
+                                <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
+                                <div className='winners__name'>{displayName}</div>
+                                {prize ? <div className='winners__prize'>
+                                    <img src={image} alt='' /> {name}
+                                </div> : null}
                             </div>
-                            <div className='winners__scores'>
-                                <strong>{scores}</strong><br/>
-                                {pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])}
-                            </div>
-                            <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
-                            <div className='winners__name'>{displayName}</div>
-                            {prize ? <div className='winners__prize'>
-                                <img src={image} alt='' /> {name}
-                            </div> : null}
-                        </div>
-                    }
-                    return null
-                })}
+                        }
+                        return null
+                    })}
             </div>
         default:
 
@@ -202,7 +224,7 @@ class Winners extends Component {
     render() {
         let {game, games, raffle, data} = this.state
         let dates = []
-        games.filter(el => (el.code === game)).map((el, i) => {
+        games.filter(el => (el.code === game)).map(el => {
             el.raffles.map(d => {
                 dates.push({name: moment(d[1]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
             })

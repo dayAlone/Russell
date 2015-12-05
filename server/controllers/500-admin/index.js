@@ -367,12 +367,13 @@ export default function(app) {
                         template_content: []
                     }
                     switch (game.code) {
+                    case 'present':
                     case 'kitchen':
                     case 'test':
                         mailFields.template_content.push({
                             name: 'content',
                             content: `<h3>Ура! Russell Hobbs поздравляет вас с победой!<br />
-                            Вы заняли ${position} место в нашем конкурсе «Собери коллекцию»<br />
+                            Вы заняли ${position} место в нашем конкурсе «${game.name}»<br />
                             от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли приз –<br/>
                             <img src="${prize.photo}" width="160"/> <br/>
                             ${prize.name}

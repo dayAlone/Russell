@@ -179,9 +179,9 @@
         &--games-1
             left 50%
             transform translateX(-50%)
-        &--games-2
-            right 50%
-            transform translateX(50%)
+            & + .winners__item
+                right 50%
+                transform translateX(50%)
         &--games-2, &--games-3
             margin-top 100px
     &__position

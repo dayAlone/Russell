@@ -40,7 +40,7 @@ export default {
     secret: 'mysecret',
     expires: 60 * 60 * 24,
     mongoose: {
-        uri: 'mongodb://localhost/testReact',
+        uri: 'mongodb://localhost/testReact', //'mongodb://heroku_lcftncvb:6e0o0p38sllg60p0ul8i823btm@ds051664-a0.mongolab.com:51664,ds051664-a1.mongolab.com:51664/heroku_lcftncvb?replicaSet=rs-ds051664', //
         options: {
             server: {
                 socketOptions: {

@@ -38,13 +38,16 @@ const TableRowsRadio = React.createClass({
         o[name] = val
         let places = Object.assign({}, this.getValue().places, o)
 
-        if (this.getValue().places[name] === val) delete(places[name])
+
 
         return (e) => {
             e.preventDefault()
-            for (let i in this.getValue().places) {
-                if (this.getValue().places[i] === val) {
-                    return false
+            if (this.getValue().places[name] === val) delete(places[name])
+            else {
+                for (let i in this.getValue().places) {
+                    if (this.getValue().places[i] === val) {
+                        return false
+                    }
                 }
             }
             this.setValue(Object.assign({}, this.getValue(), {places: places}))
@@ -317,9 +320,14 @@ class Competition extends Component {
                             likes: el.count
                         }
                     }
-                    if (place !== 'full') fields['place'] = place
+                    if (place !== 'full') {
+                        fields['place'] = place
+                        delete(fields.additional.full)
+                    }
+                    console.log(fields)
                     return fields
                 })
+            console.log(items)
         } else {
             items = this.state.data
                 .filter(el => (ids.indexOf(el._id._id) !== -1))

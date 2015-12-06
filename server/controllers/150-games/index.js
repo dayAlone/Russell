@@ -131,7 +131,7 @@ const getUserScores = function* (user, pre, after) {
             })
             let scores = yield Scores.find({ user: user._id, $or: query }).sort({ created: -1 })
             scores.map(el => {
-                result[el.type]['today'].push(el)
+                if (result[el.type]) result[el.type]['today'].push(el)
             })
 
             if (typeof after === 'function') result = yield after(result)

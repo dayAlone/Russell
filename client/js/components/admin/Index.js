@@ -10,7 +10,7 @@ import moment from 'moment'
 
 class User extends Component {
     render() {
-        let { displayName, email, created, providers } = this.props.data
+        let { displayName, email, created, providers, phone } = this.props.data
         return <div className='table__row user'>
             <div className='table__col'>{displayName}</div>
             <div className='table__col'>{providers.length > 0 ? providers.map((el, i) => {
@@ -20,7 +20,7 @@ class User extends Component {
             }) : null}</div>
             <div className='table__col'>{moment(created).format('DD.MM.YYYY HH:mm')}</div>
             <div className='table__col'><a href={`mailto:${email}`}>{email}</a></div>
-            <div className='table__col'></div>
+            <div className='table__col'>{phone}</div>
         </div>
     }
 }
@@ -96,7 +96,7 @@ class AdminUsers extends Component {
                     <div className='table__col'>Сеть</div>
                     <div className='table__col'>Дата регистрации</div>
                     <div className='table__col'>E-mail</div>
-                    <div className='table__col'>Информация</div>
+                    <div className='table__col'>Телефон</div>
                 </div>
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {

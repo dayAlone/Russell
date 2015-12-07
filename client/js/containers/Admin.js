@@ -40,7 +40,7 @@ class Admin extends Component {
                                     {name: 'Отчеты', link: '/admin/reports/'},
                                 ].map((el, i) => {
                                     if (i === 0 && this.props.location.pathname !== '/admin/') {
-                                        return <IndexLink key={i} to='/admin/' className='admin__link' activeClassName='admin__link--active'>Чеки</IndexLink>
+                                        return <IndexLink key={i} to='/admin/' className='admin__link' activeClassName='admin__link--active'>Пользователи</IndexLink>
                                     }
                                     return <Link key={i} to={el.link} className='admin__link' activeClassName='admin__link--active'>{el.name}</Link>
                                 })}

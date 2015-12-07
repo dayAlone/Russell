@@ -32,7 +32,8 @@ class Admin extends Component {
                         { this.props.isLogin ? <div>
                             <div className='admin__nav'>
                                 {[
-                                    {name: 'Чеки', link: '/admin/'},
+                                    {name: 'Пользователи', link: '/admin/'},
+                                    {name: 'Чеки', link: '/admin/checks/'},
                                     {name: 'Победители', link: '/admin/winners/'},
                                     {name: 'Фото', link: '/admin/presents/'},
                                     {name: 'Розыгрыш', link: '/admin/competitions/'},

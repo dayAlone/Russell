@@ -4,110 +4,43 @@ import ReactDOM from 'react-dom'
 import ReactPaginate from 'react-paginate'
 
 import Formsy from 'formsy-react'
-import {Input, Textarea, Dropdown, RadioGroup} from '../forms/'
-import CheckModal from './blocks/checkModal'
+import {Input, RadioGroup} from '../forms/'
 
 import moment from 'moment'
-import 'react-photoswipe/lib/photoswipe.css'
-import {PhotoSwipe} from 'react-photoswipe'
 
-const getStatus = (status, until, vinner) => {
-    if (vinner) {
-        return {
-            message: 'Выиграл',
-            class: 'vinner'
-        }
-    }
-    if (moment(until) < moment()) {
-        return {
-            message: 'Сыгран',
-            class: 'inactive'
-        }
-    }
-
-    switch (status) {
-    case 'correct':
-        return {
-            message: 'Прошел АВ',
-            class: 'moderation'
-        }
-    case 'canceled':
-        return {
-            message: 'Отклонен',
-            class: 'canceled'
-        }
-    case 'check_canceled':
-        return {
-            message: 'Не прошел АВ',
-            class: 'check_canceled'
-        }
-    case 'active':
-        return {
-            message: 'Активен',
-            class: 'active'
-        }
-    case 'added':
-        return {
-            message: 'Ждет отправки на АВ',
-            class: 'added'
-        }
-    case 'moderation':
-        return {
-            message: 'Ждет модерации',
-            class: 'moderation'
-        }
-    default:
-        return {
-            message: 'Отправлен на АВ',
-            class: 'processign'
-        }
-    }
-
-}
-
-class Check extends Component {
+class User extends Component {
     render() {
-        let {_id, status, created, user, until, vinner, products} = this.props.data
-        let condition = getStatus(status, until, vinner)
-
-        return <div className='table__row check'>
-            <div className='table__col'>{_id}</div>
-            <div className='table__col'>
-                <div className={`check__status ${condition.class ? 'check__status--' + condition.class : ''}`}>{condition.message}</div>
-            </div>
-            <div className='table__col' dangerouslySetInnerHTML={{__html: moment(created).format('DD.MM.YYYY HH:mm')}}/>
-            <div className='table__col'>
-                <a href='#' onClick={this.props.openModal(this.props.data, condition.class)}>Редактировать</a>
-            </div>
-            <div className='table__col'>{user ? user.displayName : null}</div>
-            <div className='table__col'>
-                {products.length > 0 ?
-                    products.map((el, i) => {
-                        return <div key={i}><a href={`/catalog/product/${el.product.code}/`} target='_blank'>{el.product.name}</a><br/><br/></div>
-                    })
-                    : 'нет'}
-            </div>
-
+        let { displayName, email, created, providers } = this.props.data
+        return <div className='table__row user'>
+            <div className='table__col'>{displayName}</div>
+            <div className='table__col'>{providers.length > 0 ? providers.map((el, i) => {
+                return <a key={i} href={el.profile.profileUrl} target='_blank' className={`social social--${el.name}`}>
+                    <img src={`/layout/images/svg/${el.name === 'facebook' ? 'fb' : 'vk'}.svg`} alt='' />
+                </a>
+            }) : null}</div>
+            <div className='table__col'>{moment(created).format('DD.MM.YYYY HH:mm')}</div>
+            <div className='table__col'><a href={`mailto:${email}`}>{email}</a></div>
+            <div className='table__col'></div>
         </div>
     }
 }
 
-class AdminChecks extends Component {
+class AdminUsers extends Component {
     state = {
         perPage: 10,
         offset: 0,
         data: [],
-        url: '/admin/checks/get/',
+        url: '/admin/users/get/',
         timer: false,
         photoswipe: false,
         image: []
     }
-    loadChecksFromServer() {
+    loadUsersFromServer() {
         let {url, perPage, offset} = this.state
-        let {type, id} = this.refs.form.getCurrentValues()
+        let {query} = this.refs.form.getCurrentValues()
         $.ajax({
             url: url,
-            data: {limit: perPage, offset: offset, type: type, id: id},
+            data: {limit: perPage, offset: offset, query: query},
             type: 'GET',
             success: data => {
                 if (data) this.setState({data: data.list, pageNum: Math.ceil(data.meta.total_count / data.meta.limit)})
@@ -118,24 +51,25 @@ class AdminChecks extends Component {
         })
     }
     componentDidMount() {
-        this.loadChecksFromServer()
+        this.loadUsersFromServer()
     }
     handlePageClick(data) {
         let selected = data.selected
         let offset = Math.ceil(selected * this.state.perPage)
 
         this.setState({offset: offset}, () => {
-            this.loadChecksFromServer()
+            this.loadUsersFromServer()
         })
     }
     getFormResults() {
         let {limit} = this.refs.form.getCurrentValues()
         this.setState({perPage: limit}, () => {
-            this.loadChecksFromServer()
+            this.loadUsersFromServer()
         })
     }
     handleFormChange() {
         clearTimeout(this.state.timer)
+
         this.setState({timer: setTimeout(this.getFormResults.bind(this), 500)})
     }
     openModal(data, condition) {
@@ -144,69 +78,32 @@ class AdminChecks extends Component {
             this.refs.modal.show(data, condition)
         }
     }
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.photoswipe === true && this.state.photoswipe === true) return false
-        return true
-    }
-    openPhotoSwipe(image) {
-        return (e) => {
-            let img = new Image()
-            img.onload = () => {
-                this.setState({photoswipe: true, image: [{src: image, w: img.width, h: img.height}]})
-                $('body').addClass('photoswipe-open')
-            }
-            img.src = image.indexOf('http') === -1 ? `http://${location.hostname}${location.port ? ':' + location.port : ''}${image}` : image
-
-            e.preventDefault()
-        }
-    }
-    closePhotoSwipe() {
-        $('body').removeClass('photoswipe-open')
-        this.setState({photoswipe: false})
-    }
     render() {
-        return <div className='admin-checks'>
-            <Helmet title='Russell Hobbs | Кабинет модератора | Чеки'/>
-            <PhotoSwipe
-                isOpen={this.state.photoswipe}
-                options={{shareEl: false}}
-                items={this.state.image}
-                onClose={this.closePhotoSwipe.bind(this)}/>
-            <CheckModal loadChecksFromServer={this.loadChecksFromServer.bind(this)} openPhotoSwipe={this.openPhotoSwipe.bind(this)} ref='modal' />
+        return <div className='admin-users'>
+            <Helmet title='Russell Hobbs | Кабинет модератора | Пользователи'/>
             <Formsy.Form ref='form' className='form' onChange={this.handleFormChange.bind(this)}>
-                <Dropdown name='type' className='dropdown--small' trigger='Выберите статус чека' items={[
-                    {name: 'Все', code: 'all'},
-                    {name: 'Ждет проверки модератором', code: 'moderation'},
-                    {name: 'Ждет отправки на АВ', code: 'added'},
-                    {name: 'Отправлен на АВ', code: 'processign'},
-                    {name: 'Активен', code: 'active'},
-                    {name: 'Отклонен', code: 'canceled'},
-                    {name: 'Не прошел АВ', code: 'check_canceled'},
-                    {name: 'Сыгран', code: 'gameover'},
-                    {name: 'Выиграл', code: 'vinner'}
-                ]} value=''/>
+
                 <RadioGroup name='limit' title='Показывать по:' items={[
                     {name: '10', code: 10},
                     {name: '50', code: 50},
                     {name: '100', code: 100},
                 ]} value='10'/>
-                <Input name='id' placeholder='Поиск чека по ID' />
+                <Input name='query' placeholder='Поиск чека по имени или почте' />
             </Formsy.Form>
-            <div className='table admin-checks__table'>
+            <div className='table admin-users__table'>
                 <div className='table__title'>
-                    <div className='table__col'>ID</div>
-                    <div className='table__col'>Статус чека</div>
-                    <div className='table__col'>Дата добавления</div>
-                    <div className='table__col'>Данные и фото чека</div>
-                    <div className='table__col'>Загружен пользователем</div>
-                    <div className='table__col'>Связанные товары</div>
+                    <div className='table__col'>Пользователь</div>
+                    <div className='table__col'>Сеть</div>
+                    <div className='table__col'>Дата регистрации</div>
+                    <div className='table__col'>E-mail</div>
+                    <div className='table__col'>Информация</div>
                 </div>
                 {this.state.data.length > 0 ?
                     this.state.data.map((el, i) => {
-                        return <Check key={i} openModal={this.openModal.bind(this)} data={el}/>
+                        return <User key={i} openModal={this.openModal.bind(this)} data={el}/>
                     })
                     : <div className='table__row table__row--message center'>
-                        Не найдено ни одного чека.
+                        Не найдено ни одного пользователя.
                     </div>}
             </div>
 
@@ -226,4 +123,4 @@ class AdminChecks extends Component {
     }
 }
 
-export default AdminChecks
+export default AdminUsers

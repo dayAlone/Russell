@@ -33,6 +33,10 @@ export default function configureRoutes(reducerRegistry) {
                     require.ensure([], require => {
                         callback(null, [
                             {
+                                path: 'checks/',
+                                component: require('../components/admin/Checks')
+                            },
+                            {
                                 path: 'competitions/',
                                 component: require('../components/admin/Competitions')
                             },

@@ -7,11 +7,11 @@ const MyInput = React.createClass({
 
     changeValue(event) {
         let value = event.currentTarget[this.props.type === 'checkbox' ? 'checked' : 'value']
-        if (this.props.onChange) this.props.onChange(value)
+        if (typeof this.props.onChange === 'function') this.props.onChange(value)
         this.setValue(value)
     },
     componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== this.getValue()) this.setValue(this.props.value)
+        if (nextProps.value && nextProps.value !== this.getValue()) this.setValue(this.props.value)
     },
     render() {
         let { type, name, title, placeholder, className, maxLength, classFrame } = this.props

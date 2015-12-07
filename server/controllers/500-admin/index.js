@@ -293,6 +293,44 @@ export default function(app) {
                 this.body = { list: data.result, meta: { limit: limit, total_count: data.total }}
             }
         })
+        .get('/admin/users/get/', function* () {
+            let { limit } = this.query
+
+            if (this.req.user && this.req.user.role === 'admin') {
+
+                let fields = {}
+                let result
+                try {
+                    let {offset, limit, query} = this.query
+                    if (query) {
+                        fields = {
+                            $or: [
+                                {
+                                    displayName: {$regex: query}
+                                },
+                                {
+                                    email: {$regex: query}
+                                }
+                            ]
+                        }
+                    }
+
+                    let total = yield Users.count(fields)
+
+                    let list = yield Users.find(fields, {}, {
+                        sort: {
+                            created: -1
+                        }
+                    }).skip(offset).limit(limit)
+
+                    result = { error: false, list: list, meta: { limit: limit, total_count: total }}
+                } catch (e) {
+                    console.log(e.stack)
+                    result = { error: true }
+                }
+                this.body = result
+            }
+        })
         .get('/admin/checks/get-csv/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 this.res.writeHead(200, {

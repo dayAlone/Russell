@@ -171,7 +171,6 @@ class Winners extends Component {
         case 'test':
         case 'kitchen':
         case 'present':
-            console.log(data)
             return <div className='winners'>
                 {data
                     .sort((a, b) => {
@@ -182,7 +181,7 @@ class Winners extends Component {
                         if (user && prize) {
                             let { photo, displayName } = user
                             let { photo: image, name } = prize
-                            let { scores } = additional
+                            let { scores, likes } = additional
                             if (additional.full) {
                                 return <div className={`winners__item winners__item--full`} key={i}>
                                     <div className='winners__col'>
@@ -203,10 +202,13 @@ class Winners extends Component {
                                 <div className='winners__position'>
                                     {position} место
                                 </div>
-                                <div className='winners__scores'>
+                                { game === 'present' ? <div className='winners__scores'>
+                                    <strong>{likes}</strong><br/>
+                                    {pluralize(likes, ['лайк', 'лайка', 'лайков', 'лайка'])}
+                                </div> : <div className='winners__scores'>
                                     <strong>{scores}</strong><br/>
                                     {pluralize(scores, ['балл', 'балла', 'баллов', 'балла'])}
-                                </div>
+                                </div> }
                                 <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
                                 <div className='winners__name'>{displayName}</div>
                                 {prize ? <div className='winners__prize'>

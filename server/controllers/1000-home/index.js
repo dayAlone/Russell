@@ -4,6 +4,9 @@ import Maillist from '../../models/maillist'
 export default function(app) {
     const router = new Router()
     router
+        .get('/59f954225451e0fb17629452290139a814345fba6999289f5457e3cd5fb98041.html', function *() {
+            this.body = 'postoffice-59f954225451e0fb17629452290139a814345fba6999289f5457e3cd5fb98041'
+        })
         .get('*', function* () {
             let meta = {
                 image: '',

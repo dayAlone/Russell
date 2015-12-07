@@ -80,7 +80,7 @@ class Winners extends Component {
                     list = list.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = []
                     list.map((r, i) => {
-                        if (list[i + 1]) { // && moment(list[i + 1]) < moment()) {
+                        if (list[i + 1] && moment(list[i + 1]) < moment()) {
                             raffles.push([r, list[i + 1]])
                         }
                     })

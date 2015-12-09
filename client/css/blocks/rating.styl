@@ -156,6 +156,54 @@
         @media (min-width: $scr_s)
             width (100/3)%
             float left
+    &--checks
+        .winners__item
+            &--small
+                .winners
+                    &__photo
+                        margin-right 20px
+                        size 80px
+                        margin-top -10px
+                    &__name
+                        font-size 15px
+                        margin-bottom 4px
+                        margin-top 0
+                    &__content
+                        width calc(100% - 100px)
+                        small
+                            margin-top 13px
+                    &__photo, &__content
+                        float left
+                        text-align left
+                    &__prize
+                        text-align left
+                        margin 0
+                        padding 0
+                        margin-top 10px
+                        font-size 13px
+            &--0
+                float none
+                margin 0 auto
+            & + h3
+                margin-top 70px
+                margin-bottom 40px
+                > span:after
+                    border-bottom-color alpha(white, .5)
+        h3
+            width 100%
+            text-align center
+            > span
+                display inline-block
+                position relative
+                padding-bottom 20px
+                &:after
+                    border-bottom 1px solid #ff1628
+                    content ""
+                    width 150px
+                    bottom 0px
+                    position absolute
+                    left 50%
+                    transform translateX(-50%)
     &__item
         float left
         width 100%
@@ -163,6 +211,13 @@
         text-align center
         position relative
         margin-bottom 40px
+        small
+            font-size 12px
+            color #636363
+            display inline-block
+            width 100%
+            margin-top 20px
+            margin-bottom -10px
         @media (min-width: $scr_s)
             width (100/3)%
             margin-bottom 0px
@@ -171,9 +226,11 @@
             margin-bottom 35px
             padding-bottom 40px
             border-bottom 1px solid red
-            h4, .winners__prize
+            h4, .winners__prize, small
                 margin-top 50px
                 position relative
+
+
             h4
                 top 10px
         &--games-1
@@ -213,6 +270,7 @@
             vertical-align middle
             position relative
             top -5px
+            margin-bottom -10px
     &__scores
         text-transform uppercase
         color #9a9da0

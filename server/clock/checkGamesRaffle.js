@@ -90,5 +90,11 @@ export default function* () {
             }
         }
     }
+    /*
+    let emails = [  ]
+    for (let e = 0; e < emails.length; e++) {
+        yield sendMessage({email: emails[e]}, `Совсем скоро, 14 декабря, состоится розыгрыш призов<br/> по нашей акции «Выиграй мечту».`)
+    }
+    */
     console.log('checkGamesRaffle')
 }

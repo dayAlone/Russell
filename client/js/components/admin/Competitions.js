@@ -425,7 +425,7 @@ class Competition extends Component {
                     <Link to={`/admin/winners/?game=${game}&raffle=${raffle}`} className='button--small button'>Перейти в раздел с победителями</Link>
                 </Modal>
                 <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : el._id !== null ? el._id.displayName : ''))} values={values ? values.random : false}/>
-                <RandomChecks ref='checks' game={game} raffle={raffle} games={this.props.games}/>
+                <RandomChecks ref='checks' game={game} raffle={raffle} games={this.props.games} numbers={data.map(el => (el._id))}/>
                 <PhotoSwipe
                     isOpen={this.state.photoswipe}
                     options={{shareEl: false}}

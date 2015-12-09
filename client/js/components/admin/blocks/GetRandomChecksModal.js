@@ -28,7 +28,7 @@ class GetRandomScoresModal extends Component {
         if (counts < 10 || request) {
             this.setState({
                 counts: counts + 1,
-                result: parseInt(Math.random() * 1000, 10)
+                result: this.props.numbers[parseInt(Math.random() * this.props.numbers.length, 10)]
             })
         } else {
             if (items.length > 0) {

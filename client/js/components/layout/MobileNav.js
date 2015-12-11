@@ -25,7 +25,7 @@ class Nav extends Component {
                 <Link to='/catalog/collections/' ref='sub_item' className='nav__item nav__item--sub' activeClassName='nav__item--active'>Коллекции</Link>
             </div>
             <div className='nav__col center'>
-                <Link to='/buy/' className='nav__item' activeClassName='nav__item--active'>Где купить</Link>
+                <Link to='/buy/' className='nav__item' activeClassName='nav__item--active'>Где купить со скидкой 10%</Link>
             </div>
             <div className='nav__col right'>
                 <Link to='/games/' className='nav__item' activeClassName='nav__item--active'>Выиграй мечту!</Link>

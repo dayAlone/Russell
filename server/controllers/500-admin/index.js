@@ -247,6 +247,33 @@ export default function(app) {
                 this.res.end()
             }
         })
+        .post('/admin/checks/random/', function* () {
+            if (this.req.user && this.req.user.role === 'admin') {
+                let { raffle, ids } = this.request.body
+                let result
+                ids = ids || []
+                raffle = JSON.parse(raffle)
+                let checks = yield Check.find({
+                    status: 'active',
+                    _id: { $nin: ids },
+                    $and: [
+                        {
+                            created: {
+                                $gte: raffle[0]
+                            }
+                        },
+                        {
+                            created: {
+                                $lte: raffle[1]
+                            }
+                        }
+                    ]
+                }, { _id: 1, user: 1 }).populate('user', 'displayName _id')
+                let random = Math.floor(Math.random() * checks.length)
+                result = { item: checks[random], finish: checks.length <= ids.length }
+                this.body = result
+            }
+        })
         .post('/admin/checks/update/', function* () {
             if (this.req.user && this.req.user.role === 'admin') {
                 let error = false
@@ -294,10 +321,8 @@ export default function(app) {
             }
         })
         .get('/admin/users/get/', function* () {
-            let { limit } = this.query
 
             if (this.req.user && this.req.user.role === 'admin') {
-
                 let fields = {}
                 let result
                 try {

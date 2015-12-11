@@ -16,8 +16,8 @@ class Winners extends Component {
     state = {
         data: [],
         url: '/games/winners/get/',
-        game: this.props.location.query.game ? this.props.location.query.game : 'share-history',
-        accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present'],
+        game: this.props.location.query.game ? this.props.location.query.game : 'checks',
+        accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks'],
         games: [],
         raffle: false,
     }
@@ -80,7 +80,7 @@ class Winners extends Component {
                     list = list.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = []
                     list.map((r, i) => {
-                        if (list[i + 1] && moment(list[i + 1]) < moment()) {
+                        if (list[i + 1]) { // && moment(list[i + 1]) < moment()) {
                             raffles.push([r, list[i + 1]])
                         }
                     })
@@ -129,6 +129,35 @@ class Winners extends Component {
     getRusults() {
         let { data, game } = this.state
         switch (game) {
+        case 'checks':
+            let view = (el, i) => {
+                let { position, user, additional, prize } = el
+                if (user) {
+                    let { photo, displayName } = user
+                    let { check } = additional
+
+                    return <div className={`winners__item winners__item--${position} ${position > 0 ? 'winners__item--small' : ''}`} key={i}>
+                        <div className='winners__photo' style={{backgroundImage: `url(${photo ? photo : '/layout/images/svg/avatar.svg'})`}}/>
+                        <div className='winners__content'>
+                            <div className='winners__name'>{displayName}</div>
+                            <small>ID чека: {check._id}</small>
+                            {prize && prize.photo ? <div className='winners__prize'>
+                                <img src={prize.photo} alt='' /> {prize.name}
+                            </div> : null}
+
+                            {!prize && check && check.products ? <div className='winners__prize'>
+                                {check.products.map((el, i) => (<span>{el.product.name} <br/></span>))}
+                            </div> : null}
+                        </div>
+                    </div>
+                }
+            }
+            return <div className='winners winners--checks'>
+                <h3><span>Главный приз</span></h3>
+                {data.slice(0, 1).map(view)}
+                <h3><span>Призеры розыгрыша</span></h3>
+                {data.slice(1 - data.length).map(view)}
+            </div>
         case 'share-history':
         case 'maraphon':
         case 'heart':

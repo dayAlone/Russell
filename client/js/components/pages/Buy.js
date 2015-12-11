@@ -19,7 +19,7 @@ class PageBuy extends Component {
                                 backgroundImage: `url(${image})`,
                                 backgroundColor: color
                             }}>
-                            { promo ? <div className='stores__promo'>Промокод:<br/>{promo}</div> : null }
+                            { promo ? <div className='stores__promo'>Промокод на скидку 10%<br/>{promo}</div> : null }
                             { promo ? <div className='stores__banner'>%</div> : null }
                 </a>
             }) : false

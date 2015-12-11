@@ -23,16 +23,22 @@ class Header extends Component {
     }
     render() {
         return <div>
+
                 <div className='header header--desktop'>
-                    <div className='header__col'>
-                        <Link to='/' className='header__logo'>
-                            <img src={`/layout/images/svg/logo.svg`} />
-                        </Link>
+                    <Link className='header__ribbon' to='/buy/'>
+                        скидка<br/><big>10%</big><br/>на технику<br/>Russell<br/>hobbs
+                    </Link>
+                    <div>
+                        <div className='header__col'>
+                            <Link to='/' className='header__logo'>
+                                <img src={`/layout/images/svg/logo.svg`} />
+                            </Link>
+                        </div>
+                        <div className='header__col right'>
+                            <a href='#' onClick={this.openModal.bind(this)}><img src={`/layout/images/svg/title-description-mobile.svg`} className='header__title' /></a>
+                        </div>
+                        <UserInfo />
                     </div>
-                    <div className='header__col right'>
-                        <a href='#' onClick={this.openModal.bind(this)}><img src={`/layout/images/svg/title-description-mobile.svg`} className='header__title' /></a>
-                    </div>
-                    <UserInfo />
                 </div>
                 <div className='header header--mobile'>
                     <div className='header__col'>

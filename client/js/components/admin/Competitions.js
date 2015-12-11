@@ -9,6 +9,7 @@ import Spinner from '../ui/Spinner'
 import Formsy, {Mixin} from 'formsy-react'
 import {Dropdown, RadioGroup} from '../forms/'
 import RandomScores from './blocks/GetRandomScoresModal'
+import RandomChecks from './blocks/GetRandomChecksModal'
 import moment from 'moment'
 import Modal from '../ui/Modal'
 
@@ -37,8 +38,6 @@ const TableRowsRadio = React.createClass({
         let o = {}
         o[name] = val
         let places = Object.assign({}, this.getValue().places, o)
-
-
 
         return (e) => {
             e.preventDefault()
@@ -142,7 +141,7 @@ export default RadioGroup
 class Competition extends Component {
     state = {
         accepted: ['checks', 'kitchen', 'test', 'present'],
-        game: 'present', //false,
+        game: 'checks', //false,
         raffle: false,
         perPage: 50,
         offset: 0,
@@ -280,7 +279,7 @@ class Competition extends Component {
                         <div className='table__col'>{_id}</div>
                         <div className='table__col'>{moment(added).format('DD.MM.YYYY HH:mm')}</div>
                         <div className='table__col'>{name}</div>
-                        <div className='table__col'>{products.length > 0 ?
+                        <div className='table__col'>{products && products.length > 0 ?
                             products.map((el, i) => {
                                 return <div key={i}><a href={`/catalog/product/${el.product.code}/`} target='_blank'>{el.product.name}</a><br/><br/></div>
                             })
@@ -296,6 +295,10 @@ class Competition extends Component {
     }
     showRandomModal(e) {
         this.refs.random.show()
+        e.preventDefault()
+    }
+    showRandomChecksModal(e) {
+        this.refs.checks.show()
         e.preventDefault()
     }
     createWinners(e) {
@@ -327,12 +330,11 @@ class Competition extends Component {
                     console.log(fields)
                     return fields
                 })
-            console.log(items)
         } else {
             items = this.state.data
-                .filter(el => (ids.indexOf(el._id._id) !== -1))
+                .filter(el => (el._id && ids.indexOf(el._id._id) !== -1))
                 .map(el => ({
-                    user: el._id._id,
+                    user: el._id ? el._id._id : null,
                     place: Object.keys(values.places).filter(function(key) {return values.places[key] === el._id._id})[0],
                     additional: {
                         scores: el.total
@@ -344,7 +346,6 @@ class Competition extends Component {
             raffle: raffle,
             game: game._id
         }, response => {
-            console.log(response)
             if (!response.error) {
                 if (response.result === 'success') {
                     this.setState({message: 'Теперь им необходимо раздать призы и отправить уведомления'}, this.refs.result.show)
@@ -360,7 +361,7 @@ class Competition extends Component {
         switch (this.state.game) {
         case 'checks':
             return <div className='table__buttons'>
-                    <a href='#'>Выбрать случайные чеки</a>
+                    <a href='#' onClick={this.showRandomChecksModal.bind(this)}>Выбрать случайные чеки</a>
                 </div>
         default:
             let count = 0
@@ -424,6 +425,7 @@ class Competition extends Component {
                     <Link to={`/admin/winners/?game=${game}&raffle=${raffle}`} className='button--small button'>Перейти в раздел с победителями</Link>
                 </Modal>
                 <RandomScores ref='random' data={data.map(el => (el.user ? el.user.displayName : el._id !== null ? el._id.displayName : ''))} values={values ? values.random : false}/>
+                <RandomChecks ref='checks' game={game} raffle={raffle} games={this.props.games} numbers={data.map(el => (el._id))}/>
                 <PhotoSwipe
                     isOpen={this.state.photoswipe}
                     options={{shareEl: false}}

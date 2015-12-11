@@ -45,6 +45,29 @@
         a.button
             color white
             margin-top 30px
+        a.button--no-margin
+            margin-top -9px
+            margin-bottom 50px
+        .modal__winners
+            > div
+                width 70%
+                margin 0 auto
+                margin-bottom 10px
+                display inline-block
+                small
+                    font-size 11px
+                    font-weight normal
+                strong
+                    text-align left
+                    color #717b84
+                    width 35%
+                    &, & + span
+                        float left
+                        font-weight bold
+                    & + span
+                        text-align right
+
+                        width 65%
     &--checks
         @media (min-width: $scr_s)
             max-width 450px

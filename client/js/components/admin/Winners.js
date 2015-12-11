@@ -13,6 +13,70 @@ import moment from 'moment'
 import * as actionCreators from '../../actions/games'
 import { bindActionCreators } from 'redux'
 
+class CheckRow extends Component {
+    state = {
+        hover: false,
+        disabled_save: false,
+        disabled_send: false
+    }
+    onMouseEnter() {
+        this.setState({ hover: true })
+    }
+    onMouseLeave() {
+        this.setState({ hover: false })
+    }
+    savePrize(e) {
+        let { savePrize, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_save: true }, savePrize(_id, this.savedCallback.bind(this)))
+        e.preventDefault()
+    }
+    sendMail(e) {
+        let { sendMail, el} = this.props
+        let { _id } = el
+        this.setState({ disabled_send: true }, sendMail(_id))
+        e.preventDefault()
+    }
+    deleteWinner(e) {
+        let { deleteWinner, el} = this.props
+        let { _id } = el
+        deleteWinner(_id)()
+        e.preventDefault()
+    }
+    savedCallback() {
+        this.setState({ disabled_save: false })
+    }
+    render() {
+        let {user, additional, position, prize, _id, sended} = this.props.el
+        let {hover, disabled_save, disabled_send} = this.state
+        return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
+            <div className='table__col'>{user ? user.displayName : null}</div>
+            <div className='table__col'>{additional.check._id}</div>
+            <div className='table__col'>{position === 0 ? 'Главный приз' : 'Призер ' + position}</div>
+            {position === 0 ? <div className='table__col'>
+                <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
+                    name: el.name,
+                    code: el._id
+                }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
+                {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
+                    {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
+                </a> : null}
+            </div> : <div className='table__col'>
+                {additional.check.products.map((el, i) => {
+                    console.log(el)
+                    return <span key={i}>{el.product.name}<br/></span>
+                })}
+            </div> }
+            <div className='table__col'>
+                {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className={`btn ${disabled_send ? 'btn--disabled' : ''}`}>{disabled_send ? <img src='/layout/images/loading.gif' alt='' /> : null} Уведомить</a> : null}
+            </div>
+            <div className='table__col'>
+                {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
+            </div>
+        </div>
+    }
+}
+
 class GameRow extends Component {
     state = {
         hover: false,
@@ -343,10 +407,11 @@ class Competition extends Component {
         switch (this.state.game) {
         case 'checks':
             return <div className='table__title'>
-                <div className='table__col'>ID</div>
-                <div className='table__col'>Дата добавления</div>
-                <div className='table__col'>Загружен пользователем</div>
-                <div className='table__col'>Связанные товары</div>
+                <div className='table__col'>Пользователь</div>
+                <div className='table__col'>ID чека</div>
+                <div className='table__col'>Тип призера</div>
+                <div className='table__col'>Приз</div>
+                <div className='table__col'>Письмо</div>
             </div>
         case 'present':
             return <div className='table__title'>
@@ -381,7 +446,15 @@ class Competition extends Component {
         switch (this.state.game) {
         case 'checks':
             return <div>
-
+                {data.map((el, i) => {
+                    return <CheckRow
+                            setFullWinner={this.setFullWinner.bind(this)}
+                            deleteWinner={this.deleteWinner.bind(this)}
+                            savePrize={this.savePrize.bind(this)}
+                            el={el}
+                            key={i}
+                            prizes={this.props.prizes}/>
+                })}
             </div>
         case 'share-history':
         case 'maraphon':

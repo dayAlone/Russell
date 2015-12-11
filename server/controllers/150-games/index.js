@@ -1,10 +1,13 @@
 import Router from 'koa-router'
 import Games from '../../models/games'
 import Scores from '../../models/scores'
+import { check as Checks } from '../../models/check'
 import Users from '../../models/user'
 import Winners from '../../models/winners'
 import Prizes from '../../models/prizes'
 import Presents from '../../models/presents'
+import Products from '../../models/products'
+
 import { Types } from 'mongoose'
 import moment from 'moment'
 import config from 'config'
@@ -176,8 +179,11 @@ export default function(app) {
                     let raw = yield Winners.find(query).sort({position: 1, 'additional.full': -1})
                     let data = yield Users.populate(raw, {path: 'user', select: 'displayName photo _id'})
                     data = yield Prizes.populate(data, {path: 'prize'})
+                    data = yield Checks.populate(data, {path: 'additional.check'})
+                    data = yield Products.populate(data, {path: 'additional.check.products.product'})
                     result = { error: false, list: data }
                 } catch (e) {
+                    console.log(e.stack)
                     result = { error: e }
                 }
                 this.body = result

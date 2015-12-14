@@ -49,31 +49,35 @@ class CheckRow extends Component {
     render() {
         let {user, additional, position, prize, _id, sended} = this.props.el
         let {hover, disabled_save, disabled_send} = this.state
-        return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
-            <div className='table__col'>{user ? user.displayName : null}</div>
-            <div className='table__col'>{additional.check._id}</div>
-            <div className='table__col'>{position === 0 ? 'Главный приз' : 'Призер ' + position}</div>
-            {position === 0 ? <div className='table__col'>
-                <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
-                    name: el.name,
-                    code: el._id
-                }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
-                {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
-                    {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
-                </a> : null}
-            </div> : <div className='table__col'>
-                {additional.check.products.map((el, i) => {
-                    console.log(el)
-                    return <span key={i}>{el.product.name}<br/></span>
-                })}
-            </div> }
-            <div className='table__col'>
-                {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className={`btn ${disabled_send ? 'btn--disabled' : ''}`}>{disabled_send ? <img src='/layout/images/loading.gif' alt='' /> : null} Уведомить</a> : null}
+        if (additional.check) {
+            return <div className='table__row' onMouseEnter={this.onMouseEnter.bind(this)} onMouseLeave={this.onMouseLeave.bind(this)}>
+                <div className='table__col'>{user ? user.displayName : null}</div>
+                <div className='table__col'>{additional.check._id}</div>
+                <div className='table__col'>{position === 0 ? 'Главный приз' : 'Призер ' + position}</div>
+                {position === 0 ? <div className='table__col'>
+                    <Dropdown name={`prizes[${_id}]`} className='dropdown--small' items={this.props.prizes.map(el=>({
+                        name: el.name,
+                        code: el._id
+                    }))} value={prize ? prize._id : this.props.prizes[0]._id}/>
+                    {hover || disabled_save ? <a href='#' onClick={this.savePrize.bind(this)} className={`btn ${disabled_save ? 'btn--disabled' : ''}`}>
+                        {disabled_save ? <img src='/layout/images/loading.gif' alt='' /> : null} Сохранить
+                    </a> : null}
+                </div> : <div className='table__col'>
+                    {additional.check.products.map((el, i) => {
+                        console.log(el)
+                        return <span key={i}>{el.product.name}<br/></span>
+                    })}
+                </div> }
+                <div className='table__col'>
+                    {!sended && (hover || disabled_send) ? <a href='#' onClick={this.sendMail.bind(this)} className={`btn ${disabled_send ? 'btn--disabled' : ''}`}>{disabled_send ? <img src='/layout/images/loading.gif' alt='' /> : null} Уведомить</a> : null}
+                </div>
+                <div className='table__col'>
+                    {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
+                </div>
             </div>
-            <div className='table__col'>
-                {hover ? <a href='#' onClick={this.deleteWinner.bind(this)} className='btn'>x</a> : null}
-            </div>
-        </div>
+        } else {
+            return null
+        }
     }
 }
 

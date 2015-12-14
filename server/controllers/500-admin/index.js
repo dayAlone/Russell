@@ -9,6 +9,7 @@ import config from 'config'
 import { Iconv } from 'iconv'
 import { Types } from 'mongoose'
 import moment from 'moment'
+import randomstring from 'randomstring'
 
 import request from 'co-request'
 let isJsonString = (str) => {
@@ -284,13 +285,13 @@ export default function(app) {
                         status_comment: status_comment,
                         count: count,
                         organisation: organisation,
-                        inn: inn,
-                        eklz: eklz,
+                        inn: inn ? inn : randomstring.generate(),
+                        eklz: eklz ? eklz : randomstring.generate(),
                         date: date,
                         time: time,
                         total: total,
-                        kpk_number: kpk_number,
-                        kpk_value: kpk_value
+                        kpk_number: kpk_number ? kpk_number : randomstring.generate(),
+                        kpk_value: kpk_value ? kpk_value : randomstring.generate()
                     }
                     if (fields['status'] === 'added') {
                         fields['kpk_id'] = ''

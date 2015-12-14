@@ -5,6 +5,10 @@ import {Input, Dropdown, Textarea} from '../../forms/'
 
 import Modal from '../../ui/Modal'
 
+Formsy.addValidationRule('minLengthOrEmpty', (values, value, length) => {
+    return value && value.length >= length
+})
+
 class CheckModal extends Component {
 
     state = {
@@ -97,10 +101,10 @@ class CheckModal extends Component {
                         <Input title='Товаров RH в чеке' name='count' value={count} classFrame='form__count'/>
                     </div>
                     <div className='form__col'>
-                        <Input title='ЭКЛЗ' name='eklz' value={eklz}/>
-                        <Input title='ИНН' name='inn' value={inn}/>
-                        <Input title='Номер КПК' name='kpk_number' value={kpk_number}/>
-                        <Input title='Значение КПК' name='kpk_value' value={kpk_value}/>
+                        <Input title='ЭКЛЗ' name='eklz' value={condition === 'moderation' || condition === 'canceled' ? '' : eklz}/>
+                        <Input title='ИНН' name='inn' value={condition === 'moderation' || condition === 'canceled' ? '' : inn}/>
+                        <Input title='Номер КПК' name='kpk_number' value={condition === 'moderation' || condition === 'canceled' ? '' : kpk_number}/>
+                        <Input title='Значение КПК' name='kpk_value' value={condition === 'moderation' || condition === 'canceled' ? '' : kpk_value}/>
                     </div>
                 </div>
 

@@ -70,13 +70,9 @@ class Check extends Component {
                 </Formsy.Form> : `ID: ${_id}`}</span><br/>
                 <div className={`check__info ${!this.state.hidden ? 'check__info--visible' : ''}`}>
                     {organisation ? <span>Организация: {organisation}<br/></span> : null}
-                    {inn ? <span>ИНН: {inn}<br/></span> : null}
-                    {eklz ? <span>ЭКЛЗ: {eklz}<br/></span> : null}
                     <span>Дата: {date}</span><br/>
                     <span>Время: {time}</span><br/>
                     <span>Сумма: {total}</span><br/>
-                    {kpk_number ? <span>Номер КПК: {kpk_number}<br/></span> : null}
-                    {kpk_value ? <span>Значение КПК: {kpk_value}<br/></span> : null}
                     <a href='#' ref='photo' onClick={this.handleClickPreview(photo)} className='check__preview' style={{backgroundImage: `url(${photo})`}}></a>
                     {photo2 ? <a href='#' ref='photo2' onClick={this.handleClickPreview(photo2)} className='check__preview' style={{backgroundImage: `url(${photo2})`}}></a> : null }
                 </div>

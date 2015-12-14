@@ -453,7 +453,7 @@ export default function(app) {
                         if (position === 0) {
                             str += `Вы стали главным победителем в нашей акции «Выиграй&nbsp;мечту» от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли суперприз – коллекцию кухонной техники Illumina<br/></h3><br/><img src="http://164623.selcdn.com/russell/layout/images/mail-img.jpg" width="100%"/> <br/>`
                         } else {
-                            str += `Вы стали одним из победителей в нашей акции «Выиграй&nbsp;мечту» от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли приз (призы) – </h3>`
+                            str += `Вы стали одним из победителей в нашей акции «Выиграй&nbsp;мечту» от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли ${check.products && check.products.length > 1 ? 'призы' : 'приз'} – </h3>`
                             str += `<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>`
                             check.products.map((el, i) => (
                                 str += `<td class="center">

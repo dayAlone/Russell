@@ -450,6 +450,7 @@ class Competition extends Component {
                     return <CheckRow
                             setFullWinner={this.setFullWinner.bind(this)}
                             deleteWinner={this.deleteWinner.bind(this)}
+                            sendMail={this.sendMail.bind(this)}
                             savePrize={this.savePrize.bind(this)}
                             el={el}
                             key={i}

@@ -16,7 +16,7 @@ class Winners extends Component {
     state = {
         data: [],
         url: '/games/winners/get/',
-        game: this.props.location.query.game ? this.props.location.query.game : 'checks',
+        game: this.props.location.query.game ? this.props.location.query.game : 'test',
         accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks'],
         games: [],
         raffle: false,
@@ -80,7 +80,7 @@ class Winners extends Component {
                     list = list.sort((a, b) => (moment(a) - moment(b)))
                     let raffles = []
                     list.map((r, i) => {
-                        if (list[i + 1]) { // && moment(list[i + 1]) < moment()) {
+                        if (list[i + 1] && moment(list[i + 1]) < moment()) {
                             raffles.push([r, list[i + 1]])
                         }
                     })

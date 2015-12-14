@@ -411,7 +411,10 @@ export default function(app) {
                     let { id, raffle } = this.request.body
                     if (raffle) raffle = JSON.parse(raffle)
                     let data = yield Winners.findOne({ _id: id }).populate('user').populate('prize').populate('game')
-                    let { game, user, position, prize} = data
+                    let { game, user, position, prize, additional} = data
+                    let { check } = additional
+                    if (check) check = yield Check.findOne({ _id: check}).populate('products.product')
+
                     let mailFields = {
                         message: {
                             subject: 'Поздравляем!',
@@ -442,42 +445,65 @@ export default function(app) {
                             ${prize.name}
                             </h3>`
                         })
+
+                        break
+                    case 'checks':
+                        let str = `<h3>Ура! Russell Hobbs поздравляет вас с победой!<br />`
+                        if (position === 0) {
+                            str += `Вы стали главным победителем в нашей акции «Выиграй&nbsp;мечту» от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли суперприз – коллекцию кухонной техники Illumina<br/></h3><br/><img src="http://164623.selcdn.com/russell/layout/images/mail-img.jpg" width="100%"/> <br/>`
+                        } else {
+                            str += `Вы стали одним из победителей в нашей акции «Выиграй&nbsp;мечту» от ${moment(raffle[1]).format('DD.MM.YYYY')} и выиграли приз (призы) – </h3>`
+                            str += `<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>`
+                            check.products.map((el, i) => (
+                                str += `<td class="center">
+                                        <img src="${el.product.preview}" width="160"/><br/>${el.product.name}
+                                    </td> ${(i + 1) % 3 === 0 ? '</tr><tr>' : ''}`
+
+                            ))
+
+                            str += `</tr>`
+                        }
                         mailFields.template_content.push({
-                            name: 'additional',
-                            content: `<table cellpadding="0" cellspacing="0" border="0" width="100%">
-                            <tr>
-                                <td class="center padding">
-                                    <img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="center">
-                                    <h3 style="margin-bottom: 0">Примите наши поздравления!</h3>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="center padding">
-                                    <img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="center">
-                                    <p>Чтобы получить ваш выигрыш, свяжитесь, пожалуйста, <br/>с нами по электронной почте:<br/>
-                                    <a href='mailto:support@russellhobbs-promo.ru'>support@russellhobbs-promo.ru</a>
-                                    <br/><br/>Ваш Russell Hobbs</p>
-                                    <h1><a href="http://russellhobbs-promo.ru">russellhobbs-promo.ru</a></h1>
-                                </td>
-                            </tr>
-                        </table>`
+                            name: 'content',
+                            content: str
                         })
+
                         break
                     default:
                     }
-
+                    mailFields.template_content.push({
+                        name: 'additional',
+                        content: `<table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tr>
+                            <td class="center padding">
+                                <img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="center">
+                                <h3 style="margin-bottom: 0">Примите наши поздравления!</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="center padding">
+                                <img src="http://164623.selcdn.com/russell/layout/images/mail-line.jpg" width="100%"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="center">
+                                <p>Чтобы получить ваш выигрыш, свяжитесь, пожалуйста, <br/>с нами по электронной почте:<br/>
+                                <a href='mailto:support@russellhobbs-promo.ru'>support@russellhobbs-promo.ru</a>
+                                <br/><br/>Ваш Russell Hobbs</p>
+                                <h1><a href="http://russellhobbs-promo.ru">russellhobbs-promo.ru</a></h1>
+                            </td>
+                        </tr>
+                    </table>`
+                    })
                     yield sendUserEmail(mailFields)
                     yield Winners.update({_id: id}, {$set: {sended: true} })
                     result = {error: false, result: 'success'}
                 } catch (e) {
+                    console.log(e.stack)
                     result = {error: e.message, code: e.code}
                 }
                 this.body = result

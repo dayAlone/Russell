@@ -7,6 +7,8 @@ import Winners from '../../models/winners'
 import Users, {sendUserEmail} from '../../models/user'
 import moment from 'moment'
 import { Types } from 'mongoose'
+import randomstring from 'randomstring'
+
 const getUserChecks = function* (user, pre, after) {
     if (user) {
         let result
@@ -72,6 +74,10 @@ const addOrUpdateCheck = function* () {
                 { safe: true, upsert: true }
             )
         } else {
+            fields.inn = randomstring.generate()
+            fields.eklz = randomstring.generate()
+            fields.kpk_number = randomstring.generate()
+            fields.kpk_value = randomstring.generate()
             yield Check.create(fields)
         }
 

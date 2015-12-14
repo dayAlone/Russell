@@ -272,12 +272,12 @@ class Competition extends Component {
         switch (this.state.game) {
         case 'checks':
             rows = data.map((el, i) => {
-                let {_id, added, user, products} = el
+                let {_id, created, user, products} = el
                 let name = user ? user.displayName : null
                 if (typeof _id !== 'object') {
                     return <div className='table__row' key={i}>
                         <div className='table__col'>{_id}</div>
-                        <div className='table__col'>{moment(added).format('DD.MM.YYYY HH:mm')}</div>
+                        <div className='table__col'>{moment(created).format('DD.MM.YYYY HH:mm')}</div>
                         <div className='table__col'>{name}</div>
                         <div className='table__col'>{products && products.length > 0 ?
                             products.map((el, i) => {

@@ -139,7 +139,7 @@ class Product extends Component {
                                 { pdf ? <div className='product__pdf'><a href={pdf} target='_blank'><img src='/layout/images/svg/pdf.svg' />Скачать инструкции</a></div> : false}
 
                                 <div className='product__sale'>
-                                    <h4>Купить со скидкой:</h4>
+                                    <h4>Купить со скидкой 10%:</h4>
                                     { false !== true ? null : <a target='_blank' style={{backgroundImage: 'url(/layout/images/ozon.jpg)'}} href='http://www.ozon.ru/?context=search&text=russell+hobbs' className='product__sale-link'></a> }
                                     <a target='_blank' style={{backgroundImage: 'url(/layout/images/u.jpg)'}} href='http://www.ulmart.ru/search?string=russell+hobbs&rootCategory=&sort=6' className='product__sale-link'></a>
                                     <h4>Промокод: RUSSELLHOBBS</h4>

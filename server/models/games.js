@@ -12,7 +12,8 @@ const gameSchema = new mongoose.Schema({
     description: String,
     image: String,
     raffles: [Date],
-    sort: Number
+    sort: Number,
+    video: Array
 })
 
 gameSchema.pre('save', function(next) {
@@ -24,7 +25,7 @@ gameSchema.statics.findCurrentRaffle = function* (code) {
     let game = yield Game.findOne({ code: code })
     let current = false
     if (game) {
-        current = game.raffles.filter(el => (moment(el) > moment().add(3, 'hours')))[0]    
+        current = game.raffles.filter(el => (moment(el) > moment().add(3, 'hours')))[0]
     }
     return current
 }

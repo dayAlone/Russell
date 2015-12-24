@@ -388,12 +388,26 @@ export default function(app) {
                     if (parseInt(fields.level, 10) > 0) fields['level'] = fields.level
                     if (parseInt(fields.scores, 10) < 0) fields.scores = 0
                     console.log('GameResultUpdate', this.req.user._id, id, fields)
+                    let isUpdate = true
+                    if (fields.share) {
+                        let game = yield Scores.findOne({
+                            _id: id, user: this.req.user._id
+                        })
+                        let x = 0
+                        for (let i in fields.share) {
+                            if (game.share[i].toString() === fields.share[i].toString()) x++
+                        }
+                        if (x === 2) isUpdate = false
+                        console.log(x, isUpdate)
+                    }
                     result = yield getUserScores(this.req.user, function*(user) {
-                        yield Scores.findOneAndUpdate(
-                            { _id: id, user: user._id },
-                            { $set: fields },
-                            { safe: true, upsert: true }
-                        )
+                        if (isUpdate) {
+                            yield Scores.findOneAndUpdate(
+                                { _id: id, user: user._id },
+                                { $set: fields },
+                                { safe: true, upsert: true }
+                            )
+                        }
                     })
                 } catch (e) {
                     this.body = { error: e }

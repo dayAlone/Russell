@@ -271,7 +271,6 @@ export default function(app) {
                     ]
                 }, { _id: 1, user: 1 }).populate('user', 'displayName _id')
                 let random = Math.floor(Math.random() * checks.length)
-                console.log(checks.length, ids.length, ids)
                 result = { item: checks[random], finish: checks.length === 1 }
                 this.body = result
             }

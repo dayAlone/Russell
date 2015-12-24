@@ -16,7 +16,7 @@ class Winners extends Component {
     state = {
         data: [],
         url: '/games/winners/get/',
-        game: this.props.location.query.game ? this.props.location.query.game : 'test',
+        game: this.props.location.query.game ? this.props.location.query.game : 'checks',
         accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks'],
         games: [],
         raffle: false,
@@ -88,7 +88,8 @@ class Winners extends Component {
                         games.push({
                             name: el.name,
                             code: el.code,
-                            raffles: raffles
+                            raffles: raffles,
+                            video: el.video
                         })
                     }
                 }
@@ -127,9 +128,14 @@ class Winners extends Component {
         return network
     }
     getRusults() {
-        let { data, game } = this.state
+        let { data, game, games, raffle } = this.state
         switch (game) {
         case 'checks':
+            let tmp = raffle ? JSON.parse(raffle) : false
+            let cur = games.filter(el=>(el.code === game))[0]
+            let curKey = cur.raffles.map(el=>(el[1])).indexOf(tmp[1])
+            let video = cur.video ? cur.video[curKey !== -1 ? curKey : 0] : false
+            console.log(cur.video, curKey)
             let view = (el, i) => {
                 let { position, user, additional, prize } = el
                 if (user) {
@@ -157,6 +163,12 @@ class Winners extends Component {
                 {data.slice(0, 1).map(view)}
                 <h3><span>Призеры розыгрыша</span></h3>
                 {data.slice(1 - data.length).map(view)}
+                {video ? <div className='winners__after'>
+                    <h3 className='white'><span>Видео розыгрыша</span></h3>
+                    <div className='winners__video'>
+                        <iframe width='100%' height='315' src={'https://www.youtube.com/embed/' + video + '?showinfo=0&controls=2&rel=0'} frameborder='0' allowfullscreen></iframe>
+                        </div>
+                    </div> : null}
             </div>
         case 'share-history':
         case 'maraphon':
@@ -260,6 +272,7 @@ class Winners extends Component {
                 dates.push({name: moment(d[1]).format('DD.MM.YYYY'), code: JSON.stringify(d)})
             })
         })
+
         return <div className='rating'>
             <Helmet title='Russell Hobbs | Итоги конкурса'/>
 

@@ -17,8 +17,8 @@ import { bindActionCreators } from 'redux'
 
 class Present extends Component {
     handleClick(e) {
-        if (!this.props.user) this.props.openModal()
-        else this.props.likePresent(this.props.el._id)()
+        //if (!this.props.user) this.props.openModal()
+        //else this.props.likePresent(this.props.el._id)()
         e.preventDefault()
     }
     render() {

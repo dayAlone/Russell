@@ -172,9 +172,10 @@ class ProfileChecks extends Component {
                             }
                         })}/>
         }
+        //<a href='#' onClick={this.openModal()} className='button button--small'>Добавить чек</a>
         return <div className={'checks checks--' + checks.length}>
             <Helmet title='Russell Hobbs | Личный кабинет | Чеки'/>
-            <a href='#' onClick={this.openModal()} className='button button--small'>Добавить чек</a>
+
             <div className='table checks__table'>
                 <div className='table__title'>
                     <div className='table__col'>Данные<br/> чека</div>

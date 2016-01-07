@@ -518,9 +518,7 @@ class Kitchen extends Component {
             <span className='test__score test__score--big' data-text='Баллов'>
                 {level === 2 ? this.state.scores.total : this.state.scores.current}
             </span>
-            {level === 2 ? <span className='test__score test__score--big' data-text='Место в рейтинге'>
-                {position}
-            </span> : null }
+            
             {(shares.fb !== true || shares.vk !== true) && level === 2 ? <div>
                 <img src='/layout/images/line.png' alt='' className='kitchen__divider' />
                 <div className='kitchen__share'>

@@ -53,27 +53,7 @@ class Title extends Component {
             return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
                 <img src={`/layout/images/svg/love.svg`} height='23' className='title__love' />
                 <Slick className='title__slider' {...options}>{this.shuffleArray(content)}</Slick>
-                {this.props.type === 'big' || this.props.type === 'counter' ?
-                    <div>
-                        <div className='title__group'>
-                            <div className='title__col'>
-                                <span className='title__number'>1</span>
-                                <p>Приобретайте технику Russell Hobbs с 12 октября по 28 декабря</p>
-                            </div>
-                            <div className='title__col'>
-                                <span className='title__number'>2</span>
-                                <p>Регистриуйте на сайте чеки за покупку, выбирайте призы</p>
-                            </div>
-                            <div className='title__col'>
-                                <span className='title__number'>3</span>
-                                <p>Выигрывайте коллекцию Illumina или выбранные вами призы</p>
-                            </div>
-                        </div>
-                        <div className='title__col'>
-                            {this.props.type === 'counter' ? <Link to='/games/dream/' onClick={this.handleClick.bind(this)} className='button'>Участвовать</Link> : <Link to='/games/' className='button'>Выиграть!</Link>}
-                        </div>
-                    </div>
-                    : null}
+                
 
                 <img src={`/layout/images/line.png`} width='100%' className='title__line' height='2'/>
             </div>

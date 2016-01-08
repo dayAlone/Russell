@@ -92,11 +92,15 @@ export default function configureRoutes(reducerRegistry) {
                         },
                         {
                             path: 'dream',
-                            component: require('../components/games/Dream')
+                            onEnter: (nextState, replaceState) => {
+                                replaceState(null, '/games/')
+                            }
                         },
                         {
                             path: 'present/',
-                            component: require('../components/games/PresentDescription')
+                            onEnter: (nextState, replaceState) => {
+                                replaceState(null, '/games/present/gallery/')
+                            }
                         },
                         {
                             path: 'present/make/',

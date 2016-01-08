@@ -30,11 +30,11 @@ class Profile extends Component {
         let nav = [
             {name: 'Общая информация', link: '/profile/'},
             {name: 'Мои чеки', link: '/profile/checks/'},
-            {name: 'Избранное', link: '/profile/favorites/'},
+            //{name: 'Избранное', link: '/profile/favorites/'},
             //{name: 'Статистика', link: '/profile/statistic/'},
             {name: 'Мои фото', link: '/profile/presents/'},
             {name: 'Мои выигрыши', link: '/profile/prizes/'},
-            {name: 'Обратная связь', link: '/profile/feedback/'},
+            //{name: 'Обратная связь', link: '/profile/feedback/'},
         ]
         let dropdownNav = nav.map(el => {
             return {

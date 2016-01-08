@@ -12,10 +12,10 @@ class ProfileIndex extends Component {
             <div>
                 <div className='profile__col'><Info /></div>
                 <div className='profile__col'>
-                    <ChecksStat />
+
                 </div>
             </div>
-            <GamesShortStat />
+            
         </div>
     }
 }

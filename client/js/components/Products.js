@@ -49,7 +49,7 @@ class Products extends Component {
     componentWillUpdate(nextProps) {
         if (nextProps.code !== this.props.code) this.setState({current: false})
     }
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         this.activateAnimation()
         let {source, isLogin, profile, favorites} = this.props
         if (isLogin && !favorites) {

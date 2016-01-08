@@ -32,7 +32,7 @@ class Prize extends Component {
             <div className='table__col'>{moment(raffle).format('DD.MM.YYYY')}</div>
             <div className='table__col'>{game ? game.name : null}</div>
             <div className='table__col right'>
-                <Link to={`/profile/feedback/?subject=${fields.subject}&message=${fields.message}`}>Получить выигрыш</Link>
+                
             </div>
         </div>
     }

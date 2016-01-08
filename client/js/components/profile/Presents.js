@@ -55,7 +55,7 @@ class ProfileIndex extends Component {
             </div>
             <div className='center'>
                 <img src='/layout/images/mail-line.jpg' alt='' width='100%'/>
-                <Link to='/games/present/make/' className='button button--small'>Добавить фото</Link>
+                
             </div>
             <PhotoSwipe
                 isOpen={this.state.photoswipe}

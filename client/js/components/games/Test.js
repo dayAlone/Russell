@@ -357,9 +357,7 @@ class Test extends Component {
             <span className='test__score test__score--big' data-text='Баллов'>
                 {time}
             </span>
-            <span className='test__score test__score--big' data-text='Место в рейтинге'>
-                {position}
-            </span>
+            
             {shares.fb !== true || shares.vk !== true ? <div>
                 <img src='/layout/images/line.png' alt='' className='test__divider' />
                 <div className='test__share'>

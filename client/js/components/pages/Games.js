@@ -24,7 +24,7 @@ class PageGames extends Component {
             if (i > 0) {
                 return <div key={i} className='game'>
                     <div className='game__image'>
-                        <div className='game__flag'>{flag}</div>
+                        
                         <img src={image} alt='' />
                     </div>
                     <div className='game__content'>

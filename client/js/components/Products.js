@@ -98,14 +98,6 @@ class Products extends Component {
                             <div className={`products__name`}>{name}</div>
                             <div className='products__artnumber'>{artnumber}</div>
                         </Link>
-                        { isLogin ?
-                            <div className={`products__favorite ${typeof favorites === 'object' && favorites.indexOf(_id) === -1 ? '' : 'products__favorite--active'}`}>
-                                <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}>
-                                    <IconSVG src={require('svg-inline!../../public/images/svg/heart-border.svg')}/>
-
-                                </a>
-                            </div>
-                            : null}
                     </div>
             })
         return items

@@ -124,16 +124,6 @@ class Product extends Component {
                                 className={`product__tabs-content ${this.state.open === 'short' ? 'product__tabs-content--active' : null}`}
                                 ref='short'
                                 >
-                                { isLogin ?
-                                    <div className='product__favorite'>
-                                        <a href='#' onClick={this.openAssignModal(name + ' ' + artnumber, _id)}>
-                                        {typeof favorites === 'object' && favorites.indexOf(_id) === -1
-                                            ? <span><img src='/layout/images/svg/heart-border-red.svg' alt='' width='22'/>В избранное</span>
-                                        : <span><img src='/layout/images/svg/heart.svg' alt='' width='22'/> Привязать к еще одному чеку</span>
-                                        }
-                                        </a>
-                                    </div>
-                                    : null}
                                 <span dangerouslySetInnerHTML={{__html: description }} />
                                 { video ? <div className='product__video'><iframe width='440' height='248' src={video} frameBorder='0' allowFullScreen=''></iframe></div> : false}
                                 { pdf ? <div className='product__pdf'><a href={pdf} target='_blank'><img src='/layout/images/svg/pdf.svg' />Скачать инструкции</a></div> : false}

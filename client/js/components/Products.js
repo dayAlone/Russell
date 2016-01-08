@@ -116,7 +116,7 @@ class Products extends Component {
                             <div dangerouslySetInnerHTML={{__html: current.description}} />
                         </div>
                         <img src='/layout/images/line.png' width='100%' className='products__line' />
-                        <div className={`products__items ${isLogin ? 'products__items--favorites' : ''}`}>{this.getItems(current)}</div>
+                        <div className={`products__items`}>{this.getItems(current)}</div>
                         <CheckAssignModal ref='modal'/>
                     </div>
             }

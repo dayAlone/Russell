@@ -29,7 +29,7 @@ class PageGames extends Component {
                     <div className='game__content'>
                         <h2 className='game__title'>{name}</h2>
                         <div className='game__description' dangerouslySetInnerHTML={{__html: description}} />
-                        <Link to={'/games/' + code + '/'} className='countdown__button'>Участвовать</Link>
+                        <Link to={'/games/' + code + '/'} className='countdown__button'>{code === 'present' ? 'Галерея фотографий' : 'Играть'}</Link>
                     </div>
                     { i + 1 !== this.props.games.length ? <img src='/layout/images/line.png' width='100%' className='game__line' /> : null }
 

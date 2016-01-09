@@ -308,11 +308,11 @@ export default function(app) {
                         let titles = {
                             kitchen: {
                                 title: `Мною уже собрано ${scores} ${scoresText} в игре «Собери коллекцию!».`,
-                                description: 'И я все ближе к выигрышу приза! Хотите со мной посоревноваться? Заходите на russellhobbs-promo.ru!',
+                                description: 'Хотите со мной посоревноваться? Заходите на russellhobbs-promo.ru!',
                             },
                             test: {
                                 title: `На моем счету уже ${scores} ${scoresText} в тесте «История в деталях!». `,
-                                description: 'И мои шансы на выигрыш приза стали еще больше! Заходите на russellhobbs-promo.ru и давайте соревноваться!',
+                                description: 'Заходите на russellhobbs-promo.ru и давайте соревноваться!',
                             }
                         }
                         meta = {

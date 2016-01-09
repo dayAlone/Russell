@@ -104,7 +104,9 @@ export default function configureRoutes(reducerRegistry) {
                         },
                         {
                             path: 'present/make/',
-                            component: require('../components/games/Present')
+                            onEnter: (nextState, replaceState) => {
+                                replaceState(null, '/games/present/gallery/')
+                            }
                         },
                         {
                             path: 'present/gallery/',

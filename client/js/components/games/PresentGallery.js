@@ -189,9 +189,7 @@ class PresentGallery extends Component {
                                     activeClassName={'active'} /> : null}
                             </div>
                             <div className='present__col center'>
-                                {this.props.isLogin ?
-                                    <Link to='/games/present/make/' className='button button--small'>Добавить работу</Link>
-                                    : <a href='#' onClick={this.openModal.bind(this)} className='button button--small'>Добавить работу</a>}
+                                
                             </div>
                             <div className='present__col'>
                                 <RadioGroup name='limit' title='Показывать по:' items={[

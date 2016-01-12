@@ -427,6 +427,7 @@ class Competition extends Component {
                 <div className='table__col'>Письмо</div>
             </div>
         case 'share-history':
+        case 'focus':
         case 'maraphon':
         case 'heart':
             return <div className='table__title'>

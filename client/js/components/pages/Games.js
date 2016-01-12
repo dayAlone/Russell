@@ -9,7 +9,7 @@ import Title from '../layout/Title'
 
 @connect(state => ({ games: state.games.list }))
 class PageGames extends Component {
-    state = { accepted: ['test', 'kitchen', 'checks', 'present'] }
+    state = { accepted: ['test', 'kitchen', 'checks'] }
     componentDidMount() {
         (window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=ivkGixeM4zWWU2mbwjjdG2nOfDp8BMhi3pAuIA/LTByiUr3CgbVB8JWvpu9C0yT8xqZo9V*9YtnRPdTxQHyYtS4EFSb0My9FyVRRRWKiPkYGpjhMS0FteJeI0O4008d9HDuimpiicASTmxJYxpPBUNmkNBwU5itjpIe4zLXjhDs-'
     }

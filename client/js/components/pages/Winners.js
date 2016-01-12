@@ -17,7 +17,7 @@ class Winners extends Component {
         data: [],
         url: '/games/winners/get/',
         game: this.props.location.query.game ? this.props.location.query.game : 'checks',
-        accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks'],
+        accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks', 'focus'],
         games: [],
         raffle: false,
     }

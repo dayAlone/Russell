@@ -427,6 +427,7 @@ class Competition extends Component {
                 <div className='table__col'>Письмо</div>
             </div>
         case 'share-history':
+        case 'focus':
         case 'maraphon':
         case 'heart':
             return <div className='table__title'>
@@ -464,6 +465,7 @@ class Competition extends Component {
         case 'share-history':
         case 'maraphon':
         case 'heart':
+        case 'focus':
             return <div>
                 {data.map((el, i) => {
                     return <SocialRow
@@ -506,6 +508,7 @@ class Competition extends Component {
         case 'share-history':
         case 'maraphon':
         case 'heart':
+        case 'focus':
             return <div className='table__buttons'>
                 <a href='#' onClick={this.showAddModal.bind(this)} className='btn'>Добавить победителя</a>
             </div>

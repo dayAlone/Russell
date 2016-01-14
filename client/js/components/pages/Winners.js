@@ -17,7 +17,7 @@ class Winners extends Component {
         data: [],
         url: '/games/winners/get/',
         game: this.props.location.query.game ? this.props.location.query.game : 'checks',
-        accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks'],
+        accepted: ['test', 'kitchen', 'share-history', 'maraphon', 'heart', 'present', 'checks', 'focus'],
         games: [],
         raffle: false,
     }
@@ -173,6 +173,7 @@ class Winners extends Component {
         case 'share-history':
         case 'maraphon':
         case 'heart':
+        case 'focus':
             data.sort((a, b) => {
                 if (a.additional.full || b.additional.full) return 1
                 if (a.additional.link && b.additional.link) return this.getByLink(a.additional.link).length - this.getByLink(b.additional.link).length

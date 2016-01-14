@@ -233,7 +233,7 @@ export default function(app) {
                 mandrill('/messages/send', {
                     message: {
                         to: [{email: 'support@russellhobbs-promo.ru', name: 'Служба поддержки'}],
-                        from_email: email,
+                        from_email: 'feedback@russellhobbs-promo.ru', //email,
                         from_name: name,
                         subject: `Обратная связь RussellHobbs-Promo | ${subject}`,
                         text: `Сообщение отправлено с сайта RussellHobbs-Promo\n\nПользователь: ${name} (${email})\nТелефон: ${phone}\n\nТема: ${subject}\nСообщение: \n${message}`

@@ -38,9 +38,12 @@ class Title extends Component {
             let start = moment(dateStart).format('D MMMM')
             let end = moment(dateStop).format('D MMMM')
             description = description.replace('#start#', start).replace('#end#', end)
-            for (let i = 1; i < 12; i++) {
-                content.push(<Link key={i} to='/games/'><img src={`/layout/images/b-${i}.jpg`} alt='' /></Link>)
-            }
+           
+                content.push(<Link to='/catalog/collections/clarity-collection/'><img src={`/banner/aw15_clarity.jpg`} alt='' /></Link>)
+                content.push(<Link to='/catalog/collections/explore/'><img src={`/banner/aw15_explore.jpg`} alt='' /></Link>)
+                content.push(<Link to='/catalog/collections/fiesta/'><img src={`/banner/aw15_fiesta.jpg`} alt='' /></Link>)
+                content.push(<Link to='/catalog/collections/legacy/'><img src={`/banner/aw15_legacy_floral.jpg`} alt='' /></Link>)
+           
             let options = {
                 arrows: false,
                 infinite: true,

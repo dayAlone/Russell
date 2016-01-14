@@ -38,12 +38,12 @@ class Title extends Component {
             let start = moment(dateStart).format('D MMMM')
             let end = moment(dateStop).format('D MMMM')
             description = description.replace('#start#', start).replace('#end#', end)
-           
-                content.push(<Link to='/catalog/collections/clarity-collection/'><img src={`/banner/aw15_clarity.jpg`} alt='' /></Link>)
-                content.push(<Link to='/catalog/collections/explore/'><img src={`/banner/aw15_explore.jpg`} alt='' /></Link>)
-                content.push(<Link to='/catalog/collections/fiesta/'><img src={`/banner/aw15_fiesta.jpg`} alt='' /></Link>)
-                content.push(<Link to='/catalog/collections/legacy/'><img src={`/banner/aw15_legacy_floral.jpg`} alt='' /></Link>)
-           
+
+            content.push(<Link to='/catalog/collections/clarity-collection/'><img src={`/layout/images/aw15_clarity.jpg`} alt='' /></Link>)
+            content.push(<Link to='/catalog/collections/explore/'><img src={`/layout/images/aw15_explore.jpg`} alt='' /></Link>)
+            content.push(<Link to='/catalog/collections/fiesta/'><img src={`/layout/images/aw15_fiesta.jpg`} alt='' /></Link>)
+            content.push(<Link to='/catalog/collections/legacy/'><img src={`/layout/images/aw15_legacy_floral.jpg`} alt='' /></Link>)
+
             let options = {
                 arrows: false,
                 infinite: true,
@@ -56,7 +56,7 @@ class Title extends Component {
             return <div className={`title ${this.props.type ? `title--${this.props.type}` : ''}`}>
                 <img src={`/layout/images/svg/love.svg`} height='23' className='title__love' />
                 <Slick className='title__slider' {...options}>{this.shuffleArray(content)}</Slick>
-                
+
 
                 <img src={`/layout/images/line.png`} width='100%' className='title__line' height='2'/>
             </div>

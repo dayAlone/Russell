@@ -25,9 +25,7 @@ class Header extends Component {
         return <div>
 
                 <div className='header header--desktop'>
-                    <Link className='header__ribbon' to='/buy/'>
-                        скидка<br/><big>10%</big><br/>на технику<br/>Russell<br/>hobbs
-                    </Link>
+                    
                     <div>
                         <div className='header__col'>
                             <Link to='/' className='header__logo'>

@@ -91,12 +91,18 @@
                 width 100%
                 animation: zoomZoom .8s infinite
     &__slider
+        margin-bottom 30px
         @media (max-width: $scr_s)
             padding 0 20px
             img
                 max-width calc(100% - 40px)
         img
             max-width 100%
+        .slick-slide
+            poiner-events none
+            &.slick-active
+                pointer-events all
+                z-index 10
     &__question
         font-weight bold
         padding 10px 0

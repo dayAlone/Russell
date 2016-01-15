@@ -48,7 +48,7 @@ class Title extends Component {
                 arrows: false,
                 infinite: true,
                 autoplay: true,
-                autoplaySpeed: 3000,
+                autoplaySpeed: 5000,
                 fade: true,
                 speed: 2000,
                 swipe: false

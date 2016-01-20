@@ -10,7 +10,7 @@ export default {
         return cfg.root
     }),
     recaptcha: '6Le-9BATAAAAAICkYtNqzsFwKLCUcb-7z2M-GU7V',
-    mandrill: 'p-OvdHwNlPmJe0He0XiUtg',
+    mandrill: 'a0xWWownxBs57MhQzAkG1Q',
     ftp: {
         host: 'ftp.selcdn.ru',
         folder: `/russell`,

@@ -32,7 +32,7 @@ let webpackConfig = {
         ]
     },
     postcss() {
-        return [lost]
+        return []
     },
     plugins: [
         new webpack.ProvidePlugin({
